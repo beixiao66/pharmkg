@@ -1,0 +1,31 @@
+# pharmkg 后端依赖
+#
+# 安装：
+#     cd backend
+#     python -m venv .venv
+#     .venv\Scripts\activate
+#     pip install -r requirements.txt
+#
+# 说明：这里用下限约束（>=）而不是硬锁定，便于后续升级。
+#      首次安装成功后请执行 pip freeze > requirements.lock.txt 锁定版本，
+#      保证换机器时能装出完全一致的环境（论文的"可复现性"要用到它）。
+
+# ── Web 框架 ────────────────────────────────────────────────
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-multipart>=0.0.9
+
+# ── 配置管理 ────────────────────────────────────────────────
+pydantic>=2.7
+pydantic-settings>=2.3
+python-dotenv>=1.0
+
+# ── 数据库驱动 ──────────────────────────────────────────────
+neo4j>=5.20                 # 图数据库驱动
+psycopg[binary]>=3.1        # PostgreSQL 驱动
+SQLAlchemy>=2.0             # ORM / 连接管理
+alembic>=1.13               # 数据库迁移
+
+# ── HTTP 客户端与大模型 SDK ─────────────────────────────────
+httpx>=0.27
+openai>=1.30                # DeepSeek / 百炼 均为 OpenAI 兼容接口

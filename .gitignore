@@ -101,6 +101,9 @@ volumes/
 logs/
 *.log
 
+# 容器数据落地目录（docker-compose.yml 里 DATA_DIR 留空时使用）
+.docker-data/
+
 
 # ------------------------------------------------------------
 # 6. IDE / 编辑器

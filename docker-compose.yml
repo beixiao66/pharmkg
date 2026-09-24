@@ -1,0 +1,68 @@
+# ============================================================
+#  pharmkg 基础设施容器
+#
+#  本文件在开发阶段只包含两个数据库服务：
+#    · Neo4j      —— 知识图谱
+#    · PostgreSQL —— 用户 / 药箱 / 会话 / 消息
+#
+#  后端 FastAPI 与前端 Vue 在开发阶段本地运行（热重载更快、调试方便），
+#  交付前再补 Dockerfile 把它们纳入本文件，实现"一键启动"。
+#
+#  常用命令：
+#      docker-compose up -d        启动
+#      docker-compose ps           查看状态（两个都应是 healthy）
+#      docker-compose logs -f      跟踪日志
+#      docker-compose down         停止（数据保留在挂载目录里）
+#
+#  首次使用前先执行：Copy-Item .env.example .env  并填写真实密码
+# ============================================================
+
+services:
+
+  # ── 知识图谱 ──────────────────────────────────────────────
+  neo4j:
+    image: neo4j:5.26-community
+    container_name: pharmkg-neo4j
+    restart: unless-stopped
+    ports:
+      - "7474:7474"   # HTTP，Neo4j Browser 用
+      - "7687:7687"   # Bolt，后端连接用
+    environment:
+      # ⚠️ 密码从 .env 读取，绝不写死在这里 —— 本文件会提交到公开仓库
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD}
+      # 导入 35 万条三元组时 pagecache 对速度影响明显
+      NEO4J_server_memory_heap_max__size: 1G
+      NEO4J_server_memory_pagecache_size: 512M
+    volumes:
+      - ${DATA_DIR:-./.docker-data}/neo4j/data:/data
+      - ${DATA_DIR:-./.docker-data}/neo4j/logs:/logs
+      # 把待导入的原始数据挂进容器，Cypher 里可用 LOAD CSV 读取
+      - ./data/raw:/import:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:7474 >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+
+  # ── 业务关系库 ────────────────────────────────────────────
+  postgres:
+    image: postgres:16
+    container_name: pharmkg-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      TZ: Asia/Shanghai
+      # PostgreSQL 默认就是 UTF-8，中文无需额外设置字符集
+    volumes:
+      - ${DATA_DIR:-./.docker-data}/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s

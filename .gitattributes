@@ -1,0 +1,32 @@
+# ============================================================
+#  换行符统一策略
+#
+#  背景：Windows 上 git 默认 core.autocrlf=true，会把仓库里的 LF
+#  在签出时转成 CRLF。一旦某个文件被不同工具改过，就会出现
+#  "整个文件都变了"的假 diff，看不出真正的改动。
+# ============================================================
+
+# 仓库内一律存 LF，签出时也保持 LF
+* text=auto eol=lf
+
+
+# ── 例外：Windows 批处理必须 CRLF，否则可能无法执行 ──
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+
+# ── 二进制文件：不转换换行符，也不做文本 diff ──
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.webp  binary
+*.pdf   binary
+*.docx  binary
+*.doc   binary
+*.xlsx  binary
+*.pptx  binary
+*.zip   binary
+*.gz    binary
+*.dump  binary
