@@ -74,6 +74,30 @@ curl http://localhost:8000/health
 
 接口文档：<http://localhost:8000/docs>
 
+## 数据准备
+
+原始数据体积约 33.5 MB，**不入库**（体积大 + 部分有再分发限制）。一条命令拉取并校验：
+
+```powershell
+python scripts/download_data.py
+```
+
+脚本特点：断点友好（已存在的文件自动跳过）、下载后校验 SHA-256 与体积、
+结果写入 `data/raw/MANIFEST.json`。
+
+```powershell
+python scripts/download_data.py --list             # 只看数据源清单，不下载
+python scripts/download_data.py --only ddinter     # 只下 DDInter
+python scripts/download_data.py --verify-only      # 离线校验本地文件完整性
+python scripts/download_data.py --check-upstream   # HEAD 比对上游，看数据是否更新过
+python scripts/inspect_raw.py                      # 体检：格式、规模、数据质量
+```
+
+> 📄 **数据实际长什么样，以 [`docs/数据源实测报告.md`](docs/数据源实测报告.md) 为准。**
+> 该报告由 `scripts/inspect_raw.py` 对真实文件统计生成，纠正了方案文档中多处推测性描述
+> （例如 DDInter 的 CSV 其实没有机制与处理建议；OpenCMKG 的三元组文件是带引号的 CSV，
+> 必须用 `csv` 模块解析，否则会静默丢掉 2,171 行）。
+
 ## 目录结构
 
 ```
@@ -84,7 +108,7 @@ pharmkg/
 ├── .gitignore
 ├── docker-compose.yml    Neo4j + PostgreSQL
 ├── data/
-│   ├── raw/              下载的原始数据集（不提交）
+│   ├── raw/              下载的原始数据集（不提交，由脚本重建）
 │   ├── collected/        自己采集的说明书文本（提交）
 │   └── processed/        药名映射表、抽取结果（提交）
 ├── backend/              FastAPI 后端
@@ -93,7 +117,9 @@ pharmkg/
 │       ├── config.py     集中读取环境变量
 │       └── main.py       应用入口 + 健康检查
 ├── scripts/              离线数据管线脚本（L1–L4）
-└── docs/                 需求与技术方案基线
+│   ├── download_data.py  原始数据下载 + 完整性校验
+│   └── inspect_raw.py    原始数据体检（格式 / 规模 / 质量）
+└── docs/                 需求与技术方案基线、数据源实测报告
 ```
 
 ## 数据来源
@@ -102,8 +128,8 @@ pharmkg/
 
 | 数据 | 用途 | 地址 | 许可证 |
 |---|---|---|---|
-| OpenCMKG | 图谱骨架：疾病 / 药物 / 症状 | <https://github.com/RuiqingDing/OpenCMKG> | 仅学术研究 |
-| DDInter | 药物相互作用、严重程度、处理建议 | <https://ddinter.scbdd.com/download/> | CC BY-NC-SA 4.0 |
+| OpenCMKG | 图谱骨架：疾病 / 药物 / 症状 / 食物 / 科室 / 生产商 | <https://github.com/RuiqingDing/OpenCMKG> | 仅学术研究 |
+| DDInter | 药物相互作用 + 严重程度（**无机制与处理建议**） | <https://ddinter.scbdd.com/download/> | CC BY-NC-SA 4.0 |
 | NMPA 说明书 | 禁忌、特殊人群 | <https://www.nmpa.gov.cn/> | 政府公开信息 |
 
 > ⚠️ **许可证合规**：DDInter 为非商业（NC）+ 相同方式共享（SA）。本项目属学术非商业用途，但若公开分发衍生图谱须采用同协议。**DrugBank 禁止再分发，不入库。**
@@ -117,6 +143,8 @@ pharmkg/
 
 - [x] 需求与技术方案基线
 - [x] 项目骨架（数据库容器化、后端可启动、健康检查通过）
+- [x] 原始数据获取与校验（OpenCMKG + DDInter，33.5 MB，SHA-256 校验通过）
+- [x] **数据源实测**（格式、规模、质量全部实测；纠正基线中 9 处推测性描述）
 - [ ] L1 药品骨架导入
 - [ ] L2 药物相互作用导入（含药名映射覆盖率实测）
 - [ ] L3 说明书采集
