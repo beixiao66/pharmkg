@@ -25,16 +25,20 @@
 from __future__ import annotations
 
 import argparse
-import ast
 import csv
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-RAW_DIR = REPO_ROOT / "data" / "raw"
-OPENCMKG = RAW_DIR / "opencmkg"
-DDINTER = RAW_DIR / "ddinter"
+# OpenCMKG 的两个解析坑（单行 dict + 带引号 CSV）统一在 opencmkg_io 里处理，
+# 这里和 import_opencmkg.py 共用同一份实现，避免修了一处漏了另一处。
+from opencmkg_io import (  # noqa: E402
+    DDINTER_DIR as DDINTER,
+    OPENCMKG_DIR as OPENCMKG,
+    RAW_DIR,
+    load_entities_dict,
+    load_triples,
+)
 
 DDINTER_CODES = "ABDHLPRV"
 DDINTER_COLUMNS = ["DDInterID_A", "Drug_A", "DDInterID_B", "Drug_B", "Level"]
@@ -122,67 +126,8 @@ class Report:
 
 
 # ================================================================ OpenCMKG
-
-def load_entities_dict(path: Path) -> tuple[dict[str, list[str]], int]:
-    """entities_dict.txt 是**单行 Python dict 字面量**，用 ast 解析。
-
-    上游数据里混进了 1 个裸标识符 ``nan``（pandas 缺失值直接 str 化的产物），
-    会让 ``ast.literal_eval`` 抛 ValueError。这里把它替换成占位符而不是跳过整行——
-    因为"上游数据里有个 nan"本身就是一条质量结论，值得记下来报告。
-
-    返回 (实体字典, nan 占位符个数)。
-    """
-    raw = path.read_text(encoding="utf-8").strip()
-
-    class _NanToConstant(ast.NodeTransformer):
-        def __init__(self) -> None:
-            self.count = 0
-
-        def visit_Name(self, node: ast.Name):  # noqa: N802 — ast API 命名
-            self.count += 1
-            return ast.copy_location(ast.Constant(value="__NAN__"), node)
-
-    tree = ast.parse(raw, mode="eval")
-    fixer = _NanToConstant()
-    tree = fixer.visit(tree)
-    data = ast.literal_eval(tree)
-
-    if not isinstance(data, dict):
-        raise ValueError(f"entities_dict.txt 顶层不是 dict，而是 {type(data).__name__}")
-    return {str(k): [str(x) for x in v] for k, v in data.items()}, fixer.count
-
-
-def load_triples(path: Path) -> tuple[list[tuple[str, str, str]], dict[str, int]]:
-    """解析三元组。**必须用 csv 模块，任何手写 split 都会出错。**
-
-    ``triples.txt`` 是合法 CSV：字段本身含逗号时**会加双引号**，但只给需要的字段加。
-    三种真实行形态：
-
-        百日咳,disease_need_check,"耳,鼻,咽拭子细菌培养"        ← 尾部带引号
-        "跖骨,趾骨骨折",disease_has_symptom,疲劳                ← 头部带引号
-        "小儿人类疱疹病毒6,7,8型感染性疾病",disease_has_symptom,疱疹
-
-    因此：
-      * ``line.split(",")`` 会丢掉全部 2,171 行含逗号的记录（切成 4 段以上）；
-      * ``line.split(",", 2)`` 能救回尾部带引号的，但会把**头部带引号**的行切错位，
-        造出 ``趾骨骨折"`` 这种根本不存在的"关系名"；
-      * 只有 ``csv.reader`` 能全部正确解析。
-    """
-    raw_lines = [ln for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
-    stats = {
-        "total": len(raw_lines),
-        #: 逗号数 != 2，即朴素 split(",") 必然切坏的行
-        "naive_loss": sum(1 for ln in raw_lines if ln.count(",") != 2),
-        "unrecoverable": 0,
-    }
-
-    triples: list[tuple[str, str, str]] = []
-    for row in csv.reader(raw_lines):
-        if len(row) != 3:
-            stats["unrecoverable"] += 1
-            continue
-        triples.append((row[0], row[1], row[2]))
-    return triples, stats
+# 读取函数（load_entities_dict / load_triples）已移到 scripts/opencmkg_io.py，
+# 与 import_opencmkg.py 共用同一份实现——那两个解析坑不该有第二份代码。
 
 
 def derive_schema(triples, entities_dict, report: Report, samples: int):
@@ -400,8 +345,12 @@ def inspect_opencmkg(report: Report, samples: int) -> dict:
     report.h1("一、OpenCMKG（骨架图谱）")
 
     # ---- entities_dict
+    # 先解析三元组：词表里那条嵌套 list 的类型归属要靠 disease_need_check 关系证据来定
+    tr_path = OPENCMKG / "triples.txt"
+    triples, tstats = load_triples(tr_path)
+
     ed_path = OPENCMKG / "entities_dict.txt"
-    entities_dict, nan_count = load_entities_dict(ed_path)
+    entities_dict, ed_stats = load_entities_dict(ed_path, triples=triples)
     total_ent = sum(len(v) for v in entities_dict.values())
 
     report.h2("1.1 entities_dict.txt")
@@ -409,9 +358,28 @@ def inspect_opencmkg(report: Report, samples: int) -> dict:
     report.kv("文件结构", "单行 Python dict 字面量（全部内容在同一行，需 ast.literal_eval）")
     report.kv("顶层类型键", "、".join(entities_dict.keys()))
     report.kv("实体类型数", len(entities_dict))
-    report.kv("实体总数", f"{total_ent:,}")
-    if nan_count:
-        report.kv("⚠ 裸标识符 nan（缺失值泄漏）", f"{nan_count} 处 → 已替换为 '__NAN__' 占位")
+    report.kv("实体总数（展平去重后）", f"{total_ent:,}")
+    report("")
+    report("    上游数据的三处毛病（读取层已修复并计数）：")
+    report.kv("  ① 裸标识符 nan", f"{ed_stats['nan_placeholders']} 处 → 替换为 '__NAN__' 占位")
+    report.kv("  ② 嵌套 list", f"{ed_stats['nested_lists']} 个"
+              f"（内含 {ed_stats['nested_elements']:,} 个条目）→ 已展平")
+    report.kv("     ↳ 按关系证据归为 check", f"{ed_stats['nested_as_check']:,} 个")
+    report.kv("     ↳ 保留上游标注 symptom", f"{ed_stats['nested_as_symptom']:,} 个")
+    report.kv("  ③ 展平后的重复项", f"{ed_stats['duplicates_removed']:,} 个 → 已去重")
+    if ed_stats["non_string_items"]:
+        report.kv("  ④ 非字符串元素", f"{ed_stats['non_string_items']} 个 → 已丢弃")
+    report("")
+    report("    ★ 嵌套 list 是个**实质性的上游 bug**：上游把一整批条目当成单个元素")
+    report("      塞进了 symptom 列表。不展平则这些条目等同于不存在；而 str(内层list)")
+    report("      会造出一个 71,618 字符的『症状名』，足以撑爆 Neo4j 的索引长度上限。")
+    report("")
+    report("    ★ 而且**上游的类型标注是错的**：内层 6,833 个条目里，")
+    report(f"      {ed_stats['nested_as_check']:,} 个是 disease_need_check 的尾实体"
+          f"（占全部检查项尾实体的 95.9%），")
+    report("      而出现在 disease_has_symptom 里的是 **0 个**。整体当 Symptom 入库")
+    report("      会造成同名双标签节点（同一名字既是 Symptom 又是 Check）。")
+    report("      本报告按关系证据逐条归位：检查项 → Check，其余保留 Symptom。")
     report("")
     rows = []
     for t, names in sorted(entities_dict.items(), key=lambda kv: -len(kv[1])):
@@ -420,9 +388,7 @@ def inspect_opencmkg(report: Report, samples: int) -> dict:
                      "、".join(list(dict.fromkeys(names))[:3])[:46]))
     report.table(rows, ("类型", "实体数", "去重后", "样例"), aligns="<>>" + "<")
 
-    # ---- triples
-    tr_path = OPENCMKG / "triples.txt"
-    triples, tstats = load_triples(tr_path)
+    # ---- triples（已在 1.1 之前解析过，这里只出报告）
     report.h2("1.2 triples.txt")
     report.kv("文件体积", f"{tr_path.stat().st_size:,} B")
     report.kv("编码 / 行尾", "UTF-8 / LF")
@@ -717,7 +683,7 @@ def main(argv: list[str] | None = None) -> int:
     if missing:
         print("✗ 原始数据缺失，请先运行：python scripts/download_data.py")
         for p in missing:
-            print("   缺：", p.relative_to(REPO_ROOT))
+            print("   缺：", p.relative_to(RAW_DIR.parent))
         return 1
 
     report = Report()
