@@ -27,12 +27,14 @@ class Settings(BaseSettings):
     )
 
     # ── Neo4j ────────────────────────────────────────────────
-    neo4j_uri: str = "bolt://localhost:7687"
+    #: 用 127.0.0.1 而非 localhost：后者会解析出 IPv6 + IPv4 两个地址，
+    #: 连不上时超时按地址各付一次，健康检查平白慢一倍（实测 4s vs 2s）。
+    neo4j_uri: str = "bolt://127.0.0.1:7687"
     neo4j_user: str = "neo4j"
     neo4j_password: str = ""
 
     # ── PostgreSQL ───────────────────────────────────────────
-    postgres_host: str = "localhost"
+    postgres_host: str = "127.0.0.1"   # 同上：不用 localhost，避免双栈重复超时
     postgres_port: int = 5432
     postgres_user: str = "pharmkg"
     postgres_password: str = ""
