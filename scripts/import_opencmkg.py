@@ -41,6 +41,7 @@ L1 · 药品骨架导入 —— OpenCMKG → Neo4j
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import sys
 import time
 from collections import defaultdict
@@ -58,9 +59,55 @@ from opencmkg_io import (  # noqa: E402
     load_triples,
 )
 
+# Windows 控制台默认 GBK，先切 UTF-8 —— 放在最前面，
+# 这样连下面的"用错解释器"提示都不会乱码。
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
+    except (AttributeError, ValueError):
+        pass
+
+#: 本脚本依赖的第三方包。缺任何一个都说明解释器用错了。
+REQUIRED_PACKAGES = ("pydantic_settings", "neo4j")
+
+
+def _abort_missing_dependencies(missing: list[str]) -> None:
+    """依赖缺失时给出**可执行的下一步**，而不是一句 ModuleNotFoundError。
+
+    最常见的踩法：直接敲 ``python scripts/import_opencmkg.py``。
+    本机 PATH 里的 ``python`` 是 3.9，而项目依赖装在 ``backend/.venv`` 里，
+    于是报 ``No module named 'pydantic_settings'``——看起来像环境坏了，
+    其实是解释器选错了。
+    """
+    venv_python = REPO_ROOT / "backend" / ".venv" / "Scripts" / "python.exe"
+    print(f"✗ 缺少依赖：{'、'.join(missing)} —— 当前用的 Python 解释器不对。")
+    print()
+    print(f"  当前解释器    {sys.executable}")
+    if venv_python.exists():
+        print(f"  项目虚拟环境  {venv_python}")
+        print()
+        print("  请改用虚拟环境运行：")
+        print(f'    "{venv_python}" scripts\\import_opencmkg.py')
+    else:
+        print(f"  项目虚拟环境  ✗ 不存在：{venv_python}")
+        print()
+        print("  请先创建并安装依赖：")
+        print("    cd backend")
+        print("    py -3.13 -m venv .venv")
+        print("    .venv\\Scripts\\python.exe -m pip install -r requirements.txt")
+    print()
+    print("  ⚠️ 不要直接用 PATH 里的 python —— 本机那个是 3.9，且依赖装在虚拟环境里。")
+    raise SystemExit(1)
+
+
 # scripts/ 与 backend/ 是两个独立目录。这里把 backend 挂进 sys.path，
 # 只为复用 app.config —— 配置必须只有一处来源，不在脚本里再解析一遍 .env。
 sys.path.insert(0, str(REPO_ROOT / "backend"))
+
+_missing = [m for m in REQUIRED_PACKAGES if importlib.util.find_spec(m) is None]
+if _missing:
+    _abort_missing_dependencies(_missing)
+
 from app.config import get_settings  # noqa: E402
 
 #: 每批提交多少行。太大占内存，太小网络往返多。
@@ -343,12 +390,6 @@ def reset(session) -> dict[str, int]:
 # ---------------------------------------------------------------- 入口
 
 def main(argv: list[str] | None = None) -> int:
-    for stream in (sys.stdout, sys.stderr):
-        try:
-            stream.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
-        except (AttributeError, ValueError):
-            pass
-
     parser = argparse.ArgumentParser(description="把 OpenCMKG 骨架导入 Neo4j")
     parser.add_argument("--sample", type=int, default=None,
                         help="每个关系只导前 N 条（冒烟用；不传则全量）")

@@ -76,16 +76,28 @@ curl http://localhost:8000/health
 
 ## 数据准备
 
+> ⚠️ **下面所有脚本都用项目虚拟环境的解释器跑**：
+> `backend\.venv\Scripts\python.exe`。
+> 直接敲 `python` 会用 PATH 里的系统 Python（本机是 3.9），依赖不在那里，
+> 报 `No module named 'pydantic_settings'` —— **不是环境坏了，是解释器选错了**。
+> 为省事可先设个别名：
+>
+> ```powershell
+> $PY = ".\backend\.venv\Scripts\python.exe"
+> & $PY scripts/import_opencmkg.py --stats-only
+> ```
+
 原始数据体积约 33.5 MB，**不入库**（体积大 + 部分有再分发限制）。一条命令拉取并校验：
 
 ```powershell
-python scripts/download_data.py
+& .\backend\.venv\Scripts\python.exe scripts\download_data.py
 ```
 
 脚本特点：断点友好（已存在的文件自动跳过）、下载后校验 SHA-256 与体积、
 结果写入 `data/raw/MANIFEST.json`。
 
 ```powershell
+# 下面为简洁起见，省略 ".\backend\.venv\Scripts\python.exe" 前缀
 python scripts/download_data.py --list             # 只看数据源清单，不下载
 python scripts/download_data.py --only ddinter     # 只下 DDInter
 python scripts/download_data.py --verify-only      # 离线校验本地文件完整性
@@ -95,16 +107,18 @@ python scripts/inspect_raw.py                      # 体检：格式、规模、
 
 > 📄 **数据实际长什么样，以 [`docs/数据源实测报告.md`](docs/数据源实测报告.md) 为准。**
 > 该报告由 `scripts/inspect_raw.py` 对真实文件统计生成，纠正了方案文档中多处推测性描述
+> （例如 DDInter 的 CSV 其实没有机制与处理建议；OpenCMKG 的三元组文件是带引号的 CSV，
+> 必须用 `csv` 模块解析，否则会静默丢掉 2,171 行）。
 
 ## 导入图谱（L1）
 
 原始数据 → Neo4j 骨架图。**写入一律用 `MERGE`，重跑不会产生重复**（已验证）。
 
 ```powershell
-python scripts/import_opencmkg.py                # 全量导入（约 17 秒）
-python scripts/import_opencmkg.py --stats-only   # 只读：打印图规模 + 冒烟测试
-python scripts/import_opencmkg.py --sample 2000  # 每个关系只导前 2000 条（冒烟）
-python scripts/import_opencmkg.py --reset        # 先清掉上次导入的 opencmkg 数据
+& .\backend\.venv\Scripts\python.exe scripts\import_opencmkg.py                # 全量导入（约 17 秒）
+& .\backend\.venv\Scripts\python.exe scripts\import_opencmkg.py --stats-only   # 只读：图规模 + 冒烟测试
+& .\backend\.venv\Scripts\python.exe scripts\import_opencmkg.py --sample 2000  # 每关系只导前 2000 条
+& .\backend\.venv\Scripts\python.exe scripts\import_opencmkg.py --reset        # 先清掉上次导入的数据
 ```
 
 导入结果（62,479 节点 / 354,752 边）与验收查询见
@@ -112,8 +126,6 @@ python scripts/import_opencmkg.py --reset        # 先清掉上次导入的 open
 
 > ⚠️ **查图谱时一定要带 Label**：有 1,771 个名字跨多个类型（`木瓜` 既是食物又是药、
 > `谷氨酰胺` 既是药又是化验项），不带 Label 的 `MATCH (n {name:...})` 会命中多个节点。
-> （例如 DDInter 的 CSV 其实没有机制与处理建议；OpenCMKG 的三元组文件是带引号的 CSV，
-> 必须用 `csv` 模块解析，否则会静默丢掉 2,171 行）。
 
 ## 目录结构
 
