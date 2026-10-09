@@ -43,8 +43,10 @@ class Settings(BaseSettings):
     # ── 大模型：阿里云百炼（基线决策 #22，单一 provider）─────────
     #: 不再维护 provider 切换分支；多模型对比靠改 llm_model 实现。
     dashscope_api_key: Optional[str] = None
-    #: OpenAI 兼容地址，含业务空间 ID，必须从控制台照抄，形如
-    #: https://{WorkspaceId}.cn-beijing.maas.aliyuncs.com/compatible-mode/v1
+    #: OpenAI 兼容地址。**已实测打通**的是老域名（无需业务空间 ID）：
+    #: https://dashscope.aliyuncs.com/compatible-mode/v1
+    #: 官方推荐改用业务空间专属域名：
+    #: https://<业务空间ID>.cn-beijing.maas.aliyuncs.com/compatible-mode/v1
     dashscope_base_url: str = ""
     #: 默认 qwen-plus——它可用文本接口；qwen3.8-* 等需多模态接口，别随手换
     llm_model: str = "qwen-plus"

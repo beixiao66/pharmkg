@@ -95,6 +95,23 @@ python scripts/inspect_raw.py                      # 体检：格式、规模、
 
 > 📄 **数据实际长什么样，以 [`docs/数据源实测报告.md`](docs/数据源实测报告.md) 为准。**
 > 该报告由 `scripts/inspect_raw.py` 对真实文件统计生成，纠正了方案文档中多处推测性描述
+
+## 导入图谱（L1）
+
+原始数据 → Neo4j 骨架图。**写入一律用 `MERGE`，重跑不会产生重复**（已验证）。
+
+```powershell
+python scripts/import_opencmkg.py                # 全量导入（约 17 秒）
+python scripts/import_opencmkg.py --stats-only   # 只读：打印图规模 + 冒烟测试
+python scripts/import_opencmkg.py --sample 2000  # 每个关系只导前 2000 条（冒烟）
+python scripts/import_opencmkg.py --reset        # 先清掉上次导入的 opencmkg 数据
+```
+
+导入结果（62,479 节点 / 354,752 边）与验收查询见
+[`docs/数据源实测报告.md`](docs/数据源实测报告.md) §7。
+
+> ⚠️ **查图谱时一定要带 Label**：有 1,771 个名字跨多个类型（`木瓜` 既是食物又是药、
+> `谷氨酰胺` 既是药又是化验项），不带 Label 的 `MATCH (n {name:...})` 会命中多个节点。
 > （例如 DDInter 的 CSV 其实没有机制与处理建议；OpenCMKG 的三元组文件是带引号的 CSV，
 > 必须用 `csv` 模块解析，否则会静默丢掉 2,171 行）。
 
@@ -117,8 +134,10 @@ pharmkg/
 │       ├── config.py     集中读取环境变量
 │       └── main.py       应用入口 + 健康检查
 ├── scripts/              离线数据管线脚本（L1–L4）
-│   ├── download_data.py  原始数据下载 + 完整性校验
-│   └── inspect_raw.py    原始数据体检（格式 / 规模 / 质量）
+│   ├── download_data.py    原始数据下载 + 完整性校验
+│   ├── inspect_raw.py      原始数据体检（格式 / 规模 / 质量）
+│   ├── opencmkg_io.py      OpenCMKG 读取层（两个解析坑 + 三处上游 bug 的修复）
+│   └── import_opencmkg.py  L1：骨架导入 Neo4j
 └── docs/                 需求与技术方案基线、数据源实测报告
 ```
 
@@ -145,8 +164,8 @@ pharmkg/
 - [x] 项目骨架（数据库容器化、后端可启动、健康检查通过）
 - [x] 原始数据获取与校验（OpenCMKG + DDInter，33.5 MB，SHA-256 校验通过）
 - [x] **数据源实测**（格式、规模、质量全部实测；纠正基线中 9 处推测性描述）
-- [ ] L1 药品骨架导入
-- [ ] L2 药物相互作用导入（含药名映射覆盖率实测）
+- [x] **L1 药品骨架导入**（62,479 节点 / 354,752 边，MERGE 幂等已验证；查出并修复上游嵌套 list bug）
+- [ ] L2 药物相互作用导入（前置：第 0 步药名映射覆盖率实测）
 - [ ] L3 说明书采集
 - [ ] L4 说明书知识抽取
 - [ ] L5 问答链路
