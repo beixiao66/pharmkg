@@ -396,6 +396,25 @@ def write_review_sample(rows: list[dict], size: int) -> list[dict]:
     为什么不直接随机抽 200：随机抽样会把绝大部分名额给"原样精确"那种
     几乎不可能出错的层，而真正需要人眼看的恰恰是「拼音相同」「编辑距离」
     「未命中」这几层。所以**低置信层给保底名额，其余按比例分配**。
+
+    **两个判定列是两回事，不能合并成一个**：
+
+    ============  ============  ================================  ==============
+    行类型        待填列        判定标准                          得到的指标
+    ============  ============  ================================  ==============
+    有匹配        映射对否      ``en_name`` 与 ``matched_cn``      **映射准确率**
+                                是不是**同一种药**
+    未命中        译名对否      ``cn_name`` 是不是 ``en_name``     **翻译准确率**
+                                的正确中文名
+    ============  ============  ================================  ==============
+
+    ``译名对否`` 所有行都可以填（它在校验 LLM 翻译这一步）；
+    ``映射对否`` 只在 ``matched_cn`` 非空时才有意义。
+
+    例：
+      - ``Bismuth subsalicylate`` / 水杨酸铋 → 水杨酸      ：映射**错**（不是同一种药）
+      - ``Cefuroxime`` / 头孢呋辛 → 头孢呋辛酯             ：映射**对**（酯形式，同一种药）
+      - ``Abacavir`` / 阿巴卡韦 →（未命中）                ：译名**对**，未命中是词表没有
     """
     by_level: dict[str, list[dict]] = defaultdict(list)
     for r in rows:
@@ -428,11 +447,11 @@ def write_review_sample(rows: list[dict], size: int) -> list[dict]:
     with REVIEW_FILE.open("w", encoding="utf-8-sig", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=[
             "en_name", "is_major", "cn_name", "matched_cn", "match_level", "score",
-            "人工判定", "备注",
+            "译名对否", "映射对否", "备注",
         ])
         writer.writeheader()
         for r in sample:
-            writer.writerow({**r, "人工判定": "", "备注": ""})
+            writer.writerow({**r, "译名对否": "", "映射对否": "", "备注": ""})
     return sample
 
 
@@ -603,8 +622,10 @@ def main(argv: list[str] | None = None) -> int:
     log("")
     log(f"完成，用时 {time.time() - t_start:.1f}s")
     log("")
-    log(f"下一步：打开 {REVIEW_FILE.relative_to(REPO_ROOT)} 人工核对映射是否准确")
-    log("        （每一行的『人工判定』列填 对 / 错 / 存疑）")
+    log(f"下一步：打开 {REVIEW_FILE.relative_to(REPO_ROOT)} 人工核对")
+    log("        『译名对否』：cn_name 是不是 en_name 的正确中文名（所有行都填）")
+    log("        『映射对否』：en_name 与 matched_cn 是不是同一种药（仅 matched_cn 非空时填）")
+    log("        填 对 / 错 / 存疑")
     return 0
 
 
