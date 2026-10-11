@@ -112,20 +112,31 @@ python scripts/inspect_raw.py                      # 体检：格式、规模、
 
 ## 导入图谱（L1）
 
-原始数据 → Neo4j 骨架图。**写入一律用 `MERGE`，重跑不会产生重复**（已验证）。
+原始数据 → Neo4j 图谱。**写入一律用 `MERGE`，重跑不会产生重复**（L1、L2 都已验证）。
 
 ```powershell
-& .\backend\.venv\Scripts\python.exe scripts\import_opencmkg.py                # 全量导入（约 17 秒）
-& .\backend\.venv\Scripts\python.exe scripts\import_opencmkg.py --stats-only   # 只读：图规模 + 冒烟测试
-& .\backend\.venv\Scripts\python.exe scripts\import_opencmkg.py --sample 2000  # 每关系只导前 2000 条
-& .\backend\.venv\Scripts\python.exe scripts\import_opencmkg.py --reset        # 先清掉上次导入的数据
+$PY = ".\backend\.venv\Scripts\python.exe"
+
+# L1 骨架：疾病 / 药物 / 症状 / 食物 / 科室 / 生产商 / 检查 + SameAs
+& $PY scripts\import_opencmkg.py --stats-only   # 只读：图规模 + 冒烟测试
+& $PY scripts\import_opencmkg.py                # 全量（约 17 秒）
+
+# L2 相互作用：160,235 对去重后写成 150,522 条 INTERACTS_WITH 边
+& $PY scripts\import_ddi.py --stats-only        # 只读：图规模 + 验收查询
+& $PY scripts\import_ddi.py                     # 全量（约 9 秒）
+& $PY scripts\import_ddi.py --reset             # 只清 source=ddinter 的数据，不动 L1 骨架
 ```
 
-导入结果（62,479 节点 / 354,752 边）与验收查询见
-[`docs/数据源实测报告.md`](docs/数据源实测报告.md) §7。
+导入后的完整规模、两个覆盖口径、验收查询见
+[`docs/数据源实测报告.md`](docs/数据源实测报告.md) §7（L1）与 §8（L2）。
 
 > ⚠️ **查图谱时一定要带 Label**：有 1,771 个名字跨多个类型（`木瓜` 既是食物又是药、
 > `谷氨酰胺` 既是药又是化验项），不带 Label 的 `MATCH (n {name:...})` 会命中多个节点。
+
+> ⚠️ **不要拿"覆盖率"一个数字说事**。L2 之后图谱里有两类药：
+> `source=opencmkg`（4,301 个，有适应症等背景关系）与
+> `source=ddinter`（1,387 个，**只有相互作用数据**）。
+> **DDI 数据覆盖 100%，药品详情覆盖 21.4%**——两个口径必须分开陈述。
 
 ## 目录结构
 
@@ -146,11 +157,13 @@ pharmkg/
 │       ├── config.py     集中读取环境变量
 │       └── main.py       应用入口 + 健康检查
 ├── scripts/              离线数据管线脚本（L1–L4）
-│   ├── download_data.py    原始数据下载 + 完整性校验
-│   ├── inspect_raw.py      原始数据体检（格式 / 规模 / 质量）
-│   ├── opencmkg_io.py      OpenCMKG 读取层（两个解析坑 + 三处上游 bug 的修复）
-│   └── import_opencmkg.py  L1：骨架导入 Neo4j
-└── docs/                 需求与技术方案基线、数据源实测报告
+│   ├── download_data.py            原始数据下载 + 完整性校验
+│   ├── inspect_raw.py              原始数据体检（格式 / 规模 / 质量）
+│   ├── opencmkg_io.py              OpenCMKG 读取层（两个解析坑 + 三处上游 bug 的修复）
+│   ├── import_opencmkg.py          L1：骨架导入 Neo4j
+│   ├── build_drug_name_mapping.py  第 0 步：中英药名映射（LLM 翻译 + 五级匹配）
+│   └── import_ddi.py               L2：药物相互作用导入 Neo4j
+└── docs/                 需求与技术方案基线、数据源实测报告、药名映射实验报告
 ```
 
 ## 数据来源
@@ -177,10 +190,11 @@ pharmkg/
 - [x] 原始数据获取与校验（OpenCMKG + DDInter，33.5 MB，SHA-256 校验通过）
 - [x] **数据源实测**（格式、规模、质量全部实测；纠正基线中 9 处推测性描述）
 - [x] **L1 药品骨架导入**（62,479 节点 / 354,752 边，MERGE 幂等已验证；查出并修复上游嵌套 list bug）
-- [ ] L2 药物相互作用导入（前置：第 0 步药名映射覆盖率实测）
-- [ ] L3 说明书采集
+- [x] **第 0 步药名映射实验**（覆盖率 27.3% / 26.7%；查出编辑距离在医药场景不可靠）
+- [x] **L2 药物相互作用导入**（150,522 条 `INTERACTS_WITH` 边，MERGE 幂等已验证）
+- [ ] L3 说明书采集 ← **应尽早并行启动**（提前期最长，且不依赖任何其他链路）
 - [ ] L4 说明书知识抽取
-- [ ] L5 问答链路
+- [ ] L5 问答链路 ← 技术风险最高
 - [ ] L6 用药安全校验
 - [ ] L7 会话管理
 - [ ] L8 / L9 评测
