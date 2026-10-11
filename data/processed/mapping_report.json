@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-10-11T13:56:00+0800",
+  "source": "DDInter CSV + OpenCMKG entities_dict",
+  "denominator": {
+    "all": 1939,
+    "major": 1501
+  },
+  "coverage": {
+    "all": 0.2733,
+    "major": 0.2672
+  },
+  "confirmed": {
+    "all": 530,
+    "major": 401
+  },
+  "tentative": {
+    "all": 54,
+    "major": 42
+  },
+  "missed": {
+    "all": 1355,
+    "major": 1058
+  },
+  "no_translation": 1,
+  "level_counts_all": {
+    "未命中": 1355,
+    "归一化精确": 303,
+    "去盐归一化": 205,
+    "原样精确": 22,
+    "编辑距离（待确认）": 53,
+    "拼音相同（待确认）": 1
+  },
+  "level_counts_major": {
+    "未命中": 1058,
+    "归一化精确": 231,
+    "去盐归一化": 160,
+    "编辑距离（待确认）": 41,
+    "原样精确": 10,
+    "拼音相同（待确认）": 1
+  },
+  "review_sample_size": 199,
+  "fuzzy_threshold": 85,
+  "prompt_spot_check": "8/8"
+}
