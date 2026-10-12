@@ -26,6 +26,20 @@ L3 第②步 · 离线重解析（不碰网络）
 ----
     python scripts/reparse_inserts.py --check   # 只报告，不写任何文件
     python scripts/reparse_inserts.py           # 重写 text/*.txt 与 index.csv
+
+复现「修复前 → 修复后」的头条数字
+----------------------------------
+磁盘上的旧产物已经被修好了，`--check` 只能显示 "473 → 473"。
+要复现 **417 → 473 节、644 → 13,533 行**，把修复前那一版（``ee64f86``）
+的 text/ 用 worktree 取出来当基准：
+
+    git worktree add _tmp/old-wt ee64f86
+    python scripts/reparse_inserts.py --check --old-dir _tmp/old-wt/data/collected/text
+    git worktree remove --force _tmp/old-wt
+
+⚠ 别用 ``git archive | tar``：Windows 上的 bsdtar 会把 UTF-8 中文文件名
+按本地代码页解开，解出来是乱码（``乌帕达西替尼.txt`` → ``涔屽笗杈捐タ鏇垮凹.txt``），
+``--old-dir`` 一个文件都匹配不上，结果会显示成 "0 → 473"。
 """
 
 from __future__ import annotations
@@ -33,6 +47,7 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+from pathlib import Path
 
 from insert_io import (
     INDEX_FILE,
@@ -57,7 +72,7 @@ def _log(msg: str = "") -> None:
 
 
 # ── 主流程 ──────────────────────────────────────────────────────────────
-def build(check: bool) -> int:
+def build(check: bool, old_dir: Path | None = None) -> int:
     targets = load_targets()
     _log("L3 第②步 · 离线重解析")
     _log(f"  目标药      {len(targets)}（high_risk_drugs.csv 里 selected=1）")
@@ -88,7 +103,14 @@ def build(check: bool) -> int:
             _log(f"  [ 无条目 ] {kw}")
             continue
 
-        old_text = txt.read_text(encoding="utf-8") if txt.exists() else ""
+        old_text = ""
+        if old_dir is not None:
+            # 对照基准取自别的目录（复现"修复前"数字用）
+            p = old_dir / f"{kw}.txt"
+            if p.exists():
+                old_text = p.read_text(encoding="utf-8")
+        elif txt.exists():
+            old_text = txt.read_text(encoding="utf-8")
         header = read_text_header(txt)
         os_, ol_ = text_stats(old_text)
 
@@ -201,8 +223,11 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="L3 第②步：从 raw/*.html 离线重解析")
     ap.add_argument("--check", action="store_true",
                     help="只报告前后差异，不写任何文件")
+    ap.add_argument("--old-dir", type=Path, default=None, metavar="DIR",
+                    help="从别处的旧 text/ 目录取对照基准"
+                         "（复现「修复前 → 修复后」数字用，见模块文档）")
     args = ap.parse_args(argv)
-    return build(check=args.check)
+    return build(check=args.check, old_dir=args.old_dir)
 
 
 if __name__ == "__main__":
