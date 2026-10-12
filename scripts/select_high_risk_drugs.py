@@ -38,7 +38,7 @@ from opencmkg_io import REPO_ROOT
 
 OUT_FILE = REPO_ROOT / "data" / "processed" / "high_risk_drugs.csv"
 
-#: 去掉"（外用）""(topical)"这类括号补充——NMPA 上按通用名检索
+#: 去掉"（外用）""(topical)"这类括号补充——检索时按通用名
 PAREN = re.compile(r"[（(][^）)]*[）)]")
 
 
@@ -46,8 +46,8 @@ def log(msg: str = "") -> None:
     print(msg, flush=True)
 
 
-def nmpa_keyword(cn_name: str) -> str:
-    """把译名收拾成适合在 NMPA 检索的通用名。"""
+def search_keyword(cn_name: str) -> str:
+    """把译名收拾成适合检索的通用名。"""
     return PAREN.sub("", cn_name).strip()
 
 
@@ -77,9 +77,9 @@ def build_ranking(top: int) -> tuple[list[dict], dict]:
             level = row["match_level"]
             node = row["matched_cn"] if level in CONFIRMED_LEVELS else cn
 
-        key = nmpa_keyword(cn)
+        key = search_keyword(cn)
         slot = merged.setdefault(key, {
-            "cn_name": cn, "nmpa_keyword": key, "en_names": [],
+            "cn_name": cn, "search_keyword": key, "en_names": [],
             "match_level": level, "graph_node": node,
             "node_source": "opencmkg" if level in CONFIRMED_LEVELS else "ddinter",
             **{lv: 0 for lv in LEVELS_ORDERED}, "total": 0,
@@ -150,7 +150,7 @@ def main(argv: list[str] | None = None) -> int:
     sel = [r for r in rows if r["selected"]]
     log("")
     log(f"── 入选名单（前 {len(sel)} 个）──")
-    log("  " + "、".join(r["nmpa_keyword"] for r in sel))
+    log("  " + "、".join(r["search_keyword"] for r in sel))
     log("")
     major_sum = sum(r["Major"] for r in sel)
     total_major = sum(r["Major"] for r in rows)
@@ -159,7 +159,7 @@ def main(argv: list[str] | None = None) -> int:
     log(f"  其中挂在已有骨架药上的 {sum(1 for r in sel if r['node_source'] == 'opencmkg')} 个，"
         f"挂在 ddinter 新节点上的 {sum(1 for r in sel if r['node_source'] == 'ddinter')} 个")
 
-    fields = ["rank", "selected", "cn_name", "nmpa_keyword", "en_names",
+    fields = ["rank", "selected", "cn_name", "search_keyword", "en_names",
               "match_level", "graph_node", "node_source",
               *LEVELS_ORDERED, "total"]
     with OUT_FILE.open("w", encoding="utf-8-sig", newline="") as f:
@@ -173,7 +173,7 @@ def main(argv: list[str] | None = None) -> int:
     log(f"  {OUT_FILE.relative_to(REPO_ROOT)}   （全量 {len(rows):,} 行，"
         f"selected=1 的进名单）")
     log("")
-    log("下一步：L3 第②步，按 nmpa_keyword 去 NMPA 采集说明书（限速、记录 URL 与日期）")
+    log("下一步：L3 第②步，按 search_keyword 采集说明书（限速、记录 URL 与日期）")
     return 0
 
 

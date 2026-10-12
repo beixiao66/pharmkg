@@ -1,4 +1,4 @@
-﻿rank,selected,cn_name,nmpa_keyword,en_names,match_level,graph_node,node_source,Major,Moderate,Minor,Unknown,total
+﻿rank,selected,cn_name,search_keyword,en_names,match_level,graph_node,node_source,Major,Moderate,Minor,Unknown,total
 1,1,西尼莫德,西尼莫德,Siponimod,未命中,西尼莫德,ddinter,504,68,3,0,575
 2,1,奥扎莫德,奥扎莫德,Ozanimod,未命中,奥扎莫德,ddinter,469,262,2,0,733
 3,1,特立氟胺,特立氟胺,Teriflunomide,未命中,特立氟胺,ddinter,438,114,8,0,560
