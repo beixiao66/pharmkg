@@ -59,6 +59,7 @@ from insert_io import (
     read_index,
     read_text_header,
     render_text,
+    search_url,
     text_sections,
     text_stats,
     write_index,
@@ -99,7 +100,10 @@ def build(check: bool, old_dir: Path | None = None) -> int:
         txt = TEXT_DIR / f"{kw}.txt"
 
         if not raw.exists():
-            rows.append({**base, "status": "无条目"})
+            rows.append({**base, "status": "无条目",
+                         "url": search_url(kw),
+                         "candidate_count": old_rows.get(kw, {}).get(
+                             "candidate_count", "")})
             _log(f"  [ 无条目 ] {kw}")
             continue
 
@@ -173,6 +177,13 @@ def build(check: bool, old_dir: Path | None = None) -> int:
         if kw in cand_by_kw:
             r["candidate_count"] = str(cand_by_kw[kw])
 
+    # 自检：重解析算不出的字段只能**原样带过来**，掉了就是掉了。
+    # 曾经在这里栽过——"无 raw 文件"那条提前返回的分支没带 candidate_count，
+    # 4 个无条目行的 `0` 被悄悄抹成了空。这道检查就是防它再发生。
+    lost = [r["search_keyword"] for r in rows
+            if old_rows.get(r["search_keyword"], {}).get("candidate_count")
+            and not r.get("candidate_count")]
+
     _log("")
     _log("── 前后对照 ──")
     _log(f"  已采药          {collected}/{len(targets)}")
@@ -194,6 +205,12 @@ def build(check: bool, old_dir: Path | None = None) -> int:
         _log(f"  ✗ sections 列与产物不一致：{'、'.join(mismatch)}")
     else:
         _log(f"  ✓ {collected} 份的 sections 列与 txt 实际小节逐字一致")
+
+    if lost:
+        _log(f"  ✗ 有 {len(lost)} 行的 candidate_count 在重解析里丢了"
+             f"（算不出的字段必须原样带过来）：{'、'.join(lost)}")
+    else:
+        _log("  ✓ 重解析算不出的字段（candidate_count）原样保留，未丢失")
 
     trivial.sort()
     _log("")

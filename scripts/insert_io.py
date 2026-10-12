@@ -51,6 +51,15 @@
    ``handle_starttag`` 和 ``handle_endtag``，而 ``<br>`` 只触发前者。
    初版无条件 ``depth += 1 / -= 1``，depth 会一路偏掉、小节边界随之错位。
    现在显式维护 :data:`VOID_TAGS`。
+4. **表格不能按普通块级标签拍平。**
+   站点用的是真 ``<table>``。让每个 ``td`` 各占一行，行列对应关系就没了；
+   更麻烦的是**空单元格不产生任何文本**，拍平之后分不清"原文就是空"和
+   "解析掉了"——与【禁忌】= ``无`` 是同一类诚信问题。
+   实测 36 份里共 **136 张表**（临床试验 86、不良反应 24、用法用量 21、
+   药代动力学 3、药理作用 1、注意事项 1；其中只有 1 张落在 L4 抽取目标里）。
+   现在：**一行表格行 = 一行文本**，格与格之间发 ``" | "``（第 2 格起、
+   **空单元格照发**），行结束发换行；格内的 ``<br>``（一格列多个条目）
+   换成 ``"；"``，以免把这一行拆散。见 :data:`CELL_TAGS` / :data:`CELL_SEP`。
 
 搜索结果页（候选条目）
 ----------------------
@@ -80,6 +89,7 @@ from __future__ import annotations
 
 import csv
 import re
+import urllib.parse
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -128,12 +138,32 @@ KNOWN_SECTIONS = (
 )
 
 #: 块级标签——**进出各发一个换行**。行内标签（span/i/u/strong/sub/font…）不在内。
+#: 注意 ``td`` / ``th`` / ``tr`` **不在**这里，它们在 :data:`CELL_TAGS`
+#: 与 :data:`ROW_TAGS` 里单独处理。
 BLOCK_TAGS = frozenset({
     "div", "p", "li", "ul", "ol", "dl", "dt", "dd", "table", "thead", "tbody",
-    "tr", "td", "th", "h1", "h2", "h3", "h4", "h5", "h6", "br", "hr",
+    "h1", "h2", "h3", "h4", "h5", "h6", "br", "hr",
     "blockquote", "pre", "figure", "figcaption", "section", "article",
     "header", "footer", "main", "aside", "nav",
 })
+
+#: 表格单元格 / 表格行——**单独处理**，不能当普通块级标签。
+#:
+#: 每一格发一个换行会把行列对应关系彻底打散（实测 36 份里有 **136 张表**），
+#: 而且**空单元格不产生任何文本**，拍平之后分不清"原文就是空"和"解析掉了"——
+#: 与【禁忌】= ``无`` 是同一类诚信问题。
+#:
+#: 规则：同一行里**第 2 格起先发分隔符（空单元格照发）**，行结束发换行。
+#: 于是"表格的一行 = 文本的一行"。
+CELL_TAGS = frozenset({"td", "th"})
+ROW_TAGS = frozenset({"tr"})
+
+#: 单元格之间的分隔符
+CELL_SEP = " | "
+
+#: 单元格**内部**的 ``<br>``——一格常列多个条目（如"带状疱疹<br/>单纯疱疹<br/>胃肠炎"），
+#: 若也发换行就会把这一行拆散，所以换成不破行的分号
+CELL_BR = "；"
 
 #: 空标签——**不改变 depth**。HTMLParser 不认识它们，必须自己管。
 VOID_TAGS = frozenset({
@@ -173,6 +203,10 @@ class _BaseParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self.depth = 0
+        #: 在表格单元格里的层数（格内一律不换行，保证"一行表格行 = 一行文本"）
+        self._in_cell = 0
+        #: 当前表格行已经开了几格（用来决定要不要发分隔符）
+        self._cell_in_row = 0
 
     # 子类可覆写
     def _data(self, data: str) -> None:  # noqa: D102
@@ -185,7 +219,20 @@ class _BaseParser(HTMLParser):
         pass
 
     def handle_starttag(self, tag, attrs):
-        if tag in BLOCK_TAGS:
+        if tag in CELL_TAGS:
+            # 第 2 格起先发分隔符——**空单元格也照发**，
+            # 这样"这格原文就是空"与"这格被解析丢了"能区分开
+            if self._cell_in_row:
+                self._data(CELL_SEP)
+            self._cell_in_row += 1
+            self._in_cell += 1
+        elif tag in ROW_TAGS:
+            self._cell_in_row = 0
+        elif self._in_cell:
+            # 格内：<br> 换成不破行的分号，其余块级标签一律不发换行
+            if tag == "br":
+                self._data(CELL_BR)
+        elif tag in BLOCK_TAGS:
             self._data("\n")
         self._start(tag, attrs)
         if tag not in VOID_TAGS:
@@ -198,7 +245,13 @@ class _BaseParser(HTMLParser):
     def handle_endtag(self, tag):
         if tag in VOID_TAGS:
             return
-        if tag in BLOCK_TAGS:
+        if tag in CELL_TAGS:
+            self._in_cell -= 1
+        elif tag in ROW_TAGS:
+            self._data("\n")
+        elif self._in_cell:
+            pass                      # 格内块级标签不换行
+        elif tag in BLOCK_TAGS:
             self._data("\n")
         self.depth -= 1
         self._end(tag)
@@ -351,6 +404,15 @@ def _abs_url(href: str) -> str:
     if href.startswith("http"):
         return href
     return BASE + ("" if href.startswith("/") else "/") + href
+
+
+def search_url(kw: str) -> str:
+    """该药在搜索结果页的 URL。
+
+    采集失败或"无条目"时用它留证——**这张清单要能说明我们查过哪里**。
+    确定性重建，所以重解析不必从别处搬运。
+    """
+    return SEARCH_URL.format(kw=urllib.parse.quote(kw))
 
 
 def _split_meta(meta: str) -> tuple[str, str]:
@@ -621,7 +683,10 @@ _SAMPLE_DETAIL = """<html><body>
 <div class="page_item__x"><h2 class="page_name__x"><span>自定义节</span></h2>
 <div class="page_content__x"><div class="ck-content"><div>甲段<br>乙段<p class="new-line"></p>丙段</div></div></div></div>
 <div class="page_item__x"><h2 class="page_name__x"><span>末节示例</span></h2>
-<div class="page_content__x"><div class="ck-content"><div>末节</div></div></div></div>
+<div class="page_content__x"><div class="ck-content"><div>末节</div>
+<table><thead><tr><th>项目</th><th>措施</th><th>指南</th></tr></thead>
+<tbody><tr><td>甲</td><td>停药<br/>复查</td><td>第 12 周</td></tr>
+<tr><td>乙</td><td>暂停</td><td></td></tr></tbody></table></div></div></div>
 </body></html>"""
 
 #: 注意 ``<script>`` 里那份是**转义过的飞行数据**（``\"`` 而非 ``"``，
@@ -672,13 +737,21 @@ def _selftest() -> int:
     check("   降级兜底：认不出条目也要抓到链接",
           len(parse_search('<a href="/pc/drug/ZZZ">x</a>')), 1)
 
+    tbl = info["sections"]["末节示例"]
+    tbl_lines = tbl.split("\n")
+    check("⑥ 表格：一行表格行 = 一行文本（不被 td/br 拆开）", len(tbl_lines), 4)
+    check("   表格：格内 <br> 换成不破行的分号",
+          "甲 | 停药；复查 | 第 12 周" in tbl, True)
+    check("   表格：空单元格留下分隔符（原文空 ≠ 解析丢了）",
+          tbl_lines[-1], "乙 | 暂停 |")
+
     print("  合成用例回归测试")
     if fails:
         for f in fails:
             print(f"    ✗ {f}")
         print(f"    {len(fails)} 项未通过")
         return 1
-    print("    ✓ 14 项全过（三处解析缺陷各有对应用例钉住）")
+    print("    ✓ 17 项全过（四处解析缺陷各有对应用例钉住）")
     return 0
 
 
