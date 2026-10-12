@@ -46,13 +46,11 @@ L2 · 药物相互作用导入 —— DDInter → Neo4j
 from __future__ import annotations
 
 import argparse
-import csv
 import sys
 import time
 from collections import Counter, defaultdict
-from pathlib import Path
 
-from opencmkg_io import DDINTER_DIR, REPO_ROOT, SOURCE_TAG
+from opencmkg_io import REPO_ROOT, SOURCE_TAG
 
 # scripts/ 与 backend/ 是两个独立目录。把 backend 挂进 sys.path 只为复用 app.config
 sys.path.insert(0, str(REPO_ROOT / "backend"))
@@ -65,12 +63,14 @@ except ModuleNotFoundError as _exc:  # pragma: no cover
     raise SystemExit(1)
 
 from build_drug_name_mapping import CONFIRMED_LEVELS  # noqa: E402
+from ddinter_io import (  # noqa: E402
+    DDI_SOURCE,
+    LEVEL_RANK,
+    LEVELS_ORDERED,
+    load_mapping,
+    load_pairs,
+)
 
-DDINTER_CODES = "ABDHLPRV"
-MAPPING_FILE = REPO_ROOT / "data" / "processed" / "drug_name_mapping.csv"
-
-#: 由本脚本写入的节点/边的来源标记
-DDI_SOURCE = "ddinter"
 #: L1 写入的标记（用来判断节点是不是"已有的骨架药物"）
 SKELETON_SOURCE = SOURCE_TAG
 
@@ -82,44 +82,6 @@ def log(msg: str = "") -> None:
 
 
 # ---------------------------------------------------------------- 读取
-
-def load_mapping() -> dict[str, dict]:
-    """读第 0 步产出的中英药名映射表。"""
-    if not MAPPING_FILE.exists():
-        raise SystemExit(
-            f"✗ 找不到映射表 {MAPPING_FILE.relative_to(REPO_ROOT)}\n"
-            "  请先运行：python scripts/build_drug_name_mapping.py"
-        )
-    with MAPPING_FILE.open(encoding="utf-8-sig", newline="") as f:
-        return {r["en_name"]: r for r in csv.DictReader(f)}
-
-
-def load_pairs() -> tuple[dict[frozenset, str], int, list[str]]:
-    """读 DDInter 全部 CSV，按**无序药对**去重。
-
-    返回 ({(药A, 药B): level}, 原始记录数, 等级冲突的药对描述)。
-    实测 222,383 条记录去重后只有 160,235 对——同一对药会跨分片重复出现。
-    """
-    records: list[dict] = []
-    for code in DDINTER_CODES:
-        with (DDINTER_DIR / f"ddinter_downloads_code_{code}.csv").open(
-                encoding="utf-8", newline="") as f:
-            records.extend(csv.DictReader(f))
-
-    pairs: dict[frozenset, str] = {}
-    conflicts: list[str] = []
-    for r in records:
-        key = frozenset((r["Drug_A"], r["Drug_B"]))
-        if key in pairs:
-            if pairs[key] != r["Level"]:
-                conflicts.append(
-                    f"{r['Drug_A']} ↔ {r['Drug_B']}: "
-                    f"{pairs[key]} vs {r['Level']}"
-                )
-            continue
-        pairs[key] = r["Level"]
-    return pairs, len(records), conflicts
-
 
 def resolve_nodes(mapping: dict[str, dict], names: set[str]) -> dict[str, dict]:
     """把每个 DDInter 药名解析成一个图谱节点。
@@ -194,8 +156,8 @@ def import_new_drug_nodes(session, resolved: dict[str, dict]) -> int:
     return len(rows)
 
 
-#: 严重程度排序：数值越小越严重。用于同一对节点出现多个 DDInter 等级时取最严重的。
-LEVEL_RANK = {"Major": 0, "Moderate": 1, "Minor": 2, "Unknown": 3}
+#: 严重程度排序（LEVEL_RANK）与等级顺序（LEVELS_ORDERED）都定义在 ddinter_io 里，
+#: 与 L3 选样共用同一份定义，避免两处各写一份而悄悄漂移。
 
 
 def import_interactions(session, pairs, resolved, limit: int | None):
@@ -239,7 +201,7 @@ def import_interactions(session, pairs, resolved, limit: int | None):
         by_level[worst].append({"a": lo, "b": hi})
 
     written: dict[str, int] = {}
-    for level in ("Major", "Moderate", "Minor", "Unknown"):
+    for level in LEVELS_ORDERED:
         rows = by_level.get(level, [])
         if limit:
             rows = rows[:limit]

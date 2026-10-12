@@ -1,0 +1,1765 @@
+﻿rank,selected,cn_name,nmpa_keyword,en_names,match_level,graph_node,node_source,Major,Moderate,Minor,Unknown,total
+1,1,西尼莫德,西尼莫德,Siponimod,未命中,西尼莫德,ddinter,504,68,3,0,575
+2,1,奥扎莫德,奥扎莫德,Ozanimod,未命中,奥扎莫德,ddinter,469,262,2,0,733
+3,1,特立氟胺,特立氟胺,Teriflunomide,未命中,特立氟胺,ddinter,438,114,8,0,560
+4,1,来氟米特,来氟米特,Leflunomide,归一化精确,来氟米特片,opencmkg,433,60,6,177,676
+5,1,芬戈莫德,芬戈莫德,Fingolimod,未命中,芬戈莫德,ddinter,408,90,3,0,501
+6,1,色瑞替尼,色瑞替尼,Ceritinib,未命中,色瑞替尼,ddinter,358,255,11,0,624
+7,1,帕比司他,帕比司他,Panobinostat,未命中,帕比司他,ddinter,325,189,4,0,518
+8,1,卡博替尼,卡博替尼,Cabozantinib,未命中,卡博替尼,ddinter,301,153,4,0,458
+9,1,多拉司琼,多拉司琼,Dolasetron,未命中,多拉司琼,ddinter,279,54,5,116,454
+10,1,乌帕达西替尼,乌帕达西替尼,Upadacitinib,未命中,乌帕达西替尼,ddinter,267,82,6,0,355
+11,1,瑞博西利,瑞博西利,Ribociclib,未命中,瑞博西利,ddinter,264,301,13,0,578
+12,1,托法替布,托法替布,Tofacitinib,未命中,托法替布,ddinter,264,179,7,0,450
+13,1,克拉屈滨,克拉屈滨,Cladribine,未命中,克拉屈滨,ddinter,264,77,0,3,344
+14,1,克唑替尼,克唑替尼,Crizotinib,未命中,克唑替尼,ddinter,261,290,13,0,564
+15,1,碘帕醇,碘帕醇,Iopamidol,未命中,碘帕醇,ddinter,258,56,0,23,337
+16,1,碘海醇,碘海醇,Iohexol,未命中,碘海醇,ddinter,258,56,0,11,325
+17,1,尼洛替尼,尼洛替尼,Nilotinib,归一化精确,尼洛替尼胶囊,opencmkg,252,367,15,0,634
+18,1,奥希替尼,奥希替尼,Osimertinib,未命中,奥希替尼,ddinter,238,227,5,0,470
+19,1,那他珠单抗,那他珠单抗,Natalizumab,未命中,那他珠单抗,ddinter,234,31,6,0,271
+20,1,氯氮平,氯氮平,Clozapine,归一化精确,氯氮平片,opencmkg,231,149,3,42,425
+21,1,艾伏尼布,艾伏尼布,Ivosidenib,未命中,艾伏尼布,ddinter,231,171,10,0,412
+22,1,巴瑞替尼,巴瑞替尼,Baricitinib,未命中,巴瑞替尼,ddinter,230,79,5,0,314
+23,1,多塞平,多塞平,Doxepin / Doxepin (topical),去盐归一化,盐酸多塞平片,opencmkg,226,870,35,119,1250
+24,1,托瑞米芬,托瑞米芬,Toremifene,未命中,托瑞米芬,ddinter,226,121,2,0,349
+25,1,阿那格雷,阿那格雷,Anagrelide,未命中,阿那格雷,ddinter,225,140,6,4,375
+26,1,英夫利西单抗,英夫利西单抗,Infliximab,未命中,英夫利西单抗,ddinter,225,135,6,0,366
+27,1,西沙必利,西沙必利,Cisapride,归一化精确,西沙必利片,opencmkg,225,70,4,0,299
+28,1,三氧化二砷,三氧化二砷,Arsenic trioxide,未命中,三氧化二砷,ddinter,224,39,2,67,332
+29,1,硫利达嗪,硫利达嗪,Mesoridazine / Thioridazine,未命中,硫利达嗪,ddinter,222,294,14,0,530
+30,1,依那西普,依那西普,Etanercept,未命中,依那西普,ddinter,222,124,6,0,352
+31,1,戈利木单抗,戈利木单抗,Golimumab,未命中,戈利木单抗,ddinter,222,124,6,0,352
+32,1,伤寒疫苗（减毒活）,伤寒疫苗,Typhoid vaccine (inactivated) / Typhoid vaccine (live),未命中,伤寒疫苗（减毒活）,ddinter,221,183,2,0,406
+33,1,培塞利珠单抗,培塞利珠单抗,Certolizumab pegol,未命中,培塞利珠单抗,ddinter,221,127,6,0,354
+34,1,阿达木单抗,阿达木单抗,Adalimumab,未命中,阿达木单抗,ddinter,221,126,6,0,353
+35,1,他克莫司,他克莫司,Tacrolimus,归一化精确,他克莫司缓释胶囊,opencmkg,216,462,14,174,866
+36,1,维莫非尼,维莫非尼,Vemurafenib,未命中,维莫非尼,ddinter,216,305,15,0,536
+37,1,达沙替尼,达沙替尼,Dasatinib,归一化精确,达沙替尼片,opencmkg,214,411,12,49,686
+38,1,吗啡,吗啡,Morphine / Morphine (liposomal),未命中,吗啡,ddinter,212,487,7,307,1013
+39,1,安非他酮,安非他酮,Bupropion,去盐归一化,盐酸安非他酮缓释片,opencmkg,211,196,4,252,663
+40,1,卤泛群,卤泛群,Halofantrine,未命中,卤泛群,ddinter,211,54,6,0,271
+41,0,酮康唑,酮康唑,Ketoconazole,归一化精确,酮康唑胶囊,opencmkg,208,328,37,83,656
+42,0,塔利莫根拉赫帕列韦克,塔利莫根拉赫帕列韦克,Talimogene laherparepvec,未命中,塔利莫根拉赫帕列韦克,ddinter,208,5,0,0,213
+43,0,去铁酮,去铁酮,Deferiprone,归一化精确,去铁酮片,opencmkg,207,39,0,0,246
+44,0,克拉霉素,克拉霉素,Clarithromycin,归一化精确,克拉霉素缓释片,opencmkg,205,361,46,210,822
+45,0,氢可酮,氢可酮,Hydrocodone,未命中,氢可酮,ddinter,198,325,0,0,523
+46,0,帕西瑞肽,帕西瑞肽,Pasireotide,未命中,帕西瑞肽,ddinter,198,156,4,0,358
+47,0,凡德他尼,凡德他尼,Vandetanib,未命中,凡德他尼,ddinter,196,86,11,0,293
+48,0,马昔瑞林,马昔瑞林,Macimorelin,未命中,马昔瑞林,ddinter,195,128,2,0,325
+49,0,天花（痘苗）减毒活疫苗,天花减毒活疫苗,"Smallpox (Vaccinia) Vaccine, Live",未命中,天花（痘苗）减毒活疫苗,ddinter,195,0,0,0,195
+50,0,带状疱疹病毒重组疫苗,带状疱疹病毒重组疫苗,Varicella Zoster Vaccine (Recombinant),未命中,带状疱疹病毒重组疫苗,ddinter,187,9,0,0,196
+51,0,轮状病毒疫苗,轮状病毒疫苗,Rotavirus vaccine,未命中,轮状病毒疫苗,ddinter,186,3,0,0,189
+52,0,麻疹减毒活疫苗,麻疹减毒活疫苗,Measles virus vaccine live attenuated,未命中,麻疹减毒活疫苗,ddinter,186,3,0,0,189
+53,0,黄热病疫苗,黄热病疫苗,Yellow Fever Vaccine,未命中,黄热病疫苗,ddinter,186,3,0,0,189
+54,0,氯喹,氯喹,Chloroquine,去盐归一化,磷酸氯喹片,opencmkg,185,255,13,12,465
+55,0,阿卡替尼,阿卡替尼,Acalabrutinib,未命中,阿卡替尼,ddinter,183,165,0,0,348
+56,0,艾代拉里斯,艾代拉里斯,Idelalisib,未命中,艾代拉里斯,ddinter,182,494,17,0,693
+57,0,风疹病毒疫苗,风疹病毒疫苗,Rubella virus vaccine,未命中,风疹病毒疫苗,ddinter,182,3,0,0,185
+58,0,羟氯喹,羟氯喹,Hydroxychloroquine,去盐归一化,硫酸羟氯喹片,opencmkg,181,241,4,195,621
+59,0,阿帕他胺,阿帕他胺,Apalutamide,未命中,阿帕他胺,ddinter,180,341,10,0,531
+60,0,恩杂鲁胺,恩杂鲁胺,Enzalutamide,未命中,恩杂鲁胺,ddinter,179,379,12,0,570
+61,0,考比司他,考比司他,Cobicistat,未命中,考比司他,ddinter,179,222,19,0,420
+62,0,卡介苗减毒活疫苗（提斯株）,卡介苗减毒活疫苗,Bacillus calmette-guerin substrain tice live antigen,未命中,卡介苗减毒活疫苗（提斯株）,ddinter,179,3,0,0,182
+63,0,流行性腮腺炎病毒Jeryl Lynn株减毒活疫苗,流行性腮腺炎病毒Jeryl Lynn株减毒活疫苗,Mumps virus strain B level jeryl lynn live antigen,未命中,流行性腮腺炎病毒Jeryl Lynn株减毒活疫苗,ddinter,179,3,0,0,182
+64,0,咯萘啶,咯萘啶,Lumefantrine,未命中,咯萘啶,ddinter,178,53,3,0,234
+65,0,罂粟碱,罂粟碱,Papaverine,未命中,罂粟碱,ddinter,177,56,2,0,235
+66,0,地拉罗司,地拉罗司,Deferasirox,归一化精确,地拉罗司分散片,opencmkg,176,334,8,0,518
+67,0,格帕沙星,格帕沙星,Gemifloxacin / Grepafloxacin,未命中,格帕沙星,ddinter,175,280,93,12,560
+68,0,红霉素,红霉素,Erythromycin,归一化精确,红霉素软膏,opencmkg,173,348,53,180,754
+69,0,柔红霉素,柔红霉素,Daunorubicin / Daunorubicin (liposomal),编辑距离（待确认）,柔红霉素,ddinter,168,590,17,0,775
+70,0,伊布替尼,伊布替尼,Ibrutinib,未命中,伊布替尼,ddinter,168,165,3,0,336
+71,0,培西达替尼,培西达替尼,Pexidartinib,未命中,培西达替尼,ddinter,162,89,3,0,254
+72,0,多柔比星,多柔比星,Doxorubicin / Doxorubicin (liposomal),去盐归一化,盐酸多柔比星注射液,opencmkg,161,645,48,216,1070
+73,0,替西罗莫司,替西罗莫司,Temsirolimus,编辑距离（待确认）,替西罗莫司,ddinter,157,374,8,0,539
+74,0,甲基苄肼,甲基苄肼,Procarbazine,未命中,甲基苄肼,ddinter,154,263,16,0,433
+75,0,依维莫司,依维莫司,Everolimus,未命中,依维莫司,ddinter,152,223,7,0,382
+76,0,依度沙班,依度沙班,Edoxaban,未命中,依度沙班,ddinter,152,77,4,0,233
+77,0,钐[153Sm] lexidronam,钐[153Sm] lexidronam,Samarium (153Sm) lexidronam,未命中,钐[153Sm] lexidronam,ddinter,150,5,0,0,155
+78,0,西罗莫司,西罗莫司,Sirolimus,归一化精确,西罗莫司片,opencmkg,149,385,7,103,644
+79,0,沙利度胺,沙利度胺,Thalidomide,归一化精确,沙利度胺片,opencmkg,147,520,0,118,785
+80,0,沙奎那韦,沙奎那韦,Saquinavir,未命中,沙奎那韦,ddinter,146,141,6,19,312
+81,0,加替沙星,加替沙星,Gatifloxacin,归一化精确,加替沙星片,opencmkg,145,66,49,52,312
+82,0,米非司酮,米非司酮,Mifepristone,归一化精确,米非司酮胶囊,opencmkg,145,111,4,0,260
+83,0,普纳替尼,普纳替尼,Ponatinib,未命中,普纳替尼,ddinter,144,279,25,0,448
+84,0,恩考芬尼,恩考芬尼,Encorafenib,未命中,恩考芬尼,ddinter,144,301,2,0,447
+85,0,博舒替尼,博舒替尼,Bosutinib,未命中,博舒替尼,ddinter,143,268,2,0,413
+86,0,维奈托克,维奈托克,Venetoclax,未命中,维奈托克,ddinter,142,151,2,0,295
+87,0,氟康唑,氟康唑,Fluconazole,归一化精确,氟康唑片,opencmkg,140,338,33,272,783
+88,0,洛米他派,洛米他派,Lomitapide,未命中,洛米他派,ddinter,140,61,5,0,206
+89,0,伊立替康,伊立替康,Irinotecan / Irinotecan (liposomal),未命中,伊立替康,ddinter,139,403,39,132,713
+90,0,米托坦,米托坦,Mitotane,未命中,米托坦,ddinter,139,113,25,11,288
+91,0,帕唑帕尼,帕唑帕尼,Pazopanib,未命中,帕唑帕尼,ddinter,138,366,8,0,512
+92,0,米泊美生,米泊美生,Mipomersen,未命中,米泊美生,ddinter,136,0,0,0,136
+93,0,异丙嗪,异丙嗪,Alimemazine / Promethazine,去盐归一化,盐酸异丙嗪片,opencmkg,133,1045,20,196,1394
+94,0,华法林,华法林,Warfarin,去盐归一化,华法林钠片,opencmkg,133,370,63,298,864
+95,0,可卡因（鼻用）,可卡因,Cocaine (nasal) / Cocaine (topical),未命中,可卡因（鼻用）,ddinter,133,133,0,0,266
+96,0,菲达替尼,菲达替尼,Fedratinib,未命中,菲达替尼,ddinter,131,301,22,0,454
+97,0,碘苄胍（¹²³I）,碘苄胍,Iobenguane (I-123) / Iobenguane (I-131),未命中,碘苄胍（¹²³I）,ddinter,131,148,0,0,279
+98,0,恩曲替尼,恩曲替尼,Entrectinib,未命中,恩曲替尼,ddinter,128,327,11,0,466
+99,0,左醋美沙朵,左醋美沙朵,Levacetylmethadol,未命中,左醋美沙朵,ddinter,128,72,1,0,201
+100,0,匹莫齐特,匹莫齐特,Pimozide,未命中,匹莫齐特,ddinter,127,106,2,0,235
+101,0,亚甲蓝,亚甲蓝,Methylene blue,未命中,亚甲蓝,ddinter,127,58,1,0,186
+102,0,普罗帕酮,普罗帕酮,Disopyramide / Propafenone,去盐归一化,盐酸普罗帕酮注射液,opencmkg,126,286,11,21,444
+103,0,莫西沙星,莫西沙星,Moxifloxacin,未命中,莫西沙星,ddinter,126,100,47,63,336
+104,0,鲁马卡托,鲁马卡托,Lumacaftor,未命中,鲁马卡托,ddinter,126,97,2,0,225
+105,0,西洛他唑,西洛他唑,Cilostazol,归一化精确,西洛他唑片,opencmkg,125,284,8,0,417
+106,0,异丙肾上腺素,异丙肾上腺素,Isoetharine / Isoprenaline / Orciprenaline,去盐归一化,盐酸异丙肾上腺素注射液,opencmkg,124,700,45,0,869
+107,0,两性霉素B,两性霉素B,Amphotericin B / Amphotericin B (cholesteryl sulfate) / Amphotericin B (lipid complex) / Amphotericin B (liposomal),未命中,两性霉素B,ddinter,124,402,24,190,740
+108,0,决奈达隆,决奈达隆,Dronedarone,未命中,决奈达隆,ddinter,124,122,6,0,252
+109,0,环孢素,环孢素,Cyclosporine,归一化精确,环孢素滴眼液,opencmkg,123,462,37,194,816
+110,0,胺碘酮,胺碘酮,Amiodarone,去盐归一化,盐酸胺碘酮胶囊,opencmkg,122,169,6,55,352
+111,0,贝曲沙班,贝曲沙班,Betrixaban,未命中,贝曲沙班,ddinter,121,121,4,0,246
+112,0,地夫可特,地夫可特,Deflazacort,未命中,地夫可特,ddinter,118,277,7,0,402
+113,0,利伐沙班,利伐沙班,Rivaroxaban,未命中,利伐沙班,ddinter,118,188,6,0,312
+114,0,昂丹司琼,昂丹司琼,Ondansetron,未命中,昂丹司琼,ddinter,117,196,5,327,645
+115,0,格拉司琼,格拉司琼,Granisetron,未命中,格拉司琼,ddinter,117,204,6,133,460
+116,0,可待因,可待因,Codeine,未命中,可待因,ddinter,117,329,2,0,448
+117,0,帕洛诺司琼,帕洛诺司琼,Palonosetron,未命中,帕洛诺司琼,ddinter,117,160,2,118,397
+118,0,阿哌沙班,阿哌沙班,Apixaban,未命中,阿哌沙班,ddinter,117,200,6,0,323
+119,0,米哚妥林,米哚妥林,Midostaurin,未命中,米哚妥林,ddinter,116,382,4,0,502
+120,0,塞尔帕替尼,塞尔帕替尼,Selpercatinib,未命中,塞尔帕替尼,ddinter,116,125,7,0,248
+121,0,沃拉帕沙,沃拉帕沙,Vorapaxar,未命中,沃拉帕沙,ddinter,116,60,4,0,180
+122,0,长春新碱,长春新碱,Vincristine / Vincristine (liposome),未命中,长春新碱,ddinter,114,486,43,172,815
+123,0,高三尖杉酯碱甲磺酸盐,高三尖杉酯碱甲磺酸盐,Omacetaxine mepesuccinate,未命中,高三尖杉酯碱甲磺酸盐,ddinter,113,321,0,0,434
+124,0,司帕沙星,司帕沙星,Sparfloxacin,归一化精确,司帕沙星片,opencmkg,112,80,47,0,239
+125,0,替伊莫单抗,替伊莫单抗,Ibritumomab tiuxetan,未命中,替伊莫单抗,ddinter,112,80,2,0,194
+126,0,碘[131I]托西莫单抗,碘[131I]托西莫单抗,Tositumomab (I-131),未命中,碘[131I]托西莫单抗,ddinter,112,79,2,0,193
+127,0,伊诺他森,伊诺他森,Inotersen,未命中,伊诺他森,ddinter,111,21,0,0,132
+128,0,美沙酮,美沙酮,Methadone,未命中,美沙酮,ddinter,109,131,3,23,266
+129,0,布加替尼,布加替尼,Brigatinib,未命中,布加替尼,ddinter,108,392,7,0,507
+130,0,齐拉西酮,齐拉西酮,Ziprasidone,未命中,齐拉西酮,ddinter,108,123,24,39,294
+131,0,地塞米松,地塞米松,Dexamethasone / Dexamethasone (nasal) / Dexamethasone (ophthalmic) / Dexamethasone (topical),归一化精确,地塞米松片,opencmkg,107,532,130,287,1056
+132,0,西酞普兰,西酞普兰,Citalopram,未命中,西酞普兰,ddinter,107,156,16,133,412
+133,0,双香豆素,双香豆素,Dicoumarol,未命中,双香豆素,ddinter,106,288,39,0,433
+134,0,氟哌利多,氟哌利多,Droperidol,未命中,氟哌利多,ddinter,106,69,1,18,194
+135,0,阿伐普利尼布,阿伐普利尼布,Avapritinib,未命中,阿伐普利尼布,ddinter,106,62,0,0,168
+136,0,甲氨蝶呤,甲氨蝶呤,Methotrexate,归一化精确,甲氨蝶呤片,opencmkg,105,411,16,249,781
+137,0,多非利特,多非利特,Dofetilide,未命中,多非利特,ddinter,105,56,5,34,200
+138,0,贝沙罗汀,贝沙罗汀,Bexarotene / Bexarotene (topical),未命中,贝沙罗汀,ddinter,104,318,71,8,501
+139,0,格拉吉布,格拉吉布,Glasdegib,未命中,格拉吉布,ddinter,104,279,6,0,389
+140,0,伏立康唑,伏立康唑,Voriconazole,归一化精确,伏立康唑片,opencmkg,104,166,10,37,317
+141,0,索他洛尔,索他洛尔,Sotalol,去盐归一化,盐酸索他洛尔片,opencmkg,104,122,14,46,286
+142,0,赞布替尼,赞布替尼,Zanubrutinib,未命中,赞布替尼,ddinter,104,54,0,0,158
+143,0,他莫昔芬,他莫昔芬,Tamoxifen,未命中,他莫昔芬,ddinter,102,266,9,164,541
+144,0,左氧氟沙星,左氧氟沙星,Levofloxacin,归一化精确,左氧氟沙星片,opencmkg,102,282,50,0,434
+145,0,伊格列司他,伊格列司他,Eliglustat,未命中,伊格列司他,ddinter,102,177,6,0,285
+146,0,考比替尼,考比替尼,Cobimetinib,未命中,考比替尼,ddinter,102,161,0,0,263
+147,0,拉帕替尼,拉帕替尼,Lapatinib,未命中,拉帕替尼,ddinter,100,436,11,0,547
+148,0,替利霉素,替利霉素,Telithromycin,未命中,替利霉素,ddinter,99,152,5,49,305
+149,0,艾司西酞普兰,艾司西酞普兰,Escitalopram,未命中,艾司西酞普兰,ddinter,99,159,14,0,272
+150,0,伊洛哌酮,伊洛哌酮,Iloperidone,未命中,伊洛哌酮,ddinter,99,135,1,0,235
+151,0,枸橼酸钾,枸橼酸钾,Potassium citrate,归一化精确,枸橼酸钾颗粒,opencmkg,99,59,23,0,181
+152,0,氯化钾,氯化钾,Potassium chloride,归一化精确,氯化钾片,opencmkg,98,23,15,412,548
+153,0,阿米卡星,阿米卡星,Amikacin / Amikacin (liposome),归一化精确,阿米卡星滴眼液,opencmkg,98,218,2,52,370
+154,0,奥拉帕利,奥拉帕利,Olaparib,未命中,奥拉帕利,ddinter,97,342,2,0,441
+155,0,奥斯利多斯塔特,奥斯利多斯塔特,Osilodrostat,未命中,奥斯利多斯塔特,ddinter,97,305,9,0,411
+156,0,利托那韦,利托那韦,Ritonavir,未命中,利托那韦,ddinter,97,175,15,50,337
+157,0,氟哌啶醇,氟哌啶醇,Haloperidol,归一化精确,氟哌啶醇片,opencmkg,97,126,3,63,289
+158,0,贝达喹啉,贝达喹啉,Bedaquiline,未命中,贝达喹啉,ddinter,97,128,1,0,226
+159,0,瑞戈非尼,瑞戈非尼,Regorafenib,未命中,瑞戈非尼,ddinter,97,110,4,0,211
+160,0,洛那法尼,洛那法尼,Lonafarnib,未命中,洛那法尼,ddinter,97,102,4,0,203
+161,0,托西莫单抗,托西莫单抗,Tositumomab,未命中,托西莫单抗,ddinter,97,67,2,0,166
+162,0,雷莫芦单抗,雷莫芦单抗,Ramucirumab,未命中,雷莫芦单抗,ddinter,97,29,0,0,126
+163,0,伊马替尼,伊马替尼,Imatinib,未命中,伊马替尼,ddinter,96,466,18,92,672
+164,0,曲安奈德,曲安奈德,Triamcinolone / Triamcinolone (nasal) / Triamcinolone (ophthalmic) / Triamcinolone (topical),归一化精确,曲安奈德注射液,opencmkg,95,560,75,245,975
+165,0,吉瑞替尼,吉瑞替尼,Gilteritinib,未命中,吉瑞替尼,ddinter,95,334,4,0,433
+166,0,普鲁卡因胺,普鲁卡因胺,Procainamide,未命中,普鲁卡因胺,ddinter,95,72,4,3,174
+167,0,洛拉替尼,洛拉替尼,Lorlatinib,未命中,洛拉替尼,ddinter,94,355,9,0,458
+168,0,奎尼丁,奎尼丁,Quinidine,未命中,奎尼丁,ddinter,94,154,6,74,328
+169,0,奈法唑酮,奈法唑酮,Nefazodone,未命中,奈法唑酮,ddinter,94,151,6,31,282
+170,0,氨基酮戊酸,氨基酮戊酸,Aminolevulinic acid / Aminolevulinic acid (topical),未命中,氨基酮戊酸,ddinter,93,118,0,0,211
+171,0,阿扎那韦,阿扎那韦,Atazanavir,未命中,阿扎那韦,ddinter,92,140,10,35,277
+172,0,来法莫林,来法莫林,Lefamulin,未命中,来法莫林,ddinter,92,157,1,0,250
+173,0,依诺肝素钠,依诺肝素钠,Enoxaparin,未命中,依诺肝素钠,ddinter,92,77,4,0,173
+174,0,达肝素钠,达肝素钠,Dalteparin,编辑距离（待确认）,达肝素钠,ddinter,92,77,4,0,173
+175,0,磺达肝癸钠,磺达肝癸钠,Fondaparinux,未命中,磺达肝癸钠,ddinter,92,57,4,0,153
+176,0,活化蛋白C（重组）,活化蛋白C,Drotrecogin alfa,未命中,活化蛋白C（重组）,ddinter,92,39,2,0,133
+177,0,地西鲁定,地西鲁定,Desirudin,未命中,地西鲁定,ddinter,91,47,1,0,139
+178,0,伊伐布雷定,伊伐布雷定,Ivabradine,未命中,伊伐布雷定,ddinter,91,43,0,0,134
+179,0,伊布利特,伊布利特,Ibutilide,未命中,伊布利特,ddinter,91,32,1,0,124
+180,0,依非韦伦,依非韦伦,Efavirenz,未命中,依非韦伦,ddinter,90,196,5,38,329
+181,0,泊沙康唑,泊沙康唑,Posaconazole,未命中,泊沙康唑,ddinter,90,156,4,19,269
+182,0,匹维溴铵,匹维溴铵,Bepridil,归一化精确,匹维溴铵片,opencmkg,90,93,4,0,187
+183,0,卢卡帕利,卢卡帕利,Rucaparib,未命中,卢卡帕利,ddinter,89,487,10,0,586
+184,0,奈非那韦,奈非那韦,Nelfinavir,未命中,奈非那韦,ddinter,89,142,13,10,254
+185,0,喷他脒,喷他脒,Pentamidine,未命中,喷他脒,ddinter,88,247,2,0,337
+186,0,来那替尼,来那替尼,Neratinib,未命中,来那替尼,ddinter,88,86,5,0,179
+187,0,阿米舒必利,阿米舒必利,Amisulpride,未命中,阿米舒必利,ddinter,88,36,1,0,125
+188,0,奥沙利铂,奥沙利铂,Oxaliplatin,未命中,奥沙利铂,ddinter,87,399,1,144,631
+189,0,奎宁,奎宁,Quinine,未命中,奎宁,ddinter,87,312,15,0,414
+190,0,表柔比星,表柔比星,Epirubicin,未命中,表柔比星,ddinter,86,392,9,0,487
+191,0,苯巴比妥,苯巴比妥,Butalbital / Phenobarbital,未命中,苯巴比妥,ddinter,86,332,24,0,442
+192,0,阿比特龙,阿比特龙,Abiraterone,未命中,阿比特龙,ddinter,86,273,22,0,381
+193,0,曲马多,曲马多,Tramadol,未命中,曲马多,ddinter,86,134,1,97,318
+194,0,利福平,利福平,Rifampicin,归一化精确,利福平胶囊,opencmkg,86,130,9,27,252
+195,0,圣约翰草,圣约翰草,St. John's Wort,未命中,圣约翰草,ddinter,86,114,6,0,206
+196,0,康纳普坦,康纳普坦,Conivaptan,未命中,康纳普坦,ddinter,85,86,7,0,178
+197,0,人胰岛素,人胰岛素,"Insulin human / Insulin human (inhalation, rapid acting) / Insulin human (isophane) / Insulin human (regular) / Insulin human (zinc extended) / Insulin human (zinc)",编辑距离（待确认）,人胰岛素,ddinter,84,1809,189,0,2082
+198,0,伊达比星,伊达比星,Idarubicin,去盐归一化,盐酸伊达比星胶囊,opencmkg,84,293,8,0,385
+199,0,奥英妥珠单抗,奥英妥珠单抗,Inotuzumab ozogamicin,未命中,奥英妥珠单抗,ddinter,84,231,2,0,317
+200,0,伊曲康唑,伊曲康唑,Itraconazole,归一化精确,伊曲康唑口服液,opencmkg,84,120,28,63,295
+201,0,阿司咪唑,阿司咪唑,Astemizole,未命中,阿司咪唑,ddinter,84,183,6,0,273
+202,0,罗米地辛,罗米地辛,Romidepsin,未命中,罗米地辛,ddinter,83,292,2,0,377
+203,0,特非那定,特非那定,Terfenadine,未命中,特非那定,ddinter,83,200,5,0,288
+204,0,卡非佐米,卡非佐米,Carfilzomib,未命中,卡非佐米,ddinter,83,143,0,0,226
+205,0,普拉格雷,普拉格雷,Prasugrel,未命中,普拉格雷,ddinter,83,85,23,0,191
+206,0,西布曲明,西布曲明,Sibutramine,去盐归一化,盐酸西布曲明胶囊,opencmkg,82,395,42,51,570
+207,0,右芬氟拉明,右芬氟拉明,Dexfenfluramine,未命中,右芬氟拉明,ddinter,82,167,2,0,251
+208,0,波西普韦,波西普韦,Boceprevir,未命中,波西普韦,ddinter,82,81,6,0,169
+209,0,艾日布林,艾日布林,Eribulin,未命中,艾日布林,ddinter,81,289,4,0,374
+210,0,芦可替尼,芦可替尼,Ruxolitinib,未命中,芦可替尼,ddinter,81,203,50,0,334
+211,0,地拉韦啶,地拉韦啶,Delavirdine,未命中,地拉韦啶,ddinter,81,103,14,0,198
+212,0,舒尼替尼,舒尼替尼,Sunitinib,未命中,舒尼替尼,ddinter,80,314,2,0,396
+213,0,卡马西平,卡马西平,Carbamazepine,归一化精确,卡马西平片,opencmkg,80,193,4,99,376
+214,0,碘普罗胺,碘普罗胺,Iopromide,未命中,碘普罗胺,ddinter,80,57,0,65,202
+215,0,泛影酸,泛影酸,Diatrizoate / Tyropanoic acid,未命中,泛影酸,ddinter,80,120,1,0,201
+216,0,碘佛醇,碘佛醇,Ioversol,未命中,碘佛醇,ddinter,80,57,0,30,167
+217,0,碘他拉酸,碘他拉酸,Iothalamic acid,未命中,碘他拉酸,ddinter,80,69,0,0,149
+218,0,碘昔兰,碘昔兰,Ioxilan,未命中,碘昔兰,ddinter,80,57,0,0,137
+219,0,环丙沙星,环丙沙星,Ciprofloxacin,去盐归一化,盐酸环丙沙星凝胶,opencmkg,79,187,56,95,417
+220,0,芬氟拉明,芬氟拉明,Fenfluramine,未命中,芬氟拉明,ddinter,79,219,3,0,301
+221,0,茚地那韦,茚地那韦,Indinavir,未命中,茚地那韦,ddinter,79,126,11,13,229
+222,0,图卡替尼,图卡替尼,Tucatinib,未命中,图卡替尼,ddinter,79,126,7,0,212
+223,0,氯卡色林,氯卡色林,Lorcaserin,未命中,氯卡色林,ddinter,79,105,3,0,187
+224,0,特拉匹韦,特拉匹韦,Telaprevir,未命中,特拉匹韦,ddinter,79,81,5,0,165
+225,0,亭扎肝素,亭扎肝素,Tinzaparin,未命中,亭扎肝素,ddinter,79,72,4,0,155
+226,0,达那帕罗,达那帕罗,Danaparoid,未命中,达那帕罗,ddinter,79,55,4,0,138
+227,0,安普那韦,安普那韦,Amprenavir,未命中,安普那韦,ddinter,78,138,12,1,229
+228,0,扑米酮,扑米酮,Paramethadione / Primidone,归一化精确,扑米酮片,opencmkg,77,191,6,38,312
+229,0,甲泼尼龙,甲泼尼龙,Methylprednisolone / Methylprednisolone (topical),归一化精确,甲泼尼龙片,opencmkg,76,343,78,233,730
+230,0,醋竹桃霉素,醋竹桃霉素,Troleandomycin,未命中,醋竹桃霉素,ddinter,76,76,11,0,163
+231,0,苯妥英,苯妥英,Phenytoin,去盐归一化,苯妥英钠片,opencmkg,75,250,9,55,389
+232,0,磷苯妥英钠,磷苯妥英钠,Fosphenytoin,编辑距离（待确认）,磷苯妥英钠,ddinter,74,214,7,11,306
+233,0,碘克沙醇,碘克沙醇,Iodixanol,未命中,碘克沙醇,ddinter,74,48,0,26,148
+234,0,碘酞酸,碘酞酸,Iodipamide,未命中,碘酞酸,ddinter,74,59,0,0,133
+235,0,伯氨喹,伯氨喹,Primaquine,去盐归一化,磷酸伯氨喹片,opencmkg,73,201,4,0,278
+236,0,福沙那韦,福沙那韦,Fosamprenavir,未命中,福沙那韦,ddinter,71,138,6,16,231
+237,0,索立德吉,索立德吉,Sonidegib,未命中,索立德吉,ddinter,71,69,10,0,150
+238,0,伊伐卡托,伊伐卡托,Ivacaftor,未命中,伊伐卡托,ddinter,70,294,13,0,377
+239,0,右丙氧芬,右丙氧芬,Dextropropoxyphene,未命中,右丙氧芬,ddinter,70,145,1,0,216
+240,0,索拉非尼,索拉非尼,Sorafenib,未命中,索拉非尼,ddinter,69,295,7,125,496
+241,0,双氯芬酸,双氯芬酸,Diclofenac / Diclofenac (ophthalmic) / Diclofenac (topical),去盐归一化,双氯芬酸钠凝胶,opencmkg,67,462,19,270,818
+242,0,特布他林,特布他林,Terbutaline,去盐归一化,硫酸特布他林片,opencmkg,67,320,17,0,404
+243,0,来那度胺,来那度胺,Lenalidomide,归一化精确,来那度胺胶囊,opencmkg,67,98,1,180,346
+244,0,帕博西尼,帕博西尼,Palbociclib,未命中,帕博西尼,ddinter,67,228,8,0,303
+245,0,奋乃静,奋乃静,Perphenazine / Promazine,归一化精确,奋乃静片,opencmkg,66,409,13,18,506
+246,0,曲贝替定,曲贝替定,Trabectedin,未命中,曲贝替定,ddinter,66,383,0,0,449
+247,0,奥利西丁,奥利西丁,Oliceridine,未命中,奥利西丁,ddinter,66,175,1,0,242
+248,0,甲氟喹,甲氟喹,Mefloquine,未命中,甲氟喹,ddinter,65,289,8,9,371
+249,0,阿贝西利,阿贝西利,Abemaciclib,未命中,阿贝西利,ddinter,65,143,0,0,208
+250,0,利福喷丁,利福喷丁,Rifapentine,归一化精确,利福喷丁胶囊,opencmkg,65,113,3,0,181
+251,0,替格瑞洛,替格瑞洛,Ticagrelor,未命中,替格瑞洛,ddinter,64,305,52,0,421
+252,0,比卡鲁胺,比卡鲁胺,Bicalutamide,归一化精确,比卡鲁胺片,opencmkg,64,248,13,63,388
+253,0,仑伐替尼,仑伐替尼,Lenvatinib,未命中,仑伐替尼,ddinter,64,191,3,0,258
+254,0,替拉那韦,替拉那韦,Tipranavir,未命中,替拉那韦,ddinter,64,121,0,6,191
+255,0,卡普赛珠单抗,卡普赛珠单抗,Caplacizumab,未命中,卡普赛珠单抗,ddinter,64,71,4,0,139
+256,0,氧氟沙星,氧氟沙星,Ofloxacin,归一化精确,氧氟沙星滴眼液,opencmkg,63,153,49,116,381
+257,0,诺氟沙星,诺氟沙星,Norfloxacin,归一化精确,诺氟沙星片,opencmkg,63,156,49,31,299
+258,0,氟他胺,氟他胺,Flutamide,归一化精确,氟他胺片,opencmkg,63,194,4,23,284
+259,0,布洛芬,布洛芬,Ibuprofen,归一化精确,布洛芬颗粒,opencmkg,62,268,14,337,681
+260,0,多西他赛,多西他赛,Docetaxel,未命中,多西他赛,ddinter,62,271,18,217,568
+261,0,顺铂,顺铂,Cisplatin,归一化精确,顺铂注射液,opencmkg,62,237,19,202,520
+262,0,氨茶碱,氨茶碱,Aminophylline / Oxtriphylline,归一化精确,氨茶碱片,opencmkg,62,274,62,59,457
+263,0,考帕尼西布,考帕尼西布,Copanlisib,未命中,考帕尼西布,ddinter,62,167,0,0,229
+264,0,人免疫球蛋白G（静脉注射）,人免疫球蛋白G,Human immunoglobulin G (intramuscular) / Human immunoglobulin G (intravenous and subcutaneous) / Human immunoglobulin G (intravenous) / Human immunoglobulin G (subcutaneous),编辑距离（待确认）,人免疫球蛋白G（静脉注射）,ddinter,62,0,8,0,70
+265,0,布洛芬氟,布洛芬氟,Flurbiprofen,编辑距离（待确认）,布洛芬氟,ddinter,61,262,9,16,348
+266,0,纳洛昔醇,纳洛昔醇,Naloxegol,未命中,纳洛昔醇,ddinter,61,50,59,0,170
+267,0,去纤维蛋白多核苷酸,去纤维蛋白多核苷酸,Defibrotide,未命中,去纤维蛋白多核苷酸,ddinter,61,65,4,0,130
+268,0,氢化可的松,氢化可的松,Hydrocortisone / Hydrocortisone (ophthalmic) / Hydrocortisone (topical),归一化精确,氢化可的松注射液,opencmkg,60,413,75,254,802
+269,0,尼鲁米特,尼鲁米特,Nilutamide,未命中,尼鲁米特,ddinter,60,175,2,0,237
+270,0,阿加曲班,阿加曲班,Argatroban,未命中,阿加曲班,ddinter,60,79,4,4,147
+271,0,来匹卢定,来匹卢定,Lepirudin,未命中,来匹卢定,ddinter,60,79,4,0,143
+272,0,缩宫素,缩宫素,Oxytocin,编辑距离（待确认）,缩宫素,ddinter,58,187,2,0,247
+273,0,阿地肝素钠,阿地肝素钠,Ardeparin,未命中,阿地肝素钠,ddinter,58,18,0,0,76
+274,0,右旋糖酐（低分子量）,右旋糖酐,Dextran (-1) / Dextran (high molecular weight) / Dextran (low molecular weight),编辑距离（待确认）,右旋糖酐（低分子量）,ddinter,58,12,0,0,70
+275,0,肝素,肝素,Heparin / Heparin (flush),去盐归一化,肝素钠乳膏,opencmkg,57,132,21,409,619
+276,0,氯吡格雷,氯吡格雷,Clopidogrel,未命中,氯吡格雷,ddinter,57,152,14,391,614
+277,0,三氯苯达唑,三氯苯达唑,Triclabendazole,未命中,三氯苯达唑,ddinter,57,166,2,0,225
+278,0,安尼西酮,安尼西酮,Anisindione,未命中,安尼西酮,ddinter,57,114,5,0,176
+279,0,辛伐他汀,辛伐他汀,Simvastatin,归一化精确,辛伐他汀胶囊,opencmkg,56,207,10,422,695
+280,0,戈舍瑞林,戈舍瑞林,Goserelin,未命中,戈舍瑞林,ddinter,56,204,2,108,370
+281,0,泊马度胺,泊马度胺,Pomalidomide,未命中,泊马度胺,ddinter,56,202,0,0,258
+282,0,地加瑞克,地加瑞克,Degarelix,未命中,地加瑞克,ddinter,56,158,2,0,216
+283,0,坎格雷洛,坎格雷洛,Cangrelor,未命中,坎格雷洛,ddinter,56,71,4,0,131
+284,0,氟氢可的松,氟氢可的松,Fludrocortisone,未命中,氟氢可的松,ddinter,55,367,23,0,445
+285,0,达拉非尼,达拉非尼,Dabrafenib,未命中,达拉非尼,ddinter,55,353,10,0,418
+286,0,长春碱,长春碱,Vinblastine,去盐归一化,硫酸长春碱注射液,opencmkg,55,268,25,22,370
+287,0,曲普瑞林,曲普瑞林,Triptorelin,去盐归一化,醋酸曲普瑞林注射液,opencmkg,55,204,2,0,261
+288,0,亮丙瑞林,亮丙瑞林,Leuprolide,未命中,亮丙瑞林,ddinter,55,203,2,0,260
+289,0,地洛瑞林,地洛瑞林,Histrelin,未命中,地洛瑞林,ddinter,55,203,2,0,260
+290,0,替扎尼定,替扎尼定,Tizanidine,去盐归一化,盐酸替扎尼定片,opencmkg,55,129,1,62,247
+291,0,阿瑞匹坦,阿瑞匹坦,Aprepitant,未命中,阿瑞匹坦,ddinter,54,312,20,82,468
+292,0,长春瑞滨,长春瑞滨,Vinorelbine,未命中,长春瑞滨,ddinter,54,274,17,120,465
+293,0,洛美沙星,洛美沙星,Lomefloxacin,去盐归一化,盐酸洛美沙星胶囊,opencmkg,54,132,52,0,238
+294,0,阿昔替尼,阿昔替尼,Axitinib,未命中,阿昔替尼,ddinter,54,103,19,0,176
+295,0,阿昔单抗,阿昔单抗,Abciximab,未命中,阿昔单抗,ddinter,54,74,4,0,132
+296,0,泼尼松龙,泼尼松龙,Prednisolone / Prednisolone (ophthalmic),归一化精确,泼尼松龙片,opencmkg,53,404,38,292,787
+297,0,氟替卡松（外用）,氟替卡松,Diflorasone (topical) / Fluticasone / Fluticasone (nasal) / Fluticasone (topical),未命中,氟替卡松（外用）,ddinter,53,64,104,390,611
+298,0,雷诺嗪,雷诺嗪,Ranolazine,未命中,雷诺嗪,ddinter,53,141,20,19,233
+299,0,依替巴肽,依替巴肽,Eptifibatide,未命中,依替巴肽,ddinter,53,74,4,52,183
+300,0,替罗非班,替罗非班,Tirofiban,未命中,替罗非班,ddinter,53,73,4,21,151
+301,0,倍他米松,倍他米松,Betamethasone / Betamethasone (topical),归一化精确,倍他米松片,opencmkg,52,364,78,0,494
+302,0,羟考酮,羟考酮,Oxycodone / Oxymorphone,未命中,羟考酮,ddinter,52,202,0,151,405
+303,0,恩美曲妥珠单抗,恩美曲妥珠单抗,Trastuzumab emtansine,未命中,恩美曲妥珠单抗,ddinter,52,172,0,0,224
+304,0,膦甲酸钠,膦甲酸钠,Foscarnet,未命中,膦甲酸钠,ddinter,52,115,1,11,179
+305,0,比伐卢定,比伐卢定,Bivalirudin,未命中,比伐卢定,ddinter,52,84,4,0,140
+306,0,光辉霉素,光辉霉素,Plicamycin,未命中,光辉霉素,ddinter,52,74,11,0,137
+307,0,泼尼松,泼尼松,Prednisone,去盐归一化,醋酸泼尼松片,opencmkg,51,371,36,347,805
+308,0,酮咯酸,酮咯酸,Ketorolac / Ketorolac (ophthalmic),未命中,酮咯酸,ddinter,51,158,6,66,281
+309,0,碳酸锂,碳酸锂,Lithium carbonate,归一化精确,碳酸锂片,opencmkg,51,190,11,0,252
+310,0,利福布汀,利福布汀,Rifabutin,未命中,利福布汀,ddinter,51,107,5,0,163
+311,0,芬太尼,芬太尼,Fentanyl,未命中,芬太尼,ddinter,50,115,0,159,324
+312,0,庆大霉素,庆大霉素,Gentamicin / Gentamicin (topical),去盐归一化,硫酸庆大霉素颗粒,opencmkg,50,130,3,123,306
+313,0,氟西汀,氟西汀,Fluoxetine,去盐归一化,盐酸氟西汀胶囊,opencmkg,49,213,3,86,351
+314,0,利奈唑胺,利奈唑胺,Linezolid,归一化精确,利奈唑胺片,opencmkg,49,148,0,78,275
+315,0,司来吉兰,司来吉兰,Rasagiline / Selegiline,去盐归一化,盐酸司来吉兰片,opencmkg,49,190,1,17,257
+316,0,新霉素,新霉素,Neomycin / Neomycin (topical),未命中,新霉素,ddinter,49,105,4,45,203
+317,0,阿巴瑞克,阿巴瑞克,Abarelix,未命中,阿巴瑞克,ddinter,49,146,2,0,197
+318,0,链霉素,链霉素,Streptomycin,去盐归一化,硫酸链霉素注射液,opencmkg,49,110,1,17,177
+319,0,卡那霉素,卡那霉素,Kanamycin,去盐归一化,硫酸卡那霉素滴眼液,opencmkg,49,110,3,12,174
+320,0,噻氯匹定,噻氯匹定,Ticlopidine,未命中,噻氯匹定,ddinter,48,120,26,88,282
+321,0,西多福韦,西多福韦,Cidofovir,未命中,西多福韦,ddinter,48,7,0,0,55
+322,0,布地奈德,布地奈德,Budesonide / Budesonide (nasal),归一化精确,布地奈德气雾剂,opencmkg,47,324,21,278,670
+323,0,甲氧氯普胺,甲氧氯普胺,Metoclopramide,归一化精确,甲氧氯普胺片,opencmkg,47,272,8,339,666
+324,0,肾上腺素,肾上腺素,Epinephrine / Epinephrine (ophthalmic) / Epinephrine (topical),去盐归一化,盐酸肾上腺素注射液,opencmkg,47,244,1,192,484
+325,0,拉罗替尼,拉罗替尼,Larotrectinib,未命中,拉罗替尼,ddinter,47,365,14,0,426
+326,0,舍曲林,舍曲林,Sertraline,去盐归一化,盐酸舍曲林胶囊,opencmkg,47,214,1,133,395
+327,0,阿地白介素,阿地白介素,Aldesleukin,未命中,阿地白介素,ddinter,46,386,15,0,447
+328,0,去氧肾上腺素,去氧肾上腺素,Phenylephrine / Phenylephrine (nasal) / Phenylephrine (ophthalmic) / Phenylephrine (otic) / Phenylephrine (topical),未命中,去氧肾上腺素,ddinter,46,308,2,0,356
+329,0,多黏菌素B,多黏菌素B,Polymyxin B,未命中,多黏菌素B,ddinter,46,25,1,0,72
+330,0,乙酰水杨酸,乙酰水杨酸,Acetylsalicylic acid,未命中,乙酰水杨酸,ddinter,45,220,43,346,654
+331,0,氯米帕明,氯米帕明,Clomipramine,去盐归一化,盐酸氯米帕明片,opencmkg,45,227,7,33,312
+332,0,萘普生,萘普生,Naproxen,归一化精确,萘普生栓,opencmkg,45,134,10,118,307
+333,0,阿米替林,阿米替林,Amitriptyline,去盐归一化,盐酸阿米替林片,opencmkg,45,174,7,66,292
+334,0,美洛昔康,美洛昔康,Meloxicam,未命中,美洛昔康,ddinter,45,118,1,107,271
+335,0,去甲丙咪嗪,去甲丙咪嗪,Desipramine,未命中,去甲丙咪嗪,ddinter,45,169,7,3,224
+336,0,酮洛芬,酮洛芬,Ketoprofen,归一化精确,酮洛芬胶囊,opencmkg,45,110,6,62,223
+337,0,阿莫沙平,阿莫沙平,Amoxapine,未命中,阿莫沙平,ddinter,45,169,7,0,221
+338,0,杜韦利西布,杜韦利西布,Duvelisib,未命中,杜韦利西布,ddinter,45,161,6,0,212
+339,0,舒林酸,舒林酸,Sulindac,未命中,舒林酸,ddinter,45,105,6,33,189
+340,0,芬布芬,芬布芬,Fenoprofen,归一化精确,芬布芬片,opencmkg,45,106,6,0,157
+341,0,硼替佐米,硼替佐米,Bortezomib,未命中,硼替佐米,ddinter,44,230,57,189,520
+342,0,去甲阿米替林,去甲阿米替林,Nortriptyline,未命中,去甲阿米替林,ddinter,44,172,7,66,289
+343,0,丙咪嗪,丙咪嗪,Imipramine,未命中,丙咪嗪,ddinter,44,188,7,45,284
+344,0,吲哚美辛,吲哚美辛,Indomethacin,归一化精确,吲哚美辛软膏,opencmkg,44,116,11,76,247
+345,0,三米帕明,三米帕明,Trimipramine,未命中,三米帕明,ddinter,44,170,7,13,234
+346,0,依托度酸,依托度酸,Etodolac,未命中,依托度酸,ddinter,44,104,6,66,220
+347,0,伊沙佐米,伊沙佐米,Ixazomib,未命中,伊沙佐米,ddinter,44,175,0,0,219
+348,0,丙米嗪,丙米嗪,Protriptyline,去盐归一化,盐酸丙米嗪片,opencmkg,44,167,7,0,218
+349,0,萘丁美酮,萘丁美酮,Nabumetone,归一化精确,萘丁美酮胶囊,opencmkg,44,105,5,63,217
+350,0,吡罗昔康,吡罗昔康,Piroxicam,归一化精确,吡罗昔康胶囊,opencmkg,44,114,6,50,214
+351,0,甲芬那酸,甲芬那酸,Mefenamic acid,归一化精确,甲芬那酸片,opencmkg,44,115,11,20,190
+352,0,氧布洛芬,氧布洛芬,Oxaprozin,编辑距离（待确认）,氧布洛芬,ddinter,44,104,6,33,187
+353,0,双氟尼酸,双氟尼酸,Diflunisal,未命中,双氟尼酸,ddinter,44,113,7,12,176
+354,0,地努妥昔单抗,地努妥昔单抗,Dinutuximab,未命中,地努妥昔单抗,ddinter,44,125,0,0,169
+355,0,甲氯芬那酸,甲氯芬那酸,Meclofenamic acid,编辑距离（待确认）,甲氯芬那酸,ddinter,44,105,6,0,155
+356,0,托美汀,托美汀,Tolmetin,未命中,托美汀,ddinter,44,103,6,0,153
+357,0,阿替普酶,阿替普酶,Alteplase,未命中,阿替普酶,ddinter,44,92,4,0,140
+358,0,替奈普酶,替奈普酶,Tenecteplase,未命中,替奈普酶,ddinter,44,89,4,0,137
+359,0,瑞替普酶,瑞替普酶,Reteplase,未命中,瑞替普酶,ddinter,44,89,4,0,137
+360,0,异环磷酰胺,异环磷酰胺,Ifosfamide,编辑距离（待确认）,异环磷酰胺,ddinter,43,361,15,52,471
+361,0,氯法拉滨,氯法拉滨,Clofarabine,未命中,氯法拉滨,ddinter,43,385,12,24,464
+362,0,福斯他替尼,福斯他替尼,Fostamatinib,未命中,福斯他替尼,ddinter,43,398,1,0,442
+363,0,文拉法辛,文拉法辛,Venlafaxine,去盐归一化,盐酸文拉法辛缓释胶囊,opencmkg,43,214,2,118,377
+364,0,喹硫平,喹硫平,Quetiapine,去盐归一化,富马酸喹硫平片,opencmkg,43,209,3,93,348
+365,0,塞替派,塞替派,Thiotepa,归一化精确,塞替派注射液,opencmkg,43,111,14,32,200
+366,0,苯丙醇胺,苯丙醇胺,Phenylpropanolamine / Propylhexedrine (nasal),未命中,苯丙醇胺,ddinter,43,146,1,0,190
+367,0,利匹韦林,利匹韦林,Rilpivirine,未命中,利匹韦林,ddinter,43,127,1,0,171
+368,0,萘啶酸,萘啶酸,Nalidixic acid,未命中,萘啶酸,ddinter,43,73,40,0,156
+369,0,沙美特罗,沙美特罗,Salmeterol,未命中,沙美特罗,ddinter,42,336,15,204,597
+370,0,艾拉戈利,艾拉戈利,Elagolix,未命中,艾拉戈利,ddinter,42,259,12,0,313
+371,0,鲁美替酮,鲁美替酮,Lumateperone,未命中,鲁美替酮,ddinter,42,130,0,0,172
+372,0,链佐星,链佐星,Streptozocin,未命中,链佐星,ddinter,42,106,14,0,162
+373,0,洛哌丁胺,洛哌丁胺,Loperamide,未命中,洛哌丁胺,ddinter,41,278,1,270,590
+374,0,炔雌醇,炔雌醇,Ethinylestradiol / Quinestrol,未命中,炔雌醇,ddinter,41,421,48,0,510
+375,0,双嘧达莫,双嘧达莫,Dipyridamole,归一化精确,双嘧达莫片,opencmkg,41,93,8,174,316
+376,0,右美沙芬,右美沙芬,Dextromethorphan,未命中,右美沙芬,ddinter,41,235,2,25,303
+377,0,霉酚酸,霉酚酸,Mycophenolic acid,未命中,霉酚酸,ddinter,41,171,21,65,298
+378,0,特洛伐沙星,特洛伐沙星,Trovafloxacin,未命中,特洛伐沙星,ddinter,41,78,55,0,174
+379,0,亚硝酸,亚硝酸,Nitrous acid,未命中,亚硝酸,ddinter,41,115,0,0,156
+380,0,伯托拉司他,伯托拉司他,Berotralstat,未命中,伯托拉司他,ddinter,41,86,7,0,134
+381,0,丁丙诺啡,丁丙诺啡,Buprenorphine,未命中,丁丙诺啡,ddinter,40,187,1,34,262
+382,0,芬特明,芬特明,Phentermine,未命中,芬特明,ddinter,40,128,0,81,249
+383,0,缬苯那嗪,缬苯那嗪,Valbenazine,未命中,缬苯那嗪,ddinter,40,131,2,0,173
+384,0,卢比替丁,卢比替丁,Lurbinectedin,未命中,卢比替丁,ddinter,40,118,1,0,159
+385,0,二乙基丙酮,二乙基丙酮,Diethylpropion,未命中,二乙基丙酮,ddinter,40,117,0,0,157
+386,0,特拉万星,特拉万星,Telavancin,未命中,特拉万星,ddinter,40,90,1,0,131
+387,0,羟丁酸钠,羟丁酸钠,Sodium oxybate,未命中,羟丁酸钠,ddinter,40,8,0,0,48
+388,0,紫杉醇,紫杉醇,Paclitaxel,归一化精确,紫杉醇注射液,opencmkg,39,265,17,229,550
+389,0,白蛋白结合型紫杉醇,白蛋白结合型紫杉醇,Paclitaxel (protein-bound),未命中,白蛋白结合型紫杉醇,ddinter,39,259,17,0,315
+390,0,曲唑酮,曲唑酮,Trazodone,去盐归一化,盐酸曲唑酮片,opencmkg,39,149,6,61,255
+391,0,苯羟考酮,苯羟考酮,Benzhydrocodone,未命中,苯羟考酮,ddinter,39,104,0,0,143
+392,0,甲苯磺丁脲,甲苯磺丁脲,Tolazamide / Tolbutamide,未命中,甲苯磺丁脲,ddinter,38,758,69,15,880
+393,0,氟尿嘧啶,氟尿嘧啶,Fluorouracil,归一化精确,氟尿嘧啶注射液,opencmkg,38,125,18,180,361
+394,0,噻吗洛尔,噻吗洛尔,Timolol / Timolol (ophthalmic),去盐归一化,马来酸噻吗洛尔滴眼液,opencmkg,38,241,19,55,353
+395,0,马普替林,马普替林,Maprotiline,未命中,马普替林,ddinter,38,152,4,0,194
+396,0,溴芬酸,溴芬酸,Bromfenac / Bromfenac (ophthalmic),未命中,溴芬酸,ddinter,38,151,3,0,192
+397,0,吗茚酮,吗茚酮,Mazindol,未命中,吗茚酮,ddinter,38,108,0,0,146
+398,0,尿激酶,尿激酶,Urokinase,未命中,尿激酶,ddinter,38,80,4,0,122
+399,0,链激酶,链激酶,Streptokinase,未命中,链激酶,ddinter,38,80,4,0,122
+400,0,阿尼普酶,阿尼普酶,Anistreplase,未命中,阿尼普酶,ddinter,38,79,4,0,121
+401,0,蒿甲醚,蒿甲醚,Artemether,归一化精确,蒿甲醚注射液,opencmkg,38,57,0,0,95
+402,0,卡培他滨,卡培他滨,Capecitabine,归一化精确,卡培他滨片,opencmkg,37,110,23,164,334
+403,0,米氮平,米氮平,Mirtazapine,未命中,米氮平,ddinter,37,163,1,118,319
+404,0,氟奋乃静,氟奋乃静,Fluphenazine,编辑距离（待确认）,氟奋乃静,ddinter,37,253,8,8,306
+405,0,保泰松,保泰松,Phenylbutazone,未命中,保泰松,ddinter,37,165,5,0,207
+406,0,厄达替尼,厄达替尼,Erdafitinib,未命中,厄达替尼,ddinter,37,70,0,0,107
+407,0,霍乱弧菌CVD 103-HgR减毒活疫苗抗原（活）,霍乱弧菌CVD 103-HgR减毒活疫苗抗原,Vibrio cholerae CVD 103-HgR strain live antigen / Vibrio cholerae CVD 103-HgR strain live antigen (live),未命中,霍乱弧菌CVD 103-HgR减毒活疫苗抗原（活）,ddinter,36,364,0,0,400
+408,0,巯嘌呤,巯嘌呤,Mercaptopurine,归一化精确,巯嘌呤片,opencmkg,36,127,16,117,296
+409,0,卡替洛尔,卡替洛尔,Carteolol / Carteolol (ophthalmic),去盐归一化,盐酸卡替洛尔滴眼液,opencmkg,36,169,12,0,217
+410,0,赛立奇单抗,赛立奇单抗,Sarilumab,未命中,赛立奇单抗,ddinter,36,132,6,0,174
+411,0,苯乙肼,苯乙肼,Phenelzine,未命中,苯乙肼,ddinter,36,99,7,9,151
+412,0,布托啡诺,布托啡诺,Butorphanol,未命中,布托啡诺,ddinter,36,87,0,27,150
+413,0,反苯环丙胺,反苯环丙胺,Tranylcypromine,未命中,反苯环丙胺,ddinter,36,98,7,6,147
+414,0,异卡波肼,异卡波肼,Isocarboxazid,未命中,异卡波肼,ddinter,36,98,7,0,141
+415,0,二氢麦角胺,二氢麦角胺,Dihydroergotamine,未命中,二氢麦角胺,ddinter,36,63,1,11,111
+416,0,乙醇,乙醇,Ethanol,未命中,乙醇,ddinter,35,421,15,0,471
+417,0,柳氮磺吡啶,柳氮磺吡啶,Sulfasalazine,归一化精确,柳氮磺吡啶栓,opencmkg,35,157,6,205,403
+418,0,纳曲酮,纳曲酮,Naltrexone,去盐归一化,盐酸纳曲酮片,opencmkg,35,264,0,32,331
+419,0,氯丙嗪,氯丙嗪,Chlorpromazine,去盐归一化,盐酸氯丙嗪片,opencmkg,35,228,8,28,299
+420,0,三氟丙嗪,三氟丙嗪,Trifluoperazine,未命中,三氟丙嗪,ddinter,35,220,7,0,262
+421,0,卡莫司汀,卡莫司汀,Carmustine,归一化精确,卡莫司汀注射液,opencmkg,35,114,15,73,237
+422,0,托珠单抗,托珠单抗,Tocilizumab,未命中,托珠单抗,ddinter,35,190,6,0,231
+423,0,司莫司汀,司莫司汀,Lomustine,归一化精确,司莫司汀胶囊,opencmkg,35,120,17,0,172
+424,0,德拉沙星,德拉沙星,Delafloxacin,未命中,德拉沙星,ddinter,35,78,54,0,167
+425,0,依诺沙星,依诺沙星,Enoxacin,归一化精确,依诺沙星乳膏,opencmkg,35,71,55,0,161
+426,0,氘代丁苯那嗪,氘代丁苯那嗪,Deutetrabenazine,未命中,氘代丁苯那嗪,ddinter,35,120,1,0,156
+427,0,赖右苯丙胺,赖右苯丙胺,Lisdexamfetamine,未命中,赖右苯丙胺,ddinter,35,115,1,0,151
+428,0,他泽司他,他泽司他,Tazemetostat,未命中,他泽司他,ddinter,35,112,3,0,150
+429,0,贝林妥欧单抗,贝林妥欧单抗,Blinatumomab,未命中,贝林妥欧单抗,ddinter,35,103,0,0,138
+430,0,人抗凝血酶Ⅲ,人抗凝血酶Ⅲ,Antithrombin III human,未命中,人抗凝血酶Ⅲ,ddinter,35,72,4,0,111
+431,0,曲妥珠单抗,曲妥珠单抗,Trastuzumab,未命中,曲妥珠单抗,ddinter,35,58,0,0,93
+432,0,塞来昔布,塞来昔布,Celecoxib,归一化精确,塞来昔布胶囊,opencmkg,34,311,4,294,643
+433,0,卡铂,卡铂,Carboplatin,归一化精确,卡铂注射液,opencmkg,34,197,15,242,488
+434,0,氟伏沙明,氟伏沙明,Fluvoxamine,去盐归一化,马来酸氟伏沙明片,opencmkg,34,229,6,12,281
+435,0,麻黄碱,麻黄碱,Ephedrine / Ephedrine (nasal),未命中,麻黄碱,ddinter,34,200,21,0,255
+436,0,达卡巴嗪,达卡巴嗪,Dacarbazine,未命中,达卡巴嗪,ddinter,34,122,14,63,233
+437,0,托吡酯,托吡酯,Topiramate,未命中,托吡酯,ddinter,34,33,0,116,183
+438,0,唑尼沙胺,唑尼沙胺,Zonisamide,未命中,唑尼沙胺,ddinter,34,70,0,47,151
+439,0,聚乙二醇（3350型）,聚乙二醇,Polyethylene glycol (3350 with electrolytes) / Polyethylene glycol (3350),归一化精确,聚乙二醇滴眼液,opencmkg,33,542,2,0,577
+440,0,氯霉素,氯霉素,Chloramphenicol / Chloramphenicol (ophthalmic) / Chloramphenicol (otic),归一化精确,氯霉素胶囊,opencmkg,33,468,18,49,568
+441,0,环磷酰胺,环磷酰胺,Cyclophosphamide,归一化精确,环磷酰胺片,opencmkg,33,179,30,239,481
+442,0,阿糖胞苷,阿糖胞苷,Cytarabine / Cytarabine (liposomal),未命中,阿糖胞苷,ddinter,33,177,16,195,421
+443,0,茶碱,茶碱,Theophylline,归一化精确,茶碱缓释胶囊,opencmkg,33,187,40,107,367
+444,0,维拉帕米,维拉帕米,Verapamil,去盐归一化,盐酸维拉帕米片,opencmkg,33,156,16,110,315
+445,0,达芦那韦,达芦那韦,Darunavir,未命中,达芦那韦,ddinter,33,169,7,0,209
+446,0,奈拉滨,奈拉滨,Nelarabine,未命中,奈拉滨,ddinter,33,161,0,0,194
+447,0,匹托利桑,匹托利桑,Pitolisant,未命中,匹托利桑,ddinter,33,158,1,0,192
+448,0,他拉唑帕利,他拉唑帕利,Talazoparib,未命中,他拉唑帕利,ddinter,33,150,0,0,183
+449,0,四苯喹嗪,四苯喹嗪,Tetrabenazine,未命中,四苯喹嗪,ddinter,33,132,1,0,166
+450,0,莱博雷生,莱博雷生,Lemborexant,未命中,莱博雷生,ddinter,33,123,2,0,158
+451,0,布鲁匹哌唑,布鲁匹哌唑,Brexpiprazole,未命中,布鲁匹哌唑,ddinter,33,121,0,0,154
+452,0,氟烷,氟烷,Halothane,未命中,氟烷,ddinter,33,92,2,0,127
+453,0,秋水仙碱,秋水仙碱,Colchicine,归一化精确,秋水仙碱片,opencmkg,33,85,2,0,120
+454,0,瑞卢戈利,瑞卢戈利,Relugolix,未命中,瑞卢戈利,ddinter,33,68,10,0,111
+455,0,格卡瑞韦,格卡瑞韦,Glecaprevir / Grazoprevir,未命中,格卡瑞韦,ddinter,33,73,4,0,110
+456,0,麦角胺,麦角胺,Ergotamine,未命中,麦角胺,ddinter,33,64,1,0,98
+457,0,维布妥昔单抗,维布妥昔单抗,Brentuximab vedotin,未命中,维布妥昔单抗,ddinter,32,431,0,0,463
+458,0,匹可硫酸,匹可硫酸,Picosulfuric acid,未命中,匹可硫酸,ddinter,32,421,6,0,459
+459,0,硫唑嘌呤,硫唑嘌呤,Azathioprine,归一化精确,硫唑嘌呤片,opencmkg,32,238,19,158,447
+460,0,硫鸟嘌呤,硫鸟嘌呤,Tioguanine,未命中,硫鸟嘌呤,ddinter,32,334,13,7,386
+461,0,地尔硫䓬,地尔硫䓬,Diltiazem,未命中,地尔硫䓬,ddinter,32,184,24,119,359
+462,0,硫酸钠,硫酸钠,Sodium sulfate,去盐归一化,硫酸镁注射液,opencmkg,32,324,2,0,358
+463,0,利培酮,利培酮,Risperidone,归一化精确,利培酮胶囊,opencmkg,32,216,4,94,346
+464,0,吉西他滨,吉西他滨,Gemcitabine,未命中,吉西他滨,ddinter,32,125,18,162,337
+465,0,替莫唑胺,替莫唑胺,Temozolomide,归一化精确,替莫唑胺胶囊,opencmkg,32,111,16,161,320
+466,0,帕利哌酮,帕利哌酮,Paliperidone,未命中,帕利哌酮,ddinter,32,191,1,11,235
+467,0,阿塞那平,阿塞那平,Asenapine,未命中,阿塞那平,ddinter,32,198,1,0,231
+468,0,白消安,白消安,Busulfan,归一化精确,白消安片,opencmkg,32,139,16,41,228
+469,0,托莫西汀,托莫西汀,Atomoxetine,去盐归一化,盐酸托莫西汀胶囊,opencmkg,32,117,3,41,193
+470,0,索利那新,索利那新,Solifenacin,去盐归一化,琥珀酸索利那新片,opencmkg,32,155,2,0,189
+471,0,西诺沙星,西诺沙星,Cinoxacin,未命中,西诺沙星,ddinter,32,66,51,0,149
+472,0,匹马范色林,匹马范色林,Pimavanserin,未命中,匹马范色林,ddinter,32,111,1,0,144
+473,0,吉妥珠单抗奥唑米星,吉妥珠单抗奥唑米星,Gemtuzumab ozogamicin,未命中,吉妥珠单抗奥唑米星,ddinter,32,71,15,0,118
+474,0,杆菌肽,杆菌肽,Bacitracin,未命中,杆菌肽,ddinter,32,36,0,16,84
+475,0,镥[177Lu]氧奥曲肽,镥[177Lu]氧奥曲肽,Lutetium Lu 177 dotatate,未命中,镥[177Lu]氧奥曲肽,ddinter,32,41,0,0,73
+476,0,布雷克西卡特基因自体T细胞,布雷克西卡特基因自体T细胞,Brexucabtagene autoleucel,未命中,布雷克西卡特基因自体T细胞,ddinter,32,23,0,0,55
+477,0,西咪替丁,西咪替丁,Cimetidine,归一化精确,西咪替丁片,opencmkg,31,259,127,130,547
+478,0,丙氯拉嗪,丙氯拉嗪,Prochlorperazine,未命中,丙氯拉嗪,ddinter,31,212,7,114,364
+479,0,拓扑替康,拓扑替康,Topotecan,去盐归一化,盐酸拓扑替康胶囊,opencmkg,31,229,16,20,296
+480,0,羟嗪,羟嗪,Hydroxyzine,未命中,羟嗪,ddinter,31,150,4,111,296
+481,0,美法仑,美法仑,Melphalan,未命中,美法仑,ddinter,31,110,23,70,234
+482,0,三氟拉嗪,三氟拉嗪,Triflupromazine,未命中,三氟拉嗪,ddinter,31,186,5,0,222
+483,0,博来霉素,博来霉素,Bleomycin,未命中,博来霉素,ddinter,31,115,15,44,205
+484,0,苯丁酸氮芥,苯丁酸氮芥,Chlorambucil,归一化精确,苯丁酸氮芥片,opencmkg,31,111,14,11,167
+485,0,氮芥,氮芥,Mechlorethamine,去盐归一化,盐酸氮芥酊,opencmkg,31,89,17,0,137
+486,0,普拉曲沙,普拉曲沙,Pralatrexate,未命中,普拉曲沙,ddinter,31,102,2,0,135
+487,0,贝利司他,贝利司他,Belinostat,未命中,贝利司他,ddinter,31,93,0,0,124
+488,0,三甲曲沙,三甲曲沙,Trimetrexate,未命中,三甲曲沙,ddinter,31,76,6,0,113
+489,0,利妥昔单抗,利妥昔单抗,Rituximab,未命中,利妥昔单抗,ddinter,31,52,6,0,89
+490,0,丙胺卡因（外用）,丙胺卡因,Prilocaine / Prilocaine (topiclal),未命中,丙胺卡因（外用）,ddinter,31,1,1,0,33
+491,0,大肠埃希菌左旋门冬酰胺酶,大肠埃希菌左旋门冬酰胺酶,Asparaginase Escherichia coli,未命中,大肠埃希菌左旋门冬酰胺酶,ddinter,30,365,0,0,395
+492,0,氟达拉滨,氟达拉滨,Fludarabine,未命中,氟达拉滨,ddinter,30,155,15,167,367
+493,0,米托蒽醌,米托蒽醌,Mitoxantrone,未命中,米托蒽醌,ddinter,30,183,15,126,354
+494,0,羟基脲,羟基脲,Hydroxyurea,归一化精确,羟基脲胶囊,opencmkg,30,109,15,153,307
+495,0,富马酸二甲酯,富马酸二甲酯,Dimethyl fumarate,未命中,富马酸二甲酯,ddinter,30,235,0,0,265
+496,0,阿奇霉素,阿奇霉素,Azithromycin,归一化精确,阿奇霉素颗粒,opencmkg,30,118,3,82,233
+497,0,甲硫达嗪,甲硫达嗪,Methotrimeprazine,未命中,甲硫达嗪,ddinter,30,190,5,0,225
+498,0,阿夫唑嗪,阿夫唑嗪,Alfuzosin,去盐归一化,盐酸阿夫唑嗪缓释片,opencmkg,30,126,2,37,195
+499,0,丝裂霉素,丝裂霉素,Mitomycin,未命中,丝裂霉素,ddinter,30,110,15,38,193
+500,0,艾沙康唑硫酸盐,艾沙康唑硫酸盐,Isavuconazonium,未命中,艾沙康唑硫酸盐,ddinter,30,140,7,0,177
+501,0,喷司他丁,喷司他丁,Pentostatin,未命中,喷司他丁,ddinter,30,91,16,0,137
+502,0,人抗A/B型肉毒神经毒素免疫球蛋白,人抗A/B型肉毒神经毒素免疫球蛋白,Human botulinum neurotoxin A/B immune globulin,未命中,人抗A/B型肉毒神经毒素免疫球蛋白,ddinter,30,1,0,0,31
+503,0,人巨细胞病毒免疫球蛋白,人巨细胞病毒免疫球蛋白,Human cytomegalovirus immune globulin,未命中,人巨细胞病毒免疫球蛋白,ddinter,30,0,0,0,30
+504,0,人抗D免疫球蛋白,人抗D免疫球蛋白,Human Rho(D) immune globulin,编辑距离（待确认）,人抗D免疫球蛋白,ddinter,30,0,0,0,30
+505,0,依托泊苷,依托泊苷,Etoposide,归一化精确,依托泊苷注射液,opencmkg,29,262,22,181,494
+506,0,培门冬酶,培门冬酶,Pegaspargase,未命中,培门冬酶,ddinter,29,349,0,0,378
+507,0,培美曲塞,培美曲塞,Pemetrexed,未命中,培美曲塞,ddinter,29,242,0,93,364
+508,0,依前列醇,依前列醇,Epoprostenol,未命中,依前列醇,ddinter,29,237,5,76,347
+509,0,伊洛前列素,伊洛前列素,Iloprost,未命中,伊洛前列素,ddinter,29,238,3,75,345
+510,0,曲前列尼尔,曲前列尼尔,Treprostinil,未命中,曲前列尼尔,ddinter,29,257,3,32,321
+511,0,阿那白滞素,阿那白滞素,Anakinra,未命中,阿那白滞素,ddinter,29,272,6,0,307
+512,0,伊沙匹隆,伊沙匹隆,Ixabepilone,未命中,伊沙匹隆,ddinter,29,243,3,0,275
+513,0,促肾上腺皮质激素,促肾上腺皮质激素,Corticotropin,原样精确,促肾上腺皮质激素,opencmkg,29,227,15,0,271
+514,0,替尼泊苷,替尼泊苷,Teniposide,归一化精确,替尼泊苷注射液,opencmkg,29,180,20,0,229
+515,0,伐地那非,伐地那非,Vardenafil,去盐归一化,盐酸伐地那非片,opencmkg,29,130,0,46,205
+516,0,苯丙胺,苯丙胺,Amphetamine / Benzphetamine,未命中,苯丙胺,ddinter,29,160,0,11,200
+517,0,放线菌素D,放线菌素D,Dactinomycin,未命中,放线菌素D,ddinter,29,92,15,28,164
+518,0,埃洛妥珠单抗,埃洛妥珠单抗,Elotuzumab,未命中,埃洛妥珠单抗,ddinter,29,134,0,0,163
+519,0,福斯特沙韦,福斯特沙韦,Fostemsavir,未命中,福斯特沙韦,ddinter,29,114,15,0,158
+520,0,氟尿苷,氟尿苷,Floxuridine,未命中,氟尿苷,ddinter,29,107,15,0,151
+521,0,六甲蜜胺,六甲蜜胺,Altretamine,归一化精确,六甲蜜胺胶囊,opencmkg,29,76,15,0,120
+522,0,地西他滨,地西他滨,Decitabine,未命中,地西他滨,ddinter,29,91,0,0,120
+523,0,阿扎胞苷,阿扎胞苷,Azacitidine,未命中,阿扎胞苷,ddinter,29,56,0,0,85
+524,0,瑞舒伐他汀,瑞舒伐他汀,Rosuvastatin,未命中,瑞舒伐他汀,ddinter,28,152,12,331,523
+525,0,克霉唑,克霉唑,Clotrimazole,归一化精确,克霉唑乳膏,opencmkg,28,182,24,239,473
+526,0,尼拉帕利,尼拉帕利,Niraparib,未命中,尼拉帕利,ddinter,28,321,0,0,349
+527,0,乌司奴单抗,乌司奴单抗,Ustekinumab,未命中,乌司奴单抗,ddinter,28,299,6,0,333
+528,0,利洛那塞普,利洛那塞普,Rilonacept,未命中,利洛那塞普,ddinter,28,274,6,0,308
+529,0,卡那单抗,卡那单抗,Canakinumab,未命中,卡那单抗,ddinter,28,271,6,0,305
+530,0,卡巴他赛,卡巴他赛,Cabazitaxel,未命中,卡巴他赛,ddinter,28,245,2,0,275
+531,0,苯达莫司汀,苯达莫司汀,Bendamustine,未命中,苯达莫司汀,ddinter,28,150,0,0,178
+532,0,阿芬太尼,阿芬太尼,Alfentanil,未命中,阿芬太尼,ddinter,28,117,1,21,167
+533,0,阿扑吗啡,阿扑吗啡,Apomorphine,未命中,阿扑吗啡,ddinter,28,130,1,1,160
+534,0,西妥昔单抗,西妥昔单抗,Cetuximab / Siltuximab,未命中,西妥昔单抗,ddinter,28,124,6,0,158
+535,0,达福普汀,达福普汀,Dalfopristin,未命中,达福普汀,ddinter,28,88,8,0,124
+536,0,莫格利珠单抗,莫格利珠单抗,Mogamulizumab,未命中,莫格利珠单抗,ddinter,28,48,6,0,82
+537,0,三氟胸苷,三氟胸苷,Trifluridine,未命中,三氟胸苷,ddinter,28,53,0,0,81
+538,0,度伐利尤单抗,度伐利尤单抗,Durvalumab,未命中,度伐利尤单抗,ddinter,28,47,6,0,81
+539,0,塞利尼索,塞利尼索,Selinexor,未命中,塞利尼索,ddinter,28,52,0,0,80
+540,0,奥比妥珠单抗,奥比妥珠单抗,Obinutuzumab,未命中,奥比妥珠单抗,ddinter,28,52,0,0,80
+541,0,达雷妥尤单抗,达雷妥尤单抗,Daratumumab,未命中,达雷妥尤单抗,ddinter,28,52,0,0,80
+542,0,奥法木单抗,奥法木单抗,Ofatumumab,未命中,奥法木单抗,ddinter,28,51,0,0,79
+543,0,阿柏西普,阿柏西普,Aflibercept,未命中,阿柏西普,ddinter,28,50,0,0,78
+544,0,阿特珠单抗,阿特珠单抗,Atezolizumab,未命中,阿特珠单抗,ddinter,28,47,0,0,75
+545,0,阿巴西普,阿巴西普,Abatacept,未命中,阿巴西普,ddinter,28,37,6,0,71
+546,0,度洛西汀,度洛西汀,Duloxetine,未命中,度洛西汀,ddinter,27,180,18,98,323
+547,0,司替戊醇,司替戊醇,Stiripentol,未命中,司替戊醇,ddinter,27,185,5,0,217
+548,0,氟卡尼,氟卡尼,Flecainide,未命中,氟卡尼,ddinter,27,119,10,54,210
+549,0,沃塞洛托尔,沃塞洛托尔,Voxelotor,未命中,沃塞洛托尔,ddinter,27,94,6,0,127
+550,0,他喷他多,他喷他多,Tapentadol,未命中,他喷他多,ddinter,27,91,0,0,118
+551,0,甲基麦角新碱,甲基麦角新碱,Methylergometrine,未命中,甲基麦角新碱,ddinter,27,63,0,2,92
+552,0,地尼白介素二丁毒素,地尼白介素二丁毒素,Denileukin diftitox,未命中,地尼白介素二丁毒素,ddinter,27,46,15,0,88
+553,0,甲基麦角酰胺,甲基麦角酰胺,Methysergide,未命中,甲基麦角酰胺,ddinter,27,61,0,0,88
+554,0,尿嘧啶氮芥,尿嘧啶氮芥,Uracil mustard,未命中,尿嘧啶氮芥,ddinter,27,51,9,0,87
+555,0,贝拉西普,贝拉西普,Belatacept,未命中,贝拉西普,ddinter,27,37,6,0,70
+556,0,鼠源性单克隆抗体（OKT3）,鼠源性单克隆抗体,Muromonab,未命中,鼠源性单克隆抗体（OKT3）,ddinter,27,36,6,0,69
+557,0,多替拉韦,多替拉韦,Dolutegravir,未命中,多替拉韦,ddinter,27,3,32,0,62
+558,0,氨甲环酸,氨甲环酸,Tranexamic acid,归一化精确,氨甲环酸片,opencmkg,27,6,1,0,34
+559,0,美托洛尔（眼科用）,美托洛尔,Metipranolol (ophthalmic) / Metoprolol,去盐归一化,酒石酸美托洛尔片,opencmkg,26,220,20,152,418
+560,0,维A酸,维A酸,Tretinoin / Tretinoin (topical),归一化精确,维A酸片,opencmkg,26,101,17,183,327
+561,0,奥瑞珠单抗,奥瑞珠单抗,Ocrelizumab,未命中,奥瑞珠单抗,ddinter,26,247,6,0,279
+562,0,干扰素α-2b,干扰素α-2b,Interferon alfa-2b,未命中,干扰素α-2b,ddinter,26,169,3,0,198
+563,0,埃索加宾,埃索加宾,Ezogabine,未命中,埃索加宾,ddinter,26,133,2,0,161
+564,0,七氟烷,七氟烷,Sevoflurane,未命中,七氟烷,ddinter,26,90,1,29,146
+565,0,左米那普仑,左米那普仑,Levomilnacipran,未命中,左米那普仑,ddinter,26,106,0,0,132
+566,0,比克替拉韦,比克替拉韦,Bictegravir,未命中,比克替拉韦,ddinter,26,55,0,0,81
+567,0,抗淋巴细胞免疫球蛋白（马）,抗淋巴细胞免疫球蛋白,Antilymphocyte immunoglobulin (horse),未命中,抗淋巴细胞免疫球蛋白（马）,ddinter,26,37,6,0,69
+568,0,抗胸腺细胞免疫球蛋白（兔）,抗胸腺细胞免疫球蛋白,Antithymocyte immunoglobulin (rabbit),未命中,抗胸腺细胞免疫球蛋白（兔）,ddinter,26,37,6,0,69
+569,0,贝利尤单抗,贝利尤单抗,Belimumab,未命中,贝利尤单抗,ddinter,26,37,6,0,69
+570,0,奥拉单抗,奥拉单抗,Olaratumab,未命中,奥拉单抗,ddinter,26,39,0,0,65
+571,0,卡维地洛,卡维地洛,Carvedilol,归一化精确,卡维地洛片,opencmkg,25,162,16,121,324
+572,0,齐多夫定,齐多夫定,Zidovudine,归一化精确,齐多夫定胶囊,opencmkg,25,167,5,38,235
+573,0,罗拉匹坦,罗拉匹坦,Rolapitant,未命中,罗拉匹坦,ddinter,25,171,6,0,202
+574,0,重组干扰素α-2a,重组干扰素α-2a,"Interferon alfa-2a, Recombinant",编辑距离（待确认）,重组干扰素α-2a,ddinter,25,171,2,0,198
+575,0,洛非西定,洛非西定,Lofexidine,去盐归一化,盐酸洛非西定片,opencmkg,25,143,1,0,169
+576,0,聚乙二醇干扰素α-2b,聚乙二醇干扰素α-2b,Peginterferon alfa-2b,未命中,聚乙二醇干扰素α-2b,ddinter,25,141,3,0,169
+577,0,维拉唑酮,维拉唑酮,Vilazodone,未命中,维拉唑酮,ddinter,25,140,0,0,165
+578,0,干扰素αcon-1,干扰素αcon-1,Interferon alfacon-1,未命中,干扰素αcon-1,ddinter,25,134,3,0,162
+579,0,干扰素α-n1,干扰素α-n1,Interferon alfa-n1,未命中,干扰素α-n1,ddinter,25,125,2,0,152
+580,0,磺吡酮,磺吡酮,Sulfinpyrazone,未命中,磺吡酮,ddinter,25,108,7,0,140
+581,0,司库奇尤单抗,司库奇尤单抗,Secukinumab,未命中,司库奇尤单抗,ddinter,25,107,6,0,138
+582,0,依奇珠单抗,依奇珠单抗,Ixekizumab,未命中,依奇珠单抗,ddinter,25,105,6,0,136
+583,0,古塞库单抗,古塞库单抗,Guselkumab,未命中,古塞库单抗,ddinter,25,105,6,0,136
+584,0,血管加压素,血管加压素,Vasopressin,未命中,血管加压素,ddinter,25,91,1,0,117
+585,0,阿维A,阿维A,Acitretin,归一化精确,阿维A胶囊,opencmkg,25,30,0,58,113
+586,0,替拉珠单抗,替拉珠单抗,Tildrakizumab,未命中,替拉珠单抗,ddinter,25,47,6,0,78
+587,0,瑞莎珠单抗,瑞莎珠单抗,Risankizumab,未命中,瑞莎珠单抗,ddinter,25,47,6,0,78
+588,0,左旋咪唑,左旋咪唑,Levamisole,去盐归一化,盐酸左旋咪唑片,opencmkg,25,48,0,0,73
+589,0,巴利昔单抗,巴利昔单抗,Basiliximab,未命中,巴利昔单抗,ddinter,25,37,6,0,68
+590,0,维多珠单抗,维多珠单抗,Vedolizumab,未命中,维多珠单抗,ddinter,25,37,6,0,68
+591,0,布达鲁单抗,布达鲁单抗,Brodalumab,未命中,布达鲁单抗,ddinter,25,36,6,0,67
+592,0,度普利尤单抗,度普利尤单抗,Dupilumab,未命中,度普利尤单抗,ddinter,25,21,6,0,52
+593,0,门冬胰岛素,门冬胰岛素,Insulin aspart (aspart protamine) / Insulin aspart (aspart),归一化精确,门冬胰岛素注射液,opencmkg,24,572,61,0,657
+594,0,万古霉素,万古霉素,Vancomycin,未命中,万古霉素,ddinter,24,89,0,341,454
+595,0,帕罗西汀,帕罗西汀,Paroxetine,去盐归一化,盐酸帕罗西汀片,opencmkg,24,150,2,149,325
+596,0,氯苯甘醚,氯苯甘醚,Chlorphenesin,未命中,氯苯甘醚,ddinter,24,206,0,0,230
+597,0,鲁拉西酮,鲁拉西酮,Lurasidone,未命中,鲁拉西酮,ddinter,24,149,0,0,173
+598,0,聚乙二醇干扰素α-2a,聚乙二醇干扰素α-2a,Peginterferon alfa-2a,未命中,聚乙二醇干扰素α-2a,ddinter,24,143,4,0,171
+599,0,比尼替尼,比尼替尼,Binimetinib,未命中,比尼替尼,ddinter,24,145,0,0,169
+600,0,福沙匹坦,福沙匹坦,Fosaprepitant,未命中,福沙匹坦,ddinter,24,126,7,0,157
+601,0,伏硫西汀,伏硫西汀,Vortioxetine,未命中,伏硫西汀,ddinter,24,119,0,0,143
+602,0,腺苷,腺苷,Adenosine,未命中,腺苷,ddinter,24,70,1,36,131
+603,0,氯法齐明,氯法齐明,Clofazimine,未命中,氯法齐明,ddinter,24,85,1,0,110
+604,0,二羟丙茶碱,二羟丙茶碱,Dyphylline,归一化精确,二羟丙茶碱片,opencmkg,24,37,20,0,81
+605,0,萨特利珠单抗,萨特利珠单抗,Satralizumab,未命中,萨特利珠单抗,ddinter,24,50,4,0,78
+606,0,硝酸镓,硝酸镓,Gallium nitrate,未命中,硝酸镓,ddinter,24,9,0,0,33
+607,0,阿仑单抗,阿仑单抗,Alemtuzumab,未命中,阿仑单抗,ddinter,23,268,0,0,291
+608,0,波生坦,波生坦,Bosentan,归一化精确,波生坦片,opencmkg,23,163,4,52,242
+609,0,来特莫韦,来特莫韦,Letermovir,未命中,来特莫韦,ddinter,23,122,8,0,153
+610,0,恩诺单抗维多汀,恩诺单抗维多汀,Enfortumab vedotin,未命中,恩诺单抗维多汀,ddinter,23,119,4,0,146
+611,0,米那普仑,米那普仑,Milnacipran,未命中,米那普仑,ddinter,23,119,0,0,142
+612,0,伊匹木单抗,伊匹木单抗,Ipilimumab,未命中,伊匹木单抗,ddinter,23,108,0,0,131
+613,0,泊洛妥珠单抗维多汀,泊洛妥珠单抗维多汀,Polatuzumab vedotin,未命中,泊洛妥珠单抗维多汀,ddinter,23,104,3,0,130
+614,0,普罗布考,普罗布考,Probucol,未命中,普罗布考,ddinter,23,82,1,0,106
+615,0,麦角新碱,麦角新碱,Ergometrine,未命中,麦角新碱,ddinter,23,58,0,0,81
+616,0,戈沙妥珠单抗,戈沙妥珠单抗,Sacituzumab govitecan,未命中,戈沙妥珠单抗,ddinter,23,16,0,0,39
+617,0,屈螺酮,屈螺酮,Drospirenone / Trospium,未命中,屈螺酮,ddinter,22,297,16,0,335
+618,0,可乐定,可乐定,Clonidine / Guanfacine,去盐归一化,盐酸可乐定片,opencmkg,22,181,1,127,331
+619,0,左炔诺孕酮,左炔诺孕酮,Levonorgestrel / Norgestrel,未命中,左炔诺孕酮,ddinter,22,209,7,39,277
+620,0,拉贝洛尔,拉贝洛尔,Labetalol,去盐归一化,盐酸拉贝洛尔片,opencmkg,22,152,17,45,236
+621,0,去甲文拉法辛,去甲文拉法辛,Desvenlafaxine,未命中,去甲文拉法辛,ddinter,22,142,1,16,181
+622,0,哌替啶,哌替啶,Meperidine,未命中,哌替啶,ddinter,22,79,0,77,178
+623,0,氟班色林,氟班色林,Flibanserin,未命中,氟班色林,ddinter,22,136,5,0,163
+624,0,左布诺洛尔（眼用）,左布诺洛尔,Levobetaxolol (ophthalmic) / Levobunolol / Levobunolol (ophthalmic),去盐归一化,盐酸左布诺洛尔滴眼液,opencmkg,22,111,4,24,161
+625,0,苏沃雷生,苏沃雷生,Suvorexant,未命中,苏沃雷生,ddinter,22,106,5,0,133
+626,0,全氟丙烷,全氟丙烷,Perflutren,未命中,全氟丙烷,ddinter,22,89,1,0,112
+627,0,喷他佐辛,喷他佐辛,Pentazocine,未命中,喷他佐辛,ddinter,22,73,0,9,104
+628,0,碳酸氢钾,碳酸氢钾,Potassium bicarbonate,去盐归一化,枸橼酸氢钾钠颗粒,opencmkg,22,23,14,0,59
+629,0,葡萄糖酸钾,葡萄糖酸钾,Potassium gluconate,去盐归一化,葡萄糖酸钙片,opencmkg,22,23,14,0,59
+630,0,抗凝血酶Ⅲ（人）,抗凝血酶Ⅲ,Antithrombin Alfa,未命中,抗凝血酶Ⅲ（人）,ddinter,22,24,0,0,46
+631,0,醋酸钾,醋酸钾,Potassium acetate,去盐归一化,醋酸钙颗粒,opencmkg,22,3,15,0,40
+632,0,阿维莫泮,阿维莫泮,Alvimopan,未命中,阿维莫泮,ddinter,22,6,0,0,28
+633,0,依曲韦林,依曲韦林,Etravirine,未命中,依曲韦林,ddinter,21,189,6,0,216
+634,0,丁螺环酮,丁螺环酮,Buspirone,去盐归一化,盐酸丁螺环酮片,opencmkg,21,80,0,89,190
+635,0,依普利酮,依普利酮,Eplerenone,未命中,依普利酮,ddinter,21,61,3,22,107
+636,0,达可替尼,达可替尼,Dacomitinib,未命中,达可替尼,ddinter,21,67,3,0,91
+637,0,卷曲霉素,卷曲霉素,Capreomycin,未命中,卷曲霉素,ddinter,21,37,0,0,58
+638,0,沙丁胺醇,沙丁胺醇,Salbutamol,归一化精确,沙丁胺醇气雾剂,opencmkg,20,359,17,357,753
+639,0,格列本脲,格列本脲,Glyburide,未命中,格列本脲,ddinter,20,396,34,182,632
+640,0,阿片,阿片,Opium,未命中,阿片,ddinter,20,349,0,0,369
+641,0,阿法西普,阿法西普,Alefacept,未命中,阿法西普,ddinter,20,281,6,0,307
+642,0,普萘洛尔,普萘洛尔,Propranolol,去盐归一化,盐酸普萘洛尔片,opencmkg,20,159,20,106,305
+643,0,纳多洛尔,纳多洛尔,Nadolol,未命中,纳多洛尔,ddinter,20,130,19,57,226
+644,0,吲哚洛尔,吲哚洛尔,Pindolol,未命中,吲哚洛尔,ddinter,20,142,14,19,195
+645,0,利托君,利托君,Ritodrine,去盐归一化,盐酸利托君注射液,opencmkg,20,133,15,0,168
+646,0,奈妥匹坦,奈妥匹坦,Netupitant,未命中,奈妥匹坦,ddinter,20,78,8,0,106
+647,0,福奈妥匹坦,福奈妥匹坦,Fosnetupitant,未命中,福奈妥匹坦,ddinter,20,70,8,0,98
+648,0,霉酚酸酯,霉酚酸酯,Mycophenolate mofetil,未命中,霉酚酸酯,ddinter,20,58,12,0,90
+649,0,司美替尼,司美替尼,Selumetinib,未命中,司美替尼,ddinter,20,63,0,0,83
+650,0,佩米替尼,佩米替尼,Pemigatinib,未命中,佩米替尼,ddinter,20,27,0,0,47
+651,0,粘菌素甲磺酸盐,粘菌素甲磺酸盐,Colistimethate,未命中,粘菌素甲磺酸盐,ddinter,20,13,0,0,33
+652,0,格列吡嗪,格列吡嗪,Glipizide,归一化精确,格列吡嗪分散片,opencmkg,19,377,33,186,615
+653,0,格列美脲,格列美脲,Glimepiride,归一化精确,格列美脲片,opencmkg,19,379,29,172,599
+654,0,氯磺丙脲,氯磺丙脲,Chlorpropamide,未命中,氯磺丙脲,ddinter,19,382,35,13,449
+655,0,美沙拉秦,美沙拉秦,Mesalazine,归一化精确,美沙拉秦肠溶片,opencmkg,19,86,0,185,290
+656,0,促皮质素,促皮质素,Tetracosactide,未命中,促皮质素,ddinter,19,242,15,0,276
+657,0,依法利珠单抗,依法利珠单抗,Efalizumab,未命中,依法利珠单抗,ddinter,19,208,6,0,233
+658,0,巴柳氮,巴柳氮,Balsalazide,未命中,巴柳氮,ddinter,19,136,0,41,196
+659,0,卡马替尼,卡马替尼,Capmatinib,未命中,卡马替尼,ddinter,19,101,9,0,129
+660,0,萘夫西林,萘夫西林,Nafcillin,未命中,萘夫西林,ddinter,19,87,7,0,113
+661,0,奥沙拉秦,奥沙拉秦,Olsalazine,去盐归一化,奥沙拉秦钠胶囊,opencmkg,19,83,3,0,105
+662,0,特唑啉（鼻用）,特唑啉,Tetryzoline (nasal) / Tetryzoline (ophthalmic),未命中,特唑啉（鼻用）,ddinter,19,72,0,0,91
+663,0,戈伏昔兰,戈伏昔兰,Givosiran,未命中,戈伏昔兰,ddinter,19,68,0,0,87
+664,0,血红素,血红素,Hemin,未命中,血红素,ddinter,19,55,0,0,74
+665,0,碘化钾,碘化钾,Potassium Iodide,归一化精确,碘化钾片,opencmkg,19,26,0,0,45
+666,0,艾替班特,艾替班特,Etelcalcetide,未命中,艾替班特,ddinter,19,1,0,0,20
+667,0,瑞格列奈,瑞格列奈,Repaglinide,未命中,瑞格列奈,ddinter,18,418,23,119,578
+668,0,阿替洛尔,阿替洛尔,Acebutolol / Atenolol,归一化精确,阿替洛尔片,opencmkg,18,281,29,190,518
+669,0,福莫特罗,福莫特罗,Formoterol,未命中,福莫特罗,ddinter,18,336,15,91,460
+670,0,茚达特罗,茚达特罗,Indacaterol,未命中,茚达特罗,ddinter,18,344,76,0,438
+671,0,吡布特罗,吡布特罗,Pirbuterol,未命中,吡布特罗,ddinter,18,293,15,98,424
+672,0,地高辛,地高辛,Digitoxin / Digoxin,归一化精确,地高辛片,opencmkg,18,195,42,134,389
+673,0,维兰特罗,维兰特罗,Vilanterol,未命中,维兰特罗,ddinter,18,352,15,0,385
+674,0,奥达特罗,奥达特罗,Olodaterol,未命中,奥达特罗,ddinter,18,305,1,0,324
+675,0,结合雌激素,结合雌激素,Conjugated estrogens / Conjugated estrogens (topical) / Esterified estrogens,归一化精确,结合雌激素片,opencmkg,18,277,8,0,303
+676,0,莫达非尼,莫达非尼,Modafinil,未命中,莫达非尼,ddinter,18,84,74,72,248
+677,0,去氨加压素,去氨加压素,Desmopressin,去盐归一化,醋酸去氨加压素注射液,opencmkg,18,101,1,48,168
+678,0,喷布洛尔,喷布洛尔,Penbutolol,未命中,喷布洛尔,ddinter,18,110,14,0,142
+679,0,尼达尼布,尼达尼布,Nintedanib,未命中,尼达尼布,ddinter,18,121,0,0,139
+680,0,妥布霉素,妥布霉素,Tobramycin,归一化精确,妥布霉素滴眼液,opencmkg,18,42,1,69,130
+681,0,水杨酸 salicylate,水杨酸 salicylate,Salsalate,未命中,水杨酸 salicylate,ddinter,18,104,7,0,129
+682,0,纳昔妥单抗,纳昔妥单抗,Naxitamab,未命中,纳昔妥单抗,ddinter,18,107,4,0,129
+683,0,异维A酸,异维A酸,Isotretinoin,编辑距离（待确认）,异维A酸,ddinter,18,80,0,0,98
+684,0,伊沙妥昔单抗,伊沙妥昔单抗,Isatuximab,未命中,伊沙妥昔单抗,ddinter,18,75,0,0,93
+685,0,普拉佐米星,普拉佐米星,Plazomicin,未命中,普拉佐米星,ddinter,18,51,1,0,70
+686,0,西美瑞韦,西美瑞韦,Simeprevir,未命中,西美瑞韦,ddinter,18,28,1,0,47
+687,0,德曲妥珠单抗,德曲妥珠单抗,Trastuzumab deruxtecan,未命中,德曲妥珠单抗,ddinter,18,24,0,0,42
+688,0,替沙格莱塞尔,替沙格莱塞尔,Tisagenlecleucel,未命中,替沙格莱塞尔,ddinter,18,23,0,0,41
+689,0,他法西他单抗,他法西他单抗,Tafasitamab,未命中,他法西他单抗,ddinter,18,22,0,0,40
+690,0,贝兰他单抗马福多汀,贝兰他单抗马福多汀,Belantamab mafodotin,未命中,贝兰他单抗马福多汀,ddinter,18,22,0,0,40
+691,0,阿基仑赛,阿基仑赛,Axicabtagene ciloleucel,未命中,阿基仑赛,ddinter,18,22,0,0,40
+692,0,甲基乙酰胆碱,甲基乙酰胆碱,Methacholine,未命中,甲基乙酰胆碱,ddinter,18,2,0,0,20
+693,0,雷尼替丁,雷尼替丁,Ranitidine / Ranitidine (bismuth citrate),去盐归一化,盐酸雷尼替丁胶囊,opencmkg,17,111,106,456,690
+694,0,奥美拉唑,奥美拉唑,Omeprazole,归一化精确,奥美拉唑肠溶片,opencmkg,17,131,46,477,671
+695,0,利多卡因,利多卡因,Lidocaine / Lidocaine (ophthalmic) / Lidocaine (topical),去盐归一化,盐酸利多卡因注射液,opencmkg,17,223,69,297,606
+696,0,阿昔洛韦,阿昔洛韦,Acyclovir / Acyclovir (topical),归一化精确,阿昔洛韦乳膏,opencmkg,17,24,8,406,455
+697,0,咪康唑,咪康唑,Miconazole / Miconazole (topical),去盐归一化,硝酸咪康唑散,opencmkg,17,233,28,98,376
+698,0,艾洛扎胺,艾洛扎胺,Eluxadoline,未命中,艾洛扎胺,ddinter,17,188,1,0,206
+699,0,醋酸甲羟孕酮,醋酸甲羟孕酮,Medroxyprogesterone acetate,归一化精确,醋酸甲羟孕酮分散片,opencmkg,17,181,7,0,205
+700,0,狄诺西美富马酸盐,狄诺西美富马酸盐,Diroximel fumarate,未命中,狄诺西美富马酸盐,ddinter,17,186,0,0,203
+701,0,单甲基富马酸,单甲基富马酸,Monomethyl fumarate,未命中,单甲基富马酸,ddinter,17,185,0,0,202
+702,0,达罗他胺,达罗他胺,Darolutamide,未命中,达罗他胺,ddinter,17,115,49,0,181
+703,0,羟甲唑啉（眼用）,羟甲唑啉,Oxymetazoline (nasal) / Oxymetazoline (ophthalmic) / Oxymetazoline (topical),去盐归一化,盐酸羟甲唑啉喷雾剂,opencmkg,17,118,0,0,135
+704,0,依来曲普坦,依来曲普坦,Eletriptan,未命中,依来曲普坦,ddinter,17,37,0,35,89
+705,0,氨己烯酸,氨己烯酸,Vigabatrin,未命中,氨己烯酸,ddinter,17,46,0,0,63
+706,0,甲氧氟烷,甲氧氟烷,Methoxyflurane,未命中,甲氧氟烷,ddinter,17,34,0,0,51
+707,0,二甲双胍,二甲双胍,Metformin,去盐归一化,盐酸二甲双胍肠溶片,opencmkg,16,290,26,310,642
+708,0,兰索拉唑,兰索拉唑,Lansoprazole,归一化精确,兰索拉唑片,opencmkg,16,118,23,461,618
+709,0,贝塔洛尔,贝塔洛尔,Betaxolol / Betaxolol (ophthalmic),未命中,贝塔洛尔,ddinter,16,212,16,8,252
+710,0,环苯扎林,环苯扎林,Cyclobenzaprine,未命中,环苯扎林,ddinter,16,84,1,135,236
+711,0,氯硝西泮类似物（注：实际为新型抗癫痫药，中国药典及NMPA标准名为‘森诺巴特’）,氯硝西泮类似物,Cenobamate,未命中,氯硝西泮类似物（注：实际为新型抗癫痫药，中国药典及NMPA标准名为‘森诺巴特’）,ddinter,16,166,4,0,186
+712,0,艾司奥美拉唑,艾司奥美拉唑,Esomeprazole,未命中,艾司奥美拉唑,ddinter,16,119,32,0,167
+713,0,舒芬太尼,舒芬太尼,Sufentanil,未命中,舒芬太尼,ddinter,16,116,0,22,154
+714,0,拉米地坦,拉米地坦,Lasmiditan,未命中,拉米地坦,ddinter,16,125,0,0,141
+715,0,艾曲泊帕,艾曲泊帕,Eltrombopag,未命中,艾曲泊帕,ddinter,16,117,1,0,134
+716,0,甲基苯丙胺,甲基苯丙胺,Metamfetamine,未命中,甲基苯丙胺,ddinter,16,102,0,5,123
+717,0,苯甲曲秦,苯甲曲秦,Phendimetrazine,未命中,苯甲曲秦,ddinter,16,75,0,0,91
+718,0,托列瓦默,托列瓦默,Tolevamer,未命中,托列瓦默,ddinter,16,66,0,0,82
+719,0,奈替米星,奈替米星,Netilmicin,去盐归一化,硫酸奈替米星注射液,opencmkg,16,40,1,0,57
+720,0,干扰素γ-1b,干扰素γ-1b,Interferon gamma-1b,未命中,干扰素γ-1b,ddinter,16,41,0,0,57
+721,0,多沙普仑,多沙普仑,Doxapram,去盐归一化,盐酸多沙普仑注射液,opencmkg,16,39,0,0,55
+722,0,伊奈利珠单抗,伊奈利珠单抗,Inebilizumab,未命中,伊奈利珠单抗,ddinter,16,13,4,0,33
+723,0,那格列奈,那格列奈,Nateglinide,未命中,那格列奈,ddinter,15,357,26,116,514
+724,0,地特胰岛素,地特胰岛素,Insulin detemir,未命中,地特胰岛素,ddinter,15,306,32,0,353
+725,0,赖谷胰岛素,赖谷胰岛素,Insulin glulisine,未命中,赖谷胰岛素,ddinter,15,306,32,0,353
+726,0,甘精胰岛素,甘精胰岛素,Insulin glargine,未命中,甘精胰岛素,ddinter,15,305,32,0,352
+727,0,赖脯胰岛素,赖脯胰岛素,Insulin lispro,未命中,赖脯胰岛素,ddinter,15,305,32,0,352
+728,0,德谷胰岛素,德谷胰岛素,Insulin degludec,未命中,德谷胰岛素,ddinter,15,304,32,0,351
+729,0,多西拉敏,多西拉敏,Doxylamine,未命中,多西拉敏,ddinter,15,273,1,0,289
+730,0,奈韦拉平,奈韦拉平,Nevirapine,未命中,奈韦拉平,ddinter,15,150,5,37,207
+731,0,吉非贝齐,吉非贝齐,Gemfibrozil,未命中,吉非贝齐,ddinter,15,47,1,62,125
+732,0,吡非尼酮,吡非尼酮,Pirfenidone,归一化精确,吡非尼酮胶囊,opencmkg,15,93,1,0,109
+733,0,瑞芬太尼,瑞芬太尼,Remifentanil,未命中,瑞芬太尼,ddinter,15,71,0,10,96
+734,0,达卡他韦,达卡他韦,Daclatasvir,未命中,达卡他韦,ddinter,15,70,4,0,89
+735,0,二巯丙醇,二巯丙醇,Dimercaprol,未命中,二巯丙醇,ddinter,15,0,0,0,15
+736,0,雷贝拉唑,雷贝拉唑,Rabeprazole,未命中,雷贝拉唑,ddinter,14,104,17,351,486
+737,0,甲二嗪,甲二嗪,Methdilazine,未命中,甲二嗪,ddinter,14,381,6,0,401
+738,0,硫乙拉嗪,硫乙拉嗪,Thiethylperazine,未命中,硫乙拉嗪,ddinter,14,377,5,0,396
+739,0,特比萘芬,特比萘芬,Terbinafine,去盐归一化,盐酸特比萘芬片,opencmkg,14,115,10,167,306
+740,0,阿培利司,阿培利司,Alpelisib,未命中,阿培利司,ddinter,14,263,3,0,280
+741,0,米诺环素,米诺环素,Minocycline / Minocycline (topical),去盐归一化,盐酸米诺环素片,opencmkg,14,134,25,105,278
+742,0,罗非昔布,罗非昔布,Rofecoxib,未命中,罗非昔布,ddinter,14,96,0,135,245
+743,0,西那卡塞,西那卡塞,Cinacalcet,去盐归一化,盐酸西那卡塞片,opencmkg,14,109,3,114,240
+744,0,伐地考昔,伐地考昔,Valdecoxib,未命中,伐地考昔,ddinter,14,123,2,81,220
+745,0,伪麻黄碱,伪麻黄碱,Pseudoephedrine,未命中,伪麻黄碱,ddinter,14,131,5,0,150
+746,0,右兰索拉唑,右兰索拉唑,Dexlansoprazole,编辑距离（待确认）,右兰索拉唑,ddinter,14,85,19,0,118
+747,0,纳布啡,纳布啡,Nalbuphine,未命中,纳布啡,ddinter,14,77,0,23,114
+748,0,异美汀,异美汀,Isometheptene,未命中,异美汀,ddinter,14,48,0,0,62
+749,0,巴龙霉素,巴龙霉素,Paromomycin,未命中,巴龙霉素,ddinter,14,20,2,0,36
+750,0,莫昔妥莫单抗帕苏多毒素,莫昔妥莫单抗帕苏多毒素,Moxetumomab Pasudotox,未命中,莫昔妥莫单抗帕苏多毒素,ddinter,14,9,0,0,23
+751,0,泮托拉唑,泮托拉唑,Pantoprazole,去盐归一化,泮托拉唑钠肠溶片,opencmkg,13,109,19,456,597
+752,0,佐匹克隆,佐匹克隆,Eszopiclone / Zaleplon / Zopiclone,未命中,佐匹克隆,ddinter,13,131,4,170,318
+753,0,螺内酯,螺内酯,Spironolactone,归一化精确,螺内酯片,opencmkg,13,107,12,139,271
+754,0,灰黄霉素,灰黄霉素,Griseofulvin,归一化精确,灰黄霉素片,opencmkg,13,208,13,0,234
+755,0,氢氧化铝,氢氧化铝,Aluminum hydroxide,未命中,氢氧化铝,ddinter,13,112,80,0,205
+756,0,氢吗啡酮,氢吗啡酮,Hydromorphone,未命中,氢吗啡酮,ddinter,13,78,0,113,204
+757,0,己烯雌酚（外用）,己烯雌酚,Dienestrol (topical) / Diethylstilbestrol,归一化精确,己烯雌酚片,opencmkg,13,169,18,0,200
+758,0,唑来膦酸,唑来膦酸,Zoledronic acid,未命中,唑来膦酸,ddinter,13,39,0,136,188
+759,0,双硫仑,双硫仑,Disulfiram,未命中,双硫仑,ddinter,13,142,15,13,183
+760,0,伐昔洛韦,伐昔洛韦,Valaciclovir,去盐归一化,盐酸伐昔洛韦缓释片,opencmkg,13,22,2,130,167
+761,0,帕米膦酸,帕米膦酸,Pamidronic acid,未命中,帕米膦酸,ddinter,13,39,0,113,165
+762,0,卡利拉嗪,卡利拉嗪,Cariprazine,未命中,卡利拉嗪,ddinter,13,148,0,0,161
+763,0,伊班膦酸钠,伊班膦酸钠,Ibandronate,归一化精确,伊班膦酸钠注射液,opencmkg,13,66,0,69,148
+764,0,双氢可待因,双氢可待因,Dihydrocodeine,未命中,双氢可待因,ddinter,13,106,0,0,119
+765,0,依替膦酸,依替膦酸,Etidronic acid,未命中,依替膦酸,ddinter,13,68,0,36,117
+766,0,沙芬酰胺,沙芬酰胺,Safinamide,未命中,沙芬酰胺,ddinter,13,96,0,0,109
+767,0,吡喹酮,吡喹酮,Praziquantel / Pyrantel,归一化精确,吡喹酮片,opencmkg,13,70,2,0,85
+768,0,青霉胺,青霉胺,Penicillamine,归一化精确,青霉胺片,opencmkg,13,35,0,16,64
+769,0,阿伐那非,阿伐那非,Avanafil,未命中,阿伐那非,ddinter,13,40,0,0,53
+770,0,利索西兰特马拉琉塞,利索西兰特马拉琉塞,Lisocabtagene maraleucel,未命中,利索西兰特马拉琉塞,ddinter,13,13,0,0,26
+771,0,氨苯砜,氨苯砜,Dapsone / Dapsone (topical),未命中,氨苯砜,ddinter,12,198,58,163,431
+772,0,苯海拉明,苯海拉明,Diphenhydramine / Diphenhydramine (topical),去盐归一化,盐酸苯海拉明注射液,opencmkg,12,382,2,0,396
+773,0,苯海索,苯海索,Benzatropine / Orphenadrine / Procyclidine / Trihexyphenidyl,去盐归一化,盐酸苯海索片,opencmkg,12,276,4,69,361
+774,0,醋磺己脲,醋磺己脲,Acetohexamide,未命中,醋磺己脲,ddinter,12,318,30,0,360
+775,0,雌二醇,雌二醇,Estradiol / Estradiol (topical),原样精确,雌二醇,opencmkg,12,228,5,94,339
+776,0,呋塞米,呋塞米,Furosemide,归一化精确,呋塞米片,opencmkg,12,147,10,152,321
+777,0,厄贝沙坦,厄贝沙坦,Eprosartan / Irbesartan,归一化精确,厄贝沙坦分散片,opencmkg,12,166,2,117,297
+778,0,厄洛替尼,厄洛替尼,Erlotinib,未命中,厄洛替尼,ddinter,12,160,2,120,294
+779,0,托拉塞米,托拉塞米,Torasemide,归一化精确,托拉塞米注射液,opencmkg,12,161,8,71,252
+780,0,洛伐他汀,洛伐他汀,Lovastatin,归一化精确,洛伐他汀片,opencmkg,12,132,3,98,245
+781,0,布美他尼,布美他尼,Bumetanide,归一化精确,布美他尼注射液,opencmkg,12,137,7,81,237
+782,0,雌酮硫酸钠,雌酮硫酸钠,Estrone sulfate / Estrone sulfate (topical),未命中,雌酮硫酸钠,ddinter,12,188,5,0,205
+783,0,依他尼酸,依他尼酸,Etacrynic acid,未命中,依他尼酸,ddinter,12,137,7,1,157
+784,0,纳洛西酮,纳洛西酮,Naldemedine,未命中,纳洛西酮,ddinter,12,128,2,0,142
+785,0,硫酸镁,硫酸镁,Magnesium sulfate,归一化精确,硫酸镁注射液,opencmkg,12,79,1,0,92
+786,0,左啡诺,左啡诺,Levorphanol,未命中,左啡诺,ddinter,12,73,0,0,85
+787,0,依马帕单抗,依马帕单抗,Emapalumab,未命中,依马帕单抗,ddinter,12,64,0,0,76
+788,0,洛匹那韦,洛匹那韦,Lopinavir,未命中,洛匹那韦,ddinter,12,49,4,0,65
+789,0,右旋苯丙胺,右旋苯丙胺,Dextroamphetamine,未命中,右旋苯丙胺,ddinter,12,47,0,0,59
+790,0,维帕他韦,维帕他韦,Velpatasvir,未命中,维帕他韦,ddinter,12,41,4,0,57
+791,0,马西替坦,马西替坦,Macitentan,未命中,马西替坦,ddinter,12,43,1,0,56
+792,0,去铁胺,去铁胺,Deferoxamine,未命中,去铁胺,ddinter,12,6,0,29,47
+793,0,帕尼单抗,帕尼单抗,Panitumumab,未命中,帕尼单抗,ddinter,12,14,0,0,26
+794,0,苯甲酸贝泊多酸,苯甲酸贝泊多酸,Bempedoic acid,未命中,苯甲酸贝泊多酸,ddinter,12,10,0,0,22
+795,0,多西环素,多西环素,Doxycycline / Doxycycline (topical),去盐归一化,盐酸多西环素胶囊,opencmkg,11,136,29,297,473
+796,0,扎鲁司特,扎鲁司特,Zafirlukast,未命中,扎鲁司特,ddinter,11,213,17,131,372
+797,0,奥氮平,奥氮平,Olanzapine,归一化精确,奥氮平片,opencmkg,11,216,2,96,325
+798,0,四环素,四环素,Tetracycline / Tetracycline (topical),归一化精确,四环素软膏,opencmkg,11,124,29,149,313
+799,0,干扰素β-1a,干扰素β-1a,Interferon beta-1a,未命中,干扰素β-1a,ddinter,11,273,0,0,284
+800,0,干扰素β-1b,干扰素β-1b,Interferon beta-1b,未命中,干扰素β-1b,ddinter,11,273,0,0,284
+801,0,聚乙二醇干扰素β-1a,聚乙二醇干扰素β-1a,Peginterferon beta-1a,未命中,聚乙二醇干扰素β-1a,ddinter,11,266,0,0,277
+802,0,乙酰唑胺,乙酰唑胺,Acetazolamide / Methazolamide,归一化精确,乙酰唑胺片,opencmkg,11,206,12,40,269
+803,0,非洛地平,非洛地平,Felodipine,未命中,非洛地平,ddinter,11,136,6,92,245
+804,0,水杨酸钠,水杨酸钠,Salicylic acid (sodium),去盐归一化,水杨酸软膏,opencmkg,11,150,33,0,194
+805,0,炔诺酮,炔诺酮,Norethisterone,归一化精确,炔诺酮片,opencmkg,11,109,3,35,158
+806,0,尼莫地平,尼莫地平,Nimodipine,归一化精确,尼莫地平缓释胶囊,opencmkg,11,116,1,12,140
+807,0,托伐普坦,托伐普坦,Tolvaptan,归一化精确,托伐普坦片,opencmkg,11,110,5,0,126
+808,0,依托孕烯,依托孕烯,Etonogestrel,未命中,依托孕烯,ddinter,11,104,2,0,117
+809,0,舒马普坦,舒马普坦,Sumatriptan,未命中,舒马普坦,ddinter,11,4,0,91,106
+810,0,磺胺甲噻二唑,磺胺甲噻二唑,Sulfamethizole,未命中,磺胺甲噻二唑,ddinter,11,76,0,0,87
+811,0,金诺芬,金诺芬,Auranofin,未命中,金诺芬,ddinter,11,56,0,18,85
+812,0,萘甲唑啉（眼用）,萘甲唑啉,Naphazoline (nasal) / Naphazoline (ophthalmic),去盐归一化,盐酸萘甲唑啉滴鼻液,opencmkg,11,72,0,0,83
+813,0,地佐辛,地佐辛,Dezocine,未命中,地佐辛,ddinter,11,61,0,0,72
+814,0,阿普斯特,阿普斯特,Apremilast,未命中,阿普斯特,ddinter,11,58,2,0,71
+815,0,维生素A,维生素A,Vitamin A,编辑距离（待确认）,维生素A,ddinter,11,6,1,50,68
+816,0,硫代苹果酸金钠,硫代苹果酸金钠,Sodium aurothiomalate,未命中,硫代苹果酸金钠,ddinter,11,56,0,0,67
+817,0,硫代葡萄糖金,硫代葡萄糖金,Aurothioglucose,未命中,硫代葡萄糖金,ddinter,11,54,0,0,65
+818,0,普拉替尼,普拉替尼,Pralsetinib,未命中,普拉替尼,ddinter,11,50,0,0,61
+819,0,阿莫曲坦,阿莫曲坦,Almotriptan,未命中,阿莫曲坦,ddinter,11,19,0,24,54
+820,0,氟马西尼,氟马西尼,Flumazenil,未命中,氟马西尼,ddinter,11,15,3,23,52
+821,0,阿伐曲泊帕,阿伐曲泊帕,Avatrombopag,未命中,阿伐曲泊帕,ddinter,11,40,0,0,51
+822,0,氧吲哚美辛,氧吲哚美辛,Oxitriptan,编辑距离（待确认）,氧吲哚美辛,ddinter,11,6,0,0,17
+823,0,色氨酸,色氨酸,Tryptophan,未命中,色氨酸,ddinter,11,6,0,0,17
+824,0,甲硝唑,甲硝唑,Metronidazole / Metronidazole (topical),归一化精确,甲硝唑片,opencmkg,10,135,183,299,627
+825,0,甘露醇,甘露醇,Mannitol,归一化精确,甘露醇注射液,opencmkg,10,92,6,141,249
+826,0,睾酮,睾酮,Testosterone / Testosterone (topical),原样精确,睾酮,opencmkg,10,149,0,85,244
+827,0,帕立骨化醇,帕立骨化醇,Paricalcitol,未命中,帕立骨化醇,ddinter,10,91,0,133,234
+828,0,氯唑沙宗,氯唑沙宗,Carisoprodol / Chlorzoxazone,归一化精确,氯唑沙宗片,opencmkg,10,101,1,116,228
+829,0,三唑仑,三唑仑,Triazolam,未命中,三唑仑,ddinter,10,107,18,77,212
+830,0,去甲金霉素,去甲金霉素,Demeclocycline,未命中,去甲金霉素,ddinter,10,119,25,0,154
+831,0,氧雄龙,氧雄龙,Oxandrolone,未命中,氧雄龙,ddinter,10,69,0,62,141
+832,0,达那唑,达那唑,Danazol,归一化精确,达那唑胶囊,opencmkg,10,107,5,15,137
+833,0,甲氧苄啶,甲氧苄啶,Trimethoprim,未命中,甲氧苄啶,ddinter,10,29,2,65,106
+834,0,硫噻吨,硫噻吨,Thiothixene,未命中,硫噻吨,ddinter,10,75,1,15,101
+835,0,洛沙平,洛沙平,Loxapine,未命中,洛沙平,ddinter,10,74,1,8,93
+836,0,马拉维罗,马拉维罗,Maraviroc,未命中,马拉维罗,ddinter,10,82,0,0,92
+837,0,莫林酮,莫林酮,Molindone,未命中,莫林酮,ddinter,10,73,1,0,84
+838,0,佐米曲普坦,佐米曲普坦,Zolmitriptan,未命中,佐米曲普坦,ddinter,10,17,1,49,77
+839,0,利扎曲普坦,利扎曲普坦,Rizatriptan,未命中,利扎曲普坦,ddinter,10,5,0,60,75
+840,0,伊曲茶碱,伊曲茶碱,Istradefylline,未命中,伊曲茶碱,ddinter,10,58,4,0,72
+841,0,度骨化醇,度骨化醇,Doxercalciferol,未命中,度骨化醇,ddinter,10,58,1,0,69
+842,0,那拉曲普坦,那拉曲普坦,Naratriptan,未命中,那拉曲普坦,ddinter,10,5,1,18,34
+843,0,舒更葡糖钠,舒更葡糖钠,Sugammadex,未命中,舒更葡糖钠,ddinter,10,21,0,0,31
+844,0,夫罗曲坦,夫罗曲坦,Frovatriptan,未命中,夫罗曲坦,ddinter,10,9,1,8,28
+845,0,依拉环素,依拉环素,Eravacycline,未命中,依拉环素,ddinter,10,9,5,0,24
+846,0,右雷佐生,右雷佐生,Dexrazoxane,未命中,右雷佐生,ddinter,10,9,0,0,19
+847,0,法莫替丁,法莫替丁,Famotidine,归一化精确,法莫替丁片,opencmkg,9,232,38,358,637
+848,0,吡格列酮,吡格列酮,Pioglitazone,未命中,吡格列酮,ddinter,9,258,35,299,601
+849,0,硝苯地平,硝苯地平,Nifedipine,归一化精确,硝苯地平控释片,opencmkg,9,177,15,107,308
+850,0,阿立哌唑,阿立哌唑,Aripiprazole,未命中,阿立哌唑,ddinter,9,248,1,48,306
+851,0,精蛋白锌赖脯胰岛素,精蛋白锌赖脯胰岛素,Insulin lispro (protamine),编辑距离（待确认）,精蛋白锌赖脯胰岛素,ddinter,9,265,29,0,303
+852,0,卡托普利,卡托普利,Captopril,归一化精确,卡托普利片,opencmkg,9,124,12,99,244
+853,0,比索洛尔,比索洛尔,Bisoprolol,未命中,比索洛尔,ddinter,9,139,14,63,225
+854,0,氨基谷氨酰胺,氨基谷氨酰胺,Aminoglutethimide,未命中,氨基谷氨酰胺,ddinter,9,183,17,0,209
+855,0,亚硝酸戊酯,亚硝酸戊酯,Amyl Nitrite,未命中,亚硝酸戊酯,ddinter,9,150,1,0,160
+856,0,土霉素,土霉素,Oxytetracycline,归一化精确,土霉素片,opencmkg,9,99,22,14,144
+857,0,哌甲酯,哌甲酯,Methylphenidate,去盐归一化,盐酸哌甲酯片,opencmkg,9,28,3,95,135
+858,0,丙环定,丙环定,Propiomazine,未命中,丙环定,ddinter,9,118,5,0,132
+859,0,艾司洛尔,艾司洛尔,Esmolol,去盐归一化,盐酸艾司洛尔注射液,opencmkg,9,108,6,0,123
+860,0,瑞普替尼,瑞普替尼,Ripretinib,未命中,瑞普替尼,ddinter,9,80,0,0,89
+861,0,乌布罗吉泮,乌布罗吉泮,Ubrogepant,未命中,乌布罗吉泮,ddinter,9,66,0,0,75
+862,0,氧甲氢龙,氧甲氢龙,Oxymetholone,未命中,氧甲氢龙,ddinter,9,60,0,0,69
+863,0,二乙酰吗啡,二乙酰吗啡,Diamorphine,未命中,二乙酰吗啡,ddinter,9,46,1,0,56
+864,0,琥珀胆碱,琥珀胆碱,Succinylcholine,未命中,琥珀胆碱,ddinter,9,38,5,0,52
+865,0,拉替拉韦,拉替拉韦,Raltegravir,未命中,拉替拉韦,ddinter,9,11,16,0,36
+866,0,无水乙二胺四乙酸二钠,无水乙二胺四乙酸二钠,Edetate disodium anhydrous,未命中,无水乙二胺四乙酸二钠,ddinter,9,1,0,0,10
+867,0,无水乙二胺四乙酸钙二钠,无水乙二胺四乙酸钙二钠,Edetate calcium disodium anhydrous,未命中,无水乙二胺四乙酸钙二钠,ddinter,9,1,0,0,10
+868,0,曲格列酮,曲格列酮,Troglitazone,未命中,曲格列酮,ddinter,8,382,32,0,422
+869,0,骨化三醇（外用）,骨化三醇,Calcitriol / Calcitriol (topical),编辑距离（待确认）,骨化三醇（外用）,ddinter,8,96,1,283,388
+870,0,屈大麻酚,屈大麻酚,Dronabinol,未命中,屈大麻酚,ddinter,8,345,4,0,357
+871,0,吉非替尼,吉非替尼,Gefitinib,未命中,吉非替尼,ddinter,8,170,5,165,348
+872,0,赖诺普利,赖诺普利,Lisinopril,归一化精确,赖诺普利片,opencmkg,8,119,12,168,307
+873,0,阿托伐他汀,阿托伐他汀,Atorvastatin,去盐归一化,阿托伐他汀钙分散片,opencmkg,8,142,8,142,300
+874,0,氨氯地平,氨氯地平,Amlodipine,去盐归一化,马来酸氨氯地平片,opencmkg,8,136,2,143,289
+875,0,雷米普利,雷米普利,Ramipril,未命中,雷米普利,ddinter,8,120,11,143,282
+876,0,依那普利,依那普利,Enalapril,去盐归一化,马来酸依那普利片,opencmkg,8,121,11,137,277
+877,0,喹那普利,喹那普利,Quinapril,未命中,喹那普利,ddinter,8,140,11,86,245
+878,0,培哚普利,培哚普利,Perindopril,未命中,培哚普利,ddinter,8,119,12,73,212
+879,0,甲苯巴比妥,甲苯巴比妥,Methylphenobarbital,未命中,甲苯巴比妥,ddinter,8,178,7,0,193
+880,0,司可巴比妥,司可巴比妥,Secobarbital,未命中,司可巴比妥,ddinter,8,171,7,0,186
+881,0,福辛普利,福辛普利,Fosinopril,未命中,福辛普利,ddinter,8,119,11,44,182
+882,0,阿普巴比妥,阿普巴比妥,Amobarbital,未命中,阿普巴比妥,ddinter,8,165,7,0,180
+883,0,丁巴比妥,丁巴比妥,Butabarbital,未命中,丁巴比妥,ddinter,8,160,7,0,175
+884,0,戊巴比妥,戊巴比妥,Pentobarbital,未命中,戊巴比妥,ddinter,8,160,7,0,175
+885,0,奈必洛尔,奈必洛尔,Nebivolol,未命中,奈必洛尔,ddinter,8,152,11,0,171
+886,0,贝那普利,贝那普利,Benazepril,去盐归一化,盐酸贝那普利片,opencmkg,8,110,13,37,168
+887,0,达非那新,达非那新,Darifenacin,未命中,达非那新,ddinter,8,115,1,36,160
+888,0,莫昔普利,莫昔普利,Moexipril,未命中,莫昔普利,ddinter,8,118,11,22,159
+889,0,群多普利,群多普利,Trandolapril,未命中,群多普利,ddinter,8,119,11,16,154
+890,0,左氨氯地平,左氨氯地平,Levamlodipine,未命中,左氨氯地平,ddinter,8,139,2,0,149
+891,0,甲巯咪唑,甲巯咪唑,Methimazole,归一化精确,甲巯咪唑片,opencmkg,8,42,1,92,143
+892,0,西立伐他汀,西立伐他汀,Cerivastatin,未命中,西立伐他汀,ddinter,8,106,0,26,140
+893,0,艾司利卡西平,艾司利卡西平,Eslicarbazepine,未命中,艾司利卡西平,ddinter,8,114,3,0,125
+894,0,他司美尔通,他司美尔通,Tasimelteon,未命中,他司美尔通,ddinter,8,89,0,0,97
+895,0,维库溴铵,维库溴铵,Vecuronium,未命中,维库溴铵,ddinter,8,38,5,34,85
+896,0,利奥西呱,利奥西呱,Riociguat,未命中,利奥西呱,ddinter,8,65,0,0,73
+897,0,罗库溴铵,罗库溴铵,Rocuronium,未命中,罗库溴铵,ddinter,8,38,5,22,73
+898,0,丹曲林,丹曲林,Dantrolene,去盐归一化,丹曲林钠胶囊,opencmkg,8,47,0,15,70
+899,0,泮库溴铵,泮库溴铵,Pancuronium,未命中,泮库溴铵,ddinter,8,40,5,17,70
+900,0,顺式阿曲库铵,顺式阿曲库铵,Cisatracurium,未命中,顺式阿曲库铵,ddinter,8,30,5,18,61
+901,0,骨化二醇,骨化二醇,Calcifediol,未命中,骨化二醇,ddinter,8,48,1,0,57
+902,0,米库氯铵,米库氯铵,Mivacurium,未命中,米库氯铵,ddinter,8,39,5,0,52
+903,0,二氢速甾醇,二氢速甾醇,Dihydrotachysterol,未命中,二氢速甾醇,ddinter,8,41,1,0,50
+904,0,阿曲库铵,阿曲库铵,Atracurium,未命中,阿曲库铵,ddinter,8,30,5,0,43
+905,0,多库氯铵,多库氯铵,Doxacurium,未命中,多库氯铵,ddinter,8,24,5,0,37
+906,0,右哌甲酯,右哌甲酯,Dexmethylphenidate,未命中,右哌甲酯,ddinter,8,26,2,0,36
+907,0,瑞帕库溴铵,瑞帕库溴铵,Rapacuronium,未命中,瑞帕库溴铵,ddinter,8,23,4,0,35
+908,0,甲磺酸美他库林,甲磺酸美他库林,Metocurine,未命中,甲磺酸美他库林,ddinter,8,23,4,0,35
+909,0,筒箭毒碱,筒箭毒碱,Tubocurarine,未命中,筒箭毒碱,ddinter,8,23,4,0,35
+910,0,哌库溴铵,哌库溴铵,Pipecuronium,未命中,哌库溴铵,ddinter,8,22,4,0,34
+911,0,埃维特格韦,埃维特格韦,Elvitegravir,未命中,埃维特格韦,ddinter,8,19,0,0,27
+912,0,吡咯醇胺,吡咯醇胺,Mepyramine,未命中,吡咯醇胺,ddinter,7,372,2,0,381
+913,0,氢氧化镁,氢氧化镁,Magnesium hydroxide,未命中,氢氧化镁,ddinter,7,288,71,0,366
+914,0,奥利司他,奥利司他,Orlistat,归一化精确,奥利司他胶囊,opencmkg,7,101,9,192,309
+915,0,尼扎替丁,尼扎替丁,Nizatidine,未命中,尼扎替丁,ddinter,7,39,36,181,263
+916,0,喷托维林,喷托维林,Pentoxyverine,去盐归一化,枸橼酸喷托维林片,opencmkg,7,226,0,0,233
+917,0,缬更昔洛韦,缬更昔洛韦,Valganciclovir,去盐归一化,盐酸缬更昔洛韦片,opencmkg,7,152,0,55,214
+918,0,更昔洛韦,更昔洛韦,Ganciclovir,归一化精确,更昔洛韦滴眼液,opencmkg,7,153,0,49,209
+919,0,碳酸钙,碳酸钙,Calcium carbonate,归一化精确,碳酸钙咀嚼片,opencmkg,7,141,50,0,198
+920,0,碳酸镁,碳酸镁,Magnesium carbonate,去盐归一化,碳酸钙咀嚼片,opencmkg,7,111,79,0,197
+921,0,非诺贝特,非诺贝特,Fenofibrate,归一化精确,非诺贝特片,opencmkg,7,62,0,128,197
+922,0,西地那非,西地那非,Sildenafil,去盐归一化,枸橼酸西地那非片,opencmkg,7,76,2,106,191
+923,0,氢氧化铝镁,氢氧化铝镁,Magaldrate,未命中,氢氧化铝镁,ddinter,7,92,77,0,176
+924,0,伊索拉定,伊索拉定,Isradipine,未命中,伊索拉定,ddinter,7,121,2,42,172
+925,0,尼索地平,尼索地平,Nisoldipine,未命中,尼索地平,ddinter,7,119,5,36,167
+926,0,尼卡地平,尼卡地平,Nicardipine,未命中,尼卡地平,ddinter,7,122,1,30,160
+927,0,他克林,他克林,Tacrine,未命中,他克林,ddinter,7,124,2,0,133
+928,0,阿法替尼,阿法替尼,Afatinib,未命中,阿法替尼,ddinter,7,124,1,0,132
+929,0,阿米洛利,阿米洛利,Amiloride,未命中,阿米洛利,ddinter,7,82,7,26,122
+930,0,氨蝶呤,氨蝶呤,Triamterene,编辑距离（待确认）,氨蝶呤,ddinter,7,86,10,0,103
+931,0,阿来替尼,阿来替尼,Alectinib,未命中,阿来替尼,ddinter,7,83,0,0,90
+932,0,炔雌醇甲醚,炔雌醇甲醚,Mestranol,未命中,炔雌醇甲醚,ddinter,7,71,6,0,84
+933,0,水合氯醛,水合氯醛,Chloral hydrate / Paraldehyde,未命中,水合氯醛,ddinter,7,75,1,0,83
+934,0,丙硫氧嘧啶,丙硫氧嘧啶,Propylthiouracil,归一化精确,丙硫氧嘧啶肠溶片,opencmkg,7,42,0,32,81
+935,0,多巴胺,多巴胺,Dopamine,未命中,多巴胺,ddinter,7,72,2,0,81
+936,0,艾司氯胺酮,艾司氯胺酮,Esketamine,未命中,艾司氯胺酮,ddinter,7,63,0,0,70
+937,0,司坦唑醇,司坦唑醇,Stanozolol,未命中,司坦唑醇,ddinter,7,60,0,0,67
+938,0,他拉罗妥司他汀,他拉罗妥司他汀,Tagraxofusp,未命中,他拉罗妥司他汀,ddinter,7,59,0,0,66
+939,0,多拉韦林,多拉韦林,Doravirine,未命中,多拉韦林,ddinter,7,16,36,0,59
+940,0,瑞美吉泮,瑞美吉泮,Rimegepant,未命中,瑞美吉泮,ddinter,7,48,0,0,55
+941,0,胆骨化醇,胆骨化醇,Cholecalciferol,未命中,胆骨化醇,ddinter,7,46,2,0,55
+942,0,麦角钙化醇,麦角钙化醇,Ergocalciferol,未命中,麦角钙化醇,ddinter,7,46,2,0,55
+943,0,帕替洛默,帕替洛默,Patiromer,未命中,帕替洛默,ddinter,7,41,0,0,48
+944,0,肉毒毒素A型,肉毒毒素A型,Botulinum toxin type A,未命中,肉毒毒素A型,ddinter,7,34,0,0,41
+945,0,肉毒毒素B型,肉毒毒素B型,Botulinum Toxin Type B,未命中,肉毒毒素B型,ddinter,7,34,0,0,41
+946,0,地诺孕素,地诺孕素,Dienogest,未命中,地诺孕素,ddinter,7,29,1,0,37
+947,0,诺孕酯,诺孕酯,Norgestimate,未命中,诺孕酯,ddinter,7,27,2,0,36
+948,0,匹莫林,匹莫林,Pemoline,未命中,匹莫林,ddinter,7,19,0,4,30
+949,0,氨基苯甲酸,氨基苯甲酸,Aminobenzoic acid,未命中,氨基苯甲酸,ddinter,7,20,0,0,27
+950,0,普托马尼,普托马尼,Pretomanid,未命中,普托马尼,ddinter,7,7,0,0,14
+951,0,布罗索尤单抗,布罗索尤单抗,Burosumab,未命中,布罗索尤单抗,ddinter,7,2,0,0,9
+952,0,罗格列酮,罗格列酮,Rosiglitazone,去盐归一化,酒石酸罗格列酮片,opencmkg,6,246,23,297,572
+953,0,阿卡波糖,阿卡波糖,Acarbose,归一化精确,阿卡波糖胶囊,opencmkg,6,211,28,124,369
+954,0,氯苯那敏,氯苯那敏,Chlorpheniramine,去盐归一化,马来酸氯苯那敏片,opencmkg,6,303,2,36,347
+955,0,赛庚啶,赛庚啶,Cyproheptadine,归一化精确,赛庚啶乳膏,opencmkg,6,294,2,0,302
+956,0,氯马斯汀,氯马斯汀,Clemastine,未命中,氯马斯汀,ddinter,6,286,3,0,295
+957,0,卡比沙明,卡比沙明,Carbinoxamine,未命中,卡比沙明,ddinter,6,286,2,0,294
+958,0,右溴苯那敏,右溴苯那敏,Dexbrompheniramine,未命中,右溴苯那敏,ddinter,6,285,2,0,293
+959,0,溴苯那敏,溴苯那敏,Brompheniramine,未命中,溴苯那敏,ddinter,6,282,2,0,290
+960,0,曲普利啶,曲普利啶,Triprolidine,去盐归一化,盐酸曲普利啶胶囊,opencmkg,6,281,2,0,289
+961,0,阿普唑仑,阿普唑仑,Alprazolam,未命中,阿普唑仑,ddinter,6,109,18,136,269
+962,0,吡咯吡胺,吡咯吡胺,Tripelennamine,未命中,吡咯吡胺,ddinter,6,251,3,0,260
+963,0,缬沙坦,缬沙坦,Valsartan,归一化精确,缬沙坦胶囊,opencmkg,6,87,0,160,253
+964,0,氯沙坦,氯沙坦,Losartan,去盐归一化,氯沙坦钾片,opencmkg,6,96,1,149,252
+965,0,美克洛嗪,美克洛嗪,Meclizine,未命中,美克洛嗪,ddinter,6,240,5,0,251
+966,0,阿扎他定,阿扎他定,Azatadine,未命中,阿扎他定,ddinter,6,242,2,0,250
+967,0,丙戊酸,丙戊酸,Valproic acid,去盐归一化,丙戊酸镁片,opencmkg,6,94,14,133,247
+968,0,环丙嗪,环丙嗪,Cyclizine,未命中,环丙嗪,ddinter,6,229,3,0,238
+969,0,毒扁豆碱,毒扁豆碱,Physostigmine / Physostigmine (ophthalmic),未命中,毒扁豆碱,ddinter,6,231,0,0,237
+970,0,苯茚胺,苯茚胺,Phenindamine,未命中,苯茚胺,ddinter,6,217,2,0,225
+971,0,氧化镁,氧化镁,Magnesium oxide,未命中,氧化镁,ddinter,6,105,88,0,199
+972,0,替米沙坦,替米沙坦,Telmisartan,归一化精确,替米沙坦片,opencmkg,6,82,1,95,184
+973,0,氯环嗪,氯环嗪,Chlorcyclizine,未命中,氯环嗪,ddinter,6,168,2,0,176
+974,0,咪达唑仑,咪达唑仑,Midazolam,未命中,咪达唑仑,ddinter,6,115,19,35,175
+975,0,胍乙啶,胍乙啶,Guanadrel / Guanethidine,未命中,胍乙啶,ddinter,6,156,0,0,162
+976,0,磺胺甲噁唑,磺胺甲噁唑,Sulfamethoxazole,归一化精确,磺胺甲噁唑片,opencmkg,6,57,88,0,151
+977,0,阿托伐醌,阿托伐醌,Atovaquone,未命中,阿托伐醌,ddinter,6,32,4,104,146
+978,0,特洛司他乙酯,特洛司他乙酯,Telotristat ethyl,未命中,特洛司他乙酯,ddinter,6,129,0,0,135
+979,0,雷洛昔芬,雷洛昔芬,Raloxifene,未命中,雷洛昔芬,ddinter,6,6,4,109,125
+980,0,萨瑞环素,萨瑞环素,Sarecycline,未命中,萨瑞环素,ddinter,6,101,4,0,111
+981,0,美西律,美西律,Mexiletine,去盐归一化,盐酸美西律片,opencmkg,6,54,3,42,105
+982,0,金刚烷胺,金刚烷胺,Amantadine / Rimantadine,去盐归一化,盐酸金刚烷胺糖浆,opencmkg,6,47,1,43,97
+983,0,替比夫定,替比夫定,Telbivudine,归一化精确,替比夫定片,opencmkg,6,90,0,0,96
+984,0,奥美沙坦,奥美沙坦,Olmesartan,编辑距离（待确认）,奥美沙坦,ddinter,6,87,0,0,93
+985,0,阿齐沙坦酯,阿齐沙坦酯,Azilsartan medoxomil,未命中,阿齐沙坦酯,ddinter,6,79,0,0,85
+986,0,磺胺嘧啶,磺胺嘧啶,Sulfadiazine,归一化精确,磺胺嘧啶片,opencmkg,6,54,0,22,82
+987,0,间羟胺,间羟胺,Metaraminol,未命中,间羟胺,ddinter,6,59,0,0,65
+988,0,甲氧唑酮,甲氧唑酮,Metaxalone,未命中,甲氧唑酮,ddinter,6,47,0,0,53
+989,0,非诺贝酸,非诺贝酸,Fenofibric acid,未命中,非诺贝酸,ddinter,6,37,0,0,43
+990,0,奥司匹米芬,奥司匹米芬,Ospemifene,未命中,奥司匹米芬,ddinter,6,29,0,0,35
+991,0,地高辛免疫Fab（羊）,地高辛免疫Fab,Digoxin Immune Fab (Ovine),未命中,地高辛免疫Fab（羊）,ddinter,6,10,0,0,16
+992,0,生长激素（重组）,生长激素,Somatotropin / Somatrem,归一化精确,生长激素,opencmkg,5,761,18,0,784
+993,0,东莨菪碱,东莨菪碱,Scopolamine / Scopolamine (ophthalmic),去盐归一化,氢溴酸东莨菪碱注射液,opencmkg,5,196,19,90,310
+994,0,奥曲肽,奥曲肽,Octreotide,去盐归一化,醋酸奥曲肽注射液,opencmkg,5,127,3,134,269
+995,0,多奈哌齐,多奈哌齐,Donepezil,去盐归一化,盐酸多奈哌齐片,opencmkg,5,124,49,78,256
+996,0,坦索罗辛,坦索罗辛,Tamsulosin,未命中,坦索罗辛,ddinter,5,67,1,126,199
+997,0,苯丁酸甘油酯,苯丁酸甘油酯,Glycerol phenylbutyrate,未命中,苯丁酸甘油酯,ddinter,5,182,4,0,191
+998,0,加兰他敏,加兰他敏,Galantamine,去盐归一化,氢溴酸加兰他敏分散片,opencmkg,5,146,0,21,172
+999,0,利斯的明,利斯的明,Rivastigmine,未命中,利斯的明,ddinter,5,122,0,41,168
+1000,0,头孢曲松,头孢曲松,Ceftriaxone,未命中,头孢曲松,ddinter,5,13,2,144,164
+1001,0,非尔氨酯,非尔氨酯,Felbamate,未命中,非尔氨酯,ddinter,5,155,4,0,164
+1002,0,氟尼缩松,氟尼缩松,Flunisolide / Flunisolide (nasal),未命中,氟尼缩松,ddinter,5,61,14,79,159
+1003,0,去羟肌苷,去羟肌苷,Didanosine,未命中,去羟肌苷,ddinter,5,80,8,60,153
+1004,0,左旋沙丁胺醇,左旋沙丁胺醇,Arformoterol,未命中,左旋沙丁胺醇,ddinter,5,125,15,0,145
+1005,0,左沙丁胺醇,左沙丁胺醇,Levosalbutamol,编辑距离（待确认）,左沙丁胺醇,ddinter,5,125,15,0,145
+1006,0,阿伐斯汀,阿伐斯汀,Acrivastine,归一化精确,阿伐斯汀胶囊,opencmkg,5,136,2,0,143
+1007,0,甲基多巴,甲基多巴,Methyldopa,未命中,甲基多巴,ddinter,5,66,9,50,130
+1008,0,氯巴占,氯巴占,Clobazam,未命中,氯巴占,ddinter,5,102,13,0,120
+1009,0,双氯芬酰胺,双氯芬酰胺,Diclofenamide,未命中,双氯芬酰胺,ddinter,5,100,5,0,110
+1010,0,非索罗定,非索罗定,Fesoterodine,未命中,非索罗定,ddinter,5,103,0,0,108
+1011,0,水杨酸胆碱,水杨酸胆碱,Choline salicylate,未命中,水杨酸胆碱,ddinter,5,95,7,0,107
+1012,0,雌酮,雌酮,Estrone,未命中,雌酮,ddinter,5,95,3,0,103
+1013,0,西洛多辛,西洛多辛,Silodosin,未命中,西洛多辛,ddinter,5,91,0,0,96
+1014,0,苯硝唑,苯硝唑,Benznidazole,未命中,苯硝唑,ddinter,5,89,0,0,94
+1015,0,丙酸倍氯米松（外用）,丙酸倍氯米松,Beclomethasone dipropionate / Beclomethasone dipropionate (nasal) / Prednicarbate (topical),归一化精确,丙酸倍氯米松气雾剂,opencmkg,5,30,58,0,93
+1016,0,匹伐他汀,匹伐他汀,Pitavastatin,去盐归一化,匹伐他汀钙片,opencmkg,5,78,2,0,85
+1017,0,葡萄糖酸钙,葡萄糖酸钙,Calcium gluconate,归一化精确,葡萄糖酸钙片,opencmkg,5,78,0,0,83
+1018,0,菲达霉素,菲达霉素,Fidaxomicin,未命中,菲达霉素,ddinter,5,17,57,0,79
+1019,0,烟酰胺,烟酰胺,Nicotinamide,归一化精确,烟酰胺片,opencmkg,5,58,1,0,64
+1020,0,甲苯丁胺,甲苯丁胺,Mephentermine,未命中,甲苯丁胺,ddinter,5,59,0,0,64
+1021,0,氟羟甲睾酮,氟羟甲睾酮,Fluoxymesterone,未命中,氟羟甲睾酮,ddinter,5,56,0,0,61
+1022,0,甲睾酮,甲睾酮,Methyltestosterone,归一化精确,甲睾酮片,opencmkg,5,56,0,0,61
+1023,0,磺异噁唑,磺异噁唑,Sulfisoxazole,未命中,磺异噁唑,ddinter,5,55,0,0,60
+1024,0,鹅去氧胆酸,鹅去氧胆酸,Chenodeoxycholic acid,未命中,鹅去氧胆酸,ddinter,5,48,0,0,53
+1025,0,赛洛唑啉（鼻用）,赛洛唑啉,Xylometazoline (nasal),未命中,赛洛唑啉（鼻用）,ddinter,5,44,0,0,49
+1026,0,奥马环素,奥马环素,Omadacycline,未命中,奥马环素,ddinter,5,39,0,0,44
+1027,0,高氯酸钾,高氯酸钾,Potassium perchlorate,未命中,高氯酸钾,ddinter,5,20,11,0,36
+1028,0,奥沙尼喹,奥沙尼喹,Oxamniquine,未命中,奥沙尼喹,ddinter,5,26,2,0,33
+1029,0,干扰素α-n3,干扰素α-n3,Interferon alfa-n3,未命中,干扰素α-n3,ddinter,5,14,3,0,22
+1030,0,贝伐珠单抗,贝伐珠单抗,Bevacizumab,未命中,贝伐珠单抗,ddinter,5,17,0,0,22
+1031,0,硫糖铝,硫糖铝,Sucralfate,归一化精确,硫糖铝咀嚼片,opencmkg,4,102,42,265,413
+1032,0,阿托品,阿托品,Atropine / Atropine (ophthalmic),去盐归一化,硫酸阿托品片,opencmkg,4,201,20,164,389
+1033,0,地西环明,地西环明,Dicyclomine,未命中,地西环明,ddinter,4,177,19,140,340
+1034,0,纳比隆,纳比隆,Nabilone,未命中,纳比隆,ddinter,4,322,0,0,326
+1035,0,氢氯噻嗪,氢氯噻嗪,Hydrochlorothiazide,归一化精确,氢氯噻嗪片,opencmkg,4,161,19,128,312
+1036,0,格隆溴铵,格隆溴铵,Glycopyrronium / Glycopyrronium (topical),未命中,格隆溴铵,ddinter,4,271,20,0,295
+1037,0,亚叶酸,亚叶酸,Leucovorin,未命中,亚叶酸,ddinter,4,20,1,266,291
+1038,0,地西泮,地西泮,Diazepam,未命中,地西泮,ddinter,4,108,20,159,291
+1039,0,氯硝西泮,氯硝西泮,Clonazepam,未命中,氯硝西泮,ddinter,4,103,13,155,275
+1040,0,对乙酰氨基酚,对乙酰氨基酚,Acetaminophen,归一化精确,对乙酰氨基酚缓释片,opencmkg,4,37,17,216,274
+1041,0,唑吡坦,唑吡坦,Zolpidem,未命中,唑吡坦,ddinter,4,87,1,179,271
+1042,0,劳拉西泮,劳拉西泮,Lorazepam,未命中,劳拉西泮,ddinter,4,53,13,193,263
+1043,0,奥卡西平,奥卡西平,Oxcarbazepine,归一化精确,奥卡西平片,opencmkg,4,189,4,51,248
+1044,0,美托拉宗,美托拉宗,Metolazone,未命中,美托拉宗,ddinter,4,161,17,66,248
+1045,0,普伐他汀,普伐他汀,Pravastatin,去盐归一化,普伐他汀钠片,opencmkg,4,83,2,148,237
+1046,0,吲达帕胺,吲达帕胺,Indapamide,编辑距离（待确认）,吲达帕胺,ddinter,4,161,16,54,235
+1047,0,替马西泮,替马西泮,Temazepam,未命中,替马西泮,ddinter,4,55,13,158,230
+1048,0,加巴喷丁,加巴喷丁,Gabapentin,未命中,加巴喷丁,ddinter,4,36,6,169,215
+1049,0,氯噻酮,氯噻酮,Chlorthalidone,未命中,氯噻酮,ddinter,4,161,17,22,204
+1050,0,莨菪碱,莨菪碱,Hyoscyamine,未命中,莨菪碱,ddinter,4,177,19,0,200
+1051,0,溴丙胺太林,溴丙胺太林,Propantheline,归一化精确,溴丙胺太林片,opencmkg,4,176,19,0,199
+1052,0,欧文氏菌左旋门冬酰胺酶,欧文氏菌左旋门冬酰胺酶,Asparaginase Erwinia chrysanthemi,未命中,欧文氏菌左旋门冬酰胺酶,ddinter,4,193,0,0,197
+1053,0,氯噻嗪,氯噻嗪,Chlorothiazide,编辑距离（待确认）,氯噻嗪,ddinter,4,156,17,19,196
+1054,0,培格拉西帕酶,培格拉西帕酶,Calaspargase pegol,未命中,培格拉西帕酶,ddinter,4,191,0,0,195
+1055,0,甲溴东莨菪碱,甲溴东莨菪碱,Methscopolamine,未命中,甲溴东莨菪碱,ddinter,4,172,16,0,192
+1056,0,美贝维林,美贝维林,Mepenzolate,未命中,美贝维林,ddinter,4,172,16,0,192
+1057,0,氯地定,氯地定,Clidinium,未命中,氯地定,ddinter,4,171,16,0,191
+1058,0,普瑞巴林,普瑞巴林,Pregabalin,归一化精确,普瑞巴林胶囊,opencmkg,4,47,0,132,183
+1059,0,多噻嗪,多噻嗪,Polythiazide,未命中,多噻嗪,ddinter,4,161,17,0,182
+1060,0,氢氟噻嗪,氢氟噻嗪,Hydroflumethiazide,未命中,氢氟噻嗪,ddinter,4,161,17,0,182
+1061,0,利血平,利血平,Deserpidine / Reserpine,未命中,利血平,ddinter,4,173,1,1,179
+1062,0,林丹,林丹,Lindane,拼音相同（待确认）,林丹,ddinter,4,175,0,0,179
+1063,0,烟酸,烟酸,Niacin,原样精确,烟酸,opencmkg,4,60,2,112,178
+1064,0,阿莫达非尼,阿莫达非尼,Armodafinil,未命中,阿莫达非尼,ddinter,4,92,74,0,170
+1065,0,苄氟噻嗪,苄氟噻嗪,Bendroflumethiazide,未命中,苄氟噻嗪,ddinter,4,149,15,0,168
+1066,0,奥沙西泮,奥沙西泮,Oxazepam,未命中,奥沙西泮,ddinter,4,53,13,93,163
+1067,0,氟伐他汀,氟伐他汀,Fluvastatin,去盐归一化,氟伐他汀钠胶囊,opencmkg,4,101,3,50,158
+1068,0,补骨脂素,补骨脂素,Methoxsalen / Methoxsalen (topical) / Trioxsalen,未命中,补骨脂素,ddinter,4,131,0,0,135
+1069,0,甲苯妥英,甲苯妥英,Mephenytoin,未命中,甲苯妥英,ddinter,4,123,5,0,132
+1070,0,甲氯芬酯,甲氯芬酯,Methocarbamol,去盐归一化,盐酸甲氯芬酯胶囊,opencmkg,4,40,0,81,125
+1071,0,酯唑仑,酯唑仑,Estazolam,未命中,酯唑仑,ddinter,4,71,13,37,125
+1072,0,巴氯芬,巴氯芬,Baclofen,归一化精确,巴氯芬片,opencmkg,4,47,1,67,119
+1073,0,氟拉西泮,氟拉西泮,Flurazepam,未命中,氟拉西泮,ddinter,4,77,13,22,116
+1074,0,乙苯妥英,乙苯妥英,Ethotoin,未命中,乙苯妥英,ddinter,4,102,3,0,109
+1075,0,丁卡因（眼用）,丁卡因,Tetracaine / Tetracaine (ophthalmic) / Tetracaine (topical),去盐归一化,盐酸丁卡因注射液,opencmkg,4,99,1,0,104
+1076,0,夸西泮,夸西泮,Quazepam,未命中,夸西泮,ddinter,4,62,14,23,103
+1077,0,氯氮䓬,氯氮䓬,Chlordiazepoxide,未命中,氯氮䓬,ddinter,4,66,15,18,103
+1078,0,氯氮卓酸,氯氮卓酸,Clorazepic acid,未命中,氯氮卓酸,ddinter,4,85,13,0,102
+1079,0,雷美尔通,雷美尔通,Ramelteon,未命中,雷美尔通,ddinter,4,96,0,0,100
+1080,0,水杨酸苯酯,水杨酸苯酯,Phenyl salicylate,未命中,水杨酸苯酯,ddinter,4,79,7,0,90
+1081,0,环索奈德（鼻用）,环索奈德,Ciclesonide / Ciclesonide (nasal),未命中,环索奈德（鼻用）,ddinter,4,62,14,10,90
+1082,0,枸橼酸钙,枸橼酸钙,Calcium citrate,归一化精确,枸橼酸钙片,opencmkg,4,80,0,0,84
+1083,0,磷酸钙,磷酸钙,Calcium Phosphate,未命中,磷酸钙,ddinter,4,80,0,0,84
+1084,0,扎西他滨,扎西他滨,Zalcitabine,未命中,扎西他滨,ddinter,4,70,5,0,79
+1085,0,氨基己酸,氨基己酸,Aminocaproic acid,未命中,氨基己酸,ddinter,4,6,1,64,75
+1086,0,甲丙氨酯,甲丙氨酯,Meprobamate,未命中,甲丙氨酯,ddinter,4,44,0,20,68
+1087,0,咖啡因,咖啡因,Caffeine,未命中,咖啡因,ddinter,4,35,13,15,67
+1088,0,丙磺舒,丙磺舒,Probenecid,未命中,丙磺舒,ddinter,4,19,10,33,66
+1089,0,托卡朋,托卡朋,Tolcapone,未命中,托卡朋,ddinter,4,55,2,3,64
+1090,0,瑞马唑仑,瑞马唑仑,Remimazolam,未命中,瑞马唑仑,ddinter,4,46,4,0,54
+1091,0,四铁三柠檬酸十水合物,四铁三柠檬酸十水合物,Tetraferric tricitrate decahydrate,未命中,四铁三柠檬酸十水合物,ddinter,4,44,2,0,50
+1092,0,磺胺多辛,磺胺多辛,Sulfadoxine,未命中,磺胺多辛,ddinter,4,45,0,0,49
+1093,0,新斯的明,新斯的明,Neostigmine,编辑距离（待确认）,新斯的明,ddinter,4,42,0,0,46
+1094,0,去氧孕烯,去氧孕烯,Desogestrel / Norelgestromin,未命中,去氧孕烯,ddinter,4,39,1,0,44
+1095,0,乙胺嘧啶,乙胺嘧啶,Pyrimethamine,归一化精确,乙胺嘧啶片,opencmkg,4,22,2,14,42
+1096,0,人C1酯酶抑制剂,人C1酯酶抑制剂,Human C1-esterase inhibitor,未命中,人C1酯酶抑制剂,ddinter,4,37,0,0,41
+1097,0,康奈司他特α,康奈司他特α,Conestat alfa,未命中,康奈司他特α,ddinter,4,37,0,0,41
+1098,0,双氯苯唑胺,双氯苯唑胺,Dichloralphenazone,未命中,双氯苯唑胺,ddinter,4,29,0,0,33
+1099,0,氯胍,氯胍,Proguanil,未命中,氯胍,ddinter,4,26,3,0,33
+1100,0,对氨基水杨酸,对氨基水杨酸,Aminosalicylic acid,去盐归一化,对氨基水杨酸钙片,opencmkg,4,22,1,0,27
+1101,0,左亚叶酸,左亚叶酸,Levoleucovorin,未命中,左亚叶酸,ddinter,4,19,0,0,23
+1102,0,他非诺喹,他非诺喹,Tafenoquine,未命中,他非诺喹,ddinter,4,17,0,0,21
+1103,0,非布司他,非布司他,Febuxostat,未命中,非布司他,ddinter,4,17,0,0,21
+1104,0,培基那肽,培基那肽,Peginesatide,未命中,培基那肽,ddinter,4,4,10,0,18
+1105,0,促红细胞生成素,促红细胞生成素,Erythropoietin,编辑距离（待确认）,促红细胞生成素,ddinter,4,3,10,0,17
+1106,0,达贝泊汀α,达贝泊汀α,Darbepoetin alfa,未命中,达贝泊汀α,ddinter,4,3,10,0,17
+1107,0,哌嗪,哌嗪,Piperazine,未命中,哌嗪,ddinter,4,10,0,0,14
+1108,0,头孢地尔,头孢地尔,Cefiderocol,未命中,头孢地尔,ddinter,4,10,0,0,14
+1109,0,环丝氨酸,环丝氨酸,Cycloserine,未命中,环丝氨酸,ddinter,4,7,0,0,11
+1110,0,人凝血因子IX复合物,人凝血因子IX复合物,Factor IX Complex (Human),未命中,人凝血因子IX复合物,ddinter,4,1,0,0,5
+1111,0,抗抑制物凝血复合物,抗抑制物凝血复合物,Anti-inhibitor coagulant complex,未命中,抗抑制物凝血复合物,ddinter,4,1,0,0,5
+1112,0,己酮可可碱,己酮可可碱,Pentoxifylline,归一化精确,己酮可可碱肠溶片,opencmkg,3,228,0,143,374
+1113,0,米诺地尔,米诺地尔,Minoxidil / Minoxidil (topical),归一化精确,米诺地尔喷雾剂,opencmkg,3,186,2,116,307
+1114,0,阿莫西林,阿莫西林,Amoxicillin,归一化精确,阿莫西林胶囊,opencmkg,3,23,7,238,271
+1115,0,异烟肼,异烟肼,Isoniazid,归一化精确,异烟肼片,opencmkg,3,172,18,49,242
+1116,0,枸橼酸镁,枸橼酸镁,Magnesium citrate,去盐归一化,枸橼酸钾颗粒,opencmkg,3,231,1,0,235
+1117,0,别嘌醇,别嘌醇,Allopurinol,归一化精确,别嘌醇片,opencmkg,3,11,7,195,216
+1118,0,氯化钙,氯化钙,Calcium chloride,去盐归一化,氯化钠注射液,opencmkg,3,31,0,182,216
+1119,0,人腺病毒E型4型CL-68578株抗原,人腺病毒E型4型CL-68578株抗原,Human adenovirus e serotype 4 strain cl-68578 antigen,未命中,人腺病毒E型4型CL-68578株抗原,ddinter,3,186,0,0,189
+1120,0,呋喃妥因,呋喃妥因,Nitrofurantoin,未命中,呋喃妥因,ddinter,3,80,14,73,170
+1121,0,替硝唑,替硝唑,Tinidazole,归一化精确,替硝唑片,opencmkg,3,157,1,0,161
+1122,0,拉米夫定,拉米夫定,Lamivudine,归一化精确,拉米夫定片,opencmkg,3,20,0,122,145
+1123,0,司他夫定,司他夫定,Stavudine,未命中,司他夫定,ddinter,3,70,0,61,134
+1124,0,兰瑞肽,兰瑞肽,Lanreotide,未命中,兰瑞肽,ddinter,3,127,3,0,133
+1125,0,安立生坦,安立生坦,Ambrisentan,未命中,安立生坦,ddinter,3,48,8,51,110
+1126,0,利巴韦林,利巴韦林,Ribavirin,归一化精确,利巴韦林胶囊,opencmkg,3,3,0,97,103
+1127,0,左旋多巴,左旋多巴,Levodopa,归一化精确,左旋多巴片,opencmkg,3,92,8,0,103
+1128,0,硫酸锌,硫酸锌,Zinc sulfate,归一化精确,硫酸锌口服溶液,opencmkg,3,32,68,0,103
+1129,0,葡萄糖酸锌,葡萄糖酸锌,Zinc gluconate,归一化精确,葡萄糖酸锌口服溶液,opencmkg,3,32,68,0,103
+1130,0,多巴酚丁胺,多巴酚丁胺,Dobutamine,未命中,多巴酚丁胺,ddinter,3,70,0,25,98
+1131,0,乙硫异烟胺,乙硫异烟胺,Ethionamide,未命中,乙硫异烟胺,ddinter,3,89,0,0,92
+1132,0,氟胞嘧啶,氟胞嘧啶,Flucytosine,归一化精确,氟胞嘧啶片,opencmkg,3,81,1,0,85
+1133,0,醋酸钙,醋酸钙,Calcium acetate,归一化精确,醋酸钙颗粒,opencmkg,3,80,0,0,83
+1134,0,卡泊芬净,卡泊芬净,Caspofungin,未命中,卡泊芬净,ddinter,3,27,0,51,81
+1135,0,富马酸亚铁,富马酸亚铁,Ferrous fumarate,归一化精确,富马酸亚铁咀嚼片,opencmkg,3,69,8,0,80
+1136,0,葡萄糖酸亚铁,葡萄糖酸亚铁,Ferrous gluconate,去盐归一化,富马酸亚铁咀嚼片,opencmkg,3,69,8,0,80
+1137,0,铁,铁,Iron,未命中,铁,ddinter,3,68,8,0,79
+1138,0,溴隐亭,溴隐亭,Bromocriptine,未命中,溴隐亭,ddinter,3,66,2,0,71
+1139,0,去甲肾上腺素,去甲肾上腺素,Norepinephrine,未命中,去甲肾上腺素,ddinter,3,67,0,0,70
+1140,0,氨吡啶,氨吡啶,Amifampridine,未命中,氨吡啶,ddinter,3,65,0,0,68
+1141,0,米拉贝隆,米拉贝隆,Mirabegron,未命中,米拉贝隆,ddinter,3,18,46,0,67
+1142,0,克利维地平,克利维地平,Clevidipine,未命中,克利维地平,ddinter,3,61,1,0,65
+1143,0,雷迪帕韦,雷迪帕韦,Ledipasvir,未命中,雷迪帕韦,ddinter,3,58,4,0,65
+1144,0,水杨酸铋,水杨酸铋,Bismuth subsalicylate,编辑距离（待确认）,水杨酸铋,ddinter,3,61,0,0,64
+1145,0,哈拉西泮,哈拉西泮,Halazepam,未命中,哈拉西泮,ddinter,3,48,10,0,61
+1146,0,甲氧明,甲氧明,Methoxamine,未命中,甲氧明,ddinter,3,58,0,0,61
+1147,0,氨氯噻嗪,氨氯噻嗪,Apraclonidine,未命中,氨氯噻嗪,ddinter,3,55,0,0,58
+1148,0,氯化镁,氯化镁,Magnesium chloride,去盐归一化,氯化钠注射液,opencmkg,3,55,0,0,58
+1149,0,齐留通,齐留通,Zileuton,未命中,齐留通,ddinter,3,51,1,0,55
+1150,0,考来维仑,考来维仑,Colesevelam,未命中,考来维仑,ddinter,3,44,0,0,47
+1151,0,葡萄糖酸镁,葡萄糖酸镁,Magnesium gluconate,去盐归一化,葡萄糖酸钙片,opencmkg,3,44,0,0,47
+1152,0,蔗糖铁,蔗糖铁,Iron sucrose / Sodium ferric gluconate complex,未命中,蔗糖铁,ddinter,3,44,0,0,47
+1153,0,卡麦角林,卡麦角林,Cabergoline,未命中,卡麦角林,ddinter,3,11,0,31,45
+1154,0,双氯西林,双氯西林,Dicloxacillin,未命中,双氯西林,ddinter,3,12,2,24,41
+1155,0,厄他培南,厄他培南,Ertapenem,未命中,厄他培南,ddinter,3,7,0,28,38
+1156,0,氯美扎酮,氯美扎酮,Chlormezanone,归一化精确,氯美扎酮片,opencmkg,3,32,0,0,35
+1157,0,索利氨酯,索利氨酯,Solriamfetol,未命中,索利氨酯,ddinter,3,30,0,0,33
+1158,0,葡庚糖酸钙,葡庚糖酸钙,Calcium glucoheptonate,未命中,葡庚糖酸钙,ddinter,3,30,0,0,33
+1159,0,贝胆碱,贝胆碱,Bethanechol,未命中,贝胆碱,ddinter,3,26,0,2,31
+1160,0,乙氯维诺,乙氯维诺,Ethchlorvynol,未命中,乙氯维诺,ddinter,3,25,1,0,29
+1161,0,Levonordefrin,Levonordefrin,Levonordefrin,无译文,Levonordefrin,ddinter,3,25,0,0,28
+1162,0,氯贝酸,氯贝酸,Clofibrate,未命中,氯贝酸,ddinter,3,25,0,0,28
+1163,0,硝酸银（眼科用）,硝酸银,Silver nitrate (ophthalmic) / Silver nitrate (topical),未命中,硝酸银（眼科用）,ddinter,3,21,0,0,24
+1164,0,非那吡啶,非那吡啶,Phenazopyridine,未命中,非那吡啶,ddinter,3,21,0,0,24
+1165,0,普拉睾酮戊酸酯,普拉睾酮戊酸酯,Prasterone enantate,未命中,普拉睾酮戊酸酯,ddinter,3,19,0,0,22
+1166,0,拉科酰胺,拉科酰胺,Lacosamide,未命中,拉科酰胺,ddinter,3,18,0,0,21
+1167,0,莫雷西嗪,莫雷西嗪,Moricizine,去盐归一化,盐酸莫雷西嗪片,opencmkg,3,12,5,0,20
+1168,0,二氨吡啶,二氨吡啶,Dalfampridine,未命中,二氨吡啶,ddinter,3,16,0,0,19
+1169,0,沃西拉普韦,沃西拉普韦,Voxilaprevir,未命中,沃西拉普韦,ddinter,3,16,0,0,19
+1170,0,亚胺培南,亚胺培南,Imipenem,未命中,亚胺培南,ddinter,3,12,0,0,15
+1171,0,美罗培南,美罗培南,Meropenem,未命中,美罗培南,ddinter,3,11,0,0,14
+1172,0,纳武利尤单抗,纳武利尤单抗,Nivolumab,未命中,纳武利尤单抗,ddinter,3,10,0,0,13
+1173,0,帕博利珠单抗,帕博利珠单抗,Pembrolizumab,未命中,帕博利珠单抗,ddinter,3,9,0,0,12
+1174,0,索磷布韦,索磷布韦,Sofosbuvir,未命中,索磷布韦,ddinter,3,4,1,0,8
+1175,0,抑肽酶,抑肽酶,Aprotinin,未命中,抑肽酶,ddinter,3,3,0,0,6
+1176,0,阿加糖酶β,阿加糖酶β,Agalsidase beta,未命中,阿加糖酶β,ddinter,3,1,0,0,4
+1177,0,前列素E2（外用）,前列素E2,Dinoprostone (topical),未命中,前列素E2（外用）,ddinter,3,0,0,0,3
+1178,0,铜[64Cu]奥曲肽氧化物,铜[64Cu]奥曲肽氧化物,Copper oxodotreotide Cu-64,未命中,铜[64Cu]奥曲肽氧化物,ddinter,3,0,0,0,3
+1179,0,阿维鲁单抗,阿维鲁单抗,Avelumab,未命中,阿维鲁单抗,ddinter,3,0,0,0,3
+1180,0,恩格列净,恩格列净,Empagliflozin / Ertugliflozin,未命中,恩格列净,ddinter,2,659,38,0,699
+1181,0,叶酸,叶酸,Folic acid,归一化精确,叶酸片,opencmkg,2,29,1,398,430
+1182,0,沙格列汀,沙格列汀,Saxagliptin,归一化精确,沙格列汀片,opencmkg,2,333,21,0,356
+1183,0,碳酸氢钠,碳酸氢钠,Sodium bicarbonate,归一化精确,碳酸氢钠注射液,opencmkg,2,81,54,211,348
+1184,0,克林霉素,克林霉素,Clindamycin / Clindamycin (topical),去盐归一化,盐酸克林霉素胶囊,opencmkg,2,80,2,248,332
+1185,0,艾塞那肽,艾塞那肽,Exenatide,未命中,艾塞那肽,ddinter,2,301,21,0,324
+1186,0,利格列汀,利格列汀,Linagliptin,未命中,利格列汀,ddinter,2,278,19,0,299
+1187,0,西格列汀,西格列汀,Sitagliptin,未命中,西格列汀,ddinter,2,240,22,0,264
+1188,0,来曲唑,来曲唑,Letrozole,未命中,来曲唑,ddinter,2,79,6,171,258
+1189,0,阿格列汀,阿格列汀,Alogliptin,未命中,阿格列汀,ddinter,2,222,19,0,243
+1190,0,利拉鲁肽,利拉鲁肽,Liraglutide,未命中,利拉鲁肽,ddinter,2,213,24,0,239
+1191,0,阿仑膦酸,阿仑膦酸,Alendronic acid,去盐归一化,阿仑膦酸钠肠溶片,opencmkg,2,44,5,188,239
+1192,0,阿必鲁肽,阿必鲁肽,Albiglutide,未命中,阿必鲁肽,ddinter,2,213,23,0,238
+1193,0,利西拉肽,利西拉肽,Lixisenatide,未命中,利西拉肽,ddinter,2,213,22,0,237
+1194,0,司美格鲁肽,司美格鲁肽,Semaglutide,未命中,司美格鲁肽,ddinter,2,212,19,0,233
+1195,0,度拉糖肽,度拉糖肽,Dulaglutide,未命中,度拉糖肽,ddinter,2,211,20,0,233
+1196,0,托特罗定,托特罗定,Tolterodine,去盐归一化,酒石酸托特罗定胶囊,opencmkg,2,93,24,111,230
+1197,0,黄体酮,黄体酮,Progesterone / Progesterone (topical),归一化精确,黄体酮栓,opencmkg,2,164,1,62,229
+1198,0,丙泊酚,丙泊酚,Propofol,未命中,丙泊酚,ddinter,2,124,6,92,224
+1199,0,三甲氧苯酰胺,三甲氧苯酰胺,Trimethobenzamide,未命中,三甲氧苯酰胺,ddinter,2,221,0,0,223
+1200,0,奥昔布宁,奥昔布宁,Oxybutynin,去盐归一化,盐酸奥昔布宁缓释片,opencmkg,2,75,1,122,200
+1201,0,大麻二酚,大麻二酚,Cannabidiol,未命中,大麻二酚,ddinter,2,179,16,0,197
+1202,0,地诺单抗,地诺单抗,Denosumab,未命中,地诺单抗,ddinter,2,191,0,0,193
+1203,0,利塞膦酸,利塞膦酸,Risedronic acid,未命中,利塞膦酸,ddinter,2,43,0,147,192
+1204,0,瑞德西韦,瑞德西韦,Remdesivir,未命中,瑞德西韦,ddinter,2,178,0,0,180
+1205,0,氯化锶[89Sr],氯化锶[89Sr],Strontium chloride Sr-89,未命中,氯化锶[89Sr],ddinter,2,168,0,0,170
+1206,0,苯噻嗪,苯噻嗪,Benzthiazide,未命中,苯噻嗪,ddinter,2,149,15,0,166
+1207,0,三氯甲噻嗪,三氯甲噻嗪,Trichlormethiazide,未命中,三氯甲噻嗪,ddinter,2,144,15,0,161
+1208,0,醋酸甲地孕酮,醋酸甲地孕酮,Megestrol acetate,归一化精确,醋酸甲地孕酮分散片,opencmkg,2,129,3,0,134
+1209,0,阿洛司琼,阿洛司琼,Alosetron,未命中,阿洛司琼,ddinter,2,55,2,69,128
+1210,0,乙胺丁醇,乙胺丁醇,Ethambutol,去盐归一化,盐酸乙胺丁醇片,opencmkg,2,67,0,43,112
+1211,0,雌莫司汀,雌莫司汀,Estramustine,未命中,雌莫司汀,ddinter,2,99,10,0,111
+1212,0,醋酸锌,醋酸锌,Zinc acetate,未命中,醋酸锌,ddinter,2,32,66,0,100
+1213,0,阿苯达唑,阿苯达唑,Albendazole,归一化精确,阿苯达唑颗粒,opencmkg,2,87,7,0,96
+1214,0,阿巴卡韦,阿巴卡韦,Abacavir,未命中,阿巴卡韦,ddinter,2,17,2,72,93
+1215,0,塞克硝唑,塞克硝唑,Secnidazole,归一化精确,塞克硝唑片,opencmkg,2,90,0,0,92
+1216,0,高岭土,高岭土,Kaolin,未命中,高岭土,ddinter,2,65,17,0,84
+1217,0,乳酸钙,乳酸钙,Calcium lactate,归一化精确,乳酸钙颗粒,opencmkg,2,80,0,0,82
+1218,0,无水葡萄糖酸钙,无水葡萄糖酸钙,Calcium glubionate anhydrous,未命中,无水葡萄糖酸钙,ddinter,2,80,0,0,82
+1219,0,哌拉西林,哌拉西林,Piperacillin,未命中,哌拉西林,ddinter,2,19,3,57,81
+1220,0,恩他卡朋,恩他卡朋,Entacapone,未命中,恩他卡朋,ddinter,2,45,1,31,79
+1221,0,氯化锌,氯化锌,Zinc chloride,未命中,氯化锌,ddinter,2,12,62,0,76
+1222,0,活性炭,活性炭,Activated charcoal,未命中,活性炭,ddinter,2,73,1,0,76
+1223,0,青蒿琥酯,青蒿琥酯,Artesunate,归一化精确,青蒿琥酯片,opencmkg,2,72,0,0,74
+1224,0,黄酮哌酯,黄酮哌酯,Flavoxate,去盐归一化,盐酸黄酮哌酯片,opencmkg,2,71,1,0,74
+1225,0,恩西地平,恩西地平,Enasidenib,未命中,恩西地平,ddinter,2,70,0,0,72
+1226,0,苯托品,苯托品,Phenyltoloxamine,未命中,苯托品,ddinter,2,68,2,0,72
+1227,0,乌利普利司特,乌利普利司特,Ulipristal,未命中,乌利普利司特,ddinter,2,55,13,0,70
+1228,0,比哌立登,比哌立登,Biperiden,未命中,比哌立登,ddinter,2,67,1,0,70
+1229,0,利福昔明,利福昔明,Rifaximin,未命中,利福昔明,ddinter,2,46,0,21,69
+1230,0,茶苯海明,茶苯海明,Dimenhydrinate,归一化精确,茶苯海明片,opencmkg,2,64,1,0,67
+1231,0,凹凸棒石,凹凸棒石,Attapulgite,未命中,凹凸棒石,ddinter,2,47,15,0,64
+1232,0,布比卡因,布比卡因,Bupivacaine / Bupivacaine (liposome),去盐归一化,盐酸布比卡因注射液,opencmkg,2,25,1,35,63
+1233,0,颠茄,颠茄,Belladonna,归一化精确,颠茄酊,opencmkg,2,58,2,0,62
+1234,0,一氧化氮,一氧化氮,Nitric Oxide,未命中,一氧化氮,ddinter,2,13,0,43,58
+1235,0,考来烯胺,考来烯胺,Cholestyramine,未命中,考来烯胺,ddinter,2,47,8,0,57
+1236,0,吡嗪酰胺,吡嗪酰胺,Pyrazinamide,归一化精确,吡嗪酰胺片,opencmkg,2,16,0,38,56
+1237,0,消旋肾上腺素,消旋肾上腺素,Racepinephrine,未命中,消旋肾上腺素,ddinter,2,39,15,0,56
+1238,0,卡瓦胡椒,卡瓦胡椒,Kava,未命中,卡瓦胡椒,ddinter,2,53,0,0,55
+1239,0,伏立诺他,伏立诺他,Vorinostat,未命中,伏立诺他,ddinter,2,50,0,0,52
+1240,0,奥匹卡朋,奥匹卡朋,Opicapone,未命中,奥匹卡朋,ddinter,2,50,0,0,52
+1241,0,奥贝胆酸,奥贝胆酸,Obeticholic acid,未命中,奥贝胆酸,ddinter,2,44,3,0,49
+1242,0,硫喷妥钠,硫喷妥钠,Thiopental,未命中,硫喷妥钠,ddinter,2,37,5,0,44
+1243,0,考来替泊,考来替泊,Colestipol,未命中,考来替泊,ddinter,2,33,8,0,43
+1244,0,替鲁膦酸,替鲁膦酸,Tiludronic acid,未命中,替鲁膦酸,ddinter,2,40,0,0,42
+1245,0,三甲双酮,三甲双酮,Trimethadione,未命中,三甲双酮,ddinter,2,38,0,0,40
+1246,0,噻苯达唑,噻苯达唑,Thiabendazole,未命中,噻苯达唑,ddinter,2,37,1,0,40
+1247,0,苯佐卡因（外用）,苯佐卡因,Benzocaine (topical),未命中,苯佐卡因（外用）,ddinter,2,38,0,0,40
+1248,0,辛可卡因（外用）,辛可卡因,Cinchocaine (topical),未命中,辛可卡因（外用）,ddinter,2,38,0,0,40
+1249,0,利鲁唑,利鲁唑,Riluzole,归一化精确,利鲁唑片,opencmkg,2,21,4,7,34
+1250,0,屈昔多巴,屈昔多巴,Droxidopa,未命中,屈昔多巴,ddinter,2,29,0,0,31
+1251,0,布林佐胺（眼用）,布林佐胺,Brinzolamide / Brinzolamide (ophthalmic),归一化精确,布林佐胺滴眼液,opencmkg,2,0,0,28,30
+1252,0,替加环素,替加环素,Tigecycline,未命中,替加环素,ddinter,2,11,0,17,30
+1253,0,甲己炔巴比妥,甲己炔巴比妥,Methohexital,未命中,甲己炔巴比妥,ddinter,2,16,4,0,22
+1254,0,后马托品,后马托品,Homatropine / Homatropine (ophthalmic),未命中,后马托品,ddinter,2,18,0,0,20
+1255,0,恩曲他滨,恩曲他滨,Emtricitabine,未命中,恩曲他滨,ddinter,2,17,1,0,20
+1256,0,胍,胍,Guanidine,未命中,胍,ddinter,2,15,0,0,17
+1257,0,克拉维酸,克拉维酸,Clavulanic acid,未命中,克拉维酸,ddinter,2,14,0,0,16
+1258,0,苯丁酸,苯丁酸,Phenylbutyric acid,未命中,苯丁酸,ddinter,2,14,0,0,16
+1259,0,乌洛托品,乌洛托品,Methenamine,归一化精确,乌洛托品溶液,opencmkg,2,12,0,0,14
+1260,0,妥卡尼,妥卡尼,Tocainide,未命中,妥卡尼,ddinter,2,9,3,0,14
+1261,0,丁萘夫汀,丁萘夫汀,Arbutamine,未命中,丁萘夫汀,ddinter,2,11,0,0,13
+1262,0,拉布立酶,拉布立酶,Rasburicase,未命中,拉布立酶,ddinter,2,11,0,0,13
+1263,0,昂那赛门基因阿贝帕沃克,昂那赛门基因阿贝帕沃克,Onasemnogene abeparvovec,未命中,昂那赛门基因阿贝帕沃克,ddinter,2,11,0,0,13
+1264,0,磺胺嘧啶银（外用）,磺胺嘧啶银,Silver sulfadiazine (topical),编辑距离（待确认）,磺胺嘧啶银（外用）,ddinter,2,11,0,0,13
+1265,0,左甲基叶酸,左甲基叶酸,Levomefolic acid,未命中,左甲基叶酸,ddinter,2,2,1,0,5
+1266,0,左甲基叶酸钙,左甲基叶酸钙,Levomefolic acid (calcium),未命中,左甲基叶酸钙,ddinter,2,2,1,0,5
+1267,0,帕利瑞韦,帕利瑞韦,Paritaprevir,未命中,帕利瑞韦,ddinter,2,3,0,0,5
+1268,0,甲状旁腺激素,甲状旁腺激素,Parathyroid hormone,原样精确,甲状旁腺激素,opencmkg,2,3,0,0,5
+1269,0,维拉霉素,维拉霉素,Valrubicin,未命中,维拉霉素,ddinter,2,3,0,0,5
+1270,0,替沃扎尼,替沃扎尼,Tivozanib,未命中,替沃扎尼,ddinter,2,2,0,0,4
+1271,0,利福霉素,利福霉素,Rifamycin,未命中,利福霉素,ddinter,2,1,0,0,3
+1272,0,多佐胺（眼用）,多佐胺,Dorzolamide (ophthalmic),未命中,多佐胺（眼用）,ddinter,2,0,0,0,2
+1273,0,奥普瑞白介素,奥普瑞白介素,Oprelvekin,未命中,奥普瑞白介素,ddinter,2,0,0,0,2
+1274,0,氧气,氧气,Oxygen,未命中,氧气,ddinter,2,0,0,0,2
+1275,0,奥洛他定（鼻用）,奥洛他定,Olopatadine / Olopatadine (nasal),去盐归一化,盐酸奥洛他定胶囊,opencmkg,1,273,0,112,386
+1276,0,卡格列净,卡格列净,Canagliflozin,未命中,卡格列净,ddinter,1,325,19,0,345
+1277,0,达格列净,达格列净,Dapagliflozin,未命中,达格列净,ddinter,1,312,24,0,337
+1278,0,碘化钠（¹²³I）,碘化钠,Iodide I-123 / Iodide I-131 / Sodium iodide,去盐归一化,碘化钾片,opencmkg,1,305,0,0,306
+1279,0,罗氟司特,罗氟司特,Roflumilast,未命中,罗氟司特,ddinter,1,266,3,0,270
+1280,0,普兰林肽,普兰林肽,Pramlintide,未命中,普兰林肽,ddinter,1,231,19,0,251
+1281,0,司维拉姆,司维拉姆,Sevelamer,未命中,司维拉姆,ddinter,1,33,0,205,239
+1282,0,米格列醇,米格列醇,Miglitol,归一化精确,米格列醇片,opencmkg,1,212,26,0,239
+1283,0,硝酸甘油,硝酸甘油,Nitroglycerin,归一化精确,硝酸甘油片,opencmkg,1,47,15,165,228
+1284,0,西普鲁塞-T,西普鲁塞-T,Sipuleucel-T,未命中,西普鲁塞-T,ddinter,1,213,0,0,214
+1285,0,二氮嗪,二氮嗪,Diazoxide,未命中,二氮嗪,ddinter,1,202,4,0,207
+1286,0,索马帕肽,索马帕肽,Somapacitan,未命中,索马帕肽,ddinter,1,200,3,0,204
+1287,0,依西美坦,依西美坦,Exemestane,未命中,依西美坦,ddinter,1,73,0,128,202
+1288,0,尼替西农,尼替西农,Nitisinone,未命中,尼替西农,ddinter,1,197,2,0,200
+1289,0,米索前列醇,米索前列醇,Misoprostol,归一化精确,米索前列醇片,opencmkg,1,5,5,185,196
+1290,0,卟吩钠,卟吩钠,Porfimer sodium,未命中,卟吩钠,ddinter,1,190,0,0,191
+1291,0,赛鲁帕格,赛鲁帕格,Selexipag,未命中,赛鲁帕格,ddinter,1,187,2,0,190
+1292,0,单硝酸异山梨酯,单硝酸异山梨酯,Isosorbide mononitrate,归一化精确,单硝酸异山梨酯片,opencmkg,1,45,1,142,189
+1293,0,维生素E,维生素E,Vitamin E,原样精确,维生素E,opencmkg,1,115,57,0,173
+1294,0,酚妥拉明,酚妥拉明,Phentolamine,未命中,酚妥拉明,ddinter,1,140,15,0,156
+1295,0,培非格司亭,培非格司亭,Pegfilgrastim,未命中,培非格司亭,ddinter,1,145,0,0,146
+1296,0,阿那曲唑,阿那曲唑,Anastrozole,未命中,阿那曲唑,ddinter,1,17,0,128,146
+1297,0,沙格司亭,沙格司亭,Sargramostim,未命中,沙格司亭,ddinter,1,144,0,0,145
+1298,0,美曲普汀,美曲普汀,Metreleptin,未命中,美曲普汀,ddinter,1,141,3,0,145
+1299,0,非格司亭,非格司亭,Filgrastim,未命中,非格司亭,ddinter,1,144,0,0,145
+1300,0,氯化镭[223Ra],氯化镭[223Ra],Radium Ra 223 dichloride,未命中,氯化镭[223Ra],ddinter,1,140,0,0,141
+1301,0,硝酸异山梨酯,硝酸异山梨酯,Isosorbide dinitrate,归一化精确,硝酸异山梨酯片,opencmkg,1,45,1,94,141
+1302,0,毛果芸香碱,毛果芸香碱,Pilocarpine / Pilocarpine (ophthalmic),去盐归一化,硝酸毛果芸香碱滴眼液,opencmkg,1,67,0,70,138
+1303,0,卡泊三醇（外用）,卡泊三醇,Calcipotriol / Calcipotriol (topical),归一化精确,卡泊三醇软膏,opencmkg,1,51,0,83,135
+1304,0,氨磷汀,氨磷汀,Amifostine,未命中,氨磷汀,ddinter,1,109,0,24,134
+1305,0,磷[32P]酸二氢钠,磷[32P]酸二氢钠,"Sodium phosphate, monobasic (p32)",未命中,磷[32P]酸二氢钠,ddinter,1,130,0,0,131
+1306,0,他达拉非,他达拉非,Tadalafil,归一化精确,他达拉非片,opencmkg,1,61,7,61,130
+1307,0,芦曲波帕,芦曲波帕,Lusutrombopag,未命中,芦曲波帕,ddinter,1,123,0,0,124
+1308,0,氨基酮戊酸甲酯（外用）,氨基酮戊酸甲酯,Methyl aminolevulinate (topical),未命中,氨基酮戊酸甲酯（外用）,ddinter,1,117,0,0,118
+1309,0,维替泊芬,维替泊芬,Verteporfin,未命中,维替泊芬,ddinter,1,101,1,14,117
+1310,0,枸橼酸钠,枸橼酸钠,Sodium citrate,去盐归一化,枸橼酸钾颗粒,opencmkg,1,68,45,0,114
+1311,0,阿利吉仑,阿利吉仑,Aliskiren,未命中,阿利吉仑,ddinter,1,91,0,21,113
+1312,0,西维美林,西维美林,Cevimeline,未命中,西维美林,ddinter,1,80,16,0,97
+1313,0,纳洛酮,纳洛酮,Naloxone,去盐归一化,盐酸纳洛酮注射液,opencmkg,1,29,2,53,85
+1314,0,人参,人参,Ginseng,未命中,人参,ddinter,1,82,0,0,83
+1315,0,米多君,米多君,Midodrine,去盐归一化,盐酸米多君片,opencmkg,1,56,4,20,81
+1316,0,吡啶斯的明,吡啶斯的明,Pyridostigmine,未命中,吡啶斯的明,ddinter,1,38,0,37,76
+1317,0,碳酸镧,碳酸镧,Lanthanum carbonate,未命中,碳酸镧,ddinter,1,75,0,0,76
+1318,0,阿达帕林,阿达帕林,Adapalene / Adapalene (topical),归一化精确,阿达帕林凝胶,opencmkg,1,10,0,55,66
+1319,0,咪喹莫特,咪喹莫特,Imiquimod / Imiquimod (topical),归一化精确,咪喹莫特乳膏,opencmkg,1,5,0,58,64
+1320,0,培高利特,培高利特,Pergolide,未命中,培高利特,ddinter,1,43,0,17,61
+1321,0,氨苄西林,氨苄西林,Ampicillin,归一化精确,氨苄西林胶囊,opencmkg,1,21,5,34,61
+1322,0,亚硝基铁氰化钠,亚硝基铁氰化钠,Nitroprusside,未命中,亚硝基铁氰化钠,ddinter,1,57,0,0,58
+1323,0,依酚氯铵,依酚氯铵,Edrophonium,未命中,依酚氯铵,ddinter,1,56,0,0,57
+1324,0,尿素,尿素,Urea,原样精确,尿素,opencmkg,1,51,2,0,54
+1325,0,ω-3脂肪酸,ω-3脂肪酸,Omega-3 fatty acids,未命中,ω-3脂肪酸,ddinter,1,50,0,0,51
+1326,0,非诺多泮,非诺多泮,Fenoldopam,未命中,非诺多泮,ddinter,1,49,1,0,51
+1327,0,碘化硫代磷酰胆碱（眼用）,碘化硫代磷酰胆碱,Echothiophate (ophthalmic),未命中,碘化硫代磷酰胆碱（眼用）,ddinter,1,47,0,0,48
+1328,0,氟米松（眼用）,氟米松,Fluorometholone / Fluorometholone (ophthalmic),未命中,氟米松（眼用）,ddinter,1,35,0,11,47
+1329,0,苯唑西林,苯唑西林,Oxacillin,未命中,苯唑西林,ddinter,1,14,3,23,41
+1330,0,地美戊胺（眼用）,地美戊胺,Demecarium (ophthalmic),未命中,地美戊胺（眼用）,ddinter,1,38,0,0,39
+1331,0,异氟磷（眼用）,异氟磷,Isoflurophate (ophthalmic),未命中,异氟磷（眼用）,ddinter,1,38,0,0,39
+1332,0,奥利万星,奥利万星,Oritavancin,未命中,奥利万星,ddinter,1,36,1,0,38
+1333,0,无水硫酸亚铁,无水硫酸亚铁,Ferrous sulfate anhydrous,未命中,无水硫酸亚铁,ddinter,1,31,5,0,37
+1334,0,琥珀酸蛋白铁,琥珀酸蛋白铁,Iron protein succinylate,未命中,琥珀酸蛋白铁,ddinter,1,29,5,0,35
+1335,0,巴卡普林,巴卡普林,Bacampicillin,未命中,巴卡普林,ddinter,1,29,4,0,34
+1336,0,异氟烷,异氟烷,Isoflurane,原样精确,异氟烷,opencmkg,1,6,0,27,34
+1337,0,蛋白C,蛋白C,Protein C,未命中,蛋白C,ddinter,1,31,0,0,32
+1338,0,青霉素V钾,青霉素V钾,Phenoxymethylpenicillin,归一化精确,青霉素V钾胶囊,opencmkg,1,15,2,14,32
+1339,0,他扎罗汀,他扎罗汀,Tazarotene / Tazarotene (topical),未命中,他扎罗汀,ddinter,1,8,0,22,31
+1340,0,安贝氯铵,安贝氯铵,Ambenonium,未命中,安贝氯铵,ddinter,1,30,0,0,31
+1341,0,异山梨醇,异山梨醇,Isosorbide,未命中,异山梨醇,ddinter,1,27,2,0,30
+1342,0,罗莫索单抗,罗莫索单抗,Romosozumab,未命中,罗莫索单抗,ddinter,1,28,0,0,29
+1343,0,泰地唑利,泰地唑利,Tedizolid,未命中,泰地唑利,ddinter,1,27,0,0,28
+1344,0,替卡西林,替卡西林,Ticarcillin,未命中,替卡西林,ddinter,1,19,3,0,23
+1345,0,美洛西林,美洛西林,Mezlocillin,未命中,美洛西林,ddinter,1,17,3,0,21
+1346,0,青霉素G,青霉素G,Benzylpenicillin,未命中,青霉素G,ddinter,1,14,2,4,21
+1347,0,青霉素G钠,青霉素G钠,Benzylpenicillin (sodium),未命中,青霉素G钠,ddinter,1,15,3,0,19
+1348,0,羧苄西林,羧苄西林,Carbenicillin,未命中,羧苄西林,ddinter,1,15,2,0,18
+1349,0,青霉素G钾,青霉素G钾,Benzylpenicillin (potassium),未命中,青霉素G钾,ddinter,1,14,3,0,18
+1350,0,氯唑西林,氯唑西林,Cloxacillin,未命中,氯唑西林,ddinter,1,14,2,0,17
+1351,0,替度鲁肽,替度鲁肽,Teduglutide,未命中,替度鲁肽,ddinter,1,15,0,0,16
+1352,0,甲氧西林,甲氧西林,Meticillin,未命中,甲氧西林,ddinter,1,12,3,0,16
+1353,0,普鲁卡因,普鲁卡因,Procaine,未命中,普鲁卡因,ddinter,1,10,4,0,15
+1354,0,枸橼酸,枸橼酸,Citric acid,去盐归一化,枸橼酸钾颗粒,opencmkg,1,14,0,0,15
+1355,0,艾尔巴韦,艾尔巴韦,Elbasvir,未命中,艾尔巴韦,ddinter,1,14,0,0,15
+1356,0,恩氟烷,恩氟烷,Enflurane,未命中,恩氟烷,ddinter,1,12,0,0,13
+1357,0,他法米迪斯,他法米迪斯,Tafamidis,未命中,他法米迪斯,ddinter,1,11,0,0,12
+1358,0,氯普鲁卡因,氯普鲁卡因,Chloroprocaine,未命中,氯普鲁卡因,ddinter,1,10,1,0,12
+1359,0,曲法罗汀（外用）,曲法罗汀,Trifarotene (topical),未命中,曲法罗汀（外用）,ddinter,1,10,0,0,11
+1360,0,睾内酯,睾内酯,Testolactone,未命中,睾内酯,ddinter,1,10,0,0,11
+1361,0,地氟烷,地氟烷,Desflurane,未命中,地氟烷,ddinter,1,4,0,5,10
+1362,0,阿替卡因,阿替卡因,Articaine,未命中,阿替卡因,ddinter,1,8,1,0,10
+1363,0,育亨宾,育亨宾,Yohimbine,未命中,育亨宾,ddinter,1,5,2,0,8
+1364,0,阿利维A酸（外用）,阿利维A酸,Alitretinoin (topical),未命中,阿利维A酸（外用）,ddinter,1,7,0,0,8
+1365,0,利美索龙（眼用）,利美索龙,Rimexolone (ophthalmic),未命中,利美索龙（眼用）,ddinter,1,6,0,0,7
+1366,0,人凝血因子X,人凝血因子X,Coagulation factor X human,未命中,人凝血因子X,ddinter,1,5,0,0,6
+1367,0,尼氯酰胺,尼氯酰胺,Niclosamide,未命中,尼氯酰胺,ddinter,1,5,0,0,6
+1368,0,溴苄铵,溴苄铵,Bretylium,未命中,溴苄铵,ddinter,1,5,0,0,6
+1369,0,硒,硒,Selenium,未命中,硒,ddinter,1,5,0,0,6
+1370,0,一氧化二氮,一氧化二氮,Nitrous oxide,未命中,一氧化二氮,ddinter,1,4,0,0,5
+1371,0,乙羟肟酸,乙羟肟酸,Acetohydroxamic acid,未命中,乙羟肟酸,ddinter,1,4,0,0,5
+1372,0,低分子右旋糖酐铁,低分子右旋糖酐铁,Ferric derisomaltose,未命中,低分子右旋糖酐铁,ddinter,1,4,0,0,5
+1373,0,右旋糖酐铁,右旋糖酐铁,Iron Dextran,归一化精确,右旋糖酐铁片,opencmkg,1,4,0,0,5
+1374,0,硝呋替莫,硝呋替莫,Nifurtimox,未命中,硝呋替莫,ddinter,1,4,0,0,5
+1375,0,羧基麦芽糖铁,羧基麦芽糖铁,Ferric carboxymaltose,未命中,羧基麦芽糖铁,ddinter,1,4,0,0,5
+1376,0,羧甲基葡聚糖铁,羧甲基葡聚糖铁,Ferumoxytol,未命中,羧甲基葡聚糖铁,ddinter,1,4,0,0,5
+1377,0,重组人凝血因子VIIa,重组人凝血因子VIIa,Coagulation factor VIIa Recombinant Human,编辑距离（待确认）,重组人凝血因子VIIa,ddinter,1,3,1,0,5
+1378,0,鲑降钙素,鲑降钙素,Salmon calcitonin,归一化精确,鲑降钙素注射液,opencmkg,1,2,2,0,5
+1379,0,氧化铁胶体,氧化铁胶体,Ferumoxides,未命中,氧化铁胶体,ddinter,1,3,0,0,4
+1380,0,耐昔妥珠单抗,耐昔妥珠单抗,Necitumumab,未命中,耐昔妥珠单抗,ddinter,1,2,1,0,4
+1381,0,人重组抗血友病因子,人重组抗血友病因子,"Antihemophilic factor, human recombinant",未命中,人重组抗血友病因子,ddinter,1,2,0,0,3
+1382,0,艾米西珠单抗,艾米西珠单抗,Emicizumab,未命中,艾米西珠单抗,ddinter,1,2,0,0,3
+1383,0,人凝血因子IX,人凝血因子IX,Coagulation Factor IX Human,未命中,人凝血因子IX,ddinter,1,1,0,0,2
+1384,0,山梨醇,山梨醇,Sorbitol,未命中,山梨醇,ddinter,1,1,0,0,2
+1385,0,硅氧烷包被氧化铁,硅氧烷包被氧化铁,Ferumoxsil,未命中,硅氧烷包被氧化铁,ddinter,1,1,0,0,2
+1386,0,磷酸纤维素钠,磷酸纤维素钠,Sodium cellulose phosphate,未命中,磷酸纤维素钠,ddinter,1,1,0,0,2
+1387,0,三庚酸甘油酯,三庚酸甘油酯,Triheptanoin,未命中,三庚酸甘油酯,ddinter,1,0,0,0,1
+1388,0,亚麻籽,亚麻籽,Flax seed,未命中,亚麻籽,ddinter,1,0,0,0,1
+1389,0,人凝血因子XIII,人凝血因子XIII,Factor XIII (human),编辑距离（待确认）,人凝血因子XIII,ddinter,1,0,0,0,1
+1390,0,人纤维蛋白原,人纤维蛋白原,Fibrinogen human,原样精确,人纤维蛋白原,opencmkg,1,0,0,0,1
+1391,0,人血管性血友病因子,人血管性血友病因子,Von Willebrand Factor Human,未命中,人血管性血友病因子,ddinter,1,0,0,0,1
+1392,0,克罗米芬,克罗米芬,Clomifene,未命中,克罗米芬,ddinter,1,0,0,0,1
+1393,0,己氨基酮戊酸,己氨基酮戊酸,Hexaminolevulinate,未命中,己氨基酮戊酸,ddinter,1,0,0,0,1
+1394,0,布美诺肽,布美诺肽,Bremelanotide,未命中,布美诺肽,ddinter,1,0,0,0,1
+1395,0,格拉替雷,格拉替雷,Glatiramer,未命中,格拉替雷,ddinter,1,0,0,0,1
+1396,0,氟米龙（眼用）,氟米龙,Difluprednate (ophthalmic),归一化精确,氟米龙滴眼液,opencmkg,1,0,0,0,1
+1397,0,氧喹啉（外用）,氧喹啉,Oxyquinoline (topical),未命中,氧喹啉（外用）,ddinter,1,0,0,0,1
+1398,0,氯碘羟喹（外用）,氯碘羟喹,Clioquinol (topical),未命中,氯碘羟喹（外用）,ddinter,1,0,0,0,1
+1399,0,甘油磷酸钠,甘油磷酸钠,Sodium glycerophosphate,未命中,甘油磷酸钠,ddinter,1,0,0,0,1
+1400,0,甲吡唑,甲吡唑,Fomepizole,未命中,甲吡唑,ddinter,1,0,0,0,1
+1401,0,罗米司亭,罗米司亭,Romiplostim,未命中,罗米司亭,ddinter,1,0,0,0,1
+1402,0,溴莫尼定（眼用）,溴莫尼定,Brimonidine / Brimonidine (ophthalmic) / Brimonidine (topical),去盐归一化,酒石酸溴莫尼定滴眼液,opencmkg,0,688,0,141,829
+1403,0,左甲状腺素,左甲状腺素,Levothyroxine,去盐归一化,左甲状腺素钠片,opencmkg,0,169,22,473,664
+1404,0,西替利嗪,西替利嗪,Cetirizine,去盐归一化,盐酸西替利嗪片,opencmkg,0,239,2,328,569
+1405,0,乳果糖,乳果糖,Lactulose,未命中,乳果糖,ddinter,0,213,10,310,533
+1406,0,非索非那定,非索非那定,Fexofenadine,去盐归一化,盐酸非索非那定片,opencmkg,0,60,11,401,472
+1407,0,孟鲁司特,孟鲁司特,Montelukast,去盐归一化,孟鲁司特钠咀嚼片,opencmkg,0,86,0,382,468
+1408,0,氯雷他定,氯雷他定,Loratadine,归一化精确,氯雷他定片,opencmkg,0,68,10,374,452
+1409,0,噻托溴铵,噻托溴铵,Tiotropium,未命中,噻托溴铵,ddinter,0,100,2,323,425
+1410,0,制霉菌素,制霉菌素,Nystatin,未命中,制霉菌素,ddinter,0,0,0,347,347
+1411,0,非那雄胺,非那雄胺,Finasteride,归一化精确,非那雄胺片,opencmkg,0,21,1,298,320
+1412,0,氰钴胺,氰钴胺,Cyanocobalamin,未命中,氰钴胺,ddinter,0,2,13,298,313
+1413,0,三碘甲状腺原氨酸,三碘甲状腺原氨酸,Liothyronine,未命中,三碘甲状腺原氨酸,ddinter,0,162,21,128,311
+1414,0,熊去氧胆酸,熊去氧胆酸,Ursodeoxycholic acid,归一化精确,熊去氧胆酸片,opencmkg,0,0,3,268,271
+1415,0,地氯雷他定,地氯雷他定,Desloratadine,编辑距离（待确认）,地氯雷他定,ddinter,0,8,3,254,265
+1416,0,氮卓斯汀（鼻用）,氮卓斯汀,Azelastine / Azelastine (nasal) / Azelastine (ophthalmic),未命中,氮卓斯汀（鼻用）,ddinter,0,176,2,86,264
+1417,0,乙酰半胱氨酸,乙酰半胱氨酸,Acetylcysteine,归一化精确,乙酰半胱氨酸泡腾片,opencmkg,0,1,2,244,247
+1418,0,左西替利嗪,左西替利嗪,Levocetirizine,去盐归一化,盐酸左西替利嗪口服溶液,opencmkg,0,239,2,0,241
+1419,0,替加色罗,替加色罗,Tegaserod,未命中,替加色罗,ddinter,0,0,2,234,236
+1420,0,甘油,甘油,Glycerin,去盐归一化,硝酸甘油片,opencmkg,0,214,6,0,220
+1421,0,丙酸氯倍他索（外用）,丙酸氯倍他索,Clobetasol / Clobetasol (topical),归一化精确,丙酸氯倍他索乳膏,opencmkg,0,0,44,175,219
+1422,0,氯非多尔,氯非多尔,Clofedanol,未命中,氯非多尔,ddinter,0,212,0,0,212
+1423,0,犬小孢子菌,犬小孢子菌,Trichophyton mentagrophytes,未命中,犬小孢子菌,ddinter,0,210,0,0,210
+1424,0,结核菌素纯蛋白衍生物,结核菌素纯蛋白衍生物,Tuberculin purified protein derivative,未命中,结核菌素纯蛋白衍生物,ddinter,0,210,0,0,210
+1425,0,嗜酸乳杆菌,嗜酸乳杆菌,Lactobacillus acidophilus,未命中,嗜酸乳杆菌,ddinter,0,209,0,0,209
+1426,0,比沙可啶,比沙可啶,Bisacodyl,归一化精确,比沙可啶肠溶片,opencmkg,0,207,1,0,208
+1427,0,矿物油,矿物油,Mineral oil,未命中,矿物油,ddinter,0,204,2,0,206
+1428,0,蓖麻油,蓖麻油,Castor oil,未命中,蓖麻油,ddinter,0,200,1,0,201
+1429,0,婴儿双歧杆菌长亚种,婴儿双歧杆菌长亚种,Bifidobacterium longum infantis,未命中,婴儿双歧杆菌长亚种,ddinter,0,200,0,0,200
+1430,0,紫锥菊,紫锥菊,Echinacea,未命中,紫锥菊,ddinter,0,144,54,0,198
+1431,0,乳果糖醇,乳果糖醇,Lactitol,未命中,乳果糖醇,ddinter,0,197,0,0,197
+1432,0,球孢子菌属粗球孢子菌球形体,球孢子菌属粗球孢子菌球形体,Coccidioides immitis spherule,未命中,球孢子菌属粗球孢子菌球形体,ddinter,0,195,0,0,195
+1433,0,白色念珠菌,白色念珠菌,Candida albicans,未命中,白色念珠菌,ddinter,0,195,0,0,195
+1434,0,A、C群脑膜炎球菌多糖疫苗,A、C群脑膜炎球菌多糖疫苗,Meningococcal polysaccharide vaccine group C,未命中,A、C群脑膜炎球菌多糖疫苗,ddinter,0,186,0,0,186
+1435,0,乙型肝炎疫苗（重组）,乙型肝炎疫苗,Hepatitis B Vaccine (Recombinant),未命中,乙型肝炎疫苗（重组）,ddinter,0,186,0,0,186
+1436,0,人乳头瘤病毒11型L1衣壳蛋白抗原,人乳头瘤病毒11型L1衣壳蛋白抗原,Human papillomavirus type 11 L1 capsid protein antigen,未命中,人乳头瘤病毒11型L1衣壳蛋白抗原,ddinter,0,186,0,0,186
+1437,0,炭疽疫苗,炭疽疫苗,Anthrax vaccine,未命中,炭疽疫苗,ddinter,0,186,0,0,186
+1438,0,甲型流感病毒A/加州/7/2009(H1N1)株样抗原（丙内酯灭活）,甲型流感病毒A/加州/7/2009株样抗原,Influenza A virus A/California/7/2009 (H1N1)-like antigen (propiolactone inactivated),未命中,甲型流感病毒A/加州/7/2009(H1N1)株样抗原（丙内酯灭活）,ddinter,0,186,0,0,186
+1439,0,甲型流感病毒A/越南/1194/2004(H5N1)株抗原（甲醛灭活）,甲型流感病毒A/越南/1194/2004株抗原,Influenza A virus A/Vietnam/1194/2004 (H5N1) antigen (formaldehyde inactivated),未命中,甲型流感病毒A/越南/1194/2004(H5N1)株抗原（甲醛灭活）,ddinter,0,186,0,0,186
+1440,0,甲型肝炎疫苗,甲型肝炎疫苗,Hepatitis A Vaccine,未命中,甲型肝炎疫苗,ddinter,0,186,0,0,186
+1441,0,破伤风类毒素（甲醛灭活）,破伤风类毒素,Clostridium tetani toxoid antigen (formaldehyde inactivated),未命中,破伤风类毒素（甲醛灭活）,ddinter,0,186,0,0,186
+1442,0,脊髓灰质炎病毒I型抗原（甲醛灭活）,脊髓灰质炎病毒I型抗原,Poliovirus type 1 antigen (formaldehyde inactivated),未命中,脊髓灰质炎病毒I型抗原（甲醛灭活）,ddinter,0,186,0,0,186
+1443,0,异丙托溴铵,异丙托溴铵,Ipratropium / Ipratropium (nasal),未命中,异丙托溴铵,ddinter,0,101,83,0,184
+1444,0,多沙唑嗪,多沙唑嗪,Doxazosin,未命中,多沙唑嗪,ddinter,0,56,0,126,182
+1445,0,酚酞,酚酞,Phenolphthalein,未命中,酚酞,ddinter,0,180,1,0,181
+1446,0,莱姆病疫苗（重组OspA抗原）,莱姆病疫苗,Lyme disease vaccine (recombinant OspA),未命中,莱姆病疫苗（重组OspA抗原）,ddinter,0,179,0,0,179
+1447,0,辉瑞-生物新技术公司新冠病毒肺炎疫苗,辉瑞-生物新技术公司新冠病毒肺炎疫苗,Pfizer-BioNTech Covid-19 Vaccine,未命中,辉瑞-生物新技术公司新冠病毒肺炎疫苗,ddinter,0,179,0,0,179
+1448,0,吡美莫司（外用）,吡美莫司,Pimecrolimus / Pimecrolimus (topical),未命中,吡美莫司（外用）,ddinter,0,7,69,102,178
+1449,0,阿巴莫特匹尔（外用）,阿巴莫特匹尔,Abametapir (topical),未命中,阿巴莫特匹尔（外用）,ddinter,0,178,0,0,178
+1450,0,依折麦布,依折麦布,Ezetimibe,归一化精确,依折麦布片,opencmkg,0,15,2,153,170
+1451,0,罗匹尼罗,罗匹尼罗,Ropinirole,未命中,罗匹尼罗,ddinter,0,67,0,98,165
+1452,0,鲁非酰胺,鲁非酰胺,Rufinamide,未命中,鲁非酰胺,ddinter,0,157,3,0,160
+1453,0,左乙拉西坦,左乙拉西坦,Levetiracetam,归一化精确,左乙拉西坦口服溶液,opencmkg,0,39,1,114,154
+1454,0,头孢氨苄,头孢氨苄,Cephalexin,归一化精确,头孢氨苄颗粒,opencmkg,0,9,0,144,153
+1455,0,叶绿醌,叶绿醌,Phylloquinone,未命中,叶绿醌,ddinter,0,7,2,143,152
+1456,0,拉莫三嗪,拉莫三嗪,Lamotrigine,归一化精确,拉莫三嗪片,opencmkg,0,48,6,94,148
+1457,0,头孢呋辛,头孢呋辛,Cefuroxime,编辑距离（待确认）,头孢呋辛,ddinter,0,33,0,110,143
+1458,0,氯己定,氯己定,Chlorhexidine,去盐归一化,葡萄糖酸氯己定软膏,opencmkg,0,0,0,143,143
+1459,0,瑞维芬acin,瑞维芬acin,Revefenacin,未命中,瑞维芬acin,ddinter,0,140,1,0,141
+1460,0,普拉克索,普拉克索,Pramipexole,去盐归一化,盐酸普拉克索片,opencmkg,0,40,3,97,140
+1461,0,特拉唑嗪,特拉唑嗪,Terazosin,去盐归一化,盐酸特拉唑嗪胶囊,opencmkg,0,49,1,84,134
+1462,0,半乳糖,半乳糖,Galactose,未命中,半乳糖,ddinter,0,0,0,131,131
+1463,0,头孢吡肟,头孢吡肟,Cefepime,未命中,头孢吡肟,ddinter,0,12,0,119,131
+1464,0,度他雄胺,度他雄胺,Dutasteride,未命中,度他雄胺,ddinter,0,41,0,81,122
+1465,0,肼屈嗪,肼屈嗪,Hydralazine,未命中,肼屈嗪,ddinter,0,108,1,13,122
+1466,0,拉坦前列素,拉坦前列素,Latanoprost,归一化精确,拉坦前列素滴眼液,opencmkg,0,0,0,121,121
+1467,0,帕利佛明,帕利佛明,Palifermin,未命中,帕利佛明,ddinter,0,118,0,0,118
+1468,0,莫匹罗星,莫匹罗星,Mupirocin,归一化精确,莫匹罗星软膏,opencmkg,0,0,0,117,117
+1469,0,醋硝香豆素,醋硝香豆素,Acenocoumarol,未命中,醋硝香豆素,ddinter,0,0,0,116,116
+1470,0,醋酸氟轻松（外用）,醋酸氟轻松,Fluocinolone acetonide / Fluocinonide / Fluocinonide (topical),归一化精确,醋酸氟轻松乳膏,opencmkg,0,0,44,72,116
+1471,0,头孢他啶,头孢他啶,Ceftazidime,未命中,头孢他啶,ddinter,0,28,0,86,114
+1472,0,头孢唑啉,头孢唑啉,Cefazolin,未命中,头孢唑啉,ddinter,0,13,1,98,112
+1473,0,钆双胺,钆双胺,Gadodiamide,归一化精确,钆双胺注射液,opencmkg,0,19,0,90,109
+1474,0,氯胺酮,氯胺酮,Ketamine,未命中,氯胺酮,ddinter,0,93,0,14,107
+1475,0,伐尼克兰,伐尼克兰,Varenicline,去盐归一化,酒石酸伐尼克兰片,opencmkg,0,2,1,99,102
+1476,0,乌美溴铵,乌美溴铵,Umeclidinium,未命中,乌美溴铵,ddinter,0,100,1,0,101
+1477,0,阿地溴铵,阿地溴铵,Aclidinium,未命中,阿地溴铵,ddinter,0,100,1,0,101
+1478,0,猪甲状腺,猪甲状腺,"Thyroid, porcine",编辑距离（待确认）,猪甲状腺,ddinter,0,97,2,0,99
+1479,0,美金刚,美金刚,Memantine,去盐归一化,盐酸美金刚片,opencmkg,0,33,10,56,99
+1480,0,伊维菌素,伊维菌素,Ivermectin / Ivermectin (topical),归一化精确,伊维菌素片,opencmkg,0,75,2,21,98
+1481,0,色甘酸,色甘酸,Cromoglicic acid,去盐归一化,色甘酸钠滴眼液,opencmkg,0,1,0,97,98
+1482,0,普芦卡必利,普芦卡必利,Prucalopride,未命中,普芦卡必利,ddinter,0,43,54,0,97
+1483,0,加巴喷丁类似物（注：实际为‘噻加宾’；按中国药典规范名）,加巴喷丁类似物,Tiagabine,未命中,加巴喷丁类似物（注：实际为‘噻加宾’；按中国药典规范名）,ddinter,0,64,0,32,96
+1484,0,尼古丁,尼古丁,Nicotine,未命中,尼古丁,ddinter,0,3,6,85,94
+1485,0,环吡酮胺,环吡酮胺,Ciclopirox,归一化精确,环吡酮胺乳膏,opencmkg,0,0,0,93,93
+1486,0,乙琥胺,乙琥胺,Ethosuximide,未命中,乙琥胺,ddinter,0,92,0,0,92
+1487,0,普氏鼠李皮,普氏鼠李皮,Frangula purshiana bark,未命中,普氏鼠李皮,ddinter,0,90,1,0,91
+1488,0,甲状腺片,甲状腺片,Liotrix,原样精确,甲状腺片,opencmkg,0,88,2,0,90
+1489,0,氟维司群,氟维司群,Fulvestrant,未命中,氟维司群,ddinter,0,1,0,88,89
+1490,0,银杏叶,银杏叶,Ginkgo biloba,归一化精确,银杏叶片,opencmkg,0,89,0,0,89
+1491,0,氟帕尼（¹²³I）,氟帕尼,Ioflupane I-123,未命中,氟帕尼（¹²³I）,ddinter,0,88,0,0,88
+1492,0,酮替芬,酮替芬,Ketotifen,去盐归一化,富马酸酮替芬胶囊,opencmkg,0,0,0,85,85
+1493,0,泛昔洛韦,泛昔洛韦,Famciclovir,归一化精确,泛昔洛韦分散片,opencmkg,0,3,0,81,84
+1494,0,姜黄,姜黄,Turmeric,未命中,姜黄,ddinter,0,45,35,0,80
+1495,0,硫化硒,硫化硒,Selenium Sulfide,未命中,硫化硒,ddinter,0,0,0,79,79
+1496,0,维生素D,维生素D,Vitamin D,原样精确,维生素D,opencmkg,0,0,0,79,79
+1497,0,头孢泊肟,头孢泊肟,Cefpodoxime,编辑距离（待确认）,头孢泊肟,ddinter,0,33,0,45,78
+1498,0,钆维塞胺,钆维塞胺,Gadoversetamide,未命中,钆维塞胺,ddinter,0,19,0,58,77
+1499,0,头孢地尼,头孢地尼,Cefdinir,归一化精确,头孢地尼分散片,opencmkg,0,16,0,59,75
+1500,0,培维索孟,培维索孟,Pegvisomant,未命中,培维索孟,ddinter,0,73,0,0,73
+1501,0,头孢噻肟,头孢噻肟,Cefotaxime,未命中,头孢噻肟,ddinter,0,14,0,59,73
+1502,0,氟比洛芬（眼用）,氟比洛芬,Flurbiprofen (ophthalmic),编辑距离（待确认）,氟比洛芬（眼用）,ddinter,0,71,1,0,72
+1503,0,哌唑嗪,哌唑嗪,Prazosin,未命中,哌唑嗪,ddinter,0,53,0,18,71
+1504,0,大蒜,大蒜,Garlic,原样精确,大蒜,opencmkg,0,35,36,0,71
+1505,0,头孢克洛,头孢克洛,Cefaclor,归一化精确,头孢克洛颗粒,opencmkg,0,11,0,58,69
+1506,0,左卡尼汀,左卡尼汀,Levocarnitine,归一化精确,左卡尼汀注射液,opencmkg,0,2,0,66,68
+1507,0,布瓦西坦,布瓦西坦,Brivaracetam,未命中,布瓦西坦,ddinter,0,50,18,0,68
+1508,0,瑞他帕林（外用）,瑞他帕林,Retapamulin (topical),未命中,瑞他帕林（外用）,ddinter,0,4,64,0,68
+1509,0,奥司他韦,奥司他韦,Oseltamivir,去盐归一化,磷酸奥司他韦颗粒,opencmkg,0,2,1,63,66
+1510,0,比马前列素,比马前列素,Bimatoprost,未命中,比马前列素,ddinter,0,0,0,65,65
+1511,0,脱氧胆酸,脱氧胆酸,Deoxycholic acid,未命中,脱氧胆酸,ddinter,0,64,0,0,64
+1512,0,舒泼芬（眼用）,舒泼芬,Suprofen (ophthalmic),未命中,舒泼芬（眼用）,ddinter,0,64,0,0,64
+1513,0,罗哌卡因,罗哌卡因,Ropivacaine,去盐归一化,盐酸罗哌卡因注射液,opencmkg,0,26,29,8,63
+1514,0,透明质酸酶,透明质酸酶,Hyaluronidase,原样精确,透明质酸酶,opencmkg,0,0,63,0,63
+1515,0,左布比卡因,左布比卡因,Levobupivacaine,未命中,左布比卡因,ddinter,0,44,18,0,62
+1516,0,奈帕芬胺（眼用）,奈帕芬胺,Nepafenac (ophthalmic),未命中,奈帕芬胺（眼用）,ddinter,0,61,0,0,61
+1517,0,苯乙哌啶酮,苯乙哌啶酮,Diphenoxylate,未命中,苯乙哌啶酮,ddinter,0,61,0,0,61
+1518,0,莱辛_urad,莱辛_urad,Lesinurad,未命中,莱辛_urad,ddinter,0,59,1,0,60
+1519,0,前列地尔,前列地尔,Alprostadil,归一化精确,前列地尔注射液,opencmkg,0,16,0,43,59
+1520,0,地芬诺酯,地芬诺酯,Difenoxin,未命中,地芬诺酯,ddinter,0,58,0,0,58
+1521,0,戊聚糖多硫酸钠,戊聚糖多硫酸钠,Pentosan polysulfate,未命中,戊聚糖多硫酸钠,ddinter,0,58,0,0,58
+1522,0,碘羟喹,碘羟喹,Diiodohydroxyquinoline,未命中,碘羟喹,ddinter,0,58,0,0,58
+1523,0,右美托咪定,右美托咪定,Dexmedetomidine,未命中,右美托咪定,ddinter,0,44,0,12,56
+1524,0,吡仑帕奈,吡仑帕奈,Perampanel,未命中,吡仑帕奈,ddinter,0,54,2,0,56
+1525,0,利那洛肽,利那洛肽,Linaclotide,未命中,利那洛肽,ddinter,0,11,44,0,55
+1526,0,头孢丙烯,头孢丙烯,Cefprozil,归一化精确,头孢丙烯分散片,opencmkg,0,14,0,41,55
+1527,0,硝西泮,硝西泮,Nitrazepam,未命中,硝西泮,ddinter,0,0,0,55,55
+1528,0,维莫德吉,维莫德吉,Vismodegib,未命中,维莫德吉,ddinter,0,36,19,0,55
+1529,0,胶原酶溶组织梭菌,胶原酶溶组织梭菌,Collagenase clostridium histolyticum / Collagenase clostridium histolyticum (topical),未命中,胶原酶溶组织梭菌,ddinter,0,53,0,0,53
+1530,0,别孕烯醇酮,别孕烯醇酮,Brexanolone,未命中,别孕烯醇酮,ddinter,0,52,0,0,52
+1531,0,头孢羟氨苄,头孢羟氨苄,Cefadroxil,归一化精确,头孢羟氨苄片,opencmkg,0,8,0,43,51
+1532,0,二十碳五烯酸乙酯,二十碳五烯酸乙酯,Icosapent,未命中,二十碳五烯酸乙酯,ddinter,0,50,0,0,50
+1533,0,钆贝酸,钆贝酸,Gadobenic acid,未命中,钆贝酸,ddinter,0,50,0,0,50
+1534,0,他氟前列素,他氟前列素,Travoprost,未命中,他氟前列素,ddinter,0,0,0,49,49
+1535,0,甲琥胺,甲琥胺,Methsuximide,未命中,甲琥胺,ddinter,0,48,0,0,48
+1536,0,碘泊酸,碘泊酸,Iopodic acid,未命中,碘泊酸,ddinter,0,47,1,0,48
+1537,0,洋甘菊,洋甘菊,Chamomile,未命中,洋甘菊,ddinter,0,0,47,0,47
+1538,0,甲酪氨酸,甲酪氨酸,Metyrosine,未命中,甲酪氨酸,ddinter,0,47,0,0,47
+1539,0,辣椒,辣椒,Capsicum,未命中,辣椒,ddinter,0,0,47,0,47
+1540,0,铟[111In]氧喹啉,铟[111In]氧喹啉,Indium In-111 oxyquinoline,未命中,铟[111In]氧喹啉,ddinter,0,47,0,0,47
+1541,0,缬草,缬草,Valerian,未命中,缬草,ddinter,0,46,0,0,46
+1542,0,罗替高汀,罗替高汀,Rotigotine,未命中,罗替高汀,ddinter,0,46,0,0,46
+1543,0,齐考诺肽,齐考诺肽,Ziconotide,未命中,齐考诺肽,ddinter,0,46,0,0,46
+1544,0,促甲状腺素α,促甲状腺素α,Thyrotropin alfa,未命中,促甲状腺素α,ddinter,0,45,0,0,45
+1545,0,替沙莫林,替沙莫林,Tesamorelin,未命中,替沙莫林,ddinter,0,45,0,0,45
+1546,0,碘番酸,碘番酸,Iopanoic acid,未命中,碘番酸,ddinter,0,44,1,0,45
+1547,0,克罗卡林（外用）,克罗卡林,Clocortolone (topical),未命中,克罗卡林（外用）,ddinter,0,0,44,0,44
+1548,0,卤米松（外用）,卤米松,Ulobetasol (topical),归一化精确,卤米松乳膏,opencmkg,0,0,44,0,44
+1549,0,去氧米松（外用）,去氧米松,Desoximetasone (topical),未命中,去氧米松（外用）,ddinter,0,0,44,0,44
+1550,0,去炎松（外用）,去炎松,Desonide (topical),未命中,去炎松（外用）,ddinter,0,0,44,0,44
+1551,0,哈西奈德（外用）,哈西奈德,Halcinonide (topical),归一化精确,哈西奈德乳膏,opencmkg,0,0,44,0,44
+1552,0,恩替卡韦,恩替卡韦,Entecavir,归一化精确,恩替卡韦片,opencmkg,0,44,0,0,44
+1553,0,替妥木单抗,替妥木单抗,Teprotumumab,未命中,替妥木单抗,ddinter,0,44,0,0,44
+1554,0,氟轻松（外用）,氟轻松,Flurandrenolide (topical),去盐归一化,醋酸氟轻松乳膏,opencmkg,0,0,44,0,44
+1555,0,氨西诺酮,氨西诺酮,Amcinonide,未命中,氨西诺酮,ddinter,0,0,44,0,44
+1556,0,氯化铬,氯化铬,Chromic chloride,未命中,氯化铬,ddinter,0,44,0,0,44
+1557,0,阿氯米松（外用）,阿氯米松,Alclometasone (topical),未命中,阿氯米松（外用）,ddinter,0,0,44,0,44
+1558,0,乙酰胆碱,乙酰胆碱,Acetylcholine,未命中,乙酰胆碱,ddinter,0,41,2,0,43
+1559,0,吡啶羧酸铬,吡啶羧酸铬,Chromium picolinate,未命中,吡啶羧酸铬,ddinter,0,43,0,0,43
+1560,0,胍苄啶,胍苄啶,Guanabenz,未命中,胍苄啶,ddinter,0,43,0,0,43
+1561,0,丁香,丁香,Clove,未命中,丁香,ddinter,0,0,42,0,42
+1562,0,姜,姜,Ginger,原样精确,姜,opencmkg,0,42,0,0,42
+1563,0,三甲吩噻,三甲吩噻,Trimethaphan,未命中,三甲吩噻,ddinter,0,41,0,0,41
+1564,0,氨甲酰胆碱（眼用）,氨甲酰胆碱,Carbamoylcholine (ophthalmic),未命中,氨甲酰胆碱（眼用）,ddinter,0,41,0,0,41
+1565,0,益康唑,益康唑,Econazole / Econazole (topical),去盐归一化,硝酸益康唑溶液,opencmkg,0,2,0,38,40
+1566,0,舍莫瑞林,舍莫瑞林,Sermorelin,未命中,舍莫瑞林,ddinter,0,40,0,0,40
+1567,0,依托咪酯,依托咪酯,Etomidate,未命中,依托咪酯,ddinter,0,1,0,38,39
+1568,0,芦荟叶,芦荟叶,Aloe Vera Leaf,未命中,芦荟叶,ddinter,0,39,0,0,39
+1569,0,氧布比卡因（眼用）,氧布比卡因,Oxybuprocaine (ophthalmic),未命中,氧布比卡因（眼用）,ddinter,0,38,0,0,38
+1570,0,组胺,组胺,Histamine,未命中,组胺,ddinter,0,38,0,0,38
+1571,0,苯琥胺,苯琥胺,Phensuximide,未命中,苯琥胺,ddinter,0,37,0,0,37
+1572,0,钆喷酸,钆喷酸,Gadopentetic acid,未命中,钆喷酸,ddinter,0,37,0,0,37
+1573,0,氟[18F]脱氧葡萄糖,氟[18F]脱氧葡萄糖,Fludeoxyglucose (18F),未命中,氟[18F]脱氧葡萄糖,ddinter,0,36,0,0,36
+1574,0,美卡拉明,美卡拉明,Mecamylamine,未命中,美卡拉明,ddinter,0,36,0,0,36
+1575,0,头孢西丁,头孢西丁,Cefoxitin,未命中,头孢西丁,ddinter,0,13,1,21,35
+1576,0,苯乙酰脲,苯乙酰脲,Phenacemide,未命中,苯乙酰脲,ddinter,0,34,0,0,34
+1577,0,金印草,金印草,Goldenseal,未命中,金印草,ddinter,0,33,1,0,34
+1578,0,钆塞酸,钆塞酸,Gadoxetic acid,未命中,钆塞酸,ddinter,0,33,0,0,33
+1579,0,羟钴胺,羟钴胺,Hydroxocobalamin,未命中,羟钴胺,ddinter,0,4,0,28,32
+1580,0,γ-氨基丁酸,γ-氨基丁酸,gamma-Aminobutyric acid,未命中,γ-氨基丁酸,ddinter,0,0,0,30,30
+1581,0,氨丁三醇,氨丁三醇,Tromethamine,未命中,氨丁三醇,ddinter,0,21,9,0,30
+1582,0,洛替泼诺乙酸酯,洛替泼诺乙酸酯,Loteprednol etabonate,未命中,洛替泼诺乙酸酯,ddinter,0,0,0,30,30
+1583,0,酚苄明,酚苄明,Phenoxybenzamine,去盐归一化,盐酸酚苄明片,opencmkg,0,30,0,0,30
+1584,0,醋酸钠,醋酸钠,Sodium acetate,去盐归一化,醋酸钙颗粒,opencmkg,0,21,9,0,30
+1585,0,钆特酸,钆特酸,Gadoteric acid,未命中,钆特酸,ddinter,0,30,0,0,30
+1586,0,甘草,甘草,Licorice,未命中,甘草,ddinter,0,29,0,0,29
+1587,0,硫辛酸,硫辛酸,Lipoic acid,归一化精确,硫辛酸注射液,opencmkg,0,0,29,0,29
+1588,0,车前子,车前子,Plantago seed,未命中,车前子,ddinter,0,2,27,0,29
+1589,0,三乙烯四胺,三乙烯四胺,Triethylenetetramine,未命中,三乙烯四胺,ddinter,0,24,3,0,27
+1590,0,头孢妥仑,头孢妥仑,Cefditoren,未命中,头孢妥仑,ddinter,0,25,0,2,27
+1591,0,氨曲南,氨曲南,Aztreonam,未命中,氨曲南,ddinter,0,6,0,21,27
+1592,0,玛巴洛沙韦,玛巴洛沙韦,Baloxavir marboxil,未命中,玛巴洛沙韦,ddinter,0,26,0,0,26
+1593,0,丁酸氢化可的松,丁酸氢化可的松,Hydrocortisone butyrate,归一化精确,丁酸氢化可的松乳膏,opencmkg,0,0,0,25,25
+1594,0,甲基纤维素,甲基纤维素,Methylcellulose,未命中,甲基纤维素,ddinter,0,2,23,0,25
+1595,0,维生素C,维生素C,Ascorbic acid,原样精确,维生素C,opencmkg,0,9,16,0,25
+1596,0,钆布醇,钆布醇,Gadobutrol,未命中,钆布醇,ddinter,0,25,0,0,25
+1597,0,钆福塞特三钠,钆福塞特三钠,Gadofosveset trisodium,未命中,钆福塞特三钠,ddinter,0,25,0,0,25
+1598,0,阿德福韦酯,阿德福韦酯,Adefovir dipivoxil,归一化精确,阿德福韦酯片,opencmkg,0,0,0,25,25
+1599,0,胰岛素样生长因子-1,胰岛素样生长因子-1,Mecasermin,未命中,胰岛素样生长因子-1,ddinter,0,24,0,0,24
+1600,0,氯化镓[67Ga],氯化镓[67Ga],Gallium chloride Ga-67,未命中,氯化镓[67Ga],ddinter,0,23,0,0,23
+1601,0,胰高血糖素,胰高血糖素,Glucagon,原样精确,胰高血糖素,opencmkg,0,1,22,0,23
+1602,0,奈西立肽,奈西立肽,Nesiritide,未命中,奈西立肽,ddinter,0,22,0,0,22
+1603,0,硝唑尼特,硝唑尼特,Nitazoxanide,未命中,硝唑尼特,ddinter,0,22,0,0,22
+1604,0,林可霉素,林可霉素,Lincomycin,去盐归一化,盐酸林可霉素滴眼液,opencmkg,0,7,0,14,21
+1605,0,氯化铵,氯化铵,Ammonium chloride,去盐归一化,氯化钠注射液,opencmkg,0,5,16,0,21
+1606,0,沙丙蝶呤,沙丙蝶呤,Sapropterin,去盐归一化,盐酸沙丙蝶呤片,opencmkg,0,20,0,0,20
+1607,0,羟甲叔丁肾上腺素,羟甲叔丁肾上腺素,Isoxsuprine,未命中,羟甲叔丁肾上腺素,ddinter,0,20,0,0,20
+1608,0,胰岛素样生长因子-1/胰岛素样生长因子结合蛋白-3复合物,胰岛素样生长因子-1/胰岛素样生长因子结合蛋白-3复合物,Mecasermin rinfabate,未命中,胰岛素样生长因子-1/胰岛素样生长因子结合蛋白-3复合物,ddinter,0,20,0,0,20
+1609,0,磷酸二氢钾,磷酸二氢钾,Monopotassium phosphate,未命中,磷酸二氢钾,ddinter,0,3,16,0,19
+1610,0,钆特醇,钆特醇,Gadoteridol,未命中,钆特醇,ddinter,0,19,0,0,19
+1611,0,胰酶,胰酶,Pancrelipase,未命中,胰酶,ddinter,0,18,0,0,18
+1612,0,丙美卡因（眼用）,丙美卡因,Proparacaine (ophthalmic),未命中,丙美卡因（眼用）,ddinter,0,17,0,0,17
+1613,0,乳酸,乳酸,Lactic acid,去盐归一化,乳酸钙颗粒,opencmkg,0,10,7,0,17
+1614,0,溴茶碱,溴茶碱,Bromotheophylline,未命中,溴茶碱,ddinter,0,17,0,0,17
+1615,0,环己烯乙胺酯,环己烯乙胺酯,Cyclandelate,未命中,环己烯乙胺酯,ddinter,0,17,0,0,17
+1616,0,褪黑素,褪黑素,Melatonin,未命中,褪黑素,ddinter,0,11,6,0,17
+1617,0,培格瓦酶,培格瓦酶,Pegvaliase,未命中,培格瓦酶,ddinter,0,16,0,0,16
+1618,0,环硅酸锆钠,环硅酸锆钠,Sodium zirconium cyclosilicate,未命中,环硅酸锆钠,ddinter,0,16,0,0,16
+1619,0,甘氨酸镁,甘氨酸镁,Magnesium glycinate,去盐归一化,甘氨酸,opencmkg,0,16,0,0,16
+1620,0,曲美替尼,曲美替尼,Trametinib,未命中,曲美替尼,ddinter,0,15,0,0,15
+1621,0,羟甲苯丙胺（眼用）,羟甲苯丙胺,Hydroxyamphetamine (ophthalmic),未命中,羟甲苯丙胺（眼用）,ddinter,0,15,0,0,15
+1622,0,阿坎酸,阿坎酸,Acamprosate,未命中,阿坎酸,ddinter,0,0,0,15,15
+1623,0,地匹福林（眼用）,地匹福林,Dipivefrin (ophthalmic),去盐归一化,盐酸地匹福林滴眼液,opencmkg,0,14,0,0,14
+1624,0,头孢克肟,头孢克肟,Cefixime,归一化精确,头孢克肟分散片,opencmkg,0,13,0,1,14
+1625,0,头孢哌酮,头孢哌酮,Cefoperazone,未命中,头孢哌酮,ddinter,0,14,0,0,14
+1626,0,头孢孟多,头孢孟多,Cefamandole,未命中,头孢孟多,ddinter,0,14,0,0,14
+1627,0,头孢替坦,头孢替坦,Cefotetan,未命中,头孢替坦,ddinter,0,14,0,0,14
+1628,0,头孢美唑,头孢美唑,Cefmetazole,未命中,头孢美唑,ddinter,0,14,0,0,14
+1629,0,左甲苯丙胺（鼻用）,左甲苯丙胺,Levmetamfetamine (nasal),未命中,左甲苯丙胺（鼻用）,ddinter,0,14,0,0,14
+1630,0,托拉唑啉,托拉唑啉,Tolazoline,未命中,托拉唑啉,ddinter,0,14,0,0,14
+1631,0,头孢拉定,头孢拉定,Cefradine,归一化精确,头孢拉定分散片,opencmkg,0,13,0,0,13
+1632,0,托吡卡胺,托吡卡胺,Tropicamide / Tropicamide (ophthalmic),归一化精确,托吡卡胺滴眼液,opencmkg,0,3,0,10,13
+1633,0,替匹嘧啶,替匹嘧啶,Tipiracil,未命中,替匹嘧啶,ddinter,0,13,0,0,13
+1634,0,甲钴胺,甲钴胺,Mecobalamin,归一化精确,甲钴胺片,opencmkg,0,2,11,0,13
+1635,0,维生素B6,维生素B6,Pyridoxine,原样精确,维生素B6,opencmkg,0,4,9,0,13
+1636,0,丙替肽,丙替肽,Capromab pendetide,未命中,丙替肽,ddinter,0,12,0,0,12
+1637,0,头孢匹林,头孢匹林,Cefapirin,未命中,头孢匹林,ddinter,0,12,0,0,12
+1638,0,头孢唑肟,头孢唑肟,Ceftizoxime,未命中,头孢唑肟,ddinter,0,12,0,0,12
+1639,0,头孢噻吩,头孢噻吩,Cefalotin,未命中,头孢噻吩,ddinter,0,12,0,0,12
+1640,0,头孢尼西,头孢尼西,Cefonicid,未命中,头孢尼西,ddinter,0,12,0,0,12
+1641,0,头孢洛林酯,头孢洛林酯,Ceftaroline fosamil,未命中,头孢洛林酯,ddinter,0,12,0,0,12
+1642,0,达托霉素,达托霉素,Daptomycin,未命中,达托霉素,ddinter,0,10,2,0,12
+1643,0,头孢托洛赞,头孢托洛赞,Ceftolozane,未命中,头孢托洛赞,ddinter,0,11,0,0,11
+1644,0,甲哌卡因,甲哌卡因,Mepivacaine,未命中,甲哌卡因,ddinter,0,10,1,0,11
+1645,0,人促胰液素,人促胰液素,Secretin human,未命中,人促胰液素,ddinter,0,0,10,0,10
+1646,0,洛替泼诺（眼用）,洛替泼诺,Loteprednol (ophthalmic),未命中,洛替泼诺（眼用）,ddinter,0,10,0,0,10
+1647,0,甲纳曲酮,甲纳曲酮,Methylnaltrexone,未命中,甲纳曲酮,ddinter,0,10,0,0,10
+1648,0,甲苯咪唑,甲苯咪唑,Mebendazole,归一化精确,甲苯咪唑片,opencmkg,0,9,1,0,10
+1649,0,美替拉酮,美替拉酮,Metyrapone,未命中,美替拉酮,ddinter,0,10,0,0,10
+1650,0,胆酸,胆酸,Cholic Acid,未命中,胆酸,ddinter,0,10,0,0,10
+1651,0,艾卡肽,艾卡肽,Icatibant,未命中,艾卡肽,ddinter,0,10,0,0,10
+1652,0,依替卡因,依替卡因,Etidocaine,未命中,依替卡因,ddinter,0,8,1,0,9
+1653,0,氟苯达唑美法仑,氟苯达唑美法仑,Melphalan flufenamide,未命中,氟苯达唑美法仑,ddinter,0,5,4,0,9
+1654,0,氯化铊,氯化铊,Thallous Chloride,未命中,氯化铊,ddinter,0,9,0,0,9
+1655,0,没食子酸铋,没食子酸铋,Bismuth subgallate,未命中,没食子酸铋,ddinter,0,9,0,0,9
+1656,0,米替福新,米替福新,Miltefosine,未命中,米替福新,ddinter,0,9,0,0,9
+1657,0,西米普利单抗,西米普利单抗,Cemiplimab,未命中,西米普利单抗,ddinter,0,9,0,0,9
+1658,0,伊莱瑞克,伊莱瑞克,Elexacaftor,未命中,伊莱瑞克,ddinter,0,8,0,0,8
+1659,0,扎那米韦,扎那米韦,Zanamivir,未命中,扎那米韦,ddinter,0,1,0,7,8
+1660,0,果胶,果胶,Pectin,未命中,果胶,ddinter,0,8,0,0,8
+1661,0,谷氨酰胺酶,谷氨酰胺酶,Glucarpidase,编辑距离（待确认）,谷氨酰胺酶,ddinter,0,8,0,0,8
+1662,0,卡博特韦,卡博特韦,Cabotegravir,未命中,卡博特韦,ddinter,0,7,0,0,7
+1663,0,培戈洛酶,培戈洛酶,Pegloticase,未命中,培戈洛酶,ddinter,0,7,0,0,7
+1664,0,头孢布烯,头孢布烯,Ceftibuten,未命中,头孢布烯,ddinter,0,7,0,0,7
+1665,0,奥马珠单抗,奥马珠单抗,Omalizumab,未命中,奥马珠单抗,ddinter,0,1,6,0,7
+1666,0,水杨酸（外用）,水杨酸,Salicylic acid (topical),归一化精确,水杨酸软膏,opencmkg,0,7,0,0,7
+1667,0,甘油磷酸钙,甘油磷酸钙,Calcium glycerophosphate,未命中,甘油磷酸钙,ddinter,0,7,0,0,7
+1668,0,硫磺（外用）,硫磺,Octasulfur (topical),未命中,硫磺（外用）,ddinter,0,7,0,0,7
+1669,0,磷丙泊酚,磷丙泊酚,Fospropofol,未命中,磷丙泊酚,ddinter,0,7,0,0,7
+1670,0,Loracarbef,Loracarbef,Loracarbef,未命中,Loracarbef,ddinter,0,6,0,0,6
+1671,0,加尼瑞克,加尼瑞克,Ganirelix,未命中,加尼瑞克,ddinter,0,6,0,0,6
+1672,0,沙库巴曲,沙库巴曲,Sacubitril,未命中,沙库巴曲,ddinter,0,6,0,0,6
+1673,0,特立帕肽,特立帕肽,Teriparatide,归一化精确,特立帕肽注射液,opencmkg,0,4,2,0,6
+1674,0,雷加登松,雷加登松,Regadenoson,未命中,雷加登松,ddinter,0,6,0,0,6
+1675,0,氨力农,氨力农,Amrinone,未命中,氨力农,ddinter,0,5,0,0,5
+1676,0,碘,碘,Iodine / Iodine (topical),未命中,碘,ddinter,0,5,0,0,5
+1677,0,磷酸二氢钠,磷酸二氢钠,"Sodium phosphate, monobasic",未命中,磷酸二氢钠,ddinter,0,1,4,0,5
+1678,0,米力农,米力农,Milrinone,未命中,米力农,ddinter,0,5,0,0,5
+1679,0,米卡芬净,米卡芬净,Micafungin,未命中,米卡芬净,ddinter,0,5,0,0,5
+1680,0,纳美芬,纳美芬,Nalmefene,未命中,纳美芬,ddinter,0,4,1,0,5
+1681,0,美溴芬宁,美溴芬宁,Mebrofenin,未命中,美溴芬宁,ddinter,0,5,0,0,5
+1682,0,葡萄糖酸铜,葡萄糖酸铜,Copper gluconate,未命中,葡萄糖酸铜,ddinter,0,5,0,0,5
+1683,0,蛋氨酸,蛋氨酸,Methionine,未命中,蛋氨酸,ddinter,0,1,4,0,5
+1684,0,谷氨酸,谷氨酸,Glutamic acid,原样精确,谷氨酸,opencmkg,0,5,0,0,5
+1685,0,过氧化苯甲酰（外用）,过氧化苯甲酰,Benzoyl peroxide (topical),编辑距离（待确认）,过氧化苯甲酰（外用）,ddinter,0,5,0,0,5
+1686,0,锯棕榈,锯棕榈,Saw palmetto,未命中,锯棕榈,ddinter,0,0,5,0,5
+1687,0,依库珠单抗,依库珠单抗,Eculizumab,未命中,依库珠单抗,ddinter,0,0,4,0,4
+1688,0,右旋甲状腺素,右旋甲状腺素,Dextrothyroxine,未命中,右旋甲状腺素,ddinter,0,4,0,0,4
+1689,0,塞达祖啶,塞达祖啶,Cedazuridine,未命中,塞达祖啶,ddinter,0,4,0,0,4
+1690,0,壬二酸（外用）,壬二酸,Azelaic acid / Azelaic acid (topical),未命中,壬二酸（外用）,ddinter,0,1,0,3,4
+1691,0,多利培南,多利培南,Doripenem,未命中,多利培南,ddinter,0,4,0,0,4
+1692,0,多库酯,多库酯,Docusate,未命中,多库酯,ddinter,0,3,1,0,4
+1693,0,微晶纤维素,微晶纤维素,Microcrystalline cellulose,未命中,微晶纤维素,ddinter,0,2,2,0,4
+1694,0,拉武利珠单抗,拉武利珠单抗,Ravulizumab,未命中,拉武利珠单抗,ddinter,0,0,4,0,4
+1695,0,枸橼酸铋钾,枸橼酸铋钾,Bismuth subcitrate potassium,归一化精确,枸橼酸铋钾颗粒,opencmkg,0,4,0,0,4
+1696,0,煤焦油（外用）,煤焦油,Coal tar (topical),未命中,煤焦油（外用）,ddinter,0,4,0,0,4
+1697,0,间苯二酚（外用）,间苯二酚,Resorcinol (topical),未命中,间苯二酚（外用）,ddinter,0,4,0,0,4
+1698,0,吡啶醛肟,吡啶醛肟,Pralidoxime,未命中,吡啶醛肟,ddinter,0,2,1,0,3
+1699,0,奥曲肽醋酸盐,奥曲肽醋酸盐,Dotatate,未命中,奥曲肽醋酸盐,ddinter,0,3,0,0,3
+1700,0,新生霉素,新生霉素,Novobiocin,未命中,新生霉素,ddinter,0,3,0,0,3
+1701,0,环戊通（眼用）,环戊通,Cyclopentolate (ophthalmic),未命中,环戊通（眼用）,ddinter,0,3,0,0,3
+1702,0,碘化油,碘化油,Ethiodized oil,归一化精确,碘化油咀嚼片,opencmkg,0,3,0,0,3
+1703,0,磷霉素,磷霉素,Fosfomycin,去盐归一化,磷霉素钙片,opencmkg,0,2,1,0,3
+1704,0,辅酶M,辅酶M,Coenzyme M,未命中,辅酶M,ddinter,0,3,0,0,3
+1705,0,达巴万星,达巴万星,Dalbavancin,未命中,达巴万星,ddinter,0,3,0,0,3
+1706,0,铟[111In]喷曲肽,铟[111In]喷曲肽,Indium In-111 pentetreotide,未命中,铟[111In]喷曲肽,ddinter,0,3,0,0,3
+1707,0,铟[111In]喷替酸,铟[111In]喷替酸,Indium In-111 pentetate,未命中,铟[111In]喷替酸,ddinter,0,3,0,0,3
+1708,0,β-胡萝卜素,β-胡萝卜素,Beta carotene,原样精确,β-胡萝卜素,opencmkg,0,1,1,0,2
+1709,0,二甲硅油,二甲硅油,Simethicone,未命中,二甲硅油,ddinter,0,2,0,0,2
+1710,0,利司扑兰,利司扑兰,Risdiplam,未命中,利司扑兰,ddinter,0,2,0,0,2
+1711,0,培加酶,培加酶,Pegademase,未命中,培加酶,ddinter,0,2,0,0,2
+1712,0,尿促卵泡素,尿促卵泡素,Follitropin / Urofollitropin,未命中,尿促卵泡素,ddinter,0,2,0,0,2
+1713,0,巴多昔芬,巴多昔芬,Bazedoxifene,未命中,巴多昔芬,ddinter,0,2,0,0,2
+1714,0,拉罗尼酶,拉罗尼酶,Laronidase,未命中,拉罗尼酶,ddinter,0,0,2,0,2
+1715,0,替尔马诺肽,替尔马诺肽,Tilmanocept,未命中,替尔马诺肽,ddinter,0,2,0,0,2
+1716,0,木瓜,木瓜,Papaya,原样精确,木瓜,opencmkg,0,0,2,0,2
+1717,0,氨基葡萄糖,氨基葡萄糖,Glucosamine,去盐归一化,硫酸氨基葡萄糖胶囊,opencmkg,0,2,0,0,2
+1718,0,氯化钠,氯化钠,Sodium chloride,归一化精确,氯化钠注射液,opencmkg,0,2,0,0,2
+1719,0,水杨酸甲酯（外用）,水杨酸甲酯,Methyl salicylate (topical),未命中,水杨酸甲酯（外用）,ddinter,0,2,0,0,2
+1720,0,硫酸软骨素,硫酸软骨素,Chondroitin sulfate,归一化精确,硫酸软骨素滴眼液,opencmkg,0,2,0,0,2
+1721,0,美多力松（眼用）,美多力松,Medrysone (ophthalmic),未命中,美多力松（眼用）,ddinter,0,2,0,0,2
+1722,0,肌酸,肌酸,Creatine,未命中,肌酸,ddinter,0,1,1,0,2
+1723,0,菊粉,菊粉,Inulin,未命中,菊粉,ddinter,0,1,1,0,2
+1724,0,蔓越莓,蔓越莓,Cranberry,未命中,蔓越莓,ddinter,0,2,0,0,2
+1725,0,透明质酸,透明质酸,Hyaluronic acid,原样精确,透明质酸,opencmkg,0,2,0,0,2
+1726,0,阿巴洛帕肽,阿巴洛帕肽,Abaloparatide,未命中,阿巴洛帕肽,ddinter,0,2,0,0,2
+1727,0,人绒促性腺激素,人绒促性腺激素,Chorionic Gonadotropin (Human),编辑距离（待确认）,人绒促性腺激素,ddinter,0,1,0,0,1
+1728,0,伊米苷酶,伊米苷酶,Imiglucerase,未命中,伊米苷酶,ddinter,0,1,0,0,1
+1729,0,促性腺激素释放激素,促性腺激素释放激素,Gonadorelin,未命中,促性腺激素释放激素,ddinter,0,1,0,0,1
+1730,0,六氯酚（外用）,六氯酚,Hexachlorophene (topical),未命中,六氯酚（外用）,ddinter,0,1,0,0,1
+1731,0,叶黄素,叶黄素,Lutein,未命中,叶黄素,ddinter,0,0,1,0,1
+1732,0,吐根碱,吐根碱,Ipecac,未命中,吐根碱,ddinter,0,1,0,0,1
+1733,0,喷昔洛韦（外用）,喷昔洛韦,Penciclovir (topical),归一化精确,喷昔洛韦乳膏,opencmkg,0,1,0,0,1
+1734,0,培加帕坦（眼用）,培加帕坦,Pegaptanib (ophthalmic),未命中,培加帕坦（眼用）,ddinter,0,1,0,0,1
+1735,0,壮观霉素,壮观霉素,Spectinomycin,未命中,壮观霉素,ddinter,0,1,0,0,1
+1736,0,奈多罗米,奈多罗米,Nedocromil,未命中,奈多罗米,ddinter,0,1,0,0,1
+1737,0,奎奴普林,奎奴普林,Quinupristin,未命中,奎奴普林,ddinter,0,1,0,0,1
+1738,0,尿促性素,尿促性素,Menotropins,未命中,尿促性素,ddinter,0,1,0,0,1
+1739,0,帕妥珠单抗,帕妥珠单抗,Pertuzumab,未命中,帕妥珠单抗,ddinter,0,1,0,0,1
+1740,0,恩夫韦肽,恩夫韦肽,Enfuvirtide,未命中,恩夫韦肽,ddinter,0,1,0,0,1
+1741,0,普乐替尼,普乐替尼,Plecanatide,未命中,普乐替尼,ddinter,0,1,0,0,1
+1742,0,替罗福辛,替罗福辛,Tetrofosmin,未命中,替罗福辛,ddinter,0,1,0,0,1
+1743,0,柑橘类生物类黄酮,柑橘类生物类黄酮,Citrus bioflavonoids,未命中,柑橘类生物类黄酮,ddinter,0,1,0,0,1
+1744,0,氯化锰,氯化锰,Manganese (chloride),未命中,氯化锰,ddinter,0,1,0,0,1
+1745,0,水飞蓟,水飞蓟,Milk thistle,编辑距离（待确认）,水飞蓟,ddinter,0,1,0,0,1
+1746,0,焦磷酸,焦磷酸,Pyrophosphoric acid,未命中,焦磷酸,ddinter,0,1,0,0,1
+1747,0,甲磺酸双氢麦角毒碱,甲磺酸双氢麦角毒碱,Ergoloid mesylate,归一化精确,甲磺酸双氢麦角毒碱片,opencmkg,0,1,0,0,1
+1748,0,硝酸咪康唑,硝酸咪康唑,Tioconazole,归一化精确,硝酸咪康唑散,opencmkg,0,0,0,1,1
+1749,0,硫柳汞（外用）,硫柳汞,Thimerosal (topical),未命中,硫柳汞（外用）,ddinter,0,1,0,0,1
+1750,0,硫酸锰,硫酸锰,Manganese (sulfate),未命中,硫酸锰,ddinter,0,1,0,0,1
+1751,0,磺酰乙酰胺（眼用）,磺酰乙酰胺,Sulfacetamide (ophthalmic),未命中,磺酰乙酰胺（眼用）,ddinter,0,1,0,0,1
+1752,0,米加拉司他,米加拉司他,Migalastat,未命中,米加拉司他,ddinter,0,1,0,0,1
+1753,0,米格鲁司特,米格鲁司特,Miglustat,未命中,米格鲁司特,ddinter,0,1,0,0,1
+1754,0,维贝格隆,维贝格隆,Vibegron,未命中,维贝格隆,ddinter,0,1,0,0,1
+1755,0,脱氢胆酸,脱氢胆酸,Dehydrocholic acid,未命中,脱氢胆酸,ddinter,0,0,1,0,1
+1756,0,苯佐那酯,苯佐那酯,Benzonatate,未命中,苯佐那酯,ddinter,0,1,0,0,1
+1757,0,苯扎溴铵（外用）,苯扎溴铵,Benzalkonium (topical),未命中,苯扎溴铵（外用）,ddinter,0,1,0,0,1
+1758,0,葡萄糖（未指明剂型）,葡萄糖,"Dextrose, unspecified form",归一化精确,葡萄糖注射液,opencmkg,0,1,0,0,1
+1759,0,西吡氯铵（外用）,西吡氯铵,Cetylpyridinium (topical),未命中,西吡氯铵（外用）,ddinter,0,1,0,0,1
+1760,0,达沙布韦,达沙布韦,Dasabuvir,未命中,达沙布韦,ddinter,0,1,0,0,1
+1761,0,重组人脱氧核糖核酸酶α,重组人脱氧核糖核酸酶α,Dornase alfa,未命中,重组人脱氧核糖核酸酶α,ddinter,0,1,0,0,1
+1762,0,银（外用）,银,Silver (topical),未命中,银（外用）,ddinter,0,1,0,0,1
+1763,0,阿尼芬净,阿尼芬净,Anidulafungin,未命中,阿尼芬净,ddinter,0,0,1,0,1
+1764,0,鲁比前列酮,鲁比前列酮,Lubiprostone,未命中,鲁比前列酮,ddinter,0,1,0,0,1
