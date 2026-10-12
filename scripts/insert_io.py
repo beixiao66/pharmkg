@@ -555,10 +555,16 @@ INDEX_FIELDS = [
     "candidate_count",
 ]
 
-#: candidates.csv 的列
+#: candidates.csv 的列。
+#:
+#: ⚠ ``maker`` 是**搜索结果页原样显示的"厂商"**，**不等于**详情页的【生产企业】：
+#: 实测多拉司琼的 search 厂商 = 辽宁海思科 = 详情页的【上市许可持有人】，
+#: 而详情页另有【生产企业】= 四川美大康佳乐；特立氟胺同样（盛世泰科 vs 南京海纳）。
+#: 所以两个 CSV 的"厂家"列**不是同一个概念**，绝不能互相核对。
+#: 详情页的持有人/生产企业分别记在 ``index.csv`` 的 ``holder`` / ``manufacturer``。
 CANDIDATE_FIELDS = [
     "search_keyword", "idx", "selected", "title", "spec",
-    "manufacturer", "ingredient", "url",
+    "maker", "ingredient", "url",
 ]
 
 
@@ -604,6 +610,78 @@ def write_candidates(rows: list[dict], path: Path | None = None) -> Path:
     return path
 
 
+# ── 合成用例：把三处解析缺陷各钉一条，不依赖网络 ──────────────────────
+_SAMPLE_DETAIL = """<html><body>
+<p class="page_drug-date__x"><span>核准日期：2020年1月1日</span><span>|</span>
+<span>修改日期：2021年2月2日</span></p>
+<p class="page_drug-title__x">示例药片</p>
+<div class="page_item__x"><h2 class="page_name__x"><span>禁忌</span></h2>
+<div class="page_content__x"><div class="ck-content"><ul>
+<li>第一条禁忌</li><li>第二条禁忌</li></ul></div></div></div>
+<div class="page_item__x"><h2 class="page_name__x"><span>自定义节</span></h2>
+<div class="page_content__x"><div class="ck-content"><div>甲段<br>乙段<p class="new-line"></p>丙段</div></div></div></div>
+<div class="page_item__x"><h2 class="page_name__x"><span>末节示例</span></h2>
+<div class="page_content__x"><div class="ck-content"><div>末节</div></div></div></div>
+</body></html>"""
+
+#: 注意 ``<script>`` 里那份是**转义过的飞行数据**（``\"`` 而非 ``"``，
+#: 且链接是 ``/drug/`` 而非 ``/pc/drug/``），候选解析必须不把它算进去。
+_SAMPLE_SEARCH = """<html><body>
+<div class="Main_section__x"><div class="Main_title__x">说明书</div><ul>
+<li class="DrugsItem_drugs-item__x"><a class="DrugsItem_link__x" href="/pc/drug/AAA?ky=x">
+<h3 class="DrugsItem_drugs-item-name__x"><span>甲（示例片） 10mg</span></h3>
+<p class="DrugsItem_drugs-item-cnName__x">厂商：<span>甲厂</span>   成分：<span>示例甲</span></p>
+</a></li>
+<li class="DrugsItem_drugs-item__x"><a class="DrugsItem_link__x" href="/pc/drug/BBB?ky=x">
+<h3 class="DrugsItem_drugs-item-name__x"><span>乙（示例胶囊）</span></h3>
+<p class="DrugsItem_drugs-item-cnName__x">厂商：<span>乙厂</span>   成分：<span>示例乙</span></p>
+</a></li></ul></div>
+<script>self.__next_f.push([1,"\\"className\\":\\"DrugsItem_drugs-item__x\\",\\"href\\":\\"/drug/CCC\\""])</script>
+</body></html>"""
+
+
+def _selftest() -> int:
+    """合成用例回归测试——三处解析缺陷各有对应用例钉住。"""
+    fails: list[str] = []
+
+    def check(name: str, got, want) -> None:
+        if got != want:
+            fails.append(f"{name}\n        实际 {got!r}\n        期望 {want!r}")
+
+    info = parse_detail(_SAMPLE_DETAIL)
+    check("① 列表项各自成行（旧版焊成一行）",
+          info["sections"]["禁忌"], "第一条禁忌\n第二条禁忌")
+    check("② 空 <p class=new-line> 与 <br> 都要断行",
+          info["sections"]["自定义节"], "甲段\n乙段\n丙段")
+    check("③ <br> 非自闭合也不让 depth 漂移",
+          list(info["sections"]), ["禁忌", "自定义节", "末节示例"])
+    check("④ 未知节名照样写出，只被报告、不被丢弃",
+          info["unknown_sections"], ["自定义节", "末节示例"])
+    check("   核准/修改日期未粘连",
+          (info["核准日期"], info["修改日期"]), ("2020年1月1日", "2021年2月2日"))
+    check("   药名", info["title"], "示例药片")
+
+    items = parse_search(_SAMPLE_SEARCH)
+    check("⑤ 候选数（飞行数据那份不算）", len(items), 2)
+    check("   候选一 品名", items[0]["title"], "甲（示例片）")
+    check("   候选一 规格", items[0]["spec"], "10mg")
+    check("   候选一 厂家", items[0]["manufacturer"], "甲厂")
+    check("   候选一 成分", items[0]["ingredient"], "示例甲")
+    check("   候选一 URL", items[0]["url"], BASE + "/pc/drug/AAA?ky=x")
+    check("   候选二 无规格则不硬拆", items[1]["spec"], "")
+    check("   降级兜底：认不出条目也要抓到链接",
+          len(parse_search('<a href="/pc/drug/ZZZ">x</a>')), 1)
+
+    print("  合成用例回归测试")
+    if fails:
+        for f in fails:
+            print(f"    ✗ {f}")
+        print(f"    {len(fails)} 项未通过")
+        return 1
+    print("    ✓ 14 项全过（三处解析缺陷各有对应用例钉住）")
+    return 0
+
+
 if __name__ == "__main__":
     import sys
 
@@ -614,6 +692,9 @@ if __name__ == "__main__":
             pass
 
     print("说明书读取层 · 自检")
+    print()
+    if _selftest():
+        raise SystemExit(1)
     print()
     files = sorted(RAW_DIR.glob("*.html"))
     print(f"  raw/*.html      {len(files)}")

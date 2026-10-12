@@ -22,7 +22,7 @@
 | 关系数据库 | PostgreSQL 16 |
 | 后端 | Python 3.13 + FastAPI |
 | 前端 | Vue3 + Vite（待 L5 阶段搭建） |
-| 大模型 | DeepSeek / 阿里云百炼（均为 OpenAI 兼容接口） |
+| 大模型 | 阿里云百炼（OpenAI 兼容接口），默认 `qwen-plus` |
 | 容器 | Docker Compose（开发阶段只跑数据库） |
 
 ## 快速开始
@@ -138,6 +138,31 @@ $PY = ".\backend\.venv\Scripts\python.exe"
 > `source=ddinter`（1,387 个，**只有相互作用数据**）。
 > **DDI 数据覆盖 100%，药品详情覆盖 21.4%**——两个口径必须分开陈述。
 
+## 说明书采集（L3）
+
+选样 → 采集 → 离线重解析，三段。产物落在 `data/collected/`：
+
+```powershell
+$PY = ".\backend\.venv\Scripts\python.exe"
+
+& $PY scripts\select_high_risk_drugs.py        # ① 按 Major 级频次选出 40 种高危药
+& $PY scripts\collect_inserts.py --login       # ② 先登录（脚本只读 cookie，不接收密码）
+& $PY scripts\collect_inserts.py               #    全量采集，**30 秒/请求**
+& $PY scripts\collect_inserts.py --candidates  #    补采搜索结果页，落地全部候选
+& $PY scripts\reparse_inserts.py --check       # ③ 离线重解析：只报告前后差异
+& $PY scripts\reparse_inserts.py               #    重写 text/*.txt 与 index.csv
+```
+
+> ⚠️ **请求间隔不要低于 30 秒**——实测 6 秒会在十几个药之后触发站点的人机验证。
+>
+> ⚠️ **改解析规则不要重新采集**。`raw/*.html` 是采集当时的原始页面，
+> 用 `scripts\reparse_inserts.py` 从本地重放即可——重采会改变样本，
+> 还可能再次触发人机验证。这条纪律让本次「三处解析缺陷修复」做到了**零次重采**。
+
+采集与重解析共用 `scripts/insert_io.py` 里的**同一个解析器**，两处产物不会漂移。
+产物结构、解析器的三处坑、【禁忌】信息量差异，见
+[`docs/数据源实测报告.md`](docs/数据源实测报告.md) §9。
+
 ## 目录结构
 
 ```
@@ -162,7 +187,12 @@ pharmkg/
 │   ├── opencmkg_io.py              OpenCMKG 读取层（两个解析坑 + 三处上游 bug 的修复）
 │   ├── import_opencmkg.py          L1：骨架导入 Neo4j
 │   ├── build_drug_name_mapping.py  第 0 步：中英药名映射（LLM 翻译 + 五级匹配）
-│   └── import_ddi.py               L2：药物相互作用导入 Neo4j
+│   ├── ddinter_io.py               DDInter 读取层（无序药对去重 + 等级冲突）
+│   ├── import_ddi.py               L2：药物相互作用导入 Neo4j
+│   ├── select_high_risk_drugs.py   L3①：按 Major 级频次选样
+│   ├── insert_io.py                说明书读取层（块级换行 + 文档顺序全节 + 候选解析）
+│   ├── collect_inserts.py          L3②：说明书采集（限速 / 登录 / 候选落地）
+│   └── reparse_inserts.py          L3②：从 raw/ 离线重解析（改规则不必重采）
 └── docs/                 需求与技术方案基线、数据源实测报告、药名映射实验报告
 ```
 
@@ -174,7 +204,7 @@ pharmkg/
 |---|---|---|---|
 | OpenCMKG | 图谱骨架：疾病 / 药物 / 症状 / 食物 / 科室 / 生产商 | <https://github.com/RuiqingDing/OpenCMKG> | 仅学术研究 |
 | DDInter | 药物相互作用 + 严重程度（**无机制与处理建议**） | <https://ddinter.scbdd.com/download/> | CC BY-NC-SA 4.0 |
-| NMPA 说明书 | 禁忌、特殊人群 | <https://www.nmpa.gov.cn/> | 政府公开信息 |
+| 丁香园用药助手 | 说明书全文：禁忌、注意事项、儿童用药等 | <https://drugs.dxy.cn/> | 公开可访问的聚合平台；⚠️ **二手转录，非监管原件** |
 
 > ⚠️ **许可证合规**：DDInter 为非商业（NC）+ 相同方式共享（SA）。本项目属学术非商业用途，但若公开分发衍生图谱须采用同协议。**DrugBank 禁止再分发，不入库。**
 
@@ -193,7 +223,8 @@ pharmkg/
 - [x] **第 0 步药名映射实验**（覆盖率 27.3% / 26.7%；查出编辑距离在医药场景不可靠）
 - [x] **L2 药物相互作用导入**（150,522 条 `INTERACTS_WITH` 边，MERGE 幂等已验证）
 - [x] **L3 说明书采集**（选样 40 种高危药 → 采到 **36 份**可追溯说明书；【禁忌】【注意事项】全完整）
-- [ ] L4 说明书知识抽取 ← **下一步**（开工前须先记录基线，供 §7 消融实验用）
+- [x] **L3 产物保真修复**（块级换行丢失 / 白名单丢 56 个小节 / 清单被续采覆写三处缺陷；正文 **644 → 13,533 行**，全程零重采）
+- [ ] L4 说明书知识抽取 ← **下一步**。**第一件事是跑并冻结朴素基线**（整篇输入 + 单次调用 + 无 JSON 约束，存档提示词/参数/原始输出），之后所有改进都对着它比 —— 见基线 §6.4 / §7
 - [ ] L5 问答链路 ← 技术风险最高
 - [ ] L6 用药安全校验
 - [ ] L7 会话管理

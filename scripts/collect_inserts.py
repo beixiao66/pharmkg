@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-L3 第②步 · 说明书采集（原型）
-==============================
-
+L3 第②步 · 说明书采集
+======================
 按 L3 第①步选出的高危药名单，逐药采集说明书正文，本地存档并记录来源。
 
 数据源
@@ -90,8 +89,6 @@ HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "zh-CN,zh;q=0.9",
 }
-
-#: 用来判断"登录有没有生效"的探针药见 insert_io.PROBE_DRUG。
 
 
 def log(msg: str = "") -> None:
@@ -350,14 +347,18 @@ def _row_from_info(target: dict, info: dict, url: str, collected_at: str,
 
 
 def _candidate_rows(kw: str, hits: list[dict]) -> list[dict]:
-    """候选条目 → candidates.csv 的行。``idx=0`` 即实际选中的那一份。"""
+    """候选条目 → candidates.csv 的行。``idx=0`` 即实际选中的那一份。
+
+    ``maker`` 用的是搜索结果页原样显示的"厂商"——它等于详情页的
+    【上市许可持有人】，**不是**【生产企业】。详见 ``insert_io.CANDIDATE_FIELDS``。
+    """
     return [{
         "search_keyword": kw,
         "idx": i,
         "selected": 1 if i == 0 else 0,
         "title": c.get("title", ""),
         "spec": c.get("spec", ""),
-        "manufacturer": c.get("manufacturer", ""),
+        "maker": c.get("manufacturer", ""),
         "ingredient": c.get("ingredient", ""),
         "url": c.get("url", ""),
     } for i, c in enumerate(hits)]
