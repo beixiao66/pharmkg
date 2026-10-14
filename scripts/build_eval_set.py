@@ -9,14 +9,32 @@ L4 评测集构建与校验
 
 抽样规则（可复现，写进论文）
 ----------------------------
-**按【禁忌】正文长度分层，5 层各随机取 2 篇，随机种子固定。**
-不改成"随便挑 10 个"或"挑禁忌最长的 10 个"：
+**按【禁忌】正文长度分层，5 层各随机取 2 篇，随机种子固定；再确定性强纳入
+1 篇极端样本。** 共 **11 篇**。
+
+不改成"随便挑"或"挑禁忌最长的"：
 
 * 全随机 → 可能抽不到"禁忌只有 13 字"那几篇，而那正是最容易翻车的样本；
 * 挑最长的 → 等于对着长文本出题，recall 会虚高；
-* 分层则保证覆盖从"无"到 391 字的整个区间，**消融实验的数字才有解释力**。
+* 分层保证覆盖从"无"到 391 字的整个区间，**消融实验的数字才有解释力**。
 
-⚠️ **纪律**：这 10 份一旦标好就冻结，**不得进入任何提示词或 few-shot**
+**为什么还要强纳入**：分层抽样没抽中 ``托法替布``——它【禁忌】正文只有 ``无``
+一个字，是"原文没有禁忌"与"我们没抽到"会不会混的**唯一试金石**。
+它落在第 1 层内，靠随机抽不到就等于没测。标注它约 10 秒，成本可忽略。
+
+「一条禁忌」的定义（**决定 P/R/F1 的分母**）
+--------------------------------------------
+**按"独立的人群 / 情形"拆开。** 例：
+
+    原文：严重的肝、肾功能损害者、孕妇及长期接触砷或有砷中毒者禁用。
+    → 3 条：① 严重的肝、肾功能损害者   ② 孕妇   ③ 长期接触砷或有砷中毒者
+
+为什么不照原句算 1 条：图谱里每条 ``CONTRAINDICATED_FOR`` 边对应**一个**
+"谁不能用"（决策 #30 的 e：一条禁忌一条边），粒度必须对齐。
+照原句算的话，"只抽到 1 条、漏掉另外 2 个人群"会被判**完全正确**——
+等于把最容易出的错藏起来。
+
+⚠️ **纪律**：这 11 份一旦标好就冻结，**不得进入任何提示词或 few-shot**
 （与决策 #26 同一纪律）。否则等于考前透题。
 
 用法
@@ -51,6 +69,11 @@ LAYERS = 5
 PER_LAYER = 2
 SEED = 20261013
 
+#: 确定性强纳入的药——不靠随机，因为它覆盖的是**极端情形**，抽不到就等于没测。
+#: 托法替布的【禁忌】正文只有「无」一个字：它是"原文没有禁忌"与
+#: "我们没抽到"会不会混的唯一试金石（决策 #30 / Q5 的 generic_only）。
+FORCE_INCLUDE = ("托法替布",)
+
 #: 目标小节（决策 #30 / Q4）
 SECTION = "禁忌"
 
@@ -78,7 +101,7 @@ def build_pool() -> list[dict]:
 
 
 def pick(pool: list[dict]) -> list[dict]:
-    """按长度分层随机取样——确定性可复现。"""
+    """分层随机取样 + 确定性强纳入——合起来可复现。"""
     ordered = sorted(pool, key=lambda d: (d["chars"], d["drug"]))
     n = len(ordered)
     # 尽量均分：36 份 / 5 层 = 7,7,7,7,8
@@ -92,6 +115,16 @@ def pick(pool: list[dict]) -> list[dict]:
         start += size
         k = min(PER_LAYER, len(layer))
         chosen.extend(rng.sample(layer, k))
+
+    # 强纳入：已有的不重复加
+    picked = {d["drug"] for d in chosen}
+    for name in FORCE_INCLUDE:
+        if name in picked:
+            continue
+        hit = next((d for d in pool if d["drug"] == name), None)
+        if hit is not None:
+            chosen.append(hit)
+            picked.add(name)
     return chosen
 
 
@@ -180,7 +213,7 @@ def main(argv: list[str] | None = None) -> int:
             pass
 
     ap = argparse.ArgumentParser(description="L4 评测集构建与校验")
-    ap.add_argument("--list", action="store_true", help="只列出抽中的 10 份")
+    ap.add_argument("--list", action="store_true", help="只列出抽中的篇目")
     ap.add_argument("--force", action="store_true", help="覆盖已存在的标注表")
     ap.add_argument("--verify", action="store_true", help="校验标注是否填妥")
     args = ap.parse_args(argv)
@@ -193,11 +226,14 @@ def main(argv: list[str] | None = None) -> int:
         log("L4 评测集 · 校验")
         return verify(chosen)
 
-    log("L4 评测集 · 分层抽样")
+    forced = set(FORCE_INCLUDE)
+    log("L4 评测集 · 分层抽样 + 强纳入")
     log(f"  候选        {len(pool)} 份（{SECTION} 一节非空 "
         f"{len(pool) - len(n_missing)} 份）")
     log(f"  规则        按【{SECTION}】去空白长度分 {LAYERS} 层，"
         f"每层随机取 {PER_LAYER} 篇，seed={SEED}")
+    log(f"  强纳入      {'、'.join(FORCE_INCLUDE)}（极端样本，不靠随机）")
+    log(f"  合计        {len(chosen)} 篇")
     log("")
 
     ordered = sorted(pool, key=lambda d: (d["chars"], d["drug"]))
@@ -216,7 +252,8 @@ def main(argv: list[str] | None = None) -> int:
     log("")
     log("  抽中：")
     for d in sorted(chosen, key=lambda x: x["chars"]):
-        log(f"      {d['chars']:>4} 字  {d['drug']}")
+        tag = "   ← 强纳入" if d["drug"] in forced else ""
+        log(f"      {d['chars']:>4} 字  {d['drug']}{tag}")
     log("")
 
     if args.list:
@@ -225,8 +262,11 @@ def main(argv: list[str] | None = None) -> int:
     n = write_stub(chosen, args.force)
     log(f"  已写 {GOLD_FILE.relative_to(REPO_ROOT)}（{n} 行待核）")
     log("")
-    log("  怎么填：")
-    log("    1. 把「禁忌」原文切成一条一条；切不准就**照抄原文**，别改写")
+    log("  怎么填（「一条禁忌」= **一个独立的人群/情形**）：")
+    log("    0. 例：原文「严重的肝、肾功能损害者、孕妇及长期接触砷或有砷中毒者禁用。」")
+    log("       要拆成 **3 条**：严重的肝、肾功能损害者 / 孕妇 / 长期接触砷或有砷中毒者")
+    log("       —— 表里已经按原文的每一行预填，你只需合并或拆分")
+    log("    1. gold_text **照抄原文**，别改写")
     log("       —— 评价的是「有没有抽到」，不是「会不会改写」")
     log("    2. 每行的 n_gold 填该药**一共几条**（同一药的所有行填同一个数）")
     log("    3. 原文确实没有禁忌的（如托法替布正文只有「无」），"
