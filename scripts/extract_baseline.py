@@ -40,6 +40,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import io
 import json
 import sys
 import time
@@ -227,6 +228,45 @@ def read_prev_meta() -> dict[str, dict]:
         return {}
 
 
+def read_prev_header() -> dict:
+    """读回上一轮 meta 的**头部字段**。
+
+    续跑只能**追加**，不能改写来源——首次运行的 ``git_commit`` / ``started_at``
+    是这条基线的出身证明，被后来某次续跑覆盖掉就说不清了。
+    """
+    p = OUT_DIR / "run_meta.json"
+    if not p.exists():
+        return {}
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def write_guarded(path: Path, text: str, encoding: str = "utf-8") -> None:
+    """写文件；被别的程序占住时给出人能看懂的提示，而不是甩一个 PermissionError。
+
+    Windows 上记事本 / Excel 打开文件时持有共享锁，脚本再以 ``w`` 打开就会
+    ``[Errno 13] Permission denied``——这个报错对使用者毫无指向性。
+    """
+    try:
+        path.write_text(text, encoding=encoding)
+    except PermissionError:
+        raise SystemExit(
+            f"✗ 写不了 {path.name}：文件正被其他程序占用。\n"
+            "  多半是你正在记事本 / Excel 里开着它——关掉再跑即可。\n"
+            "  已经跑出来的 raw/ 输出不会丢，重跑会自动跳过它们。"
+        )
+
+
+def _csv_text(rows: list[dict]) -> str:
+    buf = io.StringIO()
+    w = csv.DictWriter(buf, fieldnames=list(rows[0].keys()))
+    w.writeheader()
+    w.writerows(rows)
+    return buf.getvalue()
+
+
 def main(argv: list[str] | None = None) -> int:
     for s in (sys.stdout, sys.stderr):
         try:
@@ -271,6 +311,18 @@ def main(argv: list[str] | None = None) -> int:
                 f"   三节 {target_chars(d['text']):>6,} 字符")
         return 0
 
+    # 先判断这一轮有没有活儿干，**再决定动不动手写文件**。
+    # 曾经栽过：一篇都没跑（36 篇全部跳过）却仍然重写了 run_meta.json，
+    # 把 git_commit / started_at / counts 全改了——"冻结"当场失效。
+    RAW_DIR.mkdir(parents=True, exist_ok=True)
+    pending = [d for d in docs
+               if args.force or not (RAW_DIR / f"{d['drug']}.txt").exists()]
+    if not pending:
+        log(f"  {len(docs)} 篇输出都已存在，没有要跑的篇目。")
+        log("  产物保持冻结，本次不做任何写入。")
+        log("  （确实要重跑请加 --force——那会覆盖已有输出并更新台账）")
+        return 0
+
     client, settings = make_client()
     model = args.model or settings.llm_model
     log(f"  模型        {model}")
@@ -278,8 +330,9 @@ def main(argv: list[str] | None = None) -> int:
     log("")
 
     write_prompt_archive(model, force=args.force)
-    RAW_DIR.mkdir(parents=True, exist_ok=True)
     prev_meta = read_prev_meta()
+    # 续跑只追加来源，不改写；--force 是重做，才允许重置
+    prev_full = {} if args.force else read_prev_header()
 
     meta = {
         "run": "L4 朴素基线",
@@ -292,8 +345,10 @@ def main(argv: list[str] | None = None) -> int:
         "input": "整篇说明书（data/collected/text/*.txt，原样，不裁剪）",
         "output_constraint": "无（自由文本，没有 JSON schema）",
         "self_check": "无",
-        "git_commit": git_commit(),
-        "started_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "git_commit": prev_full.get("git_commit") or git_commit(),
+        "started_at": (prev_full.get("started_at")
+                       or time.strftime("%Y-%m-%d %H:%M:%S")),
+        "last_run_at": time.strftime("%Y-%m-%d %H:%M:%S"),
         "docs": [],
     }
 
@@ -342,15 +397,12 @@ def main(argv: list[str] | None = None) -> int:
     meta["finished_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
     meta["wall_seconds"] = round(time.time() - t_start, 1)
     meta["counts"] = {"run": done, "skipped": skipped, "failed": failed}
-    (OUT_DIR / "run_meta.json").write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+    write_guarded(OUT_DIR / "run_meta.json",
+                  json.dumps(meta, ensure_ascii=False, indent=2))
 
     if rows:
-        with (OUT_DIR / "summary.csv").open("w", encoding="utf-8-sig",
-                                            newline="") as f:
-            w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
-            w.writeheader()
-            w.writerows(rows)
+        write_guarded(OUT_DIR / "summary.csv", _csv_text(rows),
+                      encoding="utf-8-sig")
 
     tin = sum(r["prompt_tokens"] or 0 for r in meta["docs"])
     tout = sum(r["completion_tokens"] or 0 for r in meta["docs"])
