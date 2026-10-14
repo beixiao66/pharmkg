@@ -88,10 +88,20 @@ def norm(s: str) -> str:
     return s.lower()
 
 
+def split_atoms_raw(text: str) -> list[str]:
+    """按 、，； 切出原子，**保留原文措辞**（供人阅读与标注）。
+
+    与 :func:`atoms` 的区别：这个不归一化，是给人看的。
+    """
+    t = re.sub(r"^[\s•●·\-*?]+", "", text).strip()
+    return [p.strip().strip("。").strip()
+            for p in ATOM_SPLIT.split(t) if p.strip()]
+
+
 def atoms(text: str) -> list[str]:
-    """把一段文字切成最小并列项。"""
+    """把一段文字切成最小并列项（归一化后）。"""
     out = []
-    for part in ATOM_SPLIT.split(text):
+    for part in split_atoms_raw(text):
         n = norm(part)
         if len(n) >= MIN_ATOM:
             out.append(n)
