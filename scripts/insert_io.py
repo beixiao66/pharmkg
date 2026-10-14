@@ -88,6 +88,7 @@
 from __future__ import annotations
 
 import csv
+import io
 import re
 import urllib.parse
 from html.parser import HTMLParser
@@ -652,6 +653,36 @@ CANDIDATE_FIELDS = [
 ]
 
 
+#: 读**可能被人手改过**的 CSV 时依次尝试的编码。
+#:
+#: 中文 Windows 上的 Excel 存"CSV(逗号分隔)"默认用 **GBK**，顺带把 BOM 丢掉。
+#: 只按 ``utf-8-sig`` 读会直接 ``UnicodeDecodeError``——而报错信息里
+#: 只有一串字节位置，使用者完全看不出"是我的 Excel 存的格式不对"。
+#: 顺序很重要：先 utf-8（GBK 字节几乎不可能碰巧是合法 UTF-8），再 gb18030（GBK 超集）。
+CSV_ENCODINGS = ("utf-8-sig", "utf-8", "gb18030")
+
+
+def read_csv_rows(path: Path | str) -> tuple[list[dict], str]:
+    """读 CSV，自动兼容 Excel 另存过的编码。返回 ``(行, 实际用的编码)``。"""
+    p = Path(path)
+    data = p.read_bytes()
+    last: Exception | None = None
+    for enc in CSV_ENCODINGS:
+        try:
+            text = data.decode(enc)
+        except UnicodeDecodeError as e:
+            last = e
+            continue
+        # 统一行尾，免得 csv 模块把 \r 留进最后一个字段
+        text = text.replace("\r\n", "\n").replace("\r", "\n")
+        return list(csv.DictReader(io.StringIO(text))), enc
+    raise SystemExit(
+        f"✗ 读不了 {p.name}：试过 {'、'.join(CSV_ENCODINGS)} 都不行。\n"
+        f"  最后一次解码错误：{last}\n"
+        "  多半是文件被别的工具改存成了罕见编码——用记事本另存为 UTF-8 即可。"
+    )
+
+
 def read_index(path: Path | None = None) -> list[dict]:
     """读回 ``index.csv``。**采集脚本用它做合并**，不要再整份覆写。
 
@@ -661,8 +692,7 @@ def read_index(path: Path | None = None) -> list[dict]:
     path = path or INDEX_FILE
     if not Path(path).exists():
         return []
-    with Path(path).open(encoding="utf-8-sig", newline="") as f:
-        return list(csv.DictReader(f))
+    return read_csv_rows(path)[0]
 
 
 def read_candidates(path: Path | None = None) -> list[dict]:
@@ -670,8 +700,7 @@ def read_candidates(path: Path | None = None) -> list[dict]:
     path = path or CANDIDATE_FILE
     if not Path(path).exists():
         return []
-    with Path(path).open(encoding="utf-8-sig", newline="") as f:
-        return list(csv.DictReader(f))
+    return read_csv_rows(path)[0]
 
 
 def write_index(rows: list[dict], path: Path | None = None) -> Path:

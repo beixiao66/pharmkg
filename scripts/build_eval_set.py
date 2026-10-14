@@ -58,7 +58,7 @@ import re
 import sys
 from pathlib import Path
 
-from insert_io import TEXT_DIR, load_targets, split_sections
+from insert_io import TEXT_DIR, load_targets, read_csv_rows, split_sections
 from opencmkg_io import REPO_ROOT
 
 EVAL_DIR = REPO_ROOT / "data" / "eval"
@@ -163,8 +163,18 @@ def write_stub(chosen: list[dict], force: bool) -> int:
 def verify(chosen: list[dict]) -> int:
     if not GOLD_FILE.exists():
         raise SystemExit(f"✗ 还没有 {GOLD_FILE.relative_to(REPO_ROOT)}")
-    with GOLD_FILE.open(encoding="utf-8-sig", newline="") as f:
-        rows = list(csv.DictReader(f))
+    rows, enc = read_csv_rows(GOLD_FILE)
+    log(f"  读取编码    {enc}"
+        + ("（Excel 另存过——中文 Windows 默认是 GBK，已自动兼容）"
+           if enc != "utf-8-sig" else ""))
+
+    missing_cols = [c for c in ("drug", "n_gold", "gold_text")
+                    if rows and c not in rows[0]]
+    if missing_cols:
+        raise SystemExit(
+            f"✗ 表里缺少必需列：{'、'.join(missing_cols)}\n"
+            f"  实际列：{'、'.join(rows[0].keys()) if rows else '（空表）'}"
+        )
 
     by_drug: dict[str, list[dict]] = {}
     for r in rows:
@@ -189,6 +199,13 @@ def verify(chosen: list[dict]) -> int:
             bad.append(f"{drug}: n_gold 未填")
             log(f"  {drug:<14} {'—':>6} {len(items):>4}  ✗ n_gold 未填")
             continue
+        # n_gold=0 = 原文明确无禁忌。这时的数据行（如 gold_text="无"）只是
+        # **记录原文事实**，不当成一条禁忌来算——所以忽略行数，不报不一致。
+        if int(n) == 0:
+            log(f"  {drug:<14} {n:>6} {len(items):>4}  ✓ 原文明确无禁忌"
+                f"（{len(items)} 行仅记录事实，评分时忽略）")
+            continue
+
         total += int(n)
         ok = int(n) == len(items)
         if not ok:
@@ -201,7 +218,7 @@ def verify(chosen: list[dict]) -> int:
         for b in bad:
             log(f"  ✗ {b}")
         return 1
-    log("  ✓ 10 份全部填妥且自洽")
+    log(f"  ✓ {len(got)} 份全部填妥且自洽")
     return 0
 
 
@@ -269,8 +286,8 @@ def main(argv: list[str] | None = None) -> int:
     log("    1. gold_text **照抄原文**，别改写")
     log("       —— 评价的是「有没有抽到」，不是「会不会改写」")
     log("    2. 每行的 n_gold 填该药**一共几条**（同一药的所有行填同一个数）")
-    log("    3. 原文确实没有禁忌的（如托法替布正文只有「无」），"
-        "n_gold 填 0 并删掉数据行")
+    log("    3. 原文确实没有禁忌的（如托法替布正文只有「无」），n_gold 填 0；"
+        "那行**留着**即可——它记录原文事实，校验与评分都会忽略")
     log("    4. 填完跑 --verify")
     return 0
 
