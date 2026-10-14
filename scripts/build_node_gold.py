@@ -338,6 +338,14 @@ def verify() -> int:
         if v == "需拆":
             bad.append(f"{r['drug']}#{r['atom_idx']}: 还标着「需拆」，请拆开或改成保留/删除")
     keep = [r for r in rows if r["verdict"] == "保留"]
+    # 拆行时容易漏改序号——同药内 atom_idx 必须唯一
+    seen: dict[tuple[str, str], int] = {}
+    for r in rows:
+        k = (r["drug"], (r.get("atom_idx") or "").strip())
+        seen[k] = seen.get(k, 0) + 1
+    for (drug, idx), cnt in seen.items():
+        if cnt > 1:
+            bad.append(f"{drug} 的 atom_idx「{idx}」重复了 {cnt} 次——拆行后要改成唯一的")
     log(f"  保留 {len(keep)} / 需拆 {sum(1 for r in rows if r['verdict'] == '需拆')}"
         f" / 删除 {sum(1 for r in rows if r['verdict'] == '删除')}")
     log(f"  节点总数（去重）{len({(r['drug'], r['node']) for r in keep})}")
@@ -352,6 +360,27 @@ def verify() -> int:
     return 0
 
 
+def lookup(keyword: str, limit: int = 25) -> int:
+    """在 OpenCMKG 疾病词表里搜名字——``suggest`` 写着「需人工命名」时用它。
+
+    词表文件是**一整行的 Python 字面量**，用 grep 搜会把整行几 MB 打出来，
+    所以必须有这么个工具。
+    """
+    vocab = disease_vocab()
+    hits = sorted(n for n in vocab if keyword in n)
+    log(f"在 OpenCMKG 的 {len(vocab):,} 个疾病名里搜「{keyword}」")
+    log(f"  命中 {len(hits)} 个")
+    if len(hits) > limit:
+        log(f"  （只显示前 {limit} 个）")
+    for n in hits[:limit]:
+        log(f"    {n}")
+    log("")
+    log("  怎么用：如果上面有**恰好**表达你要的那个概念的病名，就把 node 列填它")
+    log("          （越具体的越要当心：「卒中」不要填成「出血性脑卒中」）")
+    log("          确实没有，就按规范名自己写一个——它会成为新建的 Disease 节点")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     for s in (sys.stdout, sys.stderr):
         try:
@@ -361,7 +390,11 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="L4 节点级金标准草表")
     ap.add_argument("--force", action="store_true", help="覆盖已存在的草表")
     ap.add_argument("--verify", action="store_true", help="校验人工填好的节点表")
+    ap.add_argument("--lookup", metavar="关键词", default=None,
+                    help="在 OpenCMKG 疾病词表里搜名字")
     args = ap.parse_args(argv)
+    if args.lookup:
+        return lookup(args.lookup)
     if args.verify:
         return verify()
     return build(args.force)
