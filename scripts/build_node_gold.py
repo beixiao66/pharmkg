@@ -66,8 +66,12 @@ NODE_FILE = EVAL_DIR / "contraindications_nodes.csv"
 FIELDS = ["drug", "atom_idx", "atom", "verdict", "node_type", "node",
           "in_graph", "suggest", "reason"]
 
-#: 人群受控词表（与 population_tags 对齐）
-POPULATION = ("孕妇", "哺乳期女性", "育龄女性", "儿童", "老年人", "药物过敏者")
+#: 人群受控词表（与 population_tags 对齐）。
+#: 注意**没有**通用的「药物过敏者」——已定决策：通用「对本品过敏」标
+#: ``generic_only``、只留在文本里不入图（它对每种药都成立，进图就是零信息量的边）。
+#: 但**指名了药物类别的交叉过敏是有信息量的**，单列成节点。
+POPULATION = ("孕妇", "哺乳期女性", "育龄女性", "儿童", "老年人",
+              "大环内酯类药物过敏者", "三环类药物过敏者")
 
 #: 我的逐条提案：``(药, 原子序号) -> (判定, 类型, 节点名, 理由)``
 #: 判定 ∈ 保留 / 需拆 / 删除。**这是提案，不是结论**——等人工确认。
@@ -331,13 +335,16 @@ def verify() -> int:
             bad.append(f"{r['drug']}#{r['atom_idx']}: verdict 取值非法「{v}」")
         if v == "保留":
             t = (r.get("node_type") or "").strip()
-            if t not in ("疾病", "人群", "用药"):
+            if t not in ("疾病", "人群", "用药", "仅文本"):
                 bad.append(f"{r['drug']}#{r['atom_idx']}: node_type 非法「{t}」")
-            if not (r.get("node") or "").strip():
+            # 仅文本 = 抽到了但**不入图**（如通用「对本品过敏」，标 generic_only）。
+            # 这类不需要 node——它刻意不产生边。
+            if t != "仅文本" and not (r.get("node") or "").strip():
                 bad.append(f"{r['drug']}#{r['atom_idx']}: 保留但没有 node")
         if v == "需拆":
             bad.append(f"{r['drug']}#{r['atom_idx']}: 还标着「需拆」，请拆开或改成保留/删除")
     keep = [r for r in rows if r["verdict"] == "保留"]
+    graph = [r for r in keep if r["node_type"] in ("疾病", "人群", "用药")]
     # 拆行时容易漏改序号——同药内 atom_idx 必须唯一
     seen: dict[tuple[str, str], int] = {}
     for r in rows:
@@ -348,7 +355,8 @@ def verify() -> int:
             bad.append(f"{drug} 的 atom_idx「{idx}」重复了 {cnt} 次——拆行后要改成唯一的")
     log(f"  保留 {len(keep)} / 需拆 {sum(1 for r in rows if r['verdict'] == '需拆')}"
         f" / 删除 {sum(1 for r in rows if r['verdict'] == '删除')}")
-    log(f"  节点总数（去重）{len({(r['drug'], r['node']) for r in keep})}")
+    log(f"  其中入图（可评分）{len(graph)}   仅文本（不入图）{len(keep) - len(graph)}")
+    log(f"  (drug, node) 对（去重）{len({(r['drug'], r['node']) for r in graph})}")
     if bad:
         log("")
         for b in bad[:30]:
