@@ -41,6 +41,7 @@ from __future__ import annotations
 
 import argparse
 import difflib
+import json
 import re
 import sys
 from pathlib import Path
@@ -173,6 +174,42 @@ class Aligner:
         return {"node": n, "node_type": "疾病", "level": "④新建",
                 "normalized": n}
 
+    def top_candidates(self, n: str, k: int = 15) -> list[str]:
+        """按最长公共子串占比取前 k 个词表名，供 ⑤ LLM 挑选。
+
+        必须给候选：不给的话模型只会一路"新建"，⑤ 的价值就被埋没了。
+        """
+        scored = []
+        for v in self.disease:
+            if not v:
+                continue
+            lo, hi = min(len(v), len(n)), max(len(v), len(n))
+            if hi > lo * 2:
+                continue
+            m = difflib.SequenceMatcher(None, n, v, autojunk=False)
+            s = m.find_longest_match(0, len(n), 0, len(v)).size / hi
+            if s > 0.3:
+                scored.append((s, v))
+        scored.sort(reverse=True)
+        return [v for _s, v in scored[:k]]
+
+
+# ── ⑤ LLM 兜底 ────────────────────────────────────────────────────────
+
+LLM_SYSTEM = """你是医学实体对齐助手。给你一条药品说明书里的禁忌表述，以及从知识图谱
+疾病词表中挑出的候选名，请判断它应当对齐到哪个节点。
+
+规则：
+1. 优先选候选中**语义等价**的那一个。**不要选更具体的亚型**——
+   例如「卒中」不要选「出血性脑卒中」，「感染」不要选「感染性急性小管间质性肾炎」。
+2. 候选里确实没有等价的，就按规范中文病名**新建**一个节点名：简短、规范、
+   不带严重程度（严重/重度/中度）与时间限定（近期/最近N个月内）。
+3. 人群类（孕妇 / 哺乳期女性 / 育龄女性 / 儿童 / 老年人 / 药物过敏者 等）
+   node_type 填「人群」；其余填「疾病」。
+
+只输出 JSON，不要解释：
+{"action": "existing|new", "node": "节点名", "node_type": "疾病|人群", "why": "不超过20字"}"""
+
 
 def load_gold_edges() -> list[dict]:
     """金标准里**入图**的行（`node_type ∈ 疾病/人群/用药`）。"""
@@ -182,20 +219,102 @@ def load_gold_edges() -> list[dict]:
             and (r.get("node_type") or "").strip() in ("疾病", "人群", "用药")]
 
 
-def do_eval() -> int:
+CACHE_FILE = REPO_ROOT / "data" / "extracted" / "alignment_cache.json"
+
+
+def load_cache() -> dict:
+    if CACHE_FILE.exists():
+        try:
+            return json.loads(CACHE_FILE.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+    return {}
+
+
+def save_cache(cache: dict) -> None:
+    CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    CACHE_FILE.write_text(json.dumps(cache, ensure_ascii=False, indent=2),
+                          encoding="utf-8")
+
+
+def llm_align(al: Aligner, atom: str, cache: dict):
+    """⑤：把原子 + 候选交给百炼判定。结果按原子文本缓存，重跑不再花钱。"""
+    if atom in cache:
+        return cache[atom]
+
+    sys.path.insert(0, str(REPO_ROOT / "backend"))
+    from app.config import get_settings
+    from openai import OpenAI
+
+    st = get_settings()
+    if not st.llm_configured:
+        raise SystemExit("✗ 百炼未配齐，无法做 LLM 兜底")
+    client = OpenAI(api_key=st.dashscope_api_key, base_url=st.dashscope_base_url)
+
+    n = normalize(atom)
+    cands = al.top_candidates(n, 15)
+    user = (f"禁忌表述：{atom}\n"
+            f"（归一化后：{n}）\n\n"
+            f"候选节点名（来自知识图谱疾病词表）：\n"
+            + "\n".join(f"- {c}" for c in cands))
+    resp = client.chat.completions.create(
+        model=st.llm_model,
+        messages=[{"role": "system", "content": LLM_SYSTEM},
+                  {"role": "user", "content": user}],
+        temperature=0.0, max_tokens=300, timeout=120,
+    )
+    text = resp.choices[0].message.content or ""
+    try:
+        data = json.loads(text)
+    except Exception:
+        m = re.search(r"\{.*\}", text, re.S)
+        data = json.loads(m.group(0)) if m else {}
+    out = {"node": str(data.get("node", "")).strip(),
+           "node_type": str(data.get("node_type", "疾病")).strip(),
+           "action": str(data.get("action", "new")).strip(),
+           "why": str(data.get("why", "")).strip(),
+           "candidates": cands[:15]}
+    cache[atom] = out
+    return out
+
+
+def do_eval(use_llm: bool = False) -> int:
     al = Aligner()
     gold = load_gold_edges()
+    cache = load_cache() if use_llm else {}
     print("L4 对齐器 · 在金标准上量命中率")
     print(f"  目标词表  疾病 {len(al.disease):,} · 人群 {len(al.population)}")
     print(f"  金标准    {len(gold)} 条入图边")
+    print(f"  ⑤ LLM     {'开启' if use_llm else '关闭（只量规则）'}")
     print()
 
     hit_by_level: dict[str, int] = {}
     miss: list[tuple[str, str, str, str]] = []
+    rule_hit = final_hit = 0
+    llm_called = llm_fixed = 0
     for r in gold:
         atom, want = r["atom"], r["node"]
-        got = al.align(atom)
-        ok = got["node"] == want
+        rule = al.align(atom)
+        # 比节点名时先归一化：**节点身份不该取决于一个连字符或"严重"二字**。
+        # 实测踩过：`葡萄糖半乳糖吸收障碍` vs `葡萄糖-半乳糖吸收障碍`、
+        # `骨髓功能受损` vs `骨髓功能严重受损` 都被判成错。
+        rule_ok = normalize(rule["node"]) == normalize(want)
+        rule_hit += rule_ok
+
+        got = rule
+        if use_llm and rule["level"] == "④新建":
+            # 规则什么都没找到才交 LLM——这就是"兜底"的定义
+            ll = llm_align(al, atom, cache)
+            llm_called += 1
+            if ll.get("node"):
+                got = {"node": ll["node"],
+                       "node_type": ll.get("node_type", "疾病"),
+                       "level": f"⑤LLM({ll.get('action', '')})",
+                       "normalized": rule["normalized"]}
+        ok = normalize(got["node"]) == normalize(want)
+        final_hit += ok
+        if use_llm and rule["level"] == "④新建" and ok and not rule_ok:
+            llm_fixed += 1
         lv = got["level"] + ("✓" if ok else "✗")
         hit_by_level[lv] = hit_by_level.get(lv, 0) + 1
         if not ok:
@@ -203,17 +322,24 @@ def do_eval() -> int:
 
     print("  各级命中：")
     for k in sorted(hit_by_level):
-        print(f"    {k:<8} {hit_by_level[k]:>3}")
+        print(f"    {k:<14} {hit_by_level[k]:>3}")
 
-    hit = len(gold) - len(miss)
     print()
-    print(f"  对齐准确率  {hit}/{len(gold)} = {hit / max(1, len(gold)):.1%}")
-    print(f"  需 LLM 兜底 {len(miss)}")
+    print(f"  ① 规则单独       {rule_hit}/{len(gold)} = {rule_hit / len(gold):.1%}")
+    if use_llm:
+        save_cache(cache)
+        print(f"  ⑤ LLM 调用       {llm_called} 条（④新建 的那些）")
+        print(f"  ② 规则 + LLM     {final_hit}/{len(gold)} = "
+              f"{final_hit / len(gold):.1%}")
+        print(f"     LLM 救回        {llm_fixed} 条")
+        print(f"  缓存             {CACHE_FILE.relative_to(REPO_ROOT)}")
+    print()
+    print(f"  仍不对 {len(miss)} 条")
     if miss:
         print()
-        print("  ── 规则没对上的（这些就是 LLM 该接手的）──")
+        print("  ── 没对上的 ──")
         for atom, want, got, lv in miss:
-            print(f"    {atom[:26]:<28} 期望 {want:<12} 实得 {got}（{lv}）")
+            print(f"    {atom[:26]:<28} 期望 {want:<14} 实得 {got}（{lv}）")
     return 0
 
 
@@ -225,6 +351,8 @@ def main(argv: list[str] | None = None) -> int:
             pass
     ap = argparse.ArgumentParser(description="L4 原子→节点 对齐器")
     ap.add_argument("--eval", action="store_true", help="在金标准上量命中率")
+    ap.add_argument("--llm", action="store_true",
+                    help="开启 ⑤ LLM 兜底（对 ④新建 的原子调模型；结果带缓存）")
     ap.add_argument("--atom", default=None, help="对单个原子跑一遍，看各级判定")
     args = ap.parse_args(argv)
 
@@ -234,7 +362,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  归一化 → {normalize(args.atom)}")
         print(f"  判定   → {al.align(args.atom)}")
         return 0
-    return do_eval()
+    return do_eval(use_llm=args.llm)
 
 
 if __name__ == "__main__":
