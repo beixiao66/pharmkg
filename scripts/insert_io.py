@@ -592,6 +592,28 @@ def text_sections(text: str) -> list[str]:
     return [ln[3:].strip() for ln in text.split("\n") if ln.startswith("## ")]
 
 
+def split_sections(text: str) -> dict[str, str]:
+    """把 txt 拆回 ``{小节名: 正文}``，顺序同文件。
+
+    与 :func:`render_text` 是一对逆操作。L4 **按小节送 LLM**（决策 #30 / Q3）
+    就靠它取【禁忌】【注意事项】【儿童用药】三节。
+    """
+    out: dict[str, str] = {}
+    cur: str | None = None
+    buf: list[str] = []
+    for ln in text.split("\n"):
+        if ln.startswith("## "):
+            if cur is not None:
+                out[cur] = "\n".join(buf).strip("\n")
+            cur = ln[3:].strip()
+            buf = []
+        elif cur is not None:
+            buf.append(ln)
+    if cur is not None:
+        out[cur] = "\n".join(buf).strip("\n")
+    return out
+
+
 def text_stats(text: str) -> tuple[int, int]:
     """返回 ``(小节数, 正文行数)``。
 
@@ -745,13 +767,20 @@ def _selftest() -> int:
     check("   表格：空单元格留下分隔符（原文空 ≠ 解析丢了）",
           tbl_lines[-1], "乙 | 暂停 |")
 
+    # render_text 与 split_sections 是一对逆操作——L4 按小节送 LLM 靠它
+    rt = split_sections(render_text(info, url="u", collected_at="d"))
+    check("⑦ render_text ↔ split_sections 可逆",
+          rt["禁忌"], "第一条禁忌\n第二条禁忌")
+    check("   拆出的小节与原文同序",
+          list(rt), ["禁忌", "自定义节", "末节示例"])
+
     print("  合成用例回归测试")
     if fails:
         for f in fails:
             print(f"    ✗ {f}")
         print(f"    {len(fails)} 项未通过")
         return 1
-    print("    ✓ 17 项全过（四处解析缺陷各有对应用例钉住）")
+    print("    ✓ 19 项全过（四处解析缺陷 + 一对逆操作各有对应用例钉住）")
     return 0
 
 
