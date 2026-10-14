@@ -1,0 +1,826 @@
+{
+  "gold_file": "data\\eval\\contraindications_nodes.csv",
+  "population_aliases": {
+    "孕妇": [
+      "妊娠期妇女",
+      "妊娠妇女",
+      "妊娠期女性",
+      "妊娠女性",
+      "妊娠期间",
+      "妊娠期",
+      "妊娠",
+      "孕期妇女",
+      "孕期女性",
+      "怀孕妇女",
+      "怀孕女性",
+      "怀孕期间",
+      "妊娠状态"
+    ],
+    "哺乳期女性": [
+      "哺乳期妇女",
+      "哺乳妇女",
+      "哺乳期",
+      "哺乳期间",
+      "哺乳",
+      "母乳喂养妇女",
+      "授乳期妇女"
+    ],
+    "育龄女性": [
+      "育龄期女性",
+      "育龄妇女",
+      "育龄期妇女",
+      "育龄期",
+      "育龄",
+      "有生育能力的女性",
+      "有生育潜力的女性",
+      "有生育潜力女性",
+      "有生育能力的妇女"
+    ],
+    "儿童": [
+      "小儿",
+      "儿科患者",
+      "儿童患者"
+    ],
+    "老年人": [
+      "老年患者",
+      "老年病人",
+      "高龄患者",
+      "高龄老年人",
+      "老年",
+      "65岁以上患者",
+      "65岁及以上患者",
+      "65岁以上老年人"
+    ],
+    "大环内酯类药物过敏者": [
+      "大环内酯类过敏者",
+      "对大环内酯类药物过敏者",
+      "大环内酯类抗生素过敏者",
+      "大环内酯类药物过敏",
+      "大环内酯类过敏"
+    ],
+    "三环类药物过敏者": [
+      "三环类过敏者",
+      "对三环类药物过敏者",
+      "三环类抗抑郁药过敏者",
+      "三环类抗抑郁药物过敏者",
+      "三环类药物过敏",
+      "三环类过敏"
+    ]
+  },
+  "pop_contain_min": 4,
+  "n_gold": 54,
+  "rule_only": {
+    "hit": 40,
+    "acc": 0.7407,
+    "levels": {
+      "①精确✓": 25,
+      "②包含✓": 4,
+      "②包含✗": 1,
+      "③前后缀✗": 1,
+      "④新建✓": 11,
+      "④新建✗": 12
+    }
+  },
+  "rule_plus_llm": {
+    "hit": 44,
+    "acc": 0.8148,
+    "levels": {
+      "①精确✓": 25,
+      "②包含✓": 4,
+      "②包含✗": 1,
+      "③前后缀✗": 1,
+      "⑤LLM(existing)✓": 1,
+      "⑤LLM(existing)✗": 3,
+      "⑤LLM(new)✓": 14,
+      "⑤LLM(new)✗": 5
+    },
+    "llm_called": 23,
+    "llm_fixed": 6,
+    "llm_broke": 2,
+    "broke": [
+      {
+        "atom": "卒中",
+        "rule": "卒中",
+        "llm": "中风"
+      },
+      {
+        "atom": "正在使用单胺氧化酶（MAO）抑制剂（见【药物相互作用】）",
+        "rule": "单胺氧化酶抑制剂",
+        "llm": "单胺氧化酶抑制剂使用期"
+      }
+    ]
+  },
+  "ambiguous_similarity": 0,
+  "misses": [
+    {
+      "drug": "慢性疾病的急性发作期",
+      "want": "慢性疾病",
+      "got": "慢性疾病急性发作期",
+      "level": "⑤LLM(new)"
+    },
+    {
+      "drug": "肝功能损害",
+      "want": "肝功能受损",
+      "got": "肝功能损伤",
+      "level": "③前后缀"
+    },
+    {
+      "drug": "本品不得与圣约翰草一起服用（见【药物相互作用】）",
+      "want": "圣约翰草",
+      "got": "圣约翰草用药",
+      "level": "⑤LLM(new)"
+    },
+    {
+      "drug": "免疫缺陷状态（见【注意事项】）",
+      "want": "免疫缺陷",
+      "got": "免疫缺陷状态",
+      "level": "⑤LLM(new)"
+    },
+    {
+      "drug": "卒中",
+      "want": "卒中",
+      "got": "中风",
+      "level": "⑤LLM(existing)"
+    },
+    {
+      "drug": "需要住院的失代偿性心力衰竭的患者",
+      "want": "心力衰竭",
+      "got": "难治性心力衰竭",
+      "level": "⑤LLM(existing)"
+    },
+    {
+      "drug": "过去或目前有III 度 AV 传导阻滞的患者",
+      "want": "房室传导阻滞",
+      "got": "完全性房室传导阻滞",
+      "level": "⑤LLM(existing)"
+    },
+    {
+      "drug": "正在使用单胺氧化酶（MAO）抑制剂（见【药物相互作用】）",
+      "want": "单胺氧化酶抑制剂",
+      "got": "单胺氧化酶抑制剂使用期",
+      "level": "⑤LLM(new)"
+    },
+    {
+      "drug": "中性粒细胞减少的患者",
+      "want": "中性粒细胞减少症",
+      "got": "粒细胞减少",
+      "level": "②包含"
+    },
+    {
+      "drug": "2. 患者含有罕见的遗传性半乳糖不耐受",
+      "want": "半乳糖不耐受",
+      "got": "遗传性半乳糖不耐受",
+      "level": "⑤LLM(new)"
+    }
+  ],
+  "per_atom": [
+    {
+      "drug": "他克莫司",
+      "atom_idx": "2",
+      "atom": "对他克莫司或其他大环内酯类药物过敏者禁用",
+      "want": "大环内酯类药物过敏者",
+      "rule_node": "大环内酯类药物过敏者",
+      "rule_level": "②包含",
+      "rule_ok": true,
+      "final_node": "大环内酯类药物过敏者",
+      "final_level": "②包含",
+      "final_ok": true
+    },
+    {
+      "drug": "伤寒疫苗",
+      "atom_idx": "2",
+      "atom": "(2)患急性疾病",
+      "want": "急性疾病",
+      "rule_node": "急性疾病",
+      "rule_level": "④新建",
+      "rule_ok": true,
+      "final_node": "急性疾病",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "伤寒疫苗",
+      "atom_idx": "3",
+      "atom": "严重慢性疾病",
+      "want": "慢性疾病",
+      "rule_node": "慢性疾病",
+      "rule_level": "④新建",
+      "rule_ok": true,
+      "final_node": "慢性疾病",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "伤寒疫苗",
+      "atom_idx": "4",
+      "atom": "慢性疾病的急性发作期",
+      "want": "慢性疾病",
+      "rule_node": "慢性疾病的急性发作期",
+      "rule_level": "④新建",
+      "rule_ok": false,
+      "final_node": "慢性疾病急性发作期",
+      "final_level": "⑤LLM(new)",
+      "final_ok": false
+    },
+    {
+      "drug": "伤寒疫苗",
+      "atom_idx": "4b",
+      "atom": "发热",
+      "want": "发热",
+      "rule_node": "发热",
+      "rule_level": "④新建",
+      "rule_ok": true,
+      "final_node": "发热",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "伤寒疫苗",
+      "atom_idx": "5",
+      "atom": "(3)妊娠期妇女",
+      "want": "孕妇",
+      "rule_node": "孕妇",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "孕妇",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "多塞平",
+      "atom_idx": "1",
+      "atom": "严重心脏病",
+      "want": "心脏病",
+      "rule_node": "心脏病",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "心脏病",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "多塞平",
+      "atom_idx": "2",
+      "atom": "近期有心肌梗死发作史",
+      "want": "心肌梗死",
+      "rule_node": "心肌梗死",
+      "rule_level": "②包含",
+      "rule_ok": true,
+      "final_node": "心肌梗死",
+      "final_level": "②包含",
+      "final_ok": true
+    },
+    {
+      "drug": "多塞平",
+      "atom_idx": "3",
+      "atom": "癫痫",
+      "want": "癫痫",
+      "rule_node": "癫痫",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "癫痫",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "多塞平",
+      "atom_idx": "4",
+      "atom": "青光眼",
+      "want": "青光眼",
+      "rule_node": "青光眼",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "青光眼",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "多塞平",
+      "atom_idx": "5",
+      "atom": "尿潴留",
+      "want": "尿潴留",
+      "rule_node": "尿潴留",
+      "rule_level": "④新建",
+      "rule_ok": true,
+      "final_node": "尿潴留",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "多塞平",
+      "atom_idx": "6",
+      "atom": "甲状腺机能亢进",
+      "want": "甲状腺功能亢进",
+      "rule_node": "甲状腺机能亢进",
+      "rule_level": "④新建",
+      "rule_ok": false,
+      "final_node": "甲状腺功能亢进",
+      "final_level": "⑤LLM(existing)",
+      "final_ok": true
+    },
+    {
+      "drug": "多塞平",
+      "atom_idx": "7",
+      "atom": "肝功能损害",
+      "want": "肝功能受损",
+      "rule_node": "肝功能损伤",
+      "rule_level": "③前后缀",
+      "rule_ok": false,
+      "final_node": "肝功能损伤",
+      "final_level": "③前后缀",
+      "final_ok": false
+    },
+    {
+      "drug": "多塞平",
+      "atom_idx": "8",
+      "atom": "谵妄",
+      "want": "谵妄",
+      "rule_node": "谵妄",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "谵妄",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "多塞平",
+      "atom_idx": "9",
+      "atom": "粒细胞减少",
+      "want": "粒细胞减少",
+      "rule_node": "粒细胞减少",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "粒细胞减少",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "多塞平",
+      "atom_idx": "10",
+      "atom": "对三环类药物过敏者",
+      "want": "三环类药物过敏者",
+      "rule_node": "三环类药物过敏者",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "三环类药物过敏者",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "奥希替尼",
+      "atom_idx": "2",
+      "atom": "本品不得与圣约翰草一起服用（见【药物相互作用】）",
+      "want": "圣约翰草",
+      "rule_node": "本品不得与圣约翰草一起服用",
+      "rule_level": "④新建",
+      "rule_ok": false,
+      "final_node": "圣约翰草用药",
+      "final_level": "⑤LLM(new)",
+      "final_ok": false
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "2",
+      "atom": "免疫缺陷状态（见【注意事项】）",
+      "want": "免疫缺陷",
+      "rule_node": "免疫缺陷状态",
+      "rule_level": "④新建",
+      "rule_ok": false,
+      "final_node": "免疫缺陷状态",
+      "final_level": "⑤LLM(new)",
+      "final_ok": false
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "3",
+      "atom": "最近 6 个月内发生心肌梗死",
+      "want": "心肌梗死",
+      "rule_node": "心肌梗死",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "心肌梗死",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "4",
+      "atom": "不稳定型心绞痛",
+      "want": "不稳定型心绞痛",
+      "rule_node": "不稳定型心绞痛",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "不稳定型心绞痛",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "5",
+      "atom": "卒中",
+      "want": "卒中",
+      "rule_node": "卒中",
+      "rule_level": "④新建",
+      "rule_ok": true,
+      "final_node": "中风",
+      "final_level": "⑤LLM(existing)",
+      "final_ok": false
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "6",
+      "atom": "短暂性脑缺血发作",
+      "want": "短暂性脑缺血发作",
+      "rule_node": "短暂性脑缺血发作",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "短暂性脑缺血发作",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "7",
+      "atom": "需要住院的失代偿性心力衰竭的患者",
+      "want": "心力衰竭",
+      "rule_node": "需要住院的失代偿性心力衰竭",
+      "rule_level": "④新建",
+      "rule_ok": false,
+      "final_node": "难治性心力衰竭",
+      "final_level": "⑤LLM(existing)",
+      "final_ok": false
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "7b",
+      "atom": "需要住院的纽约心脏协会（NYHA）III/IV 级心力衰竭的患者",
+      "want": "心力衰竭",
+      "rule_node": "需要住院的纽约心脏协会IIIIV级心力衰竭",
+      "rule_level": "④新建",
+      "rule_ok": false,
+      "final_node": "心力衰竭",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "8",
+      "atom": "过去或目前有 II 度 II 型房室（AV）传导阻滞的患者",
+      "want": "房室传导阻滞",
+      "rule_node": "房室传导阻滞",
+      "rule_level": "②包含",
+      "rule_ok": true,
+      "final_node": "房室传导阻滞",
+      "final_level": "②包含",
+      "final_ok": true
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "8b",
+      "atom": "过去或目前有III 度 AV 传导阻滞的患者",
+      "want": "房室传导阻滞",
+      "rule_node": "III度AV传导阻滞",
+      "rule_level": "④新建",
+      "rule_ok": false,
+      "final_node": "完全性房室传导阻滞",
+      "final_level": "⑤LLM(existing)",
+      "final_ok": false
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "8c",
+      "atom": "过去或目前有病态窦房结综合征的患者",
+      "want": "病态窦房结综合征",
+      "rule_node": "病态窦房结综合征",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "病态窦房结综合征",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "11",
+      "atom": "重度活动性感染",
+      "want": "活动性感染",
+      "rule_node": "活动性感染",
+      "rule_level": "④新建",
+      "rule_ok": true,
+      "final_node": "活动性感染",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "12",
+      "atom": "活动性慢性感染",
+      "want": "慢性感染",
+      "rule_node": "活动性慢性感染",
+      "rule_level": "④新建",
+      "rule_ok": false,
+      "final_node": "慢性感染",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "14",
+      "atom": "活动性恶性肿瘤",
+      "want": "恶性肿瘤",
+      "rule_node": "恶性肿瘤",
+      "rule_level": "②包含",
+      "rule_ok": true,
+      "final_node": "恶性肿瘤",
+      "final_level": "②包含",
+      "final_ok": true
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "15",
+      "atom": "重度肝损伤（Child-Pugh C 级）",
+      "want": "肝损伤",
+      "rule_node": "肝损伤",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "肝损伤",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "16",
+      "atom": "妊娠期间",
+      "want": "孕妇",
+      "rule_node": "孕妇",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "孕妇",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "17",
+      "atom": "以及未采取有效避孕措施的育龄女性（见【注意事项】和【孕妇及哺乳期妇女用药】）",
+      "want": "育龄女性",
+      "rule_node": "育龄女性",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "育龄女性",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "奥扎莫德",
+      "atom_idx": "18",
+      "atom": "正在使用单胺氧化酶（MAO）抑制剂（见【药物相互作用】）",
+      "want": "单胺氧化酶抑制剂",
+      "rule_node": "单胺氧化酶抑制剂",
+      "rule_level": "④新建",
+      "rule_ok": true,
+      "final_node": "单胺氧化酶抑制剂使用期",
+      "final_level": "⑤LLM(new)",
+      "final_ok": false
+    },
+    {
+      "drug": "来氟米特",
+      "atom_idx": "12",
+      "atom": "肝功能受损的患者",
+      "want": "肝功能受损",
+      "rule_node": "肝功能受损",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "肝功能受损",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "来氟米特",
+      "atom_idx": "13",
+      "atom": "处于严重免疫缺陷状态的患者",
+      "want": "免疫缺陷",
+      "rule_node": "处于免疫缺陷状态",
+      "rule_level": "④新建",
+      "rule_ok": false,
+      "final_node": "免疫缺陷",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "来氟米特",
+      "atom_idx": "15",
+      "atom": "骨髓功能严重受损",
+      "want": "骨髓功能严重受损",
+      "rule_node": "骨髓功能受损",
+      "rule_level": "④新建",
+      "rule_ok": true,
+      "final_node": "骨髓功能受损",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "来氟米特",
+      "atom_idx": "15b",
+      "atom": "重度的贫血",
+      "want": "贫血",
+      "rule_node": "贫血",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "贫血",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "来氟米特",
+      "atom_idx": "16",
+      "atom": "白细胞减少",
+      "want": "白细胞减少",
+      "rule_node": "白细胞减少",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "白细胞减少",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "来氟米特",
+      "atom_idx": "17",
+      "atom": "中性粒细胞减少的患者",
+      "want": "中性粒细胞减少症",
+      "rule_node": "粒细胞减少",
+      "rule_level": "②包含",
+      "rule_ok": false,
+      "final_node": "粒细胞减少",
+      "final_level": "②包含",
+      "final_ok": false
+    },
+    {
+      "drug": "来氟米特",
+      "atom_idx": "17b",
+      "atom": "因类风湿关节炎以外原因导致血小板减少的患者",
+      "want": "血小板减少",
+      "rule_node": "因类风湿关节炎以外原因导致血小板减少",
+      "rule_level": "④新建",
+      "rule_ok": false,
+      "final_node": "血小板减少",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "来氟米特",
+      "atom_idx": "18",
+      "atom": "严重感染的患者（参见【注意事项】）",
+      "want": "感染",
+      "rule_node": "感染",
+      "rule_level": "④新建",
+      "rule_ok": true,
+      "final_node": "感染",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "来氟米特",
+      "atom_idx": "19",
+      "atom": "中度至重度肾功能不全患者",
+      "want": "肾功能不全",
+      "rule_node": "肾功能不全",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "肾功能不全",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "来氟米特",
+      "atom_idx": "21",
+      "atom": "严重低蛋白血症患者",
+      "want": "低蛋白血症",
+      "rule_node": "低蛋白血症",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "低蛋白血症",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "来氟米特",
+      "atom_idx": "23",
+      "atom": "孕妇",
+      "want": "孕妇",
+      "rule_node": "孕妇",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "孕妇",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "来氟米特",
+      "atom_idx": "23b",
+      "atom": "未采取可靠避孕措施的育龄期女性",
+      "want": "育龄女性",
+      "rule_node": "育龄女性",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "育龄女性",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "来氟米特",
+      "atom_idx": "25",
+      "atom": "哺乳期女性（参见【孕妇及哺乳期妇女用药】）",
+      "want": "哺乳期女性",
+      "rule_node": "哺乳期女性",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "哺乳期女性",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "英夫利西单抗",
+      "atom_idx": "3",
+      "atom": "患有结核病",
+      "want": "结核病",
+      "rule_node": "结核病",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "结核病",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "英夫利西单抗",
+      "atom_idx": "3b",
+      "atom": "活动性感染",
+      "want": "活动性感染",
+      "rule_node": "活动性感染",
+      "rule_level": "④新建",
+      "rule_ok": true,
+      "final_node": "活动性感染",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "英夫利西单抗",
+      "atom_idx": "6",
+      "atom": "患有中重度心力衰竭（纽约心脏学会心功能分级 III/IV 级）的患者",
+      "want": "心力衰竭",
+      "rule_node": "心力衰竭",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "心力衰竭",
+      "final_level": "①精确",
+      "final_ok": true
+    },
+    {
+      "drug": "阿那格雷",
+      "atom_idx": "2",
+      "atom": "2. 患者含有罕见的遗传性半乳糖不耐受",
+      "want": "半乳糖不耐受",
+      "rule_node": "含有罕见的遗传性半乳糖不耐受",
+      "rule_level": "④新建",
+      "rule_ok": false,
+      "final_node": "遗传性半乳糖不耐受",
+      "final_level": "⑤LLM(new)",
+      "final_ok": false
+    },
+    {
+      "drug": "阿那格雷",
+      "atom_idx": "3",
+      "atom": "拉普乳糖酶缺乏",
+      "want": "乳糖酶缺乏",
+      "rule_node": "拉普乳糖酶缺乏",
+      "rule_level": "④新建",
+      "rule_ok": false,
+      "final_node": "乳糖酶缺乏",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "阿那格雷",
+      "atom_idx": "3b",
+      "atom": "葡萄糖-半乳糖吸收障碍",
+      "want": "葡萄糖-半乳糖吸收障碍",
+      "rule_node": "葡萄糖半乳糖吸收障碍",
+      "rule_level": "④新建",
+      "rule_ok": true,
+      "final_node": "葡萄糖半乳糖吸收障碍",
+      "final_level": "⑤LLM(new)",
+      "final_ok": true
+    },
+    {
+      "drug": "阿那格雷",
+      "atom_idx": "6",
+      "atom": "3. 严重肝损伤患者禁用",
+      "want": "肝损伤",
+      "rule_node": "肝损伤",
+      "rule_level": "①精确",
+      "rule_ok": true,
+      "final_node": "肝损伤",
+      "final_level": "①精确",
+      "final_ok": true
+    }
+  ]
+}
