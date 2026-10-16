@@ -12,6 +12,11 @@ const tags = ref([])
 const q = ref('')
 const hits = ref([])
 const busy = ref(false)
+//: 检索的三态。**必须都记下来**，否则页面无法区分
+//: 「没点」「没找到」「报错了」——而用户看到的都是"没反应"。
+const searching = ref(false)
+const searched = ref(false)
+const lastQ = ref('')
 
 async function load() {
   const [b, v] = await Promise.all([
@@ -26,8 +31,23 @@ async function load() {
 }
 
 async function search() {
-  if (!q.value.trim()) return
-  hits.value = (await api.get('/drugs/search', { params: { q: q.value.trim() } })).data
+  const qv = q.value.trim()
+  if (!qv) return
+  // ⚠️ 原来这里是**没有 try/catch 的**：一旦请求失败（后端没开、401、代理不通…），
+  //    异常直接冒到控制台，页面上**什么都不显示** —— 用户的体验就是"点了没反应"。
+  //    **静默失败比报错更难排查**，所以这里必须把结果和错误都摆到页面上。
+  searching.value = true
+  lastQ.value = qv
+  try {
+    hits.value = (await api.get('/drugs/search', { params: { q: qv } })).data
+    searched.value = true
+  } catch (e) {
+    hits.value = []
+    searched.value = true
+    ElMessage.error('检索失败：' + humanizeError(e))
+  } finally {
+    searching.value = false
+  }
 }
 
 async function add(id) {
@@ -96,14 +116,21 @@ const graph = computed(() => {
         <template #header>我的药箱（{{ box.length }}）</template>
         <el-input v-model="q" placeholder="输入药名前缀，如 卡维地洛" data-test="drug-q"
                   @keyup.enter="search">
-          <template #append><el-button @click="search" data-test="drug-search">检索</el-button></template>
+          <template #append><el-button @click="search" :loading="searching"
+                                       data-test="drug-search">检索</el-button></template>
         </el-input>
+        <!-- ⚠️ 三种结果都必须有反馈。原来只在"有结果"时渲染，
+             于是"点了没反应""没找到""请求报错"三种情况**在页面上长得一模一样**——
+             用户没法判断，只能来问我。 -->
         <div v-if="hits.length" style="margin-top:8px" data-test="search-hits">
           <el-button v-for="h in hits" :key="h.id" size="small" style="margin:4px"
                      :loading="busy" @click="add(h.id)">
             + {{ h.name }}
           </el-button>
         </div>
+        <el-alert v-else-if="searched" type="info" :closable="false"
+                  style="margin-top:8px" data-test="search-empty"
+                  :title="`图谱里没有以「${lastQ}」开头的药物。换个前缀试试（如只输前两个字）。`" />
         <el-divider />
         <el-empty v-if="!box.length" description="药箱是空的" />
         <div v-for="b in box" :key="b.drug_id" style="margin-bottom:6px"
