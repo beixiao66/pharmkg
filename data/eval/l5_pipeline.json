@@ -1,0 +1,687 @@
+{
+  "tag": "llm-template",
+  "summary": {
+    "single": {
+      "ok": 22,
+      "n": 23,
+      "rate": 0.957,
+      "steps": {
+        "ok": 22,
+        "Cypher 或结果不符": 1
+      },
+      "detail": [
+        {
+          "qid": "Q01",
+          "question": "卡维地洛和依度沙班能一起吃吗？",
+          "rewritten": "卡维地洛和依度沙班能一起吃吗？",
+          "intent": "相互作用",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "卡维地洛片",
+            "依度沙班"
+          ],
+          "answer": "根据图谱，卡维地洛片 与 依度沙班 之间存在 **Major** 级相互作用。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q02",
+          "question": "丁丙诺啡和屈大麻酚有相互作用吗？",
+          "rewritten": "丁丙诺啡和屈大麻酚有相互作用吗？",
+          "intent": "相互作用",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "丁丙诺啡",
+            "屈大麻酚"
+          ],
+          "answer": "根据图谱，丁丙诺啡 与 屈大麻酚 之间存在 **Major** 级相互作用。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q03",
+          "question": "乙酰唑胺片和盐酸二甲双胍肠溶片同服有风险吗？",
+          "rewritten": "乙酰唑胺片和盐酸二甲双胍肠溶片同服有风险吗？",
+          "intent": "相互作用",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "乙酰唑胺片",
+            "盐酸二甲双胍肠溶片"
+          ],
+          "answer": "根据图谱，乙酰唑胺片 与 盐酸二甲双胍肠溶片 之间存在 **Major** 级相互作用。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q05",
+          "question": "ω-3脂肪酸和伊布替尼需要注意吗？",
+          "rewritten": "ω-3脂肪酸和伊布替尼需要注意吗？",
+          "intent": "相互作用",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "ω-3脂肪酸",
+            "伊布替尼"
+          ],
+          "answer": "根据图谱，ω-3脂肪酸 与 伊布替尼 之间存在 **Major** 级相互作用。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q06",
+          "question": "类风湿关节炎可以用哪些药？",
+          "rewritten": "类风湿关节炎可以用哪些药？",
+          "intent": "疾病用药",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "类风湿关节炎"
+          ],
+          "answer": "根据图谱，类风湿关节炎 的推荐用药共 24 种：类风湿关节炎、骨肽片、双蚁祛湿通络胶囊、洛索洛芬钠胶囊、洛索洛芬钠片、右旋酮洛芬氨丁三醇片、痹祺胶囊、布洛芬缓释胶囊 等 24 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q07",
+          "question": "劳力性心绞痛推荐用什么药？",
+          "rewritten": "劳力性心绞痛推荐用什么药？",
+          "intent": "疾病用药",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "劳力性心绞痛"
+          ],
+          "answer": "根据图谱，劳力性心绞痛 的推荐用药共 24 种：劳力性心绞痛、速效救心丸、脑心通胶囊、丹参益心胶囊、心宝丸、冻干、大株红景天片、马来酸氨氯地平片 等 24 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q08",
+          "question": "病毒性肠炎该用什么药？",
+          "rewritten": "病毒性肠炎该用什么药？",
+          "intent": "疾病用药",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "病毒性肠炎"
+          ],
+          "answer": "根据图谱，病毒性肠炎 的推荐用药共 23 种：病毒性肠炎、复方黄连素片、乳酸菌素片、左氧氟沙星片、依托红霉素片、司帕沙星分散片、苦木注射液、枯草杆菌二联活菌肠溶胶囊 等 23 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q09",
+          "question": "纤维肌痛综合征能用什么药？",
+          "rewritten": "纤维肌痛综合征能用什么药？",
+          "intent": "疾病用药",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "纤维肌痛综合征"
+          ],
+          "answer": "根据图谱，纤维肌痛综合征 的推荐用药共 24 种：纤维肌痛综合征、骨肽片、祖师麻片、去痛片、胸腺肽肠溶片、来氟米特片、曲安奈德注射液、阿司匹林肠溶胶囊 等 24 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q10",
+          "question": "肾阳虚吃什么药？",
+          "rewritten": "肾阳虚吃什么药？",
+          "intent": "疾病用药",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "肾阳虚"
+          ],
+          "answer": "根据图谱，肾阳虚 的推荐用药共 24 种：肾阳虚、桂龙药膏、复方首乌补液、海马补肾丸、参茸卫生丸、五子衍宗丸、参茸补肾片、胚宝胶囊 等 24 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q11",
+          "question": "骨肽片是治什么的？",
+          "rewritten": "骨肽片是治什么的？",
+          "intent": "适应症",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "骨肽片"
+          ],
+          "answer": "根据图谱，骨肽片 出现在 138 个疾病的推荐用药中：剥脱性骨软骨炎、骨肽片、血色病性骨关节病、神经病性关节病、尾骨骨折与脱位、克罗恩病关节炎、顽痹、枢椎齿突骨折 等 138 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q12",
+          "question": "洛索洛芬钠片有什么适应症？",
+          "rewritten": "洛索洛芬钠片有什么适应症？",
+          "intent": "适应症",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "洛索洛芬钠片"
+          ],
+          "answer": "根据图谱，洛索洛芬钠片 出现在 11 个疾病的推荐用药中：血色病性骨关节病、洛索洛芬钠片、肩周炎、焦磷酸钙沉积病、纤维肌痛综合征、色素沉着绒毛结节性滑膜炎、上呼吸道感染、先天性肘关节融合 等 11 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q13",
+          "question": "速效救心丸能治什么病？",
+          "rewritten": "速效救心丸能治什么病？",
+          "intent": "适应症",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "速效救心丸"
+          ],
+          "answer": "根据图谱，速效救心丸 出现在 6 个疾病的推荐用药中：胸痹、速效救心丸、劳力性心绞痛、老年人不稳定型心绞痛、心血管疾病、冠心病。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q14",
+          "question": "去痛片用于哪些疾病？",
+          "rewritten": "去痛片用于哪些疾病？",
+          "intent": "适应症",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "去痛片"
+          ],
+          "answer": "根据图谱，去痛片 出现在 38 个疾病的推荐用药中：类风湿性关节炎肾损害、去痛片、周围神经病损、枕大神经痛、舌咽神经痛、Felty综合征、胫后神经痛、颅内占位性病变引起的头痛 等 38 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q15",
+          "question": "多塞平有哪些禁忌？",
+          "rewritten": "多塞平有哪些禁忌？",
+          "intent": "禁忌",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "多塞平"
+          ],
+          "answer": "根据图谱，多塞平 的禁忌（高置信度）共 8 条：三环类药物过敏者、青光眼、心肌梗死、尿潴留、癫痫、心脏病、谵妄、粒细胞减少。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q16",
+          "question": "吗啡禁用于哪些情况？",
+          "rewritten": "吗啡禁用于哪些情况？",
+          "intent": "禁忌",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "吗啡"
+          ],
+          "answer": "根据图谱，吗啡 的禁忌（高置信度）共 5 条：颅内压增高、肝功能不全、前列腺肥大、支气管哮喘、甲状腺功能减退。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q17",
+          "question": "孕妇能用乌帕达西替尼吗？",
+          "rewritten": "孕妇能用乌帕达西替尼吗？",
+          "intent": "禁忌",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "孕妇",
+            "乌帕达西替尼"
+          ],
+          "answer": "根据图谱，孕妇 与该情况存在禁忌关系（高置信度）。说明书原句：妊娠。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q18",
+          "question": "对大环内酯类药物过敏的人能用他克莫司吗？",
+          "rewritten": "对大环内酯类药物过敏的人能用他克莫司吗？",
+          "intent": "禁忌",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "大环内酯类药物过敏者",
+            "他克莫司"
+          ],
+          "answer": "根据图谱，大环内酯类药物过敏者 与该情况存在禁忌关系（高置信度）。说明书原句：对他克莫司或其他大环内酯类药物过敏者禁用。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q19",
+          "question": "尼洛替尼的禁忌里有没有低钾血症？",
+          "rewritten": "尼洛替尼的禁忌里有没有低钾血症？",
+          "intent": "禁忌",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "尼洛替尼",
+            "低钾血症"
+          ],
+          "answer": "根据图谱，尼洛替尼 与该情况存在禁忌关系（高置信度）。说明书原句：伴有低钾血症。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q20",
+          "question": "伤寒疫苗孕妇能打吗？",
+          "rewritten": "伤寒疫苗孕妇能打吗？",
+          "intent": "禁忌",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "伤寒疫苗",
+            "孕妇"
+          ],
+          "answer": "根据图谱，伤寒疫苗 与该情况存在禁忌关系（高置信度）。说明书原句：妊娠期妇女。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q21",
+          "question": "卡维地洛片的英文名是什么？",
+          "rewritten": "卡维地洛片的英文名是什么？",
+          "intent": "药品信息",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "卡维地洛片"
+          ],
+          "answer": "根据图谱，卡维地洛片 的英文名是 Carvedilol。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q22",
+          "question": "盐酸二甲双胍肠溶片的英文名？",
+          "rewritten": "盐酸二甲双胍肠溶片的英文名？",
+          "intent": "药品信息",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "盐酸二甲双胍肠溶片"
+          ],
+          "answer": "根据图谱，盐酸二甲双胍肠溶片 的英文名是 Metformin。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q23",
+          "question": "卡维地洛是什么药？",
+          "rewritten": "卡维地洛是什么药？",
+          "intent": "药品信息",
+          "step": "Cypher 或结果不符",
+          "result_ok": false,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "卡维地洛片"
+          ],
+          "answer": "根据图谱，卡维地洛片 的英文名是 Carvedilol。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q24",
+          "question": "乙酰唑胺片的英文名是什么？",
+          "rewritten": "乙酰唑胺片的英文名是什么？",
+          "intent": "药品信息",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "乙酰唑胺片"
+          ],
+          "answer": "根据图谱，乙酰唑胺片 的英文名是 Acetazolamide。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        }
+      ]
+    },
+    "multi": {
+      "ok": 22,
+      "n": 23,
+      "rate": 0.957,
+      "steps": {
+        "ok": 22,
+        "Cypher 或结果不符": 1
+      },
+      "detail": [
+        {
+          "qid": "Q01",
+          "question": "它和依度沙班能一起吃吗？",
+          "rewritten": "卡维地洛片和依度沙班能一起吃吗？",
+          "intent": "相互作用",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "卡维地洛片",
+            "依度沙班"
+          ],
+          "answer": "根据图谱，卡维地洛片 与 依度沙班 之间存在 **Major** 级相互作用。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q02",
+          "question": "它和屈大麻酚有相互作用吗？",
+          "rewritten": "丁丙诺啡和屈大麻酚有相互作用吗？",
+          "intent": "相互作用",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "丁丙诺啡",
+            "屈大麻酚"
+          ],
+          "answer": "根据图谱，丁丙诺啡 与 屈大麻酚 之间存在 **Major** 级相互作用。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q03",
+          "question": "它和盐酸二甲双胍肠溶片同服有风险吗？",
+          "rewritten": "乙酰唑胺片和盐酸二甲双胍肠溶片同服有风险吗？",
+          "intent": "相互作用",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "乙酰唑胺片",
+            "盐酸二甲双胍肠溶片"
+          ],
+          "answer": "根据图谱，乙酰唑胺片 与 盐酸二甲双胍肠溶片 之间存在 **Major** 级相互作用。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q05",
+          "question": "它和伊布替尼需要注意吗？",
+          "rewritten": "ω-3脂肪酸和伊布替尼需要注意吗？",
+          "intent": "相互作用",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "ω-3脂肪酸",
+            "伊布替尼"
+          ],
+          "answer": "根据图谱，ω-3脂肪酸 与 伊布替尼 之间存在 **Major** 级相互作用。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q06",
+          "question": "这个病可以用哪些药？",
+          "rewritten": "类风湿关节炎可以用哪些药？",
+          "intent": "疾病用药",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "类风湿关节炎"
+          ],
+          "answer": "根据图谱，类风湿关节炎 的推荐用药共 24 种：类风湿关节炎、骨肽片、双蚁祛湿通络胶囊、洛索洛芬钠胶囊、洛索洛芬钠片、右旋酮洛芬氨丁三醇片、痹祺胶囊、布洛芬缓释胶囊 等 24 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q07",
+          "question": "这个病推荐用什么药？",
+          "rewritten": "劳力性心绞痛推荐用什么药？",
+          "intent": "疾病用药",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "劳力性心绞痛"
+          ],
+          "answer": "根据图谱，劳力性心绞痛 的推荐用药共 24 种：劳力性心绞痛、速效救心丸、脑心通胶囊、丹参益心胶囊、心宝丸、冻干、大株红景天片、马来酸氨氯地平片 等 24 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q08",
+          "question": "这个病该用什么药？",
+          "rewritten": "病毒性肠炎该用什么药？",
+          "intent": "疾病用药",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "病毒性肠炎"
+          ],
+          "answer": "根据图谱，病毒性肠炎 的推荐用药共 23 种：病毒性肠炎、复方黄连素片、乳酸菌素片、左氧氟沙星片、依托红霉素片、司帕沙星分散片、苦木注射液、枯草杆菌二联活菌肠溶胶囊 等 23 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q09",
+          "question": "这个病能用什么药？",
+          "rewritten": "纤维肌痛综合征能用什么药？",
+          "intent": "疾病用药",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "纤维肌痛综合征"
+          ],
+          "answer": "根据图谱，纤维肌痛综合征 的推荐用药共 24 种：纤维肌痛综合征、骨肽片、祖师麻片、去痛片、胸腺肽肠溶片、来氟米特片、曲安奈德注射液、阿司匹林肠溶胶囊 等 24 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q10",
+          "question": "这个病吃什么药？",
+          "rewritten": "肾阳虚吃什么药？",
+          "intent": "疾病用药",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "肾阳虚"
+          ],
+          "answer": "根据图谱，肾阳虚 的推荐用药共 24 种：肾阳虚、桂龙药膏、复方首乌补液、海马补肾丸、参茸卫生丸、五子衍宗丸、参茸补肾片、胚宝胶囊 等 24 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q11",
+          "question": "它是治什么的？",
+          "rewritten": "骨肽片是治什么的？",
+          "intent": "适应症",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "骨肽片"
+          ],
+          "answer": "根据图谱，骨肽片 出现在 138 个疾病的推荐用药中：剥脱性骨软骨炎、骨肽片、血色病性骨关节病、神经病性关节病、尾骨骨折与脱位、克罗恩病关节炎、顽痹、枢椎齿突骨折 等 138 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q12",
+          "question": "它有什么适应症？",
+          "rewritten": "洛索洛芬钠片有什么适应症？",
+          "intent": "适应症",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "洛索洛芬钠片"
+          ],
+          "answer": "根据图谱，洛索洛芬钠片 出现在 11 个疾病的推荐用药中：血色病性骨关节病、洛索洛芬钠片、肩周炎、焦磷酸钙沉积病、纤维肌痛综合征、色素沉着绒毛结节性滑膜炎、上呼吸道感染、先天性肘关节融合 等 11 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q13",
+          "question": "它能治什么病？",
+          "rewritten": "速效救心丸能治什么病？",
+          "intent": "适应症",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "速效救心丸"
+          ],
+          "answer": "根据图谱，速效救心丸 出现在 6 个疾病的推荐用药中：胸痹、速效救心丸、劳力性心绞痛、老年人不稳定型心绞痛、心血管疾病、冠心病。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q14",
+          "question": "它用于哪些疾病？",
+          "rewritten": "去痛片用于哪些疾病？",
+          "intent": "适应症",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "去痛片"
+          ],
+          "answer": "根据图谱，去痛片 出现在 38 个疾病的推荐用药中：类风湿性关节炎肾损害、去痛片、周围神经病损、枕大神经痛、舌咽神经痛、Felty综合征、胫后神经痛、颅内占位性病变引起的头痛 等 38 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q15",
+          "question": "它有哪些禁忌？",
+          "rewritten": "多塞平有哪些禁忌？",
+          "intent": "禁忌",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "多塞平"
+          ],
+          "answer": "根据图谱，多塞平 的禁忌（高置信度）共 8 条：三环类药物过敏者、青光眼、心肌梗死、尿潴留、癫痫、心脏病、谵妄、粒细胞减少。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q16",
+          "question": "它禁用于哪些情况？",
+          "rewritten": "吗啡禁用于哪些情况？",
+          "intent": "禁忌",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "吗啡"
+          ],
+          "answer": "根据图谱，吗啡 的禁忌（高置信度）共 5 条：颅内压增高、肝功能不全、前列腺肥大、支气管哮喘、甲状腺功能减退。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q17",
+          "question": "孕妇能用它吗？",
+          "rewritten": "孕妇能用乌帕达西替尼吗？",
+          "intent": "禁忌",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "孕妇",
+            "乌帕达西替尼"
+          ],
+          "answer": "根据图谱，孕妇 与该情况存在禁忌关系（高置信度）。说明书原句：妊娠。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q18",
+          "question": "对大环内酯类药物过敏的人能用它吗？",
+          "rewritten": "对大环内酯类药物过敏的人能用他克莫司吗？",
+          "intent": "禁忌",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "大环内酯类药物过敏者",
+            "他克莫司"
+          ],
+          "answer": "根据图谱，大环内酯类药物过敏者 与该情况存在禁忌关系（高置信度）。说明书原句：对他克莫司或其他大环内酯类药物过敏者禁用。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q19",
+          "question": "它的禁忌里有没有低钾血症？",
+          "rewritten": "尼洛替尼的禁忌里有没有低钾血症？",
+          "intent": "禁忌",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "尼洛替尼",
+            "低钾血症"
+          ],
+          "answer": "根据图谱，尼洛替尼 与该情况存在禁忌关系（高置信度）。说明书原句：伴有低钾血症。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q20",
+          "question": "它孕妇能打吗？",
+          "rewritten": "伤寒疫苗孕妇能打吗？",
+          "intent": "禁忌",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "伤寒疫苗",
+            "孕妇"
+          ],
+          "answer": "根据图谱，伤寒疫苗 与该情况存在禁忌关系（高置信度）。说明书原句：妊娠期妇女。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q21",
+          "question": "它的英文名是什么？",
+          "rewritten": "卡维地洛片的英文名是什么？",
+          "intent": "药品信息",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "卡维地洛片"
+          ],
+          "answer": "根据图谱，卡维地洛片 的英文名是 Carvedilol。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q22",
+          "question": "它的英文名？",
+          "rewritten": "盐酸二甲双胍肠溶片的英文名？",
+          "intent": "药品信息",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "盐酸二甲双胍肠溶片"
+          ],
+          "answer": "根据图谱，盐酸二甲双胍肠溶片 的英文名是 Metformin。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q23",
+          "question": "它是什么药？",
+          "rewritten": "卡维地洛片是什么药？",
+          "intent": "药品信息",
+          "step": "Cypher 或结果不符",
+          "result_ok": false,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "卡维地洛片"
+          ],
+          "answer": "根据图谱，卡维地洛片 的英文名是 Carvedilol。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        },
+        {
+          "qid": "Q24",
+          "question": "它的英文名是什么？",
+          "rewritten": "乙酰唑胺片的英文名是什么？",
+          "intent": "药品信息",
+          "step": "ok",
+          "result_ok": true,
+          "faithful": true,
+          "evidence_consistent": true,
+          "entities": [
+            "乙酰唑胺片"
+          ],
+          "answer": "根据图谱，乙酰唑胺片 的英文名是 Acetazolamide。以上内容来自知识图谱，仅供参考，不能替代医生诊断。"
+        }
+      ]
+    }
+  }
+}
