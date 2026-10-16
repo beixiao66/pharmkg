@@ -1,0 +1,14 @@
+# pnpm 11 的构建设置。
+#
+# ⚠️ 这里的 `allowBuilds` 是 **pnpm 自己写出来让我填的**：它中止安装时在本文件
+#    留下了模板
+#        allowBuilds:
+#          esbuild: set this to true or false
+#    我第一次没看懂它，去写了 `onlyBuiltDependencies`（那是别处的键名）→ 一直不生效。
+#    **工具把模板递到手里时，先按它的格式填，别急着换成自己记得的写法。**
+#
+# 为什么必须放行：Vite 依赖 esbuild，而它的构建脚本负责落平台二进制。
+# pnpm 默认拦掉所有构建脚本 → `vite` 报 Cannot find package 'esbuild'，
+# 而那个报错指向 vite 内部，看不出根因是「构建脚本被拦」。
+allowBuilds:
+  esbuild: true
