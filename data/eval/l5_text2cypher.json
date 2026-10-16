@@ -1,0 +1,680 @@
+{
+  "tag": "full",
+  "model": "qwen-plus",
+  "repeat": 3,
+  "fewshot": 11,
+  "runs": [
+    {
+      "scored": 23,
+      "strict_ok": 20,
+      "loose_ok": 20,
+      "clarify_n": 1,
+      "clarify_ok": 0,
+      "reasons": {
+        "结果集不符": 3
+      },
+      "detail": [
+        {
+          "qid": "Q01",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d1:Drug {name: '卡维地洛片'})-[r:INTERACTS_WITH]-(d2:Drug {name: '依度沙班'})\nRETURN r.level",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.6
+        },
+        {
+          "qid": "Q02",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d1:Drug {name: '丁丙诺啡'})-[r:INTERACTS_WITH]-(d2:Drug {name: '屈大麻酚'})\nRETURN r.level",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.4
+        },
+        {
+          "qid": "Q03",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d1:Drug {name: '乙酰唑胺片'})-[r:INTERACTS_WITH]-(d2:Drug {name: '盐酸二甲双胍肠溶片'})\nRETURN r.level",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.7
+        },
+        {
+          "qid": "Q04",
+          "expect": "澄清",
+          "ok": false
+        },
+        {
+          "qid": "Q05",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d1:Drug {name: 'ω-3脂肪酸'})-[r:INTERACTS_WITH]-(d2:Drug {name: '伊布替尼'})\nRETURN r.level",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.4
+        },
+        {
+          "qid": "Q06",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'类风湿关节炎'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 23,
+          "rows_gold": 23,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q07",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'劳力性心绞痛'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 23,
+          "rows_gold": 23,
+          "seconds": 1.2
+        },
+        {
+          "qid": "Q08",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'病毒性肠炎'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 22,
+          "rows_gold": 22,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q09",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'纤维肌痛综合征'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 23,
+          "rows_gold": 23,
+          "seconds": 1.2
+        },
+        {
+          "qid": "Q10",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'肾阳虚'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 23,
+          "rows_gold": 23,
+          "seconds": 1.2
+        },
+        {
+          "qid": "Q11",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'骨肽片'})\nRETURN dz.name",
+          "rows_got": 137,
+          "rows_gold": 137,
+          "seconds": 1.5
+        },
+        {
+          "qid": "Q12",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'洛索洛芬钠片'})\nRETURN dz.name",
+          "rows_got": 10,
+          "rows_gold": 10,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q13",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'速效救心丸'})\nRETURN dz.name",
+          "rows_got": 5,
+          "rows_gold": 5,
+          "seconds": 1.2
+        },
+        {
+          "qid": "Q14",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'去痛片'})\nRETURN dz.name",
+          "rows_got": 37,
+          "rows_gold": 37,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q15",
+          "ok": false,
+          "loose": false,
+          "cypher": "MATCH (:Drug {name:'多塞平'})-[:CONTRAINDICATED_FOR]->(c)\nRETURN c.name",
+          "rows_got": 10,
+          "rows_gold": 8,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q16",
+          "ok": false,
+          "loose": false,
+          "cypher": "MATCH (:Drug {name:'吗啡'})-[:CONTRAINDICATED_FOR]->(c)\nRETURN c.name",
+          "rows_got": 10,
+          "rows_gold": 5,
+          "seconds": 1.0
+        },
+        {
+          "qid": "Q17",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '乌帕达西替尼'})-[:CONTRAINDICATED_FOR]->(p:Population {name: '孕妇'})\nRETURN p.name",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.3
+        },
+        {
+          "qid": "Q18",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (:Drug {name: '他克莫司'})-[:CONTRAINDICATED_FOR]->(p:Population {name: '大环内酯类药物过敏者'})\nRETURN p.name",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.4
+        },
+        {
+          "qid": "Q19",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '尼洛替尼'})-[:CONTRAINDICATED_FOR]->(p:Disease {name: '低钾血症'})\nRETURN p.name",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.3
+        },
+        {
+          "qid": "Q20",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '伤寒疫苗'})-[:CONTRAINDICATED_FOR]->(p:Population {name: '孕妇'})\nRETURN p.name",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.4
+        },
+        {
+          "qid": "Q21",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '卡维地洛片'})\nRETURN d.name_en",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 0.9
+        },
+        {
+          "qid": "Q22",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '盐酸二甲双胍肠溶片'})\nRETURN d.name_en",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.0
+        },
+        {
+          "qid": "Q23",
+          "ok": false,
+          "loose": false,
+          "cypher": "MATCH (d:Drug {name: '卡维地洛片'})\nRETURN d.name_en",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 0.9
+        },
+        {
+          "qid": "Q24",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '乙酰唑胺片'})\nRETURN d.name_en",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 0.9
+        }
+      ]
+    },
+    {
+      "scored": 23,
+      "strict_ok": 20,
+      "loose_ok": 20,
+      "clarify_n": 1,
+      "clarify_ok": 0,
+      "reasons": {
+        "结果集不符": 3
+      },
+      "detail": [
+        {
+          "qid": "Q01",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d1:Drug {name: '卡维地洛片'})-[r:INTERACTS_WITH]-(d2:Drug {name: '依度沙班'})\nRETURN r.level",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.5
+        },
+        {
+          "qid": "Q02",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d1:Drug {name: '丁丙诺啡'})-[r:INTERACTS_WITH]-(d2:Drug {name: '屈大麻酚'})\nRETURN r.level",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.4
+        },
+        {
+          "qid": "Q03",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d1:Drug {name: '乙酰唑胺片'})-[r:INTERACTS_WITH]-(d2:Drug {name: '盐酸二甲双胍肠溶片'})\nRETURN r.level",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.5
+        },
+        {
+          "qid": "Q04",
+          "expect": "澄清",
+          "ok": false
+        },
+        {
+          "qid": "Q05",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d1:Drug {name: 'ω-3脂肪酸'})-[r:INTERACTS_WITH]-(d2:Drug {name: '伊布替尼'})\nRETURN r.level",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.4
+        },
+        {
+          "qid": "Q06",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'类风湿关节炎'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 23,
+          "rows_gold": 23,
+          "seconds": 1.3
+        },
+        {
+          "qid": "Q07",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'劳力性心绞痛'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 23,
+          "rows_gold": 23,
+          "seconds": 1.2
+        },
+        {
+          "qid": "Q08",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'病毒性肠炎'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 22,
+          "rows_gold": 22,
+          "seconds": 1.2
+        },
+        {
+          "qid": "Q09",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'纤维肌痛综合征'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 23,
+          "rows_gold": 23,
+          "seconds": 1.3
+        },
+        {
+          "qid": "Q10",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'肾阳虚'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 23,
+          "rows_gold": 23,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q11",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'骨肽片'})\nRETURN dz.name",
+          "rows_got": 137,
+          "rows_gold": 137,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q12",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'洛索洛芬钠片'})\nRETURN dz.name",
+          "rows_got": 10,
+          "rows_gold": 10,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q13",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'速效救心丸'})\nRETURN dz.name",
+          "rows_got": 5,
+          "rows_gold": 5,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q14",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'去痛片'})\nRETURN dz.name",
+          "rows_got": 37,
+          "rows_gold": 37,
+          "seconds": 1.0
+        },
+        {
+          "qid": "Q15",
+          "ok": false,
+          "loose": false,
+          "cypher": "MATCH (:Drug {name:'多塞平'})-[:CONTRAINDICATED_FOR]->(c)\nRETURN c.name",
+          "rows_got": 10,
+          "rows_gold": 8,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q16",
+          "ok": false,
+          "loose": false,
+          "cypher": "MATCH (:Drug {name:'吗啡'})-[:CONTRAINDICATED_FOR]->(c)\nRETURN c.name",
+          "rows_got": 10,
+          "rows_gold": 5,
+          "seconds": 1.0
+        },
+        {
+          "qid": "Q17",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '乌帕达西替尼'})-[:CONTRAINDICATED_FOR]->(p:Population {name: '孕妇'})\nRETURN p.name",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.6
+        },
+        {
+          "qid": "Q18",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (:Drug {name: '他克莫司'})-[:CONTRAINDICATED_FOR]->(p:Population {name: '大环内酯类药物过敏者'})\nRETURN p.name",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 2.0
+        },
+        {
+          "qid": "Q19",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '尼洛替尼'})-[:CONTRAINDICATED_FOR]->(p:Disease {name: '低钾血症'})\nRETURN p.name",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.6
+        },
+        {
+          "qid": "Q20",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '伤寒疫苗'})-[:CONTRAINDICATED_FOR]->(p:Population {name: '孕妇'})\nRETURN p.name",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.4
+        },
+        {
+          "qid": "Q21",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '卡维地洛片'})\nRETURN d.name_en",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.2
+        },
+        {
+          "qid": "Q22",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '盐酸二甲双胍肠溶片'})\nRETURN d.name_en",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.0
+        },
+        {
+          "qid": "Q23",
+          "ok": false,
+          "loose": false,
+          "cypher": "MATCH (d:Drug {name: '卡维地洛片'})\nRETURN d.name_en",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 0.9
+        },
+        {
+          "qid": "Q24",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '乙酰唑胺片'})\nRETURN d.name_en",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 0.9
+        }
+      ]
+    },
+    {
+      "scored": 23,
+      "strict_ok": 20,
+      "loose_ok": 20,
+      "clarify_n": 1,
+      "clarify_ok": 0,
+      "reasons": {
+        "结果集不符": 3
+      },
+      "detail": [
+        {
+          "qid": "Q01",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d1:Drug {name: '卡维地洛片'})-[r:INTERACTS_WITH]-(d2:Drug {name: '依度沙班'})\nRETURN r.level",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.4
+        },
+        {
+          "qid": "Q02",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d1:Drug {name: '丁丙诺啡'})-[r:INTERACTS_WITH]-(d2:Drug {name: '屈大麻酚'})\nRETURN r.level",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.4
+        },
+        {
+          "qid": "Q03",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d1:Drug {name: '乙酰唑胺片'})-[r:INTERACTS_WITH]-(d2:Drug {name: '盐酸二甲双胍肠溶片'})\nRETURN r.level",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.5
+        },
+        {
+          "qid": "Q04",
+          "expect": "澄清",
+          "ok": false
+        },
+        {
+          "qid": "Q05",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d1:Drug {name: 'ω-3脂肪酸'})-[r:INTERACTS_WITH]-(d2:Drug {name: '伊布替尼'})\nRETURN r.level",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.4
+        },
+        {
+          "qid": "Q06",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'类风湿关节炎'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 23,
+          "rows_gold": 23,
+          "seconds": 1.2
+        },
+        {
+          "qid": "Q07",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'劳力性心绞痛'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 23,
+          "rows_gold": 23,
+          "seconds": 1.2
+        },
+        {
+          "qid": "Q08",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'病毒性肠炎'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 22,
+          "rows_gold": 22,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q09",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'纤维肌痛综合征'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 23,
+          "rows_gold": 23,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q10",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease {name:'肾阳虚'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+          "rows_got": 23,
+          "rows_gold": 23,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q11",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'骨肽片'})\nRETURN dz.name",
+          "rows_got": 137,
+          "rows_gold": 137,
+          "seconds": 1.0
+        },
+        {
+          "qid": "Q12",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'洛索洛芬钠片'})\nRETURN dz.name",
+          "rows_got": 10,
+          "rows_gold": 10,
+          "seconds": 1.3
+        },
+        {
+          "qid": "Q13",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'速效救心丸'})\nRETURN dz.name",
+          "rows_got": 5,
+          "rows_gold": 5,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q14",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'去痛片'})\nRETURN dz.name",
+          "rows_got": 37,
+          "rows_gold": 37,
+          "seconds": 1.0
+        },
+        {
+          "qid": "Q15",
+          "ok": false,
+          "loose": false,
+          "cypher": "MATCH (:Drug {name:'多塞平'})-[:CONTRAINDICATED_FOR]->(c)\nRETURN c.name",
+          "rows_got": 10,
+          "rows_gold": 8,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q16",
+          "ok": false,
+          "loose": false,
+          "cypher": "MATCH (:Drug {name:'吗啡'})-[:CONTRAINDICATED_FOR]->(c)\nRETURN c.name",
+          "rows_got": 10,
+          "rows_gold": 5,
+          "seconds": 1.0
+        },
+        {
+          "qid": "Q17",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '乌帕达西替尼'})-[:CONTRAINDICATED_FOR]->(p:Population {name: '孕妇'})\nRETURN p.name",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.5
+        },
+        {
+          "qid": "Q18",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '他克莫司'})-[:CONTRAINDICATED_FOR]->(p:Population {name: '大环内酯类药物过敏者'})\nRETURN p.name",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.6
+        },
+        {
+          "qid": "Q19",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '尼洛替尼'})-[:CONTRAINDICATED_FOR]->(p:Disease {name: '低钾血症'})\nRETURN p.name",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.3
+        },
+        {
+          "qid": "Q20",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '伤寒疫苗'})-[:CONTRAINDICATED_FOR]->(p:Population {name: '孕妇'})\nRETURN p.name",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 2.0
+        },
+        {
+          "qid": "Q21",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '卡维地洛片'})\nRETURN d.name_en",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.0
+        },
+        {
+          "qid": "Q22",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '盐酸二甲双胍肠溶片'})\nRETURN d.name_en",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 1.1
+        },
+        {
+          "qid": "Q23",
+          "ok": false,
+          "loose": false,
+          "cypher": "MATCH (d:Drug {name: '卡维地洛片'})\nRETURN d.name_en",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 0.9
+        },
+        {
+          "qid": "Q24",
+          "ok": true,
+          "loose": true,
+          "cypher": "MATCH (d:Drug {name: '乙酰唑胺片'})\nRETURN d.name_en",
+          "rows_got": 1,
+          "rows_gold": 1,
+          "seconds": 0.9
+        }
+      ]
+    }
+  ]
+}

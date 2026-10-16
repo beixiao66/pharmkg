@@ -1,0 +1,157 @@
+{
+  "F01": {
+    "keep": true,
+    "row": {
+      "fid": "F01",
+      "intent": "相互作用",
+      "question": "一氧化氮和丙胺卡因能一起用吗？",
+      "entities": "一氧化氮；丙胺卡因",
+      "cypher": "MATCH (d1:Drug {name: '一氧化氮'})-[r:INTERACTS_WITH]-(d2:Drug {name: '丙胺卡因'})\nRETURN r.level",
+      "rows": 1,
+      "source": "llm-generated, verified"
+    },
+    "why": "返回 1 行"
+  },
+  "F02": {
+    "keep": false,
+    "why": "返回值里没有节点名"
+  },
+  "F03": {
+    "keep": true,
+    "row": {
+      "fid": "F03",
+      "intent": "相互作用",
+      "question": "乙醇和丁巴比妥同服要紧吗？",
+      "entities": "乙醇；丁巴比妥",
+      "cypher": "MATCH (d1:Drug {name: '乙醇'})-[r:INTERACTS_WITH]-(d2:Drug {name: '丁巴比妥'})\nRETURN r.level",
+      "rows": 1,
+      "source": "llm-generated, verified"
+    },
+    "why": "返回 1 行"
+  },
+  "F04": {
+    "keep": true,
+    "row": {
+      "fid": "F04",
+      "intent": "疾病用药",
+      "question": "冠心病推荐用什么药？",
+      "entities": "冠心病",
+      "cypher": "MATCH (dz:Disease {name:'冠心病'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+      "rows": 22,
+      "source": "llm-generated, verified"
+    },
+    "why": "返回 22 行"
+  },
+  "F05": {
+    "keep": false,
+    "why": "返回 0 行"
+  },
+  "F06": {
+    "keep": true,
+    "row": {
+      "fid": "F06",
+      "intent": "疾病用药",
+      "question": "冠心病有哪些症状？",
+      "entities": "冠心病",
+      "cypher": "MATCH (d:Disease {name:'冠心病'})-[:HAS_SYMPTOM]->(s:Symptom)\nRETURN s.name",
+      "rows": 10,
+      "source": "llm-generated, verified"
+    },
+    "why": "返回 10 行"
+  },
+  "F07": {
+    "keep": true,
+    "row": {
+      "fid": "F07",
+      "intent": "适应症",
+      "question": "复方丹参滴丸是治什么的？",
+      "entities": "复方丹参滴丸",
+      "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'复方丹参滴丸'})\nRETURN dz.name",
+      "rows": 10,
+      "source": "llm-generated, verified"
+    },
+    "why": "返回 10 行"
+  },
+  "F08": {
+    "keep": true,
+    "row": {
+      "fid": "F08",
+      "intent": "适应症",
+      "question": "脑心通胶囊能治什么病？",
+      "entities": "脑心通胶囊",
+      "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'脑心通胶囊'})\nRETURN dz.name",
+      "rows": 31,
+      "source": "llm-generated, verified"
+    },
+    "why": "返回 31 行"
+  },
+  "F09": {
+    "keep": true,
+    "row": {
+      "fid": "F09",
+      "intent": "禁忌",
+      "question": "氯氮平有哪些禁忌？",
+      "entities": "氯氮平",
+      "cypher": "MATCH (:Drug {name:'氯氮平'})-[:CONTRAINDICATED_FOR]->(c)\nRETURN c.name",
+      "rows": 13,
+      "source": "llm-generated, verified"
+    },
+    "why": "返回 13 行"
+  },
+  "F10": {
+    "keep": true,
+    "row": {
+      "fid": "F10",
+      "intent": "禁忌",
+      "question": "来氟米特禁用于哪些情况？",
+      "entities": "来氟米特",
+      "cypher": "MATCH (:Drug {name:'来氟米特'})-[:CONTRAINDICATED_FOR]->(c)\nRETURN c.name",
+      "rows": 14,
+      "source": "llm-generated, verified"
+    },
+    "why": "返回 14 行"
+  },
+  "F11": {
+    "keep": false,
+    "why": "返回 0 行"
+  },
+  "F12": {
+    "keep": true,
+    "row": {
+      "fid": "F12",
+      "intent": "禁忌",
+      "question": "奥扎莫德的禁忌里有没有孕妇？",
+      "entities": "奥扎莫德；孕妇",
+      "cypher": "MATCH (d:Drug {name: '奥扎莫德'})-[:CONTRAINDICATED_FOR]->(p:Population {name: '孕妇'})\nRETURN p.name",
+      "rows": 1,
+      "source": "llm-generated, verified"
+    },
+    "why": "返回 1 行"
+  },
+  "F13": {
+    "keep": true,
+    "row": {
+      "fid": "F13",
+      "intent": "药品信息",
+      "question": "氯氮平的英文名是什么？",
+      "entities": "氯氮平",
+      "cypher": "MATCH (d:Drug {name: '氯氮平'})\nRETURN d.name_en",
+      "rows": 1,
+      "source": "llm-generated, verified"
+    },
+    "why": "返回 1 行"
+  },
+  "F14": {
+    "keep": true,
+    "row": {
+      "fid": "F14",
+      "intent": "药品信息",
+      "question": "木瓜的英文名是什么？",
+      "entities": "木瓜",
+      "cypher": "MATCH (d:Drug {name: '木瓜'})\nRETURN d.name_en",
+      "rows": 1,
+      "source": "llm-generated, verified"
+    },
+    "why": "返回 1 行"
+  }
+}

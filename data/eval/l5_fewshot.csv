@@ -1,0 +1,23 @@
+fid,intent,question,entities,cypher,rows,source
+F01,相互作用,一氧化氮和丙胺卡因能一起用吗？,一氧化氮；丙胺卡因,"MATCH (d1:Drug {name: '一氧化氮'})-[r:INTERACTS_WITH]-(d2:Drug {name: '丙胺卡因'})
+RETURN r.level",1,"llm-generated, verified"
+F03,相互作用,乙醇和丁巴比妥同服要紧吗？,乙醇；丁巴比妥,"MATCH (d1:Drug {name: '乙醇'})-[r:INTERACTS_WITH]-(d2:Drug {name: '丁巴比妥'})
+RETURN r.level",1,"llm-generated, verified"
+F04,疾病用药,冠心病推荐用什么药？,冠心病,"MATCH (dz:Disease {name:'冠心病'})-[:RECOMMEND_DRUG]->(d:Drug)
+RETURN d.name",22,"llm-generated, verified"
+F06,疾病用药,冠心病有哪些症状？,冠心病,"MATCH (d:Disease {name:'冠心病'})-[:HAS_SYMPTOM]->(s:Symptom)
+RETURN s.name",10,"llm-generated, verified"
+F07,适应症,复方丹参滴丸是治什么的？,复方丹参滴丸,"MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'复方丹参滴丸'})
+RETURN dz.name",10,"llm-generated, verified"
+F08,适应症,脑心通胶囊能治什么病？,脑心通胶囊,"MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'脑心通胶囊'})
+RETURN dz.name",31,"llm-generated, verified"
+F09,禁忌,氯氮平有哪些禁忌？,氯氮平,"MATCH (:Drug {name:'氯氮平'})-[:CONTRAINDICATED_FOR]->(c)
+RETURN c.name",13,"llm-generated, verified"
+F10,禁忌,来氟米特禁用于哪些情况？,来氟米特,"MATCH (:Drug {name:'来氟米特'})-[:CONTRAINDICATED_FOR]->(c)
+RETURN c.name",14,"llm-generated, verified"
+F12,禁忌,奥扎莫德的禁忌里有没有孕妇？,奥扎莫德；孕妇,"MATCH (d:Drug {name: '奥扎莫德'})-[:CONTRAINDICATED_FOR]->(p:Population {name: '孕妇'})
+RETURN p.name",1,"llm-generated, verified"
+F13,药品信息,氯氮平的英文名是什么？,氯氮平,"MATCH (d:Drug {name: '氯氮平'})
+RETURN d.name_en",1,"llm-generated, verified"
+F14,药品信息,木瓜的英文名是什么？,木瓜,"MATCH (d:Drug {name: '木瓜'})
+RETURN d.name_en",1,"llm-generated, verified"
