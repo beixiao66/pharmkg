@@ -1,0 +1,52 @@
+[
+  {
+    "text": "具有以下心律失常危险因素的患者，应慎重使用。",
+    "generic_only": null,
+    "level": "慎用"
+  },
+  {
+    "text": "严重心脏病史，包括严重室性心律失常、二或三度房室传导阻滞、窦房结功能障碍、充血性心力衰竭、缺血性心脏病；",
+    "generic_only": null,
+    "level": "慎用"
+  },
+  {
+    "text": "猝死家庭史；",
+    "generic_only": null,
+    "level": "慎用"
+  },
+  {
+    "text": "肾衰竭，尤其是进行长期透析的患者；",
+    "generic_only": null,
+    "level": "慎用"
+  },
+  {
+    "text": "慢性阻塞性肺疾病和呼吸衰竭；",
+    "generic_only": null,
+    "level": "慎用"
+  },
+  {
+    "text": "电解质紊乱的危险因素，如服用排钾利尿药；",
+    "generic_only": null,
+    "level": "慎用"
+  },
+  {
+    "text": "胰岛素用量的剧烈调整；",
+    "generic_only": null,
+    "level": "慎用"
+  },
+  {
+    "text": "持续性呕吐和/或腹泻。",
+    "generic_only": null,
+    "level": "慎用"
+  },
+  {
+    "text": "QT 间期大于 450 毫秒的病人或电解质紊乱的病人，不应使用本品。",
+    "generic_only": null,
+    "level": "慎用"
+  },
+  {
+    "text": "一般不建议用于早产新生儿。",
+    "generic_only": null,
+    "level": "慎用"
+  }
+]

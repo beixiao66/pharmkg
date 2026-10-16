@@ -1,0 +1,42 @@
+[
+  {
+    "text": "存在 DVT/PE 风险因素的患者，如高龄、肥胖、有 DVT/PE 病史，手术或卧床，使用复方激素避孕药或激素替代疗法的患者以及遗传性凝血功能障碍，应慎用巴瑞替尼。",
+    "generic_only": null,
+    "level": "慎用"
+  },
+  {
+    "text": "对于憩室性疾病患者，尤其是长期服用与憩室炎风险增加相关的合并用药（非甾体抗炎药、皮质类固醇和阿片类药物）的患者，应谨慎使用巴瑞替尼。",
+    "generic_only": null,
+    "level": "慎用"
+  },
+  {
+    "text": "当与这些药物联合使用时应该谨慎使用（见【药物相互作用】）。",
+    "generic_only": null,
+    "level": "注意"
+  },
+  {
+    "text": "伴有慢性或复发性感染",
+    "generic_only": null,
+    "level": "注意"
+  },
+  {
+    "text": "已暴露于结核病",
+    "generic_only": null,
+    "level": "注意"
+  },
+  {
+    "text": "有严重感染或机会性感染史",
+    "generic_only": null,
+    "level": "注意"
+  },
+  {
+    "text": "有地方性结核病或地方性真菌病地区旅居史；或",
+    "generic_only": null,
+    "level": "注意"
+  },
+  {
+    "text": "患有可能导致易于感染的其他疾病。",
+    "generic_only": null,
+    "level": "注意"
+  }
+]

@@ -72,6 +72,15 @@ EXPECTED: list[tuple[str, str, object]] = [
     # 但总数也变了的时候可能看不出来。
     ("data/extracted/baseline/fidelity.json", "len:not_found", 6),
     ("data/extracted/section-json/fidelity.json", "len:not_found", 0),
+    # CAUTION_FOR 层（两节各一份 fidelity；注意【注意事项】有 7 条查不到原文）
+    ("data/extracted/caution-json/fidelity_注意事项.json",
+     "loose_punct_equiv.rate", 0.9893),
+    ("data/extracted/caution-json/fidelity_注意事项.json",
+     "len:not_found", 7),
+    ("data/extracted/caution-json/fidelity_儿童用药.json",
+     "loose_punct_equiv.rate", 1.0),
+    ("data/extracted/caution-json/fidelity_儿童用药.json",
+     "len:not_found", 0),
 ]
 
 FID_ITEMS = "data/extracted/section-json/items"
@@ -143,6 +152,18 @@ def main(argv: list[str] | None = None) -> int:
         # 否则下一个人会以为"基线这一步失败了"。
         ("忠实度 · 朴素基线（100 条，预期有 6 条查不到）", check_fidelity.main,
          ["--method", "baseline", "--sample", "100"], (1,)),
+    ]
+    # CAUTION_FOR 层：三个都**离线**。抽取那一步会全部跳过（72 个单元都已存在），
+    # 正好也证明"断点续跑不写文件"。
+    import extract_sections
+    steps += [
+        ("CAUTION_FOR 抽取（应全部跳过、不写文件）", extract_sections.main,
+         ["--sections", "注意事项,儿童用药", "--out", "caution-json"], (0,)),
+        # 【注意事项】本来就有 7 条查不到原文（那正是要报出来的现象）→ 期望退出码是 1
+        ("忠实度 · 注意事项（全量，预期 7 条查不到）", check_fidelity.main,
+         ["--method", "caution-json", "--section", "注意事项", "--sample", "0"], (1,)),
+        ("忠实度 · 儿童用药（全量）", check_fidelity.main,
+         ["--method", "caution-json", "--section", "儿童用药", "--sample", "0"], (0,)),
     ]
     if args.with_graph:
         import import_insert_edges

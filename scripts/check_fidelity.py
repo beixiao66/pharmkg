@@ -216,7 +216,10 @@ def main(argv: list[str] | None = None) -> int:
         "punct_only_diff": len(loose_only),
         "not_found": [{"drug": d, "atom": a} for d, a in fails],
     }
-    out = base / "fidelity.json"
+    # 一个方法可能跑了好几节（如 CAUTION_FOR 的【注意事项】+【儿童用药】），
+    # 这时**每节各写一份**——否则后跑的那节会把前一节的结果覆盖掉（踩过）。
+    name = "fidelity.json" if args.section == "禁忌" else f"fidelity_{args.section}.json"
+    out = base / name
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=2),
                    encoding="utf-8")
     log(f"  已写 {out.relative_to(REPO_ROOT)}")

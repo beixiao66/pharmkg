@@ -73,10 +73,27 @@ def confidence_of(level: str) -> str:
     return "low"
 
 
-def load_items_for(base: Path, drug: str, *, items_dir: Path | None = None) -> list[dict]:
-    """取一个药的条目。给了 ``items_dir`` 就读结构化 JSON，否则读 ``base`` 下的自由文本。"""
-    src = (items_dir / f"{drug}.json") if items_dir else item_path(base, drug)
-    return load_output_items(src)
+def load_items_for(base: Path, drug: str, *, items_dir: Path | None = None,
+                   section: str | None = None) -> list[dict]:
+    """取一个药的条目。给了 ``items_dir`` 就读结构化 JSON，否则读 ``base`` 下的自由文本。
+
+    结构化产物的文件名有两种约定（与 ``extract_sections.unit_key`` 一致）：
+
+    * 只跑一节（如【禁忌】）→ ``<药名>.json``
+    * 跑多节（如 CAUTION_FOR 那两节）→ ``<药名>__<节名>.json``
+
+    所以按 ``<药名>__<节名>`` → ``<药名>`` 的顺序试，**取第一个存在的**。
+    """
+    if items_dir:
+        cands = []
+        if section:
+            cands.append(items_dir / f"{drug}__{section}.json")
+        cands.append(items_dir / f"{drug}.json")
+        for p in cands:
+            if p.exists():
+                return load_output_items(p)
+        return []
+    return load_output_items(item_path(base, drug))
 
 
 def extract_edges(drugs, *, base: Path, items_dir: Path | None = None,
@@ -100,7 +117,7 @@ def extract_edges(drugs, *, base: Path, items_dir: Path | None = None,
     """
     out: list[dict] = []
     for drug in sorted(drugs):
-        for it in load_items_for(base, drug, items_dir=items_dir):
+        for it in load_items_for(base, drug, items_dir=items_dir, section=section):
             for atom in raw_atoms_of(it["text"]):
                 got = al.align(atom)
                 if use_llm and got["level"] == "④新建":

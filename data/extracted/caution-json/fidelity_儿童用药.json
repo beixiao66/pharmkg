@@ -1,0 +1,18 @@
+{
+  "method": "caution-json",
+  "section": "儿童用药",
+  "scope": "【儿童用药】一节",
+  "criterion": "基线 §13.5 L4 忠实度：逐条回说明书原文查证「原文有没有这么写」",
+  "n_atoms_total": 31,
+  "n_sample": 31,
+  "strict_only_whitespace": {
+    "ok": 31,
+    "rate": 1.0
+  },
+  "loose_punct_equiv": {
+    "ok": 31,
+    "rate": 1.0
+  },
+  "punct_only_diff": 0,
+  "not_found": []
+}

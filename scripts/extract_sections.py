@@ -66,12 +66,19 @@ RAW_DIR = OUT_DIR / "raw"
 ITEMS_DIR = OUT_DIR / "items"
 
 #: 本层只跑【禁忌】：它是基线的唯一可比面，也是**有金标准**的那一节。
-#: 决策 #30 里的【注意事项】【儿童用药】→ CAUTION_FOR 待标注跟上后再补。
+#: 决策 #30 里的【注意事项】【儿童用药】→ CAUTION_FOR 另跑一层（见 :data:`CAUTION_SECTIONS`）。
 SECTIONS = ("禁忌",)
+
+#: CAUTION_FOR 那两节。决策 #38 已把槽位扩到 ``Drug → Disease/Population``，
+#: 所以这两节终于有了落点（依据见实测报告 §14：旧槽位下【注意事项】只有 3.4% 的行
+#: 涉及人群，而 52.9% 是疾病/状况）。用户拍板：**先抽 + 量忠实度 + 归档，暂不入图**。
+CAUTION_SECTIONS = ("注意事项", "儿童用药")
 
 #: 从第 0 步延续下来的调用约定（与基线一致，好让 token / 耗时可比）
 TEMPERATURE = 0.0
 MAX_TOKENS = 2048
+#: CAUTION_FOR 那两节的输出更长（【注意事项】正文平均 3,300 字符），给足余量
+CAUTION_MAX_TOKENS = 3000
 TIMEOUT = 180
 NET_RETRY = 3
 
@@ -100,6 +107,47 @@ SYSTEM_PROMPT = """你是一名药学信息抽取助手。用户会给你药品�
 USER_TEMPLATE = """药品说明书【{section}】小节原文：
 
 {text}"""
+
+#: CAUTION_FOR 那两节用的提示词。
+#: ⚠️ **只抽"人群 / 疾病状况"这一类**——因为决策 #38 把 `CAUTION_FOR` 的槽位定成
+#: ``Drug → Disease/Population``。所以：
+#:   · 监测建议（"应监测肝功能"）——它的落点是**检验项**，不是 Disease/Population
+#:   · 剂量与适应症——决策 #30 定死"只留文本、不入图"
+#:   · 合并用药——归 `INTERACTS_WITH`
+#: 这三类**不进** `items`，否则会在图谱里造出没有落点的节点。
+CAUTION_SYSTEM_PROMPT = """你是一名药学信息抽取助手。用户会给你药品说明书里某一节的原文。
+
+请逐条列出该节里**"某类人群或某种疾病状况下应当慎用 / 需要注意"**的情况。
+
+`level` 只能填两个值之一：
+- `慎用`：原文明确写了"慎用""谨慎使用""不宜使用""不建议使用"这类字样
+- `注意`：原文没有"慎用"字样，但明确要求对某类人群/某种状况**加强注意**
+
+要求：
+- **照抄原文措辞**，不要改写、不要归纳、不要补充原文没有的信息
+- 一条只讲**一个**人群或一种疾病状况，原文有几个就列几条，照原文的分段来
+- **不要**列出下面这几类（它们不属于本节要抽的东西）：
+  · 单纯的操作要求（如"应由有经验的医师处方""应由医疗机构随访"）
+  · 监测与检查建议（如"应定期监测肝功能"）
+  · 用法用量、适应症、疗程
+  · 与其它药物的合用（那属于药物相互作用）
+  · 贮藏、包装、有效期一类
+- 若整节确实没有"某类人群/某种状况下慎用或注意"的内容，`items` 返回**空数组**
+
+只输出 JSON，不要解释：
+{"items": [{"text": "照抄的原文条目", "level": "慎用"}]}"""
+
+#: 每一节用哪个提示词
+PROMPTS = {
+    "禁忌": SYSTEM_PROMPT,
+    "注意事项": CAUTION_SYSTEM_PROMPT,
+    "儿童用药": CAUTION_SYSTEM_PROMPT,
+}
+
+
+def max_tokens_for(section: str) -> int:
+    """【注意事项】正文长（平均 3,300 字符、最长 7,766），输出给足余量。"""
+    return MAX_TOKENS if section == "禁忌" else CAUTION_MAX_TOKENS
 
 
 def log(msg: str = "") -> None:
@@ -173,12 +221,12 @@ def call_once(client, model: str, section: str, text: str) -> dict:
             resp = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "system", "content": PROMPTS[section]},
                     {"role": "user",
                      "content": USER_TEMPLATE.format(section=section, text=text)},
                 ],
                 temperature=TEMPERATURE,
-                max_tokens=MAX_TOKENS,
+                max_tokens=max_tokens_for(section),
                 timeout=TIMEOUT,
                 response_format={"type": "json_object"},
             )
@@ -201,7 +249,7 @@ def call_once(client, model: str, section: str, text: str) -> dict:
             "completion_tokens": None, "elapsed": 0.0, "error": last or ""}
 
 
-def parse_items(raw: str) -> tuple[list[dict], str]:
+def parse_items(raw: str, *, want_generic_only: bool = True) -> tuple[list[dict], str]:
     """把模型输出解析成 ``[{text, generic_only}]``。返回 ``(条目, 解析说明)``。
 
     **解析失败绝不静默**：原始响应已经一字不改地落盘，这里如实记下说明，
@@ -244,13 +292,15 @@ def parse_items(raw: str) -> tuple[list[dict], str]:
             bad += 1
             continue
         g = it.get("generic_only")
+        lv = it.get("level")
         items.append({"text": t,
-                      "generic_only": g if isinstance(g, bool) else None})
+                      "generic_only": g if isinstance(g, bool) else None,
+                      "level": str(lv).strip() if lv is not None else None})
     items = [it for it in items if it["text"]]
     note = ""
     if bad:
         note = f"{bad} 条格式不对已丢弃"
-    if any(it["generic_only"] is None for it in items):
+    if want_generic_only and any(it["generic_only"] is None for it in items):
         note = (note + "；" if note else "") + "有条目没给 generic_only（记 None）"
     return items, note
 
@@ -258,24 +308,32 @@ def parse_items(raw: str) -> tuple[list[dict], str]:
 def write_prompt_archive(model: str, *, force: bool) -> None:
     """落盘提示词。**已冻结就不许改**——改了就是另一层，不是这一层。"""
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    is_caution = any(s != "禁忌" for s in SECTIONS)
+    head = ("# CAUTION_FOR 层提示词（按小节送 + JSON 约束 + level 两档）\n"
+            "# 零样本；判据写的是「什么该进 items」的定义，不是照金标准反推的。\n"
+            if is_caution else
+            "# 消融层级 2 提示词（按小节送 + JSON 约束 + generic_only）\n"
+            "# 零样本；判据是「通用过敏禁忌」的**定义**，不是照金标准反推的。\n")
+    blocks = []
+    for sec in SECTIONS:
+        blocks.append(f"## system（用于【{sec}】）\n{PROMPTS[sec]}\n")
     new = (
-        "# 消融层级 2 提示词（按小节送 + JSON 约束 + generic_only）\n"
-        "# 零样本；判据是「通用过敏禁忌」的**定义**，不是照金标准反推的。\n"
-        "\n"
-        "## system\n"
-        f"{SYSTEM_PROMPT}\n"
-        "\n"
-        "## user（{section} / {text} 处填入节名与该节正文）\n"
-        f"{USER_TEMPLATE}\n"
-        "\n"
-        "## 参数\n"
-        f"model           = {model}\n"
-        f"temperature     = {TEMPERATURE}\n"
-        f"max_tokens      = {MAX_TOKENS}\n"
-        f"timeout         = {TIMEOUT}\n"
-        f"response_format = json_object\n"
-        f"网络层重试      = {NET_RETRY}（只重试调用失败，不做内容自检）\n"
-        f"输入单元        = 整节（{', '.join(SECTIONS)}）\n"
+        head
+        + "\n"
+        + "\n".join(blocks)
+        + "\n"
+        + "## user（{section} / {text} 处填入节名与该节正文）\n"
+        + f"{USER_TEMPLATE}\n"
+        + "\n"
+        + "## 参数\n"
+        + f"model           = {model}\n"
+        + f"temperature     = {TEMPERATURE}\n"
+        + f"max_tokens      = " + "、".join(
+            f"{s}={max_tokens_for(s)}" for s in SECTIONS) + "\n"
+        + f"timeout         = {TIMEOUT}\n"
+        + "response_format = json_object\n"
+        + f"网络层重试      = {NET_RETRY}（只重试调用失败，不做内容自检）\n"
+        + f"输入单元        = 整节（{', '.join(SECTIONS)}）\n"
     )
     p = OUT_DIR / "prompt.txt"
     if p.exists() and p.read_text(encoding="utf-8") != new and not force:
@@ -336,14 +394,32 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--limit", type=int, default=None, help="只跑前 N 个单元")
     ap.add_argument("--force", action="store_true", help="连已跑过的也重跑")
     ap.add_argument("--model", default=None, help="覆盖 .env 里的 LLM_MODEL")
+    ap.add_argument("--sections", default=None,
+                    help="要跑哪些节（逗号分隔）。默认跑【禁忌】那一层；"
+                         "CAUTION_FOR 那两节用 --sections 注意事项,儿童用药 --out caution-json")
+    ap.add_argument("--out", default=None, help="输出目录名，默认 section-json")
     args = ap.parse_args(argv)
+
+    global OUT_DIR, RAW_DIR, ITEMS_DIR, SECTIONS
+    if args.sections:
+        SECTIONS = tuple(x.strip() for x in args.sections.split(",") if x.strip())
+        unknown = [x for x in SECTIONS if x not in PROMPTS]
+        if unknown:
+            raise SystemExit(f"✗ 这几节还没有提示词：{unknown}（现有：{list(PROMPTS)}）")
+    if args.out:
+        OUT_DIR = REPO_ROOT / "data" / "extracted" / args.out
+        RAW_DIR = OUT_DIR / "raw"
+        ITEMS_DIR = OUT_DIR / "items"
 
     units = load_units()
     if args.limit:
         units = units[:args.limit]
 
     total = sum(u["chars"] for u in units)
-    log("L4 第②步 · 按小节送 + JSON 约束 + generic_only")
+    _layer = ("CAUTION_FOR 层：按小节送 + JSON 约束 + level 两档"
+              if any(x != "禁忌" for x in SECTIONS)
+              else "L4 第②步 · 按小节送 + JSON 约束 + generic_only")
+    log(_layer)
     log(f"  单元数      {len(units)}（节：{', '.join(SECTIONS)}）")
     log(f"  总字符      {total:,}")
     log(f"  输出目录    {OUT_DIR.relative_to(REPO_ROOT)}")
@@ -399,11 +475,14 @@ def main(argv: list[str] | None = None) -> int:
     prev, prev_full = ({} , {}) if args.force else read_prev()
 
     meta = {
-        "run": "L4 消融层级 2：按小节送 + JSON 约束 + generic_only",
-        "decision": "#30 的后半（基线故意没做的那三件事）",
+        "run": ("CAUTION_FOR 层：按小节送 + JSON 约束 + level 两档"
+                if any(x != "禁忌" for x in SECTIONS)
+                else "L4 消融层级 2：按小节送 + JSON 约束 + generic_only"),
+        "decision": ("决策 #30 + #38（槽位扩到 Disease/Population）"
+                     if any(x != "禁忌" for x in SECTIONS) else "#30 的后半"),
         "model": model,
         "temperature": TEMPERATURE,
-        "max_tokens": MAX_TOKENS,
+        "max_tokens": {sec: max_tokens_for(sec) for sec in SECTIONS},
         "timeout": TIMEOUT,
         "response_format": "json_object",
         "net_retry": NET_RETRY,
@@ -453,7 +532,8 @@ def main(argv: list[str] | None = None) -> int:
 
         got = call_once(client, model, u["section"], u["text"])
         out_path.write_text(got["raw"], encoding="utf-8")
-        items, note = parse_items(got["raw"])
+        items, note = parse_items(got["raw"],
+                                  want_generic_only=(u["section"] == "禁忌"))
         (ITEMS_DIR / f"{key}.json").write_text(
             json.dumps(items, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -462,6 +542,9 @@ def main(argv: list[str] | None = None) -> int:
             "input_chars": u["chars"], "input_sha256": u["sha256"],
             "n_items": len(items),
             "n_generic_only": sum(1 for it in items if it["generic_only"]),
+            "levels": {lv: sum(1 for it in items if it.get("level") == lv)
+                       for lv in ("慎用", "注意")},
+            "n_level_missing": sum(1 for it in items if it.get("level") is None),
             "output_chars": len(got["raw"]),
             "finish_reason": got["finish_reason"],
             "prompt_tokens": got["prompt_tokens"],
@@ -482,8 +565,10 @@ def main(argv: list[str] | None = None) -> int:
             log(f"      ✗ 解析失败：{note}")
         else:
             done += 1
-            log(f"      条目 {len(items)}（generic_only "
-                f"{rec['n_generic_only']}） / in {got['prompt_tokens']} tok"
+            _tail = (f"generic_only {rec['n_generic_only']}"
+                     if u["section"] == "禁忌"
+                     else f"慎用 {rec['levels']['慎用']} / 注意 {rec['levels']['注意']}")
+            log(f"      条目 {len(items)}（{_tail}） / in {got['prompt_tokens']} tok"
                 f" / out {got['completion_tokens']} tok / {got['elapsed']}s"
                 + (f" / {note}" if note else ""))
 
