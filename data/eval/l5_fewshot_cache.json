@@ -36,15 +36,24 @@
       "intent": "疾病用药",
       "question": "冠心病推荐用什么药？",
       "entities": "冠心病",
-      "cypher": "MATCH (dz:Disease {name:'冠心病'})-[:RECOMMEND_DRUG]->(d:Drug)\nRETURN d.name",
+      "cypher": "MATCH (d:Disease {name:'冠心病'})-[:RECOMMEND_DRUG]->(drug:Drug)\nRETURN drug.name",
       "rows": 22,
       "source": "llm-generated, verified"
     },
     "why": "返回 22 行"
   },
   "F05": {
-    "keep": false,
-    "why": "返回 0 行"
+    "keep": true,
+    "row": {
+      "fid": "F05",
+      "intent": "疾病用药",
+      "question": "血瘀体质可以用哪些药？",
+      "entities": "血瘀体质",
+      "cypher": "MATCH (d:Disease {name:'血瘀体质'})-[:RECOMMEND_DRUG]->(drug:Drug)\nRETURN drug.name",
+      "rows": 22,
+      "source": "llm-generated, verified"
+    },
+    "why": "返回 22 行"
   },
   "F06": {
     "keep": true,
@@ -53,7 +62,7 @@
       "intent": "疾病用药",
       "question": "冠心病有哪些症状？",
       "entities": "冠心病",
-      "cypher": "MATCH (d:Disease {name:'冠心病'})-[:HAS_SYMPTOM]->(s:Symptom)\nRETURN s.name",
+      "cypher": "MATCH (:Disease {name:'冠心病'})-[:HAS_SYMPTOM]->(s:Symptom)\nRETURN s.name",
       "rows": 10,
       "source": "llm-generated, verified"
     },
@@ -92,11 +101,11 @@
       "intent": "禁忌",
       "question": "氯氮平有哪些禁忌？",
       "entities": "氯氮平",
-      "cypher": "MATCH (:Drug {name:'氯氮平'})-[:CONTRAINDICATED_FOR]->(c)\nRETURN c.name",
-      "rows": 13,
+      "cypher": "MATCH (d:Drug {name:'氯氮平'})-[r:CONTRAINDICATED_FOR]->(target)\nWHERE r.confidence = 'high'\nRETURN target.name",
+      "rows": 4,
       "source": "llm-generated, verified"
     },
-    "why": "返回 13 行"
+    "why": "返回 4 行"
   },
   "F10": {
     "keep": true,
@@ -105,11 +114,11 @@
       "intent": "禁忌",
       "question": "来氟米特禁用于哪些情况？",
       "entities": "来氟米特",
-      "cypher": "MATCH (:Drug {name:'来氟米特'})-[:CONTRAINDICATED_FOR]->(c)\nRETURN c.name",
-      "rows": 14,
+      "cypher": "MATCH (d:Drug {name:'来氟米特'})-[r:CONTRAINDICATED_FOR]->(target)\nWHERE r.confidence = 'high'\nRETURN target.name",
+      "rows": 7,
       "source": "llm-generated, verified"
     },
-    "why": "返回 14 行"
+    "why": "返回 7 行"
   },
   "F11": {
     "keep": false,
@@ -122,7 +131,7 @@
       "intent": "禁忌",
       "question": "奥扎莫德的禁忌里有没有孕妇？",
       "entities": "奥扎莫德；孕妇",
-      "cypher": "MATCH (d:Drug {name: '奥扎莫德'})-[:CONTRAINDICATED_FOR]->(p:Population {name: '孕妇'})\nRETURN p.name",
+      "cypher": "MATCH (d:Drug {name:'奥扎莫德'})-[r:CONTRAINDICATED_FOR]->(p:Population {name:'孕妇'})\nWHERE r.confidence = 'high'\nRETURN p.name",
       "rows": 1,
       "source": "llm-generated, verified"
     },
