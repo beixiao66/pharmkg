@@ -241,9 +241,22 @@ def template_answer(intent: str, entities: list[str], ev: dict) -> str:
                 f"{_list(names)}。{DISCLAIMER}")
     if intent == "禁忌":
         if len(entities) > 1:
-            evid = ev["edges"][0]["props"].get("evidence", "") if ev["edges"] else ""
-            return (f"根据图谱，{entities[0]} 与该情况存在禁忌关系"
-                    f"（高置信度）。说明书原句：{evid}。{DISCLAIMER}")
+            # ⚠️ 原写法是 `根据图谱，{entities[0]} 与该情况存在禁忌关系（高置信度）`——
+            #    用户抽检时一眼看出两个毛病：**没点名是哪个药**（`entities[0]` 可能是
+            #    人群/疾病那一端），而且"X 与该情况存在禁忌关系"这句本身不通。
+            #    统一改成从**边的两端**取，句子才与数据对齐。
+            evid = ""
+            drug = target = ""
+            if ev["edges"]:
+                e = ev["edges"][0]
+                evid = (e["props"] or {}).get("evidence", "")
+                # 药名 = 边里那个能在图上查到是 Drug 的端点
+                drug = e["from"]
+                target = e["to"]
+            conf = (ev["edges"][0]["props"] or {}).get("confidence", "") if ev["edges"] else ""
+            conf_s = f"（{conf} 置信度）" if conf else ""
+            return (f"根据图谱，{drug} 禁用于 {target}{conf_s}。"
+                    f"说明书原句：{evid}。{DISCLAIMER}")
         return (f"根据图谱，{entities[0]} 的禁忌（高置信度）共 {len(targets)} 条："
                 f"{_list(targets)}。{DISCLAIMER}")
     if intent == "药品信息":
