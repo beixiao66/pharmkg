@@ -205,6 +205,9 @@ $PY = ".\backend\.venv\Scripts\python.exe"
 & $PY scripts\import_insert_edges.py --reset   # 回滚（只删 source=insert 的东西）
 
 & $PY scripts\insert_io.py --selftest          # 合成用例回归（19 项，不依赖网络与已采数据）
+
+& $PY scripts\verify_l4.py                     # ★ 一键自检：重算 + 断言 16 条数字 + 核对产物零漂移
+& $PY scripts\verify_l4.py --with-graph        #   再跑一遍入库与验收查询（需 Neo4j）
 ```
 
 **⚠️ 图里这批边约 33% 是假阳性**（P 0.672 / R 0.765 / F1 0.716）。它们带着
@@ -222,9 +225,13 @@ $PY = ".\backend\.venv\Scripts\python.exe"
 **模型当时看到的原文**里做子串匹配即可。基线那 6 条不通过的全是**改写/拼接**，最典型的一条是
 `Waldenstrtim's`（原文拼错）被模型**改对**成了 `Waldenström's`：**模型比原文更"正确"，但不忠实。**
 
+**一条命令自检**（`scripts/verify_l4.py`）：把每个已发布的数字**重算一遍并断言没动**，
+再核对 `data/extracted/` 零漂移。数字改过好几次，而"文档里的数和产物里的数不一致"
+是最难发现的一类错——所以把它机械化。**改文档就必须改脚本里的 `EXPECTED`，反之亦然。**
+
 ```powershell
 & $PY scripts\check_fidelity.py                         # 抽 100 条
-& $PY scripts\check_fidelity.py --method baseline --sample 0   # 基线，全量
+& $PY scripts\verify_l4.py                              # 8 步 + 16 条断言 + 零漂移
 ```
 
 > ⚠️ **`--scope` 必须等于"模型当时看到的输入"**：按小节送的那层只看到【禁忌】一节，
@@ -288,6 +295,7 @@ pharmkg/
 │   ├── l4_pipeline.py              L4：条目 → 原子 → 节点（**评分与入库共用这一段**）
 │   ├── score_alignment.py          L4 第二层：端到端 (药,节点) 边级 P/R/F1
 │   ├── check_fidelity.py           L4 忠实度：抽 100 条回原文查证（§13.5）
+│   ├── verify_l4.py                ★ L4 一键自检：重算 + 断言已发布数字 + 核对产物零漂移
 │   └── import_insert_edges.py      L4 入库：CONTRAINDICATED_FOR / CAUTION_FOR → Neo4j
 └── docs/                 需求与技术方案基线、数据源实测报告、药名映射实验报告
 ```
