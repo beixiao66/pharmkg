@@ -96,7 +96,12 @@ def main() -> int:
         print("\n── 药物检索（决策 #16：只从已有节点里选）──")
         for name in DEMO:
             r = client.get("/drugs/search", params={"q": name})
-            hits = r.json() if r.status_code == 200 else []
+            # ⚠️ 响应是 {items,total,limit,truncated}，**不是裸数组**。
+            #    改这个结构的原因是用户实测「搜『卡』找不到卡维地洛片」：
+            #    以「卡」开头 29 个药，而它排第 17 位，原来 LIMIT 10 把它切掉、
+            #    页面上毫无提示。**「被截断」必须成为数据。**
+            body = r.json() if r.status_code == 200 else {}
+            hits = body.get("items", [])
             exact = next((h for h in hits if h["name"] == name), None)
             check(f"检索 {name} 命中同名节点", exact is not None,
                   f"{len(hits)} 条" + (f"  首条={hits[0]['name']}" if hits else ""))
@@ -105,6 +110,20 @@ def main() -> int:
         check("命中 id 的格式是 drug:<名字>",
               all(v.startswith("drug:") for v in ids.values()),
               str(list(ids.values())[:1]))
+
+        # ── 截断必须报出来（本次修复的核心，钉进自测防回退）──
+        b = client.get("/drugs/search", params={"q": "卡"}).json()
+        check("搜『卡』→ truncated=True（**不是静默截断**）",
+              b["truncated"] is True and b["total"] > len(b["items"]),
+              f"total={b['total']} shown={len(b['items'])} truncated={b['truncated']}")
+        check("搜『卡』的结果里**能出现卡维地洛片**（须排在显示条数以内）",
+              any(h["name"] == "卡维地洛片" for h in b["items"]),
+              f"共显示 {len(b['items'])} 条")
+        b2 = client.get("/drugs/search", params={"q": "卡维"}).json()
+        check("搜『卡维』→ 只 1 条、不截断、就是卡维地洛片",
+              b2["total"] == 1 and b2["truncated"] is False
+              and b2["items"][0]["name"] == "卡维地洛片",
+              str(b2["items"]))
 
         print("\n── 加药 ──")
         r = client.post("/medicine-box", json={"drug_id": "drug:不存在的药"}, headers=ha)
@@ -181,10 +200,17 @@ def main() -> int:
             db.commit()
             left = db.execute(select(func.count(AppUser.id)).where(
                 AppUser.username.in_([user_a, user_b]))).scalar()
-            box = db.execute(select(func.count(MedicineBox.id))).scalar()
+            # ⚠️ 这里原来断言的是「整张 medicine_box 表为空」——**那是错的断言**，
+            #    它依赖全局状态：用户自己在页面上加的药也在同一张表里，
+            #    于是自测会在"表里恰好有别人的数据"时失败（实测撞到，全表 2 行）。
+            #    要测的是**级联删除有没有留下孤儿行**，不是"表是空的"。
+            orphans = db.execute(
+                select(func.count(MedicineBox.id)).where(
+                    ~MedicineBox.user_id.in_(select(AppUser.id)))).scalar()
+            total = db.execute(select(func.count(MedicineBox.id))).scalar()
             check("测试用户已删除", left == 0)
-            check("medicine_box 里没有孤儿行（级联删除）", box == 0,
-                  f"全表 {box} 行")
+            check("级联删除没留下孤儿行（别人药箱里的数据不算）", orphans == 0,
+                  f"全表 {total} 行，其中孤儿 {orphans} 行")
 
     print()
     print(f"── 汇总 ──  通过 {len(PASSED)}  失败 {len(FAILED)}")
