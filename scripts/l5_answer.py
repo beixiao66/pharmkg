@@ -105,9 +105,11 @@ def evidence_cypher(intent: str, entities: list[str], session) -> tuple[str, dic
             cy = ("MATCH (a:Drug {name: $e0})-[r:INTERACTS_WITH]-(b:Drug) "
                   "RETURN a, r, b")
     elif intent == "疾病用药":
-        cy = "MATCH (dz:Disease {name: $e0})-[:RECOMMEND_DRUG]->(d:Drug) RETURN dz, d"
+        cy = ("MATCH (dz:Disease {name: $e0})-[r:RECOMMEND_DRUG]->(d:Drug) "
+              "RETURN dz, r, d")
     elif intent == "适应症":
-        cy = "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name: $e0}) RETURN dz, d"
+        cy = ("MATCH (dz:Disease)-[r:RECOMMEND_DRUG]->(d:Drug {name: $e0}) "
+              "RETURN dz, r, d")
     elif intent == "禁忌":
         # 两个实体时：一个是药、另一个是禁忌对象（**不分先后**，按图里的标签判）
         if e1:
@@ -189,11 +191,23 @@ def template_answer(intent: str, entities: list[str], ev: dict) -> str:
     if not ev["nodes"] and not ev["edges"]:
         return "图谱中无相关记录。" + DISCLAIMER
 
-    # ⚠️ 踩过：`疾病用药`/`适应症` 直接用**全部节点名**当结果，
-    #    于是疾病自己也被列进了"推荐用药"里——
-    #    `类风湿关节炎 的推荐用药共 24 种：类风湿关节炎、骨肽片、…`（数字也因此多 1）。
-    #    这两个意图的答案应当是**边的目标端**，不是节点集合。
-    names = [e["to"] for e in ev["edges"] if e.get("to")]
+    # ⚠️ 踩过两次，第二次是用户抽检表照出来的，值得记清楚。
+    #
+    # 第一次：`疾病用药`/`适应症` 直接用**全部节点名**当结果，于是疾病自己也被列进了
+    #        "推荐用药"里——`类风湿关节炎 的推荐用药共 24 种：类风湿关节炎、骨肽片、…`。
+    # 第二次（我"修"过之后仍然错）：我把取法改成"边的目标端"，可那两个意图的证据查询
+    #        当时**只 RETURN 了节点、没 RETURN 关系** → `edges` 是空的 →
+    #        代码退回了"用全部节点名"，**病又混进来了**。
+    #        → 教训：改了取法，还要检查**数据源里到底有没有那个东西**；
+    #          空集合上的回退分支会把 bug 原样带回来。
+    #
+    # 现在：证据查询把关系也返回，且**方向按意图分**——
+    #   `疾病用药`：Disease → Drug，要的是药物（`to`）
+    #   `适应症`  ：同一条边反向查，要的是疾病（`from`）
+    if intent == "适应症":
+        names = [e["from"] for e in ev["edges"] if e.get("from")]
+    else:
+        names = [e["to"] for e in ev["edges"] if e.get("to")]
     if not names:
         names = [n["name"] for n in ev["nodes"] if n["name"]]
     levels = [e["props"].get("level") for e in ev["edges"]]
@@ -204,7 +218,14 @@ def template_answer(intent: str, entities: list[str], ev: dict) -> str:
         if len(entities) > 1 and levels:
             return (f"根据图谱，{entities[0]} 与 {entities[1]} 之间存在 "
                     f"**{levels[0]}** 级相互作用。{DISCLAIMER}")
-        pairs = [f"{t}（{lv}）" for t, lv in zip(targets, levels) if t != entities[0]]
+        # ⚠️ `INTERACTS_WITH` 是无向关系，图里存的方向不由我们决定：
+        #    实测 `依度沙班 -[INTERACTS_WITH]-> 卡维地洛片`——`to` 端恰好是实体自己。
+        #    所以"对方药"要挑**不在 entities 里**的那一端，不能只看 `to`。
+        pairs = []
+        for e, lv in zip(ev["edges"], levels):
+            pair = [x for x in (e["from"], e["to"]) if x not in entities]
+            if pair:
+                pairs.append(f"{pair[0]}（{lv}）")
         return (f"根据图谱，{entities[0]} 共有 {len(ev['edges'])} 条相互作用记录："
                 f"{_list(pairs)}。{DISCLAIMER}")
     if intent == "疾病用药":

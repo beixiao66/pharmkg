@@ -207,7 +207,7 @@
           "out_of_evidence": []
         },
         "llm": {
-          "text": "乙酰唑胺片与盐酸二甲双胍肠溶片同服存在Major（严重）相互作用风险。  \n以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
+          "text": "乙酰唑胺片与盐酸二甲双胍肠溶片同服存在Major级别相互作用风险。  \n以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
           "faithful": true,
           "out_of_evidence": []
         }
@@ -611,106 +611,314 @@
             }
           }
         ],
-        "edges": [],
-        "cypher": "MATCH (dz:Disease {name: $e0})-[:RECOMMEND_DRUG]->(d:Drug) RETURN dz, d",
+        "edges": [
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "双蚁祛湿通络胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "洛索洛芬钠胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "洛索洛芬钠片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "右旋酮洛芬氨丁三醇片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "痹祺胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "布洛芬缓释胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "骨刺片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "硫唑嘌呤片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "双氯芬酸钠肠溶片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "尼美舒利胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "氨糖美辛肠溶片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "曲安奈德注射液",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "胸腺肽肠溶片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "阿司匹林肠溶胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "酮洛芬缓释胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "风湿定胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "注射用重组人Ⅱ型肿瘤坏死因子受体-抗体融合蛋白",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "祖师麻片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "鹿瓜多肽注射液",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "通滞苏润江胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "来氟米特片",
+            "props": {
+              "source": "opencmkg"
+            }
+          }
+        ],
+        "cypher": "MATCH (dz:Disease {name: $e0})-[r:RECOMMEND_DRUG]->(d:Drug) RETURN dz, r, d",
         "rows": [
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "双蚁祛湿通络胶囊（source=opencmkg, id=drug:双蚁祛湿通络胶囊）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "洛索洛芬钠胶囊（id=drug:洛索洛芬钠胶囊, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "洛索洛芬钠片（id=drug:洛索洛芬钠片, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "右旋酮洛芬氨丁三醇片（source=opencmkg, id=drug:右旋酮洛芬氨丁三醇片）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "痹祺胶囊（id=drug:痹祺胶囊, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "布洛芬缓释胶囊（id=drug:布洛芬缓释胶囊, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "骨刺片（id=drug:骨刺片, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "硫唑嘌呤片（id=drug:硫唑嘌呤片, source=opencmkg, name_en=Azathioprine）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "双氯芬酸钠肠溶片（source=opencmkg, id=drug:双氯芬酸钠肠溶片）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "尼美舒利胶囊（id=drug:尼美舒利胶囊, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "氨糖美辛肠溶片（id=drug:氨糖美辛肠溶片, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "曲安奈德注射液（id=drug:曲安奈德注射液, source=opencmkg, name_en=Triamcinolone (nasal)）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "胸腺肽肠溶片（id=drug:胸腺肽肠溶片, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "阿司匹林肠溶胶囊（source=opencmkg, id=drug:阿司匹林肠溶胶囊）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "酮洛芬缓释胶囊（id=drug:酮洛芬缓释胶囊, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "风湿定胶囊（id=drug:风湿定胶囊, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "注射用重组人Ⅱ型肿瘤坏死因子受体-抗体融合蛋白（source=opencmkg, id=drug:注射用重组人Ⅱ型肿瘤坏死因子受体-抗体融合蛋白）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "祖师麻片（id=drug:祖师麻片, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "鹿瓜多肽注射液（id=drug:鹿瓜多肽注射液, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "通滞苏润江胶囊（id=drug:通滞苏润江胶囊, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "来氟米特片（id=drug:来氟米特片, source=opencmkg, name_en=Leflunomide）"
           ]
         ]
       },
       "answers": {
         "template": {
-          "text": "根据图谱，类风湿关节炎 的推荐用药共 24 种：类风湿关节炎、骨肽片、双蚁祛湿通络胶囊、洛索洛芬钠胶囊、洛索洛芬钠片、右旋酮洛芬氨丁三醇片、痹祺胶囊、布洛芬缓释胶囊 等 24 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
+          "text": "根据图谱，类风湿关节炎 的推荐用药共 23 种：骨肽片、双蚁祛湿通络胶囊、洛索洛芬钠胶囊、洛索洛芬钠片、右旋酮洛芬氨丁三醇片、痹祺胶囊、布洛芬缓释胶囊、骨刺片 等 23 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
           "faithful": true,
           "out_of_evidence": []
         },
@@ -1020,106 +1228,314 @@
             }
           }
         ],
-        "edges": [],
-        "cypher": "MATCH (dz:Disease {name: $e0})-[:RECOMMEND_DRUG]->(d:Drug) RETURN dz, d",
+        "edges": [
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "速效救心丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "脑心通胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "丹参益心胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "心宝丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "冻干",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "大株红景天片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "马来酸氨氯地平片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "愈风宁心滴丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "芪参胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "硝苯地平缓释片Ⅰ",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "益心酮片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "康尔心胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "大株红景天胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "氨氯地平阿托伐他汀钙片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "Ⅰ",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "通脉颗粒",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "薯蓣皂苷片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "Ⅱ",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "丹参片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "保心宁片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "单硝酸异山梨酯胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "复方丹参滴丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "冠心生脉丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          }
+        ],
+        "cypher": "MATCH (dz:Disease {name: $e0})-[r:RECOMMEND_DRUG]->(d:Drug) RETURN dz, r, d",
         "rows": [
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "速效救心丸（id=drug:速效救心丸, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "脑心通胶囊（id=drug:脑心通胶囊, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "丹参益心胶囊（id=drug:丹参益心胶囊, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "心宝丸（id=drug:心宝丸, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "冻干（id=drug:冻干, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "大株红景天片（id=drug:大株红景天片, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "马来酸氨氯地平片（source=opencmkg, id=drug:马来酸氨氯地平片, name_en=Amlodipine）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "愈风宁心滴丸（id=drug:愈风宁心滴丸, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "芪参胶囊（id=drug:芪参胶囊, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "硝苯地平缓释片Ⅰ（source=opencmkg, id=drug:硝苯地平缓释片Ⅰ）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "益心酮片（id=drug:益心酮片, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "康尔心胶囊（id=drug:康尔心胶囊, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "大株红景天胶囊（id=drug:大株红景天胶囊, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "氨氯地平阿托伐他汀钙片（source=opencmkg, id=drug:氨氯地平阿托伐他汀钙片）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "Ⅰ（id=drug:Ⅰ, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "通脉颗粒（id=drug:通脉颗粒, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "薯蓣皂苷片（id=drug:薯蓣皂苷片, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "Ⅱ（id=drug:Ⅱ, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "丹参片（id=drug:丹参片, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "保心宁片（id=drug:保心宁片, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "单硝酸异山梨酯胶囊（source=opencmkg, id=drug:单硝酸异山梨酯胶囊）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "复方丹参滴丸（id=drug:复方丹参滴丸, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "冠心生脉丸（id=drug:冠心生脉丸, source=opencmkg）"
           ]
         ]
       },
       "answers": {
         "template": {
-          "text": "根据图谱，劳力性心绞痛 的推荐用药共 24 种：劳力性心绞痛、速效救心丸、脑心通胶囊、丹参益心胶囊、心宝丸、冻干、大株红景天片、马来酸氨氯地平片 等 24 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
+          "text": "根据图谱，劳力性心绞痛 的推荐用药共 23 种：速效救心丸、脑心通胶囊、丹参益心胶囊、心宝丸、冻干、大株红景天片、马来酸氨氯地平片、愈风宁心滴丸 等 23 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
           "faithful": true,
           "out_of_evidence": []
         },
@@ -1418,102 +1834,301 @@
             }
           }
         ],
-        "edges": [],
-        "cypher": "MATCH (dz:Disease {name: $e0})-[:RECOMMEND_DRUG]->(d:Drug) RETURN dz, d",
+        "edges": [
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "复方黄连素片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "乳酸菌素片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "左氧氟沙星片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "依托红霉素片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "司帕沙星分散片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "苦木注射液",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "枯草杆菌二联活菌肠溶胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "清泻丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "呋喃唑酮片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "止痢宁片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "复方红根草片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "炎宁颗粒",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "解毒止泻胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "盐酸左氧氟沙星胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "氧氟沙星片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "乳酸左氧氟沙星片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "复方谷氨酰胺肠溶胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "SP",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "司帕沙星片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "金菊五花茶颗粒",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "雪胆素胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病毒性肠炎",
+            "to": "肠内营养混悬",
+            "props": {
+              "source": "opencmkg"
+            }
+          }
+        ],
+        "cypher": "MATCH (dz:Disease {name: $e0})-[r:RECOMMEND_DRUG]->(d:Drug) RETURN dz, r, d",
         "rows": [
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "复方黄连素片（id=drug:复方黄连素片, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "乳酸菌素片（id=drug:乳酸菌素片, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "左氧氟沙星片（id=drug:左氧氟沙星片, source=opencmkg, name_en=Levofloxacin）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "依托红霉素片（id=drug:依托红霉素片, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "司帕沙星分散片（id=drug:司帕沙星分散片, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "苦木注射液（id=drug:苦木注射液, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "枯草杆菌二联活菌肠溶胶囊（source=opencmkg, id=drug:枯草杆菌二联活菌肠溶胶囊）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "清泻丸（id=drug:清泻丸, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "呋喃唑酮片（id=drug:呋喃唑酮片, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "止痢宁片（id=drug:止痢宁片, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "复方红根草片（id=drug:复方红根草片, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "炎宁颗粒（id=drug:炎宁颗粒, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "解毒止泻胶囊（id=drug:解毒止泻胶囊, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "盐酸左氧氟沙星胶囊（source=opencmkg, id=drug:盐酸左氧氟沙星胶囊）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "氧氟沙星片（id=drug:氧氟沙星片, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "乳酸左氧氟沙星片（source=opencmkg, id=drug:乳酸左氧氟沙星片）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "复方谷氨酰胺肠溶胶囊（source=opencmkg, id=drug:复方谷氨酰胺肠溶胶囊）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "SP（id=drug:SP, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "司帕沙星片（id=drug:司帕沙星片, source=opencmkg, name_en=Sparfloxacin）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "金菊五花茶颗粒（id=drug:金菊五花茶颗粒, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "雪胆素胶囊（id=drug:雪胆素胶囊, source=opencmkg）"
           ],
           [
             "病毒性肠炎（id=disease:病毒性肠炎, source=opencmkg）",
+            null,
             "肠内营养混悬（id=drug:肠内营养混悬, source=opencmkg）"
           ]
         ]
       },
       "answers": {
         "template": {
-          "text": "根据图谱，病毒性肠炎 的推荐用药共 23 种：病毒性肠炎、复方黄连素片、乳酸菌素片、左氧氟沙星片、依托红霉素片、司帕沙星分散片、苦木注射液、枯草杆菌二联活菌肠溶胶囊 等 23 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
+          "text": "根据图谱，病毒性肠炎 的推荐用药共 22 种：复方黄连素片、乳酸菌素片、左氧氟沙星片、依托红霉素片、司帕沙星分散片、苦木注射液、枯草杆菌二联活菌肠溶胶囊、清泻丸 等 22 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
           "faithful": true,
           "out_of_evidence": []
         },
@@ -1825,106 +2440,314 @@
             }
           }
         ],
-        "edges": [],
-        "cypher": "MATCH (dz:Disease {name: $e0})-[:RECOMMEND_DRUG]->(d:Drug) RETURN dz, d",
+        "edges": [
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "祖师麻片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "胸腺肽肠溶片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "来氟米特片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "曲安奈德注射液",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "阿司匹林肠溶胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "鹿瓜多肽注射液",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "布洛芬缓释胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "洛索洛芬钠胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "通滞苏润江胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "注射用重组人Ⅱ型肿瘤坏死因子受体-抗体融合蛋白",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "风湿定胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "硫唑嘌呤片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "酮洛芬缓释胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "双氯芬酸钠肠溶片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "双蚁祛湿通络胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "氨糖美辛肠溶片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "骨刺片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "尼美舒利胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "右旋酮洛芬氨丁三醇片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "洛索洛芬钠片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "痹祺胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          }
+        ],
+        "cypher": "MATCH (dz:Disease {name: $e0})-[r:RECOMMEND_DRUG]->(d:Drug) RETURN dz, r, d",
         "rows": [
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "祖师麻片（id=drug:祖师麻片, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "胸腺肽肠溶片（id=drug:胸腺肽肠溶片, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "来氟米特片（id=drug:来氟米特片, source=opencmkg, name_en=Leflunomide）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "曲安奈德注射液（id=drug:曲安奈德注射液, source=opencmkg, name_en=Triamcinolone (nasal)）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "阿司匹林肠溶胶囊（source=opencmkg, id=drug:阿司匹林肠溶胶囊）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "鹿瓜多肽注射液（id=drug:鹿瓜多肽注射液, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "布洛芬缓释胶囊（id=drug:布洛芬缓释胶囊, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "洛索洛芬钠胶囊（id=drug:洛索洛芬钠胶囊, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "通滞苏润江胶囊（id=drug:通滞苏润江胶囊, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "注射用重组人Ⅱ型肿瘤坏死因子受体-抗体融合蛋白（source=opencmkg, id=drug:注射用重组人Ⅱ型肿瘤坏死因子受体-抗体融合蛋白）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "风湿定胶囊（id=drug:风湿定胶囊, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "硫唑嘌呤片（id=drug:硫唑嘌呤片, source=opencmkg, name_en=Azathioprine）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "酮洛芬缓释胶囊（id=drug:酮洛芬缓释胶囊, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "双氯芬酸钠肠溶片（source=opencmkg, id=drug:双氯芬酸钠肠溶片）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "双蚁祛湿通络胶囊（source=opencmkg, id=drug:双蚁祛湿通络胶囊）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "氨糖美辛肠溶片（id=drug:氨糖美辛肠溶片, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "骨刺片（id=drug:骨刺片, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "尼美舒利胶囊（id=drug:尼美舒利胶囊, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "右旋酮洛芬氨丁三醇片（source=opencmkg, id=drug:右旋酮洛芬氨丁三醇片）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "洛索洛芬钠片（id=drug:洛索洛芬钠片, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "痹祺胶囊（id=drug:痹祺胶囊, source=opencmkg）"
           ]
         ]
       },
       "answers": {
         "template": {
-          "text": "根据图谱，纤维肌痛综合征 的推荐用药共 24 种：纤维肌痛综合征、骨肽片、祖师麻片、去痛片、胸腺肽肠溶片、来氟米特片、曲安奈德注射液、阿司匹林肠溶胶囊 等 24 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
+          "text": "根据图谱，纤维肌痛综合征 的推荐用药共 23 种：骨肽片、祖师麻片、去痛片、胸腺肽肠溶片、来氟米特片、曲安奈德注射液、阿司匹林肠溶胶囊、鹿瓜多肽注射液 等 23 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
           "faithful": true,
           "out_of_evidence": []
         },
@@ -2233,106 +3056,314 @@
             }
           }
         ],
-        "edges": [],
-        "cypher": "MATCH (dz:Disease {name: $e0})-[:RECOMMEND_DRUG]->(d:Drug) RETURN dz, d",
+        "edges": [
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "桂龙药膏",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "复方首乌补液",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "海马补肾丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "参茸卫生丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "五子衍宗丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "参茸补肾片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "胚宝胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "益肾灵颗粒",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "壮腰健肾丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "强阳保肾丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "安神补脑液",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "补肾益脑丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "六味地黄丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "安眠补脑口服液",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "三肾丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "补肾斑龙片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "疏肝益阳胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "八味益肾丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "心宝丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "益肾液",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "刺五加颗粒",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "七鞭回春乐胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肾阳虚",
+            "to": "益血生胶囊",
+            "props": {
+              "source": "opencmkg"
+            }
+          }
+        ],
+        "cypher": "MATCH (dz:Disease {name: $e0})-[r:RECOMMEND_DRUG]->(d:Drug) RETURN dz, r, d",
         "rows": [
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "桂龙药膏（id=drug:桂龙药膏, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "复方首乌补液（id=drug:复方首乌补液, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "海马补肾丸（id=drug:海马补肾丸, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "参茸卫生丸（id=drug:参茸卫生丸, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "五子衍宗丸（id=drug:五子衍宗丸, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "参茸补肾片（id=drug:参茸补肾片, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "胚宝胶囊（id=drug:胚宝胶囊, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "益肾灵颗粒（id=drug:益肾灵颗粒, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "壮腰健肾丸（id=drug:壮腰健肾丸, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "强阳保肾丸（id=drug:强阳保肾丸, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "安神补脑液（id=drug:安神补脑液, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "补肾益脑丸（id=drug:补肾益脑丸, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "六味地黄丸（id=drug:六味地黄丸, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "安眠补脑口服液（id=drug:安眠补脑口服液, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "三肾丸（id=drug:三肾丸, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "补肾斑龙片（id=drug:补肾斑龙片, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "疏肝益阳胶囊（id=drug:疏肝益阳胶囊, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "八味益肾丸（id=drug:八味益肾丸, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "心宝丸（id=drug:心宝丸, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "益肾液（id=drug:益肾液, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "刺五加颗粒（id=drug:刺五加颗粒, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "七鞭回春乐胶囊（id=drug:七鞭回春乐胶囊, source=opencmkg）"
           ],
           [
             "肾阳虚（id=disease:肾阳虚, source=opencmkg）",
+            null,
             "益血生胶囊（id=drug:益血生胶囊, source=opencmkg）"
           ]
         ]
       },
       "answers": {
         "template": {
-          "text": "根据图谱，肾阳虚 的推荐用药共 24 种：肾阳虚、桂龙药膏、复方首乌补液、海马补肾丸、参茸卫生丸、五子衍宗丸、参茸补肾片、胚宝胶囊 等 24 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
+          "text": "根据图谱，肾阳虚 的推荐用药共 23 种：桂龙药膏、复方首乌补液、海马补肾丸、参茸卫生丸、五子衍宗丸、参茸补肾片、胚宝胶囊、益肾灵颗粒 等 23 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
           "faithful": true,
           "out_of_evidence": []
         },
@@ -4009,562 +5040,1796 @@
             }
           }
         ],
-        "edges": [],
-        "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name: $e0}) RETURN dz, d",
+        "edges": [
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "剥脱性骨软骨炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "血色病性骨关节病",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "神经病性关节病",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "尾骨骨折与脱位",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "克罗恩病关节炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "顽痹",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "枢椎齿突骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "桡骨干骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "湿痹",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "投掷骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肱骨髁间骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "妊娠合并类风湿关节炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "桡骨茎突骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "桡骨头骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "孟氏骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "退变性骶髂关节炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "产后风",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "史密斯骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "癌肿性关节炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "手指撕脱性骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "幼年型慢性关节炎及其伴发的葡萄膜炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "开放性骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "胫腓骨骨干骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肘关节强直与纤维性僵硬",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "克雷氏骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "桡骨颈骨折和桡骨头骨骺分离",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "病理性骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肘外翻畸形",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "老年人骨关节炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "柯莱斯骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "Marie-Bamberger综合征",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "反应性关节炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维性骨炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "桡骨骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肩胛骨体部骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "踝关节骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肩胛颈及肩胛盂骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "股骨髁上骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "股骨头骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "髋臼骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "尺桡骨骨干双骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "股骨转子间骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "撕脱骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肥大性骨关节病",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "非淋球菌性细菌性关节炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "骨折不愈合",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "骨裂",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "小儿骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "桡骨干下1/3骨折合并下尺桡关节脱位",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肱骨头骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "费尔蒂综合征",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肱骨外髁颈骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "腕舟状骨骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "骨损伤",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "第一掌骨基部骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肱骨大结节骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "盖氏骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "创伤性关节炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "小儿骨硬化病",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "小儿成骨不全",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "尺骨干骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "多骨纤维发育不良",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "小儿骨与关节结核",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "Chance骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "小儿关节过度活动综合征",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "骶骨骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "第一掌骨基底部骨折脱位",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "粉碎性骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "下尺桡关节脱位",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肩峰骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "疲劳性骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿性关节炎的肾损害",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "巴顿骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "特发性关节痛综合征",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肱骨外髁骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "尺桡骨干双骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "尺桡骨干骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "桡骨下端骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "尺骨上1/3骨折合并桡骨头脱位",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "羟磷灰石沉积病",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "股骨颈骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "跟腱前囊炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肱骨内髁骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "跖骨疲劳性骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "僵鉧",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "颈椎骨折脱位",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿性关节炎肾损害",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "Felty综合征",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "尺骨鹰嘴骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "踝部骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "畸形性骨炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "鼻骨骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "成骨不全",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "先天性肘关节融合",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "眼眶击出性骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肱骨外科颈骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "腓骨近端骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "距骨骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "掌指关节脱位",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "脆弱性骨硬化",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "桡骨小头骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "胫腓骨骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "颧骨骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "眼眶骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "距骨后外结节骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肱骨干骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "股骨干骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "胫腓骨干骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "颈椎双侧关节突关节脱位",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "跟骨骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "桡骨颈骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "寰椎骨折脱位",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "颞骨骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "桡骨远端骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "桡骨小头骨骺分离",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "桡骨,尺骨茎突骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肘关节脱位",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "进行性骨干发育不全",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肱骨小头骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "腕舟骨骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "致密性髂骨炎",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "桡骨小头半脱位",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "股骨粗隆间骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肱骨髁上骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "先天性桡骨小头脱位",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肱骨内上髁骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "骨硬化病",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "股骨髁骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肱骨远端全骺分离",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "胫骨髁骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "跖趾关节痛",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "尺骨下1/3骨折合并下尺桡关节脱位",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "跖骨,趾骨骨折",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肘外翻",
+            "to": "骨肽片",
+            "props": {
+              "source": "opencmkg"
+            }
+          }
+        ],
+        "cypher": "MATCH (dz:Disease)-[r:RECOMMEND_DRUG]->(d:Drug {name: $e0}) RETURN dz, r, d",
         "rows": [
           [
             "剥脱性骨软骨炎（source=opencmkg, id=disease:剥脱性骨软骨炎）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "血色病性骨关节病（source=opencmkg, id=disease:血色病性骨关节病）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "神经病性关节病（source=opencmkg, id=disease:神经病性关节病）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "尾骨骨折与脱位（source=opencmkg, id=disease:尾骨骨折与脱位）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "克罗恩病关节炎（source=opencmkg, id=disease:克罗恩病关节炎）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "顽痹（id=disease:顽痹, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "枢椎齿突骨折（id=disease:枢椎齿突骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "桡骨干骨折（id=disease:桡骨干骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "湿痹（id=disease:湿痹, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "投掷骨折（id=disease:投掷骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肱骨髁间骨折（id=disease:肱骨髁间骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "妊娠合并类风湿关节炎（source=opencmkg, id=disease:妊娠合并类风湿关节炎）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "桡骨茎突骨折（id=disease:桡骨茎突骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "桡骨头骨折（id=disease:桡骨头骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "孟氏骨折（id=disease:孟氏骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "退变性骶髂关节炎（source=opencmkg, id=disease:退变性骶髂关节炎）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "产后风（id=disease:产后风, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "史密斯骨折（id=disease:史密斯骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "癌肿性关节炎（id=disease:癌肿性关节炎, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "手指撕脱性骨折（source=opencmkg, id=disease:手指撕脱性骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "幼年型慢性关节炎及其伴发的葡萄膜炎（source=opencmkg, id=disease:幼年型慢性关节炎及其伴发的葡萄膜炎）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "开放性骨折（id=disease:开放性骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "胫腓骨骨干骨折（source=opencmkg, id=disease:胫腓骨骨干骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肘关节强直与纤维性僵硬（source=opencmkg, id=disease:肘关节强直与纤维性僵硬）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "克雷氏骨折（id=disease:克雷氏骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "桡骨颈骨折和桡骨头骨骺分离（source=opencmkg, id=disease:桡骨颈骨折和桡骨头骨骺分离）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "病理性骨折（id=disease:病理性骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肘外翻畸形（id=disease:肘外翻畸形, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "老年人骨关节炎（source=opencmkg, id=disease:老年人骨关节炎）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "柯莱斯骨折（id=disease:柯莱斯骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "Marie-Bamberger综合征（source=opencmkg, id=disease:Marie-Bamberger综合征）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "反应性关节炎（id=disease:反应性关节炎, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "纤维性骨炎（id=disease:纤维性骨炎, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "桡骨骨折（id=disease:桡骨骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肩胛骨体部骨折（source=opencmkg, id=disease:肩胛骨体部骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "踝关节骨折（id=disease:踝关节骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肩胛颈及肩胛盂骨折（source=opencmkg, id=disease:肩胛颈及肩胛盂骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "股骨髁上骨折（id=disease:股骨髁上骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "股骨头骨折（id=disease:股骨头骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "髋臼骨折（id=disease:髋臼骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "尺桡骨骨干双骨折（source=opencmkg, id=disease:尺桡骨骨干双骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "股骨转子间骨折（source=opencmkg, id=disease:股骨转子间骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "撕脱骨折（id=disease:撕脱骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肥大性骨关节病（source=opencmkg, id=disease:肥大性骨关节病）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "非淋球菌性细菌性关节炎（source=opencmkg, id=disease:非淋球菌性细菌性关节炎）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "骨折不愈合（id=disease:骨折不愈合, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "骨裂（id=disease:骨裂, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "小儿骨折（id=disease:小儿骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "桡骨干下1/3骨折合并下尺桡关节脱位（source=opencmkg, id=disease:桡骨干下1/3骨折合并下尺桡关节脱位）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肱骨头骨折（id=disease:肱骨头骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "费尔蒂综合征（id=disease:费尔蒂综合征, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肱骨外髁颈骨折（source=opencmkg, id=disease:肱骨外髁颈骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "腕舟状骨骨折（id=disease:腕舟状骨骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "骨损伤（id=disease:骨损伤, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "第一掌骨基部骨折（source=opencmkg, id=disease:第一掌骨基部骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肱骨大结节骨折（source=opencmkg, id=disease:肱骨大结节骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "盖氏骨折（id=disease:盖氏骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "创伤性关节炎（id=disease:创伤性关节炎, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "小儿骨硬化病（id=disease:小儿骨硬化病, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "小儿成骨不全（id=disease:小儿成骨不全, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "尺骨干骨折（id=disease:尺骨干骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "多骨纤维发育不良（source=opencmkg, id=disease:多骨纤维发育不良）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "小儿骨与关节结核（source=opencmkg, id=disease:小儿骨与关节结核）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "Chance骨折（id=disease:Chance骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "小儿关节过度活动综合征（source=opencmkg, id=disease:小儿关节过度活动综合征）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "骶骨骨折（id=disease:骶骨骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "第一掌骨基底部骨折脱位（source=opencmkg, id=disease:第一掌骨基底部骨折脱位）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "粉碎性骨折（id=disease:粉碎性骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "下尺桡关节脱位（source=opencmkg, id=disease:下尺桡关节脱位）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肩峰骨折（id=disease:肩峰骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "疲劳性骨折（id=disease:疲劳性骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "类风湿性关节炎的肾损害（source=opencmkg, id=disease:类风湿性关节炎的肾损害）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "巴顿骨折（id=disease:巴顿骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "特发性关节痛综合征（source=opencmkg, id=disease:特发性关节痛综合征）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肱骨外髁骨折（id=disease:肱骨外髁骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "尺桡骨干双骨折（source=opencmkg, id=disease:尺桡骨干双骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "尺桡骨干骨折（id=disease:尺桡骨干骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "桡骨下端骨折（id=disease:桡骨下端骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "尺骨上1/3骨折合并桡骨头脱位（source=opencmkg, id=disease:尺骨上1/3骨折合并桡骨头脱位）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "羟磷灰石沉积病（source=opencmkg, id=disease:羟磷灰石沉积病）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "股骨颈骨折（id=disease:股骨颈骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "跟腱前囊炎（id=disease:跟腱前囊炎, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肱骨内髁骨折（id=disease:肱骨内髁骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "跖骨疲劳性骨折（source=opencmkg, id=disease:跖骨疲劳性骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "僵鉧（id=disease:僵鉧, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "颈椎骨折脱位（id=disease:颈椎骨折脱位, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "类风湿性关节炎肾损害（source=opencmkg, id=disease:类风湿性关节炎肾损害）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "Felty综合征（id=disease:Felty综合征, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "尺骨鹰嘴骨折（id=disease:尺骨鹰嘴骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "踝部骨折（id=disease:踝部骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "畸形性骨炎（id=disease:畸形性骨炎, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "鼻骨骨折（id=disease:鼻骨骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "成骨不全（id=disease:成骨不全, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "先天性肘关节融合（source=opencmkg, id=disease:先天性肘关节融合）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "眼眶击出性骨折（source=opencmkg, id=disease:眼眶击出性骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肱骨外科颈骨折（source=opencmkg, id=disease:肱骨外科颈骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "腓骨近端骨折（id=disease:腓骨近端骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "距骨骨折（id=disease:距骨骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "掌指关节脱位（id=disease:掌指关节脱位, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "脆弱性骨硬化（id=disease:脆弱性骨硬化, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "桡骨小头骨折（id=disease:桡骨小头骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "胫腓骨骨折（id=disease:胫腓骨骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "颧骨骨折（id=disease:颧骨骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "眼眶骨折（id=disease:眼眶骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "距骨后外结节骨折（source=opencmkg, id=disease:距骨后外结节骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肱骨干骨折（id=disease:肱骨干骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "股骨干骨折（id=disease:股骨干骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "胫腓骨干骨折（id=disease:胫腓骨干骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "颈椎双侧关节突关节脱位（source=opencmkg, id=disease:颈椎双侧关节突关节脱位）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "跟骨骨折（id=disease:跟骨骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "桡骨颈骨折（id=disease:桡骨颈骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "寰椎骨折脱位（id=disease:寰椎骨折脱位, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "颞骨骨折（id=disease:颞骨骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "桡骨远端骨折（id=disease:桡骨远端骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "桡骨小头骨骺分离（source=opencmkg, id=disease:桡骨小头骨骺分离）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "桡骨,尺骨茎突骨折（source=opencmkg, id=disease:桡骨,尺骨茎突骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肘关节脱位（id=disease:肘关节脱位, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "进行性骨干发育不全（source=opencmkg, id=disease:进行性骨干发育不全）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肱骨小头骨折（id=disease:肱骨小头骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "腕舟骨骨折（id=disease:腕舟骨骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "致密性髂骨炎（id=disease:致密性髂骨炎, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "桡骨小头半脱位（source=opencmkg, id=disease:桡骨小头半脱位）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "股骨粗隆间骨折（source=opencmkg, id=disease:股骨粗隆间骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肱骨髁上骨折（id=disease:肱骨髁上骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "先天性桡骨小头脱位（source=opencmkg, id=disease:先天性桡骨小头脱位）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肱骨内上髁骨折（source=opencmkg, id=disease:肱骨内上髁骨折）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "骨硬化病（id=disease:骨硬化病, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "股骨髁骨折（id=disease:股骨髁骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肱骨远端全骺分离（source=opencmkg, id=disease:肱骨远端全骺分离）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "胫骨髁骨折（id=disease:胫骨髁骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "跖趾关节痛（id=disease:跖趾关节痛, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "骨折（id=disease:骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "尺骨下1/3骨折合并下尺桡关节脱位（source=opencmkg, id=disease:尺骨下1/3骨折合并下尺桡关节脱位）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "跖骨,趾骨骨折（id=disease:跖骨,趾骨骨折, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ],
           [
             "肘外翻（id=disease:肘外翻, source=opencmkg）",
+            null,
             "骨肽片（id=drug:骨肽片, source=opencmkg）"
           ]
         ]
       },
       "answers": {
         "template": {
-          "text": "根据图谱，骨肽片 出现在 138 个疾病的推荐用药中：剥脱性骨软骨炎、骨肽片、血色病性骨关节病、神经病性关节病、尾骨骨折与脱位、克罗恩病关节炎、顽痹、枢椎齿突骨折 等 138 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
+          "text": "根据图谱，骨肽片 出现在 137 个疾病的推荐用药中：剥脱性骨软骨炎、血色病性骨关节病、神经病性关节病、尾骨骨折与脱位、克罗恩病关节炎、顽痹、枢椎齿突骨折、桡骨干骨折 等 137 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
           "faithful": true,
           "out_of_evidence": []
         },
@@ -4717,54 +6982,145 @@
             }
           }
         ],
-        "edges": [],
-        "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name: $e0}) RETURN dz, d",
+        "edges": [
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "血色病性骨关节病",
+            "to": "洛索洛芬钠片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肩周炎",
+            "to": "洛索洛芬钠片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "焦磷酸钙沉积病",
+            "to": "洛索洛芬钠片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "洛索洛芬钠片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "色素沉着绒毛结节性滑膜炎",
+            "to": "洛索洛芬钠片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "上呼吸道感染",
+            "to": "洛索洛芬钠片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "先天性肘关节融合",
+            "to": "洛索洛芬钠片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "洛索洛芬钠片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "色素绒毛结节性滑膜炎",
+            "to": "洛索洛芬钠片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "感冒",
+            "to": "洛索洛芬钠片",
+            "props": {
+              "source": "opencmkg"
+            }
+          }
+        ],
+        "cypher": "MATCH (dz:Disease)-[r:RECOMMEND_DRUG]->(d:Drug {name: $e0}) RETURN dz, r, d",
         "rows": [
           [
             "血色病性骨关节病（source=opencmkg, id=disease:血色病性骨关节病）",
+            null,
             "洛索洛芬钠片（id=drug:洛索洛芬钠片, source=opencmkg）"
           ],
           [
             "肩周炎（id=disease:肩周炎, source=opencmkg）",
+            null,
             "洛索洛芬钠片（id=drug:洛索洛芬钠片, source=opencmkg）"
           ],
           [
             "焦磷酸钙沉积病（source=opencmkg, id=disease:焦磷酸钙沉积病）",
+            null,
             "洛索洛芬钠片（id=drug:洛索洛芬钠片, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "洛索洛芬钠片（id=drug:洛索洛芬钠片, source=opencmkg）"
           ],
           [
             "色素沉着绒毛结节性滑膜炎（source=opencmkg, id=disease:色素沉着绒毛结节性滑膜炎）",
+            null,
             "洛索洛芬钠片（id=drug:洛索洛芬钠片, source=opencmkg）"
           ],
           [
             "上呼吸道感染（id=disease:上呼吸道感染, source=opencmkg）",
+            null,
             "洛索洛芬钠片（id=drug:洛索洛芬钠片, source=opencmkg）"
           ],
           [
             "先天性肘关节融合（source=opencmkg, id=disease:先天性肘关节融合）",
+            null,
             "洛索洛芬钠片（id=drug:洛索洛芬钠片, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "洛索洛芬钠片（id=drug:洛索洛芬钠片, source=opencmkg）"
           ],
           [
             "色素绒毛结节性滑膜炎（source=opencmkg, id=disease:色素绒毛结节性滑膜炎）",
+            null,
             "洛索洛芬钠片（id=drug:洛索洛芬钠片, source=opencmkg）"
           ],
           [
             "感冒（id=disease:感冒, source=opencmkg）",
+            null,
             "洛索洛芬钠片（id=drug:洛索洛芬钠片, source=opencmkg）"
           ]
         ]
       },
       "answers": {
         "template": {
-          "text": "根据图谱，洛索洛芬钠片 出现在 11 个疾病的推荐用药中：血色病性骨关节病、洛索洛芬钠片、肩周炎、焦磷酸钙沉积病、纤维肌痛综合征、色素沉着绒毛结节性滑膜炎、上呼吸道感染、先天性肘关节融合 等 11 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
+          "text": "根据图谱，洛索洛芬钠片 出现在 10 个疾病的推荐用药中：血色病性骨关节病、肩周炎、焦磷酸钙沉积病、纤维肌痛综合征、色素沉着绒毛结节性滑膜炎、上呼吸道感染、先天性肘关节融合、类风湿关节炎 等 10 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
           "faithful": true,
           "out_of_evidence": []
         },
@@ -4857,34 +7213,80 @@
             }
           }
         ],
-        "edges": [],
-        "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name: $e0}) RETURN dz, d",
+        "edges": [
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "胸痹",
+            "to": "速效救心丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "劳力性心绞痛",
+            "to": "速效救心丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "老年人不稳定型心绞痛",
+            "to": "速效救心丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "心血管疾病",
+            "to": "速效救心丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "冠心病",
+            "to": "速效救心丸",
+            "props": {
+              "source": "opencmkg"
+            }
+          }
+        ],
+        "cypher": "MATCH (dz:Disease)-[r:RECOMMEND_DRUG]->(d:Drug {name: $e0}) RETURN dz, r, d",
         "rows": [
           [
             "胸痹（id=disease:胸痹, source=opencmkg）",
+            null,
             "速效救心丸（id=drug:速效救心丸, source=opencmkg）"
           ],
           [
             "劳力性心绞痛（id=disease:劳力性心绞痛, source=opencmkg）",
+            null,
             "速效救心丸（id=drug:速效救心丸, source=opencmkg）"
           ],
           [
             "老年人不稳定型心绞痛（source=opencmkg, id=disease:老年人不稳定型心绞痛）",
+            null,
             "速效救心丸（id=drug:速效救心丸, source=opencmkg）"
           ],
           [
             "心血管疾病（id=disease:心血管疾病, source=opencmkg）",
+            null,
             "速效救心丸（id=drug:速效救心丸, source=opencmkg）"
           ],
           [
             "冠心病（id=disease:冠心病, source=opencmkg）",
+            null,
             "速效救心丸（id=drug:速效救心丸, source=opencmkg）"
           ]
         ]
       },
       "answers": {
         "template": {
-          "text": "根据图谱，速效救心丸 出现在 6 个疾病的推荐用药中：胸痹、速效救心丸、劳力性心绞痛、老年人不稳定型心绞痛、心血管疾病、冠心病。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
+          "text": "根据图谱，速效救心丸 出现在 5 个疾病的推荐用药中：胸痹、劳力性心绞痛、老年人不稳定型心绞痛、心血管疾病、冠心病。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
           "faithful": true,
           "out_of_evidence": []
         },
@@ -5361,167 +7763,501 @@
             }
           }
         ],
-        "edges": [],
-        "cypher": "MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name: $e0}) RETURN dz, d",
+        "edges": [
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿性关节炎肾损害",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "周围神经病损",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "枕大神经痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "舌咽神经痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "Felty综合征",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "胫后神经痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "颅内占位性病变引起的头痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "跖趾关节痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿关节炎",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "外伤后头痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "类风湿性关节炎的肾损害",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "神经性头痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "尾神经丛痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "尾痛症",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "单克隆丙种球蛋白病伴周围神经病",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合症",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "股外侧皮神经病",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "股神经痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "三叉神经痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "交感神经链综合征",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "灼痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "纤维肌痛综合征",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "髂腹股沟神经干痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "舌咽神经损伤",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "舌下神经损伤",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "老年人变异型心绞痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "赖利-戴综合征",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "阴部神经干痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "坐骨神经损伤",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "坐骨神经盆腔出口狭窄症",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "肋间神经痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "湿痹",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "经行舌麻",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "妊娠合并类风湿关节炎",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "痛风和高尿酸血症",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "癌性疼痛",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          },
+          {
+            "type": "RECOMMEND_DRUG",
+            "from": "癌症伴发的精神障碍",
+            "to": "去痛片",
+            "props": {
+              "source": "opencmkg"
+            }
+          }
+        ],
+        "cypher": "MATCH (dz:Disease)-[r:RECOMMEND_DRUG]->(d:Drug {name: $e0}) RETURN dz, r, d",
         "rows": [
           [
             "类风湿性关节炎肾损害（source=opencmkg, id=disease:类风湿性关节炎肾损害）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "周围神经病损（id=disease:周围神经病损, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "枕大神经痛（id=disease:枕大神经痛, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "舌咽神经痛（id=disease:舌咽神经痛, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "Felty综合征（id=disease:Felty综合征, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "胫后神经痛（id=disease:胫后神经痛, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "颅内占位性病变引起的头痛（source=opencmkg, id=disease:颅内占位性病变引起的头痛）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "跖趾关节痛（id=disease:跖趾关节痛, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "类风湿关节炎（id=disease:类风湿关节炎, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "外伤后头痛（id=disease:外伤后头痛, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "类风湿性关节炎的肾损害（source=opencmkg, id=disease:类风湿性关节炎的肾损害）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "神经性头痛（id=disease:神经性头痛, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "尾神经丛痛（id=disease:尾神经丛痛, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "尾痛症（id=disease:尾痛症, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "单克隆丙种球蛋白病伴周围神经病（source=opencmkg, id=disease:单克隆丙种球蛋白病伴周围神经病）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "纤维肌痛综合症（source=opencmkg, id=disease:纤维肌痛综合症）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "股外侧皮神经病（source=opencmkg, id=disease:股外侧皮神经病）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "股神经痛（id=disease:股神经痛, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "三叉神经痛（id=disease:三叉神经痛, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "交感神经链综合征（source=opencmkg, id=disease:交感神经链综合征）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "灼痛（id=disease:灼痛, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "纤维肌痛综合征（source=opencmkg, id=disease:纤维肌痛综合征）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "髂腹股沟神经干痛（source=opencmkg, id=disease:髂腹股沟神经干痛）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "舌咽神经损伤（id=disease:舌咽神经损伤, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "舌下神经损伤（id=disease:舌下神经损伤, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "老年人变异型心绞痛（source=opencmkg, id=disease:老年人变异型心绞痛）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "赖利-戴综合征（id=disease:赖利-戴综合征, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "阴部神经干痛（id=disease:阴部神经干痛, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "坐骨神经损伤（id=disease:坐骨神经损伤, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "坐骨神经盆腔出口狭窄症（source=opencmkg, id=disease:坐骨神经盆腔出口狭窄症）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "肋间神经痛（id=disease:肋间神经痛, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "湿痹（id=disease:湿痹, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "经行舌麻（id=disease:经行舌麻, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "妊娠合并类风湿关节炎（source=opencmkg, id=disease:妊娠合并类风湿关节炎）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "痛风和高尿酸血症（source=opencmkg, id=disease:痛风和高尿酸血症）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "癌性疼痛（id=disease:癌性疼痛, source=opencmkg）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ],
           [
             "癌症伴发的精神障碍（source=opencmkg, id=disease:癌症伴发的精神障碍）",
+            null,
             "去痛片（id=drug:去痛片, source=opencmkg）"
           ]
         ]
       },
       "answers": {
         "template": {
-          "text": "根据图谱，去痛片 出现在 38 个疾病的推荐用药中：类风湿性关节炎肾损害、去痛片、周围神经病损、枕大神经痛、舌咽神经痛、Felty综合征、胫后神经痛、颅内占位性病变引起的头痛 等 38 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
+          "text": "根据图谱，去痛片 出现在 37 个疾病的推荐用药中：类风湿性关节炎肾损害、周围神经病损、枕大神经痛、舌咽神经痛、Felty综合征、胫后神经痛、颅内占位性病变引起的头痛、跖趾关节痛 等 37 个。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
           "faithful": true,
           "out_of_evidence": []
         },
         "llm": {
-          "text": "去痛片用于以下疾病：类风湿性关节炎肾损害、周围神经病损、枕大神经痛、舌咽神经痛、Felty综合征、胫后神经痛、颅内占位性病变引起的头痛、跖趾关节痛、类风湿关节炎、外伤后头痛、类风湿性关节炎的肾损害、神经性头痛、尾神经丛痛、尾痛症、单克隆丙种球蛋白病伴周围神经病、纤维肌痛综合症、股外侧皮神经病、股神经痛、三叉神经痛、交感神经链综合征、灼痛、纤维肌痛综合征、髂腹股沟神经干痛、舌咽神经损伤、舌下神经损伤、老年人变异型心绞痛、赖利-戴综合征、阴部神经干痛、坐骨神经损伤、坐骨神经盆腔出口狭窄症、肋间神经痛、湿痹、经行舌麻、妊娠合并类风湿关节炎、痛风和高尿酸血症、癌性疼痛、癌症伴发的精神障碍。  \n以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
+          "text": "去痛片用于以下疾病：  \n类风湿性关节炎肾损害、周围神经病损、枕大神经痛、舌咽神经痛、Felty综合征、胫后神经痛、颅内占位性病变引起的头痛、跖趾关节痛、类风湿关节炎、外伤后头痛、类风湿性关节炎的肾损害、神经性头痛、尾神经丛痛、尾痛症、单克隆丙种球蛋白病伴周围神经病、纤维肌痛综合症、股外侧皮神经病、股神经痛、三叉神经痛、交感神经链综合征、灼痛、纤维肌痛综合征、髂腹股沟神经干痛、舌咽神经损伤、舌下神经损伤、老年人变异型心绞痛、赖利-戴综合征、阴部神经干痛、坐骨神经损伤、坐骨神经盆腔出口狭窄症、肋间神经痛、湿痹、经行舌麻、妊娠合并类风湿关节炎、痛风和高尿酸血症、癌性疼痛、癌症伴发的精神障碍。  \n以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
           "faithful": true,
           "out_of_evidence": []
         }
@@ -6243,21 +8979,71 @@
         "尼洛替尼",
         "低钾血症"
       ],
-      "clarify": "没有（4 个候选：没有性欲、没有性欲望、没有来例假、没有来月经）",
       "evidence": {
-        "nodes": [],
-        "edges": [],
-        "cypher": "",
-        "rows": []
+        "nodes": [
+          {
+            "label": "Drug",
+            "labels": [
+              "Drug"
+            ],
+            "name": "尼洛替尼",
+            "props": {
+              "name": "尼洛替尼",
+              "id": "drug:尼洛替尼",
+              "source": "insert"
+            }
+          },
+          {
+            "label": "Disease",
+            "labels": [
+              "Disease"
+            ],
+            "name": "低钾血症",
+            "props": {
+              "name": "低钾血症",
+              "id": "disease:低钾血症",
+              "source": "opencmkg"
+            }
+          }
+        ],
+        "edges": [
+          {
+            "type": "CONTRAINDICATED_FOR",
+            "from": "尼洛替尼",
+            "to": "低钾血症",
+            "props": {
+              "evidence_all": [
+                "伴有低钾血症"
+              ],
+              "align_level": "②包含",
+              "updated_at": "2026-10-16 10:03:18",
+              "evidence": "伴有低钾血症",
+              "method": "section-json",
+              "confidence": "high",
+              "created_at": "2026-10-16 08:58:18",
+              "section": "禁忌",
+              "source": "insert",
+              "n_evidence": 1
+            }
+          }
+        ],
+        "cypher": "MATCH (d:Drug {name: $drug})-[r:CONTRAINDICATED_FOR]->(t {name: $target}) RETURN d, r, t",
+        "rows": [
+          [
+            "尼洛替尼（id=drug:尼洛替尼, source=insert）",
+            "high",
+            "低钾血症（id=disease:低钾血症, source=opencmkg）"
+          ]
+        ]
       },
       "answers": {
         "template": {
-          "text": "你说的「没有」在图谱里对应多个条目：没有（4 个候选：没有性欲、没有性欲望、没有来例假、没有来月经）。请确认你指的是哪一个，我再查。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
+          "text": "根据图谱，尼洛替尼 与该情况存在禁忌关系（高置信度）。说明书原句：伴有低钾血症。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
           "faithful": true,
           "out_of_evidence": []
         },
         "llm": {
-          "text": "你说的「没有」在图谱里对应多个条目：没有（4 个候选：没有性欲、没有性欲望、没有来例假、没有来月经）。请确认你指的是哪一个，我再查。以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
+          "text": "尼洛替尼的禁忌里有低钾血症。  \n以上内容来自知识图谱，仅供参考，不能替代医生诊断。",
           "faithful": true,
           "out_of_evidence": []
         }
