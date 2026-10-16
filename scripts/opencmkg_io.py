@@ -225,8 +225,42 @@ def load_triples(path: Path | None = None) -> tuple[list[tuple[str, str, str]], 
     return triples, stats
 
 
+def graph_node_names(etype: str, triples=None, entities=None) -> set[str]:
+    """**L1 实际写进图里的**某一类节点名集合。
+
+    ⚠️ **它不等于 ``entities_dict[etype]``。** L1 建节点时走两条路：
+    ``import_nodes`` 把 ``entities_dict`` 全建成节点，``import_relations``
+    在写关系时还会把**关系两端** ``MERGE`` 出来。所以图里的病名比
+    ``entities_dict`` 多——实测多 **133** 个（``免疫缺陷``、``休克``、
+    ``不孕不育``、``内出血``…）。
+
+    为什么必须用这一个当对齐目标：拿 ``entities_dict`` 去对齐，就会在
+    ``免疫缺陷`` **已经存在**的情况下"新建"出一个 ``免疫缺陷状态``，
+    入库时凭空多一个重复节点；反过来图里不存在的目标一个也不会有
+    （实测 ``entities_dict`` 里的病名 100% 都在图里）。
+    """
+    if triples is None or entities is None:
+        _triples, _ = load_triples()
+        if triples is None:
+            triples = _triples
+        if entities is None:
+            entities, _ = load_entities_dict(triples=triples)
+    names = set(entities.get(etype, []))
+    for head, rel, tail in triples:
+        spec = RELATION_TYPES.get(rel)
+        if not spec:
+            continue
+        head_type, tail_type, _rel_type = spec
+        if head_type == etype:
+            names.add(head)
+        if tail_type == etype:
+            names.add(tail)
+    return names
+
+
 def build_name_index(entities: dict[str, list[str]]) -> dict[str, str]:
     """实体名 → 类型 的反查表。
+
 
     实测 53,863 个实体名**没有一个跨类型**（100% 唯一），所以这里的
     "后者覆盖前者"不会真的丢信息；仍返回唯一映射以便调用方直接用。

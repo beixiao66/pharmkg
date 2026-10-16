@@ -62,7 +62,8 @@ import sys
 from pathlib import Path
 
 from insert_io import read_csv_rows
-from opencmkg_io import REPO_ROOT, load_entities_dict, load_triples
+from opencmkg_io import (REPO_ROOT, graph_node_names, load_entities_dict,
+                         load_triples)
 
 EVAL_DIR = REPO_ROOT / "data" / "eval"
 NODE_FILE = EVAL_DIR / "contraindications_nodes.csv"
@@ -160,6 +161,31 @@ def normalize(s: str) -> str:
     return s.strip()
 
 
+def canonical_population(al: "Aligner", node: str,
+                         node_type: str) -> tuple[str, str, bool]:
+    """把 ``node_type=人群`` 的判定**收回到受控词表**。
+
+    返回 ``(规范名, 节点类型, 是否越出受控词表)``：
+
+    * 本来就不是人群 → 原样返回
+    * 是人群且能收回（``妊娠`` → ``孕妇``）→ 返回规范名
+    * 是人群但**不在**受控词表里 → **降级成疾病**并标 ``True``
+
+    为什么要收：受控词表是**封闭**的（决策 #33），⑤ LLM 不能靠"我觉得这算个人群"
+    把它撑大。实测 ⑤ 会把 ``体内有心脏起搏器``、``单胺氧化酶抑制剂使用期``、
+    ``特殊人群`` 当成人群；也会给出 ``妊娠``/``育龄期女性`` 这种**同一个概念的
+    另一种写法**，不收就会在图里和 ``孕妇``/``育龄女性`` 并存成两个节点。
+
+    这个规则**评分与入库必须共用一份**——所以放在这里，两边都调它。
+    """
+    if node_type != "人群":
+        return node, node_type, False
+    canon_pop = al.canon_population(node)
+    if canon_pop:
+        return canon_pop, "人群", False
+    return node, "疾病", True
+
+
 def canon(s: str) -> str:
     """比较两个节点名、或给边建键时用的**规范名**。
 
@@ -186,7 +212,12 @@ class Aligner:
     def __init__(self) -> None:
         triples, _ = load_triples()
         entities, _ = load_entities_dict(triples=triples)
-        self.disease = set(entities.get("disease", []))
+        # ⚠️ **必须用 `graph_node_names`，不能用 `entities_dict["disease"]`**：
+        #    L1 写关系时还会把关系两端 MERGE 成节点，于是图里的病名比
+        #    entities_dict 多 **133** 个（`免疫缺陷`、`休克`、`不孕不育`…）。
+        #    拿 entities_dict 当目标词表，就会在 `免疫缺陷` **已经存在**的情况下
+        #    "新建"出一个 `免疫缺陷状态`——**入库即重复节点**。
+        self.disease = graph_node_names("disease", triples=triples, entities=entities)
         self.population = set(POPULATION)
 
         # ① 变体 → **规范名**。两侧都先 normalize 再比，否则词表里的
@@ -211,6 +242,16 @@ class Aligner:
         #: ③ 最近一次判定里**并列最高分**的候选（≥2 说明规则其实没依据挑，
         #: 只是按确定性顺序取了第一个——这个数要报出来，不能装作没有）
         self.ambiguous: list[str] = []
+
+    def canon_population(self, name: str) -> str | None:
+        """把一个人群名**收回到受控词表**；不在词表里返回 ``None``。
+
+        受控词表是**封闭**的（决策 #33）：模型不能靠"我觉得这算个人群"把它撑大。
+        ⑤ 兜底返回的 ``妊娠`` / ``育龄期女性`` / ``大环内酯类抗生素过敏``
+        必须收回成 ``孕妇`` / ``育龄女性`` / ``大环内酯类药物过敏者``——
+        否则同一份说明书的同一件事会在图里落成两个节点。
+        """
+        return self._pop_exact.get(normalize(name) or name)
 
     # -- 各级判定 ------------------------------------------------------
     def _exact(self, n: str) -> tuple[str, str] | None:
@@ -443,9 +484,11 @@ def do_eval(use_llm: bool = False) -> int:
             ll = llm_align(al, atom, cache)
             llm_called += 1
             if ll.get("node"):
-                got = {"node": ll["node"],
-                       "node_type": ll.get("node_type", "疾病"),
-                       "level": f"⑤LLM({ll.get('action', '')})",
+                _node, _typ, _oov = canonical_population(
+                    al, ll["node"], ll.get("node_type", "疾病"))
+                got = {"node": _node, "node_type": _typ,
+                       "level": f"⑤LLM({ll.get('action', '')})"
+                                + ("(降级)" if _oov else ""),
                        "normalized": rule["normalized"]}
         ok = canon(got["node"]) == canon(want)
         final_hit += ok

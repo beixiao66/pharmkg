@@ -53,12 +53,12 @@ import json
 import sys
 from pathlib import Path
 
-from align_nodes import (Aligner, canon, llm_align, load_cache, load_gold_edges,
-                         save_cache)
+from align_nodes import Aligner, canon, load_cache, load_gold_edges, save_cache
 from insert_io import read_csv_rows
+from l4_pipeline import extract_edges, group_edges
+from l4_pipeline import raw_atoms_of as _raw_atoms_of
 from opencmkg_io import REPO_ROOT
-from score_extraction import (MIN_ATOM, atoms, cover, item_path, load_gold,
-                              load_output_items, match, norm, split_atoms_raw)
+from score_extraction import atoms, cover, item_path, load_gold, load_output_items, match, norm
 
 EXTRACTED_DIR = REPO_ROOT / "data" / "extracted"
 NODE_FILE = REPO_ROOT / "data" / "eval" / "contraindications_nodes.csv"
@@ -103,11 +103,11 @@ def load_graph_labels() -> dict[str, list[tuple[str, bool]]]:
 
 
 def raw_atoms_of(item: str) -> list[str]:
-    """把一行输出切成原子，**保留原文措辞**（对齐器需要原文，不要先归一化）。
+    """把一行输出切成原子，**保留原文措辞**。
 
-    过滤口径与 :func:`score_extraction.atoms` 一致：归一化后短于 ``MIN_ATOM`` 的丢掉。
+    真正的实现在 :mod:`l4_pipeline`（入库脚本要用同一段，避免"入库的边不是评分的边"）。
     """
-    return [p for p in split_atoms_raw(item) if len(norm(p)) >= MIN_ATOM]
+    return _raw_atoms_of(item)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -222,25 +222,18 @@ def main(argv: list[str] | None = None) -> int:
         return {"tp": tp, "fp": fp, "fn": fn, "p": p, "r": r, "f1": f1}
 
     def edges(use_llm: bool) -> dict:
-        sources: dict[tuple[str, str], list[str]] = {}
+        # **入库脚本调的是同一个 extract_edges**——所以报告里的 F1
+        # 管得住图里那批边，不会出现"评分一套、入库另一套"。
+        records = extract_edges(sorted(gold), base=indir, items_dir=items_dir,
+                                al=al, use_llm=use_llm, cache=cache)
+        grouped = group_edges(records)
+        sources = {k: [r["atom"] for r in v] for k, v in grouped.items()}
+        types = {k: v[0]["node_type"] for k, v in grouped.items()}
         flags: dict[str, bool | None] = {}          # 原子原文 -> generic_only
-        types: dict[tuple[str, str], str] = {}
         lv: dict[str, int] = {}
-        for drug in sorted(gold):
-            for it in outputs[drug]:
-                for a in raw_atoms_of(it["text"]):
-                    flags[a] = it["generic_only"]
-                    got = al.align(a)
-                    if use_llm and got["level"] == "④新建":
-                        ll = llm_align(al, a, cache)
-                        if ll.get("node"):
-                            got = {"node": ll["node"],
-                                   "node_type": ll.get("node_type", "疾病"),
-                                   "level": "⑤LLM"}
-                    lv[got["level"]] = lv.get(got["level"], 0) + 1
-                    key = (drug, canon(got["node"]))
-                    sources.setdefault(key, []).append(a)
-                    types[key] = got["node_type"]
+        for rec in records:
+            flags[rec["atom"]] = rec["generic_only"]
+            lv[rec["level"]] = lv.get(rec["level"], 0) + 1
         base = metrics(sources)
         base.update({"sources": sources, "types": types, "levels": lv})
         # (a) **真实过滤**：只用模型自己标的 generic_only，不看金标准。
