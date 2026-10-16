@@ -17,6 +17,8 @@ const busy = ref(false)
 const searching = ref(false)
 const searched = ref(false)
 const lastQ = ref('')
+//: 检索的总数与被截断标记（后端返回）。**截断必须显示出来**，见 search() 里的说明。
+const meta = ref({ total: 0, truncated: false })
 
 async function load() {
   const [b, v] = await Promise.all([
@@ -39,10 +41,16 @@ async function search() {
   searching.value = true
   lastQ.value = qv
   try {
-    hits.value = (await api.get('/drugs/search', { params: { q: qv } })).data
+    // ⚠️ 后端现在返回 {items, total, limit, truncated}，**不是裸数组**——
+    //    因为「被截断」必须能告诉用户（实测：以「卡」开头 29 个药，
+    //    LIMIT 10 把卡维地洛片切掉了，页面却毫无提示）。
+    const { data } = await api.get('/drugs/search', { params: { q: qv } })
+    hits.value = data.items
+    meta.value = { total: data.total, truncated: data.truncated }
     searched.value = true
   } catch (e) {
     hits.value = []
+    meta.value = { total: 0, truncated: false }
     searched.value = true
     ElMessage.error('检索失败：' + humanizeError(e))
   } finally {
@@ -123,10 +131,21 @@ const graph = computed(() => {
              于是"点了没反应""没找到""请求报错"三种情况**在页面上长得一模一样**——
              用户没法判断，只能来问我。 -->
         <div v-if="hits.length" style="margin-top:8px" data-test="search-hits">
-          <el-button v-for="h in hits" :key="h.id" size="small" style="margin:4px"
-                     :loading="busy" @click="add(h.id)">
-            + {{ h.name }}
-          </el-button>
+          <!-- ⚠️ 「被截断」必须说出来。实测：以「卡」开头 29 个药，
+               原来 LIMIT 10 把「卡维地洛片」（第 17 位）切掉了，
+               页面毫无提示 → 用户以为图谱里没有这个药。 -->
+          <el-alert v-if="meta.truncated" type="warning" :closable="false"
+                    style="margin-bottom:6px" data-test="search-truncated"
+                    :title="`共 ${meta.total} 条，只显示了前 ${hits.length} 条 —— 请多输几个字缩小范围`" />
+          <span v-else style="color:#909399;font-size:12px">
+            共 {{ meta.total }} 条
+          </span>
+          <div style="margin-top:6px">
+            <el-button v-for="h in hits" :key="h.id" size="small" style="margin:4px"
+                       :loading="busy" @click="add(h.id)">
+              + {{ h.name }}
+            </el-button>
+          </div>
         </div>
         <el-alert v-else-if="searched" type="info" :closable="false"
                   style="margin-top:8px" data-test="search-empty"

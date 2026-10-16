@@ -34,7 +34,8 @@ from app.config import get_settings
 from app.db import get_db
 from app.deps import get_current_user
 from app.models import AppUser, MedicineBox
-from app.schemas import (MedicineBoxCreate, MedicineBoxItem, MedicineBoxRisk,
+from app.schemas import (DrugHit, DrugSearchResult, MedicineBoxCreate,
+                         MedicineBoxItem, MedicineBoxRisk,
                          PopulationTagsUpdate, RiskCoverage, RiskPair,
                          RiskPopulation, UserResponse)
 
@@ -67,23 +68,40 @@ def population_vocabulary(session) -> list[str]:
         "MATCH (p:Population) RETURN p.name AS n") if r["n"])
 
 
-@router.get("/drugs/search", summary="从已有 Drug 节点里检索（决策 #16：不往图谱加数据）")
+@router.get("/drugs/search", response_model=DrugSearchResult,
+            summary="从已有 Drug 节点里检索（决策 #16：不往图谱加数据）")
 def search_drugs(q: str = Query(min_length=1, max_length=32),
-                 limit: int = Query(default=10, ge=1, le=50)) -> list[dict]:
+                 limit: int = Query(default=20, ge=1, le=50)) -> DrugSearchResult:
     """按名字**精确或前缀**检索。
 
-    ⚠️ 只用 `STARTS WITH`，不用 `CONTAINS`：`CONTAINS` 会把"阿司匹林"匹到
-    一长串含这三个字的复方名里，用户根本没法选。前缀检索的结果集小且可控。
+    ⚠️ 只用 `STARTS WITH`，不用 `CONTAINS`：`CONTAINS` 会把「卡」匹到一长串
+    名字里含这个字的复方名里，用户根本没法选。前缀检索的结果集小且可控。
+
+    ⚠️ **必须把「总数」与「是否被截断」返回给前端。**
+    实测：以「卡」开头的药物有 **29** 个，而 `卡维地洛片` 排第 **17** 位——
+    `LIMIT 10` 把它切掉了，页面上却没有任何提示，用户很自然地读成
+    「图谱里没有卡维地洛片」。**「被截断」必须说出来**，否则用户永远分不清
+    「没有」和「没显示」。
+
+    排序改成 **精确命中优先 → 短名 → 字典序**（原来是单纯的 `size(name), name`，
+    即最短优先，本身没有意义，还把 5 个字的 `卡维地洛片` 挤出了前 10）。
     """
+    order = ("ORDER BY CASE WHEN d.name = $q THEN 0 ELSE 1 END, "
+             "size(d.name), d.name")
     drv = _driver()
     try:
         with drv.session() as s:
+            total = s.run("MATCH (d:Drug) WHERE d.name = $q "
+                          "OR d.name STARTS WITH $q RETURN count(d) AS c",
+                          q=q).single()["c"]
             rows = list(s.run(
                 "MATCH (d:Drug) WHERE d.name = $q OR d.name STARTS WITH $q "
                 "RETURN d.id AS id, d.name AS name, d.name_en AS name_en "
-                "ORDER BY size(d.name), d.name LIMIT $lim", q=q, lim=limit))
-        return [{"id": r["id"], "name": r["name"], "name_en": r["name_en"]}
-                for r in rows]
+                + order + " LIMIT $lim", q=q, lim=limit))
+        return DrugSearchResult(
+            items=[DrugHit(id=r["id"], name=r["name"], name_en=r["name_en"])
+                   for r in rows],
+            total=total, limit=limit, truncated=total > len(rows))
     finally:
         drv.close()
 

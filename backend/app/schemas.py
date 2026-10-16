@@ -98,6 +98,26 @@ class MessageResponse(OrmResponse):
 
 # ---------------------------------------------------------------- 用药安全校验（L6）
 
+class DrugHit(BaseModel):
+    id: str
+    name: str
+    name_en: str | None = None
+
+
+class DrugSearchResult(BaseModel):
+    """检索结果**必须带总数与截断标记**。
+
+    实测教训：以「卡」开头的药有 29 个，`卡维地洛片` 排第 17 位，被 `LIMIT 10`
+    切掉且**毫无提示**，用户因此以为图谱里没有这个药。
+    **分不清「没有」和「没显示」，是检索功能最要命的体验问题。**
+    """
+
+    items: list[DrugHit]
+    total: int
+    limit: int
+    truncated: bool
+
+
 class PopulationTagsUpdate(BaseModel):
     #: 合法值＝图里实际存在的 `Population` 名（决策 #41）；服务端会校验。
     tags: list[str] = Field(default_factory=list, max_length=10)
