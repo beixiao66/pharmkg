@@ -74,6 +74,53 @@ curl http://localhost:8000/health
 
 接口文档：<http://localhost:8000/docs>
 
+## 会话管理（L7 最小版）
+
+按 §13.4，L7 排在 L5 前面的**唯一**理由：L5 要把每一轮的问题、改写、Cypher、回答落库
+（这些是 L9 的数据来源），所以**数据表与写入接口必须先存在**。
+所以这里只做这三张表 + 认证 + 会话/消息接口，**不做 UI，也不做药箱**（药箱是 L6 的输入）。
+
+```powershell
+$PY = ".\backend\.venv\Scripts\python.exe"
+
+cd backend
+& $PY -m alembic upgrade head          # 建表（app_user / conversation / message）
+& $PY -m alembic current               # 看当前版本
+& $PY -m alembic downgrade base        # 全撤回（实测可逆）
+& $PY scripts\l7_selftest.py           # 端到端自测：33 项
+```
+
+**三张表**（§6.2）：
+
+| 表 | 作用 | 关键列 |
+|---|---|---|
+| `app_user` | 用户 | `username UNIQUE`、`password_hash`（bcrypt）、`population_tags TEXT[]` |
+| `conversation` | 一次会话 | `user_id`、`title`（首条问题前 20 字自动生成） |
+| `message` | 一轮消息 | **`rewritten_query` / `cypher` / `evidence_json`** —— L9 评测的数据来源 |
+
+**接口**：`POST /auth/register`、`POST /auth/login`、`GET /auth/me`；
+`POST /conversations`、`GET /conversations`、`GET|POST /conversations/{id}/messages`。
+
+**几个刻意的选择**（都有理由，写进了代码注释）：
+
+1. **不用 `passlib`**（决策 #24）：passlib 1.7.4 读 `bcrypt.__about__.__version__`，
+   而 bcrypt 4.x 删了这个私有属性 → 直接抛异常。直接用 `bcrypt` 只有三行。
+2. **密码先 `sha256` 预散列再交给 bcrypt**：bcrypt 只取前 **72 字节**，超出部分**静默丢弃**
+   ——两个前 72 字节相同的不同密码会互相通过校验，这是真实缺陷不是洁癖。
+3. **缺令牌返回 401 而不是 403**：FastAPI 的 `HTTPBearer` 默认抛 403，但"没带令牌"语义上是
+   **401（未认证）**；混用会让前端"跳登录页"的逻辑失效。
+4. **用户不存在与密码错返回同一句话**：分开提示等于送一个用户名探测接口。
+5. **查会话一律 `WHERE id=? AND user_id=?`**，不做"先取再比 owner"；
+   查不到返回 **404** 而不是 403——403 等于承认这个 id 存在。
+6. **`evidence` 的 ORM 属性叫 `evidence`、列名仍叫 `evidence_json`**：代码里读自然名字，
+   表结构与 §6.2 一致。
+7. **`alembic.ini` 保持纯 ASCII**：Python 的 configparser 按**本地编码**读它，
+   中文 Windows 上是 GBK，任何 UTF-8 中文注释都会在 alembic 启动前就 `UnicodeDecodeError`。
+   说明写在 `alembic/env.py` 里（`.py` 一定按 UTF-8 读）。
+
+> ⚠️ `.env` 需要一行 `JWT_SECRET`。留空的话注册/登录会**直接报错**（不静默用默认密钥——
+> 那等于任何人都能自己签发令牌）。生成：`python -c "import secrets; print(secrets.token_hex(32))"`
+
 ## 数据准备
 
 > ⚠️ **下面所有脚本都用项目虚拟环境的解释器跑**：

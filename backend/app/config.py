@@ -51,6 +51,18 @@ class Settings(BaseSettings):
     #: 默认 qwen-plus——它可用文本接口；qwen3.8-* 等需多模态接口，别随手换
     llm_model: str = "qwen-plus"
 
+    # ── 认证：JWT（基线决策 #24）─────────────────────────────
+    #: 签名密钥。**留空则启动时直接报错**——绝不静默用默认值：
+    #: 一个"忘了改"的默认密钥意味着任何人都能自己签发 token。
+    jwt_secret: str = ""
+    jwt_algorithm: str = "HS256"
+    #: 7 天：演示与评测期不想反复登录；它不是安全边界，失效时间短了只是更烦。
+    jwt_expire_minutes: int = 60 * 24 * 7
+
+    @property
+    def jwt_configured(self) -> bool:
+        return bool(self.jwt_secret)
+
     @property
     def llm_configured(self) -> bool:
         """LLM 是否配齐。

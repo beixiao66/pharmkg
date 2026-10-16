@@ -1,7 +1,10 @@
 """FastAPI 应用入口。
 
-当前只提供健康检查接口，作用是**验证骨架是否搭通**：
-Neo4j 与 PostgreSQL 两个数据库都能连上，才算骨架就绪。
+提供三类接口：
+
+* ``/`` 与 ``/health``——**骨架自检**：Neo4j 与 PostgreSQL 两个库都能连上才算就绪；
+* ``/auth/*``——**L7** 注册 / 登录 / 当前用户（JWT + bcrypt，决策 #24）；
+* ``/conversations/*``——**L7 最小版** 会话与消息，L5 的每一轮从这里落库（§6.1 第 ⑥ 步）。
 
 启动：
     cd backend
@@ -19,6 +22,8 @@ from neo4j import GraphDatabase
 from sqlalchemy import create_engine, text
 
 from app.config import get_settings
+from app.routers import auth as auth_router
+from app.routers import conversations as conversations_router
 
 #: 健康检查里**每个数据库**的探测预算（秒）。
 #:
@@ -45,8 +50,26 @@ HEALTH_PROBE_TIMEOUT = 2.0
 app = FastAPI(
     title="pharmkg API",
     description="基于 AI 与知识图谱的医药查询与智能用药系统",
-    version="0.1.0",
+    version="0.2.0",
 )
+
+app.include_router(auth_router.router)
+app.include_router(conversations_router.router)
+
+
+@app.on_event("startup")
+def _warn_if_jwt_missing() -> None:
+    """缺 ``JWT_SECRET`` 时**大声警告**，但不阻止启动。
+
+    为什么不直接拒绝启动：``/health`` 是"数据库通不通"的探针，
+    它不该因为一个认证配置缺失就变成不可用（容器 healthcheck 会跟着一起挂）。
+    真正的硬失败放在**签发令牌那一刻**（`security.create_access_token`），
+    那里报错信息最准确、也离问题最近。
+    """
+    if not get_settings().jwt_configured:
+        print("⚠️  JWT_SECRET 未设置：/auth/register 与 /auth/login 会返回 500。")
+        print("    补法：在 .env 里加一行 JWT_SECRET=<随机串>；")
+        print("    生成：python -c \"import secrets; print(secrets.token_hex(32))\"")
 
 
 @app.get("/", summary="根路径")
