@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
-import api from '../api'
+import api, { humanizeError } from '../api'
 
 const emit = defineEmits(['logged-in'])
 const username = ref('')
@@ -18,10 +18,12 @@ async function doAuth(path) {
     ElMessage.success(`已登录：${data.username}`)
     emit('logged-in', data.access_token)
   } catch (e) {
-    // ⚠️ 把后端的 detail 原样显示出来。只显示"失败"会让排查变成猜谜——
-    //    而 422/409 的 detail 恰好是最有用的那句话。
-    const d = e?.response?.data?.detail
-    ElMessage.error(typeof d === 'string' ? d : JSON.stringify(d || e.message))
+    // ⚠️ **不要把原始 detail 直接甩给用户**。第一版写的是
+    //    `typeof d === 'string' ? d : JSON.stringify(d)` ——
+    //    而 422 的 detail 是**数组**，于是整坨
+    //    `[{"type":"string_too_short","loc":["body","password"],...}]` 弹在了页面上。
+    //    现在统一走 humanizeError()（见 src/api.js），它会翻成人话。
+    ElMessage.error(humanizeError(e))
   } finally {
     busy.value = false
   }

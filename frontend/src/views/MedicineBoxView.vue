@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { ElMessage } from 'element-plus'
-import api from '../api'
+import api, { humanizeError } from '../api'
 import RiskCard from '../components/RiskCard.vue'
 import EvidenceGraph from '../components/EvidenceGraph.vue'
 
@@ -22,7 +22,7 @@ async function load() {
   try {
     risk.value = (await api.get('/medicine-box/risk')).data
     tags.value = [...risk.value.population_tags]
-  } catch (e) { ElMessage.error('风险检查失败：' + e.message) }
+  } catch (e) { ElMessage.error('风险检查失败：' + humanizeError(e)) }
 }
 
 async function search() {
@@ -39,8 +39,8 @@ async function add(id) {
     q.value = ''
     await load()
   } catch (e) {
-    const d = e?.response?.data?.detail
-    ElMessage.error(typeof d === 'string' ? d : e.message)
+    // 同样**不要**把 detail 直接甩给用户：422 的 detail 是数组（见 src/api.js 的说明）
+    ElMessage.error(humanizeError(e))
   } finally { busy.value = false }
 }
 
@@ -55,8 +55,11 @@ async function saveTags() {
     ElMessage.success('人群标签已保存')
     await load()
   } catch (e) {
-    const d = e?.response?.data?.detail
-    ElMessage.error(typeof d === 'string' ? d : e.message)
+    // ⚠️ 这里的 422 尤其重要：人群标签非法时后端返回的是**数组型** detail，
+    //    里面写着"不支持的人群标签 [...]；可用的是 [...]"。第一版把它
+    //    JSON.stringify 成一坨，用户完全看不懂。humanizeError 会把
+    //    这类数组逐条翻成人话。
+    ElMessage.error(humanizeError(e))
   }
 }
 
