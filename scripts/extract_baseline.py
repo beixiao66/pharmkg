@@ -209,7 +209,7 @@ def write_prompt_archive(model: str, *, force: bool) -> None:
             "  基线一旦冻结就不能改——改了就是**另一条**基线。\n"
             "  确实要重建请换目录，或加 --force 覆盖（并同步更新文档）。\n"
         )
-    p.write_text(new, encoding="utf-8")
+    p.write_text(new, encoding="utf-8", newline='\n')
 
 
 def read_prev_meta() -> dict[str, dict]:
@@ -250,7 +250,7 @@ def write_guarded(path: Path, text: str, encoding: str = "utf-8") -> None:
     ``[Errno 13] Permission denied``——这个报错对使用者毫无指向性。
     """
     try:
-        path.write_text(text, encoding=encoding)
+        path.write_text(text, encoding=encoding, newline='\n')
     except PermissionError:
         raise SystemExit(
             f"✗ 写不了 {path.name}：文件正被其他程序占用。\n"
@@ -369,7 +369,7 @@ def main(argv: list[str] | None = None) -> int:
 
         log(f"[{i}/{len(docs)}] {drug}  （{d['chars']:,} 字符）")
         got = call_once(client, model, d["text"])
-        out_path.write_text(got["raw"], encoding="utf-8")
+        out_path.write_text(got["raw"], encoding="utf-8", newline='\n')
 
         rec = {
             "drug": drug,

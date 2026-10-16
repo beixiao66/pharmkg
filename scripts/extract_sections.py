@@ -342,7 +342,7 @@ def write_prompt_archive(model: str, *, force: bool) -> None:
             "  这一层一旦冻结就不能改——改了就是**另一层**。\n"
             "  确实要重建请换目录，或加 --force 覆盖（并同步更新文档）。\n"
         )
-    p.write_text(new, encoding="utf-8")
+    p.write_text(new, encoding="utf-8", newline='\n')
 
 
 def read_prev() -> tuple[dict[str, dict], dict]:
@@ -365,7 +365,7 @@ def read_prev() -> tuple[dict[str, dict], dict]:
 def write_guarded(path: Path, text: str, encoding: str = "utf-8") -> None:
     """写文件；被别的程序占住时给出人能看懂的提示，而不是甩一个 PermissionError。"""
     try:
-        path.write_text(text, encoding=encoding)
+        path.write_text(text, encoding=encoding, newline='\n')
     except PermissionError:
         raise SystemExit(
             f"✗ 写不了 {path.name}：文件正被其他程序占用。\n"
@@ -522,8 +522,8 @@ def main(argv: list[str] | None = None) -> int:
                    "finish_reason": "section_missing",
                    "prompt_tokens": 0, "completion_tokens": 0, "elapsed": 0.0,
                    "parse_note": "该节不存在，未调用", "error": ""}
-            out_path.write_text("", encoding="utf-8")
-            (ITEMS_DIR / f"{key}.json").write_text("[]", encoding="utf-8")
+            out_path.write_text("", encoding="utf-8", newline='\n')
+            (ITEMS_DIR / f"{key}.json").write_text("[]", encoding="utf-8", newline='\n')
             meta["docs"].append(rec)
             rows.append(rec)
             skipped += 1
@@ -531,11 +531,11 @@ def main(argv: list[str] | None = None) -> int:
             continue
 
         got = call_once(client, model, u["section"], u["text"])
-        out_path.write_text(got["raw"], encoding="utf-8")
+        out_path.write_text(got["raw"], encoding="utf-8", newline='\n')
         items, note = parse_items(got["raw"],
                                   want_generic_only=(u["section"] == "禁忌"))
         (ITEMS_DIR / f"{key}.json").write_text(
-            json.dumps(items, ensure_ascii=False, indent=2), encoding="utf-8")
+            json.dumps(items, ensure_ascii=False, indent=2), encoding="utf-8", newline='\n')
 
         rec = {
             "unit": key, "drug": u["drug"], "section": u["section"],

@@ -370,7 +370,7 @@ def main(argv: list[str] | None = None) -> int:
         "per_drug": rows,
     }
     (out_dir / "score.json").write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8", newline='\n')
     log("")
     log(f"  已写 {(out_dir / 'score.json').relative_to(REPO_ROOT)}")
     return 0

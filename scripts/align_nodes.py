@@ -407,7 +407,7 @@ def load_cache() -> dict:
 def save_cache(cache: dict) -> None:
     CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
     CACHE_FILE.write_text(json.dumps(cache, ensure_ascii=False, indent=2),
-                          encoding="utf-8")
+                          encoding="utf-8", newline='\n')
 
 
 def llm_align(al: Aligner, atom: str, cache: dict):
@@ -588,7 +588,7 @@ def do_eval(use_llm: bool = False) -> int:
     EVAL_JSON.parent.mkdir(parents=True, exist_ok=True)
     if use_llm:
         EVAL_JSON.write_text(json.dumps(payload, ensure_ascii=False, indent=2),
-                             encoding="utf-8")
+                             encoding="utf-8", newline='\n')
         print()
         print(f"  已写 {EVAL_JSON.relative_to(REPO_ROOT)}")
     else:

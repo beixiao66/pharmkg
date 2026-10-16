@@ -221,7 +221,7 @@ def main(argv: list[str] | None = None) -> int:
     name = "fidelity.json" if args.section == "禁忌" else f"fidelity_{args.section}.json"
     out = base / name
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=2),
-                   encoding="utf-8")
+                   encoding="utf-8", newline='\n')
     log(f"  已写 {out.relative_to(REPO_ROOT)}")
     return 0 if not fails else 1
 

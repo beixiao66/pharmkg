@@ -552,7 +552,7 @@ def main(argv: list[str] | None = None) -> int:
     # 与 ``align_nodes.do_eval`` 用同一条规矩，不在两处各定一套。
     if args.llm:
         (out_dir / "score_edges.json").write_text(
-            json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+            json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8", newline='\n')
         log("")
         log(f"  已写 {(out_dir / 'score_edges.json').relative_to(REPO_ROOT)}")
     else:

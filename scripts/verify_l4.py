@@ -196,22 +196,90 @@ def main(argv: list[str] | None = None) -> int:
 
     # 重算之后，提交的产物必须**一个字都没变**——否则"提交的证据"与"现在算的"不是一回事
     log("── 提交的产物有没有漂 ──────────────────────────────")
+    # ⚠️ **这一步绝不允许"拿不到状态就当通过"。**
+    #    踩过：先前用 `capture_output=True` 抓 git 的输出，而沙箱禁止外部进程的管道，
+    #    stdout 变成 None → 异常被吞掉 → 却照样打印了"✓ 零变动"。
+    #    **工具报了一个它根本没做的检查的绿灯**，这比不做检查更危险。
+    #    所以：① 改成把 git 输出重定向到**临时文件**（绕开管道）；
+    #          ② 真拿不到就**判失败**，不许静默通过。
+    tmp = REPO_ROOT / "_tmp" / "_git_status.txt"
+    tmp.parent.mkdir(parents=True, exist_ok=True)
+
+    def git_lines(*argv: str) -> list[str] | None:
+        """跑一条 git 命令、输出落到**文件**（不依赖管道）。拿不到返回 None。"""
+        try:
+            with open(tmp, "w", encoding="utf-8") as fh:
+                subprocess.run(["git", *argv], cwd=REPO_ROOT, stdout=fh,
+                               stderr=subprocess.DEVNULL, timeout=60, check=False)
+            return [ln for ln in tmp.read_text(encoding="utf-8").splitlines()
+                    if ln.strip()]
+        except Exception:  # noqa: BLE001
+            return None
+
+    # 判据必须比**内容**，不能比 git 的 stat 状态。踩过两个方向：
+    #   · 管道被拦 → stdout 为 None → 异常被吞 → 却打印"✓ 零变动"（**假绿**）
+    #   · `git status` 把"工作区是 CRLF、仓库是 LF"的文件一直报成 M，
+    #     而内容其实一致（**假红**）——那是我脚本自己写 CRLF 造成的，已改成写 LF
+    #   · 就算两边都是 LF，沙箱里 git 写不了 `.git/index`，stat 缓存刷不动，
+    #     `git status` 仍会报 M——此时**内容哈希与 HEAD 完全相同**
+    # 所以最终的判据是**逐字节比对 HEAD**：一次 `git archive` 拿到 HEAD 里的
+    # `data/extracted/`，再用 tarfile 逐个比。不依赖 index、不依赖工作区状态。
+    import tarfile
+    tar_path = REPO_ROOT / "_tmp" / "_head_extracted.tar"
+    archive = git_lines  # 复用同名风格：下面单独调一次 archive
     try:
-        out = subprocess.run(
-            ["git", "status", "--porcelain", "--", "data/extracted"],
-            cwd=REPO_ROOT, capture_output=True, text=True, timeout=60)
-        dirty = [ln for ln in out.stdout.splitlines() if ln.strip()]
-    except Exception as exc:  # noqa: BLE001
-        dirty = []
-        log(f"  （拿不到 git 状态：{type(exc).__name__}: {exc}——跳过这一步）")
-    if dirty:
+        with open(tmp, "w", encoding="utf-8") as fh:
+            subprocess.run(["git", "archive", "--format=tar",
+                            f"--output={tar_path}", "HEAD", "data/extracted"],
+                           cwd=REPO_ROOT, stdout=fh,
+                           stderr=subprocess.DEVNULL, timeout=120, check=False)
+    except Exception:  # noqa: BLE001
+        pass
+
+    if not tar_path.exists():
+        log("  ✗ **这一步没验证成功**：拿不到 HEAD 里的 data/extracted。")
+        log("    不能当成通过——要么修环境，要么手工核对提交的产物。")
         failed += 1
-        log(f"  ✗ data/extracted 下有 {len(dirty)} 处变动——"
-            f"提交的产物与现在算出来的不一致：")
-        for ln in dirty[:10]:
-            log(f"      {ln}")
     else:
-        log("  ✓ data/extracted 下零变动（提交的产物逐字节可复现）")
+        mismatched, missing = [], []
+        with tarfile.open(tar_path) as tf:
+            for m in tf.getmembers():
+                if not m.isfile():
+                    continue
+                head = tf.extractfile(m).read()
+                disk_path = REPO_ROOT / m.name
+                if not disk_path.exists():
+                    missing.append(m.name)
+                elif disk_path.read_bytes() != head:
+                    mismatched.append(m.name)
+        untracked = git_lines("ls-files", "--others", "--exclude-standard",
+                             "--", "data/extracted")
+        n_head = sum(1 for _ in tarfile.open(tar_path).getmembers())
+        if mismatched:
+            failed += 1
+            log(f"  ✗ 有 {len(mismatched)} 个产物与 HEAD **逐字节不同**（内容漂了）：")
+            for f in mismatched[:10]:
+                log(f"      {f}")
+        if missing:
+            failed += 1
+            log(f"  ✗ 有 {len(missing)} 个 HEAD 里的产物在磁盘上不见了：")
+            for f in missing[:10]:
+                log(f"      {f}")
+        if untracked is None:
+            failed += 1
+            log("  ✗ 拿不到未跟踪文件清单——这一步没验证。")
+        elif untracked:
+            failed += 1
+            log(f"  ✗ 有 {len(untracked)} 个**未跟踪**的新产物（HEAD 里没有）：")
+            for f in untracked[:10]:
+                log(f"      {f}")
+        if not mismatched and not missing and not untracked:
+            log(f"  ✓ data/extracted 下 **{n_head} 个产物与 HEAD 逐字节一致、"
+                f"无新增**（提交的产物可复现）")
+        try:
+            tar_path.unlink()
+        except OSError:
+            pass
 
     log("")
     if failed:
