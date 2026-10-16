@@ -1,0 +1,29 @@
+qid,intent,question,must_link,gold_cypher,min_rows,notes
+Q01,相互作用,卡维地洛和依度沙班能一起吃吗？,卡维地洛；依度沙班,MATCH (a:Drug {name:'卡维地洛片'})-[r:INTERACTS_WITH]-(b:Drug {name:'依度沙班'}) RETURN r.level,1,用户说的是「卡维地洛」，图里只有「卡维地洛片」——考实体链接的剂型后缀
+Q02,相互作用,丁丙诺啡和屈大麻酚有相互作用吗？,丁丙诺啡；屈大麻酚,MATCH (a:Drug {name:'丁丙诺啡'})-[r:INTERACTS_WITH]-(b:Drug {name:'屈大麻酚'}) RETURN r.level,1,两端都是自然药名，没有剂型后缀
+Q03,相互作用,乙酰唑胺片和盐酸二甲双胍肠溶片同服有风险吗？,乙酰唑胺片；盐酸二甲双胍肠溶片,MATCH (a:Drug {name:'乙酰唑胺片'})-[r:INTERACTS_WITH]-(b:Drug {name:'盐酸二甲双胍肠溶片'}) RETURN r.level,1,两端都用全名，作为「不需要补全」的对照
+Q04,相互作用,茶碱和卡维地洛一起用要紧吗？,茶碱；卡维地洛,MATCH (a:Drug {name:'茶碱缓释胶囊'})-[r:INTERACTS_WITH]-(b:Drug {name:'卡维地洛片'}) RETURN r.level,1,两端都是简称，考两次补全
+Q05,相互作用,ω-3脂肪酸和伊布替尼需要注意吗？,ω-3脂肪酸；伊布替尼,MATCH (a:Drug {name:'ω-3脂肪酸'})-[r:INTERACTS_WITH]-(b:Drug {name:'伊布替尼'}) RETURN r.level,1,药名含连字符与希腊字母，考分词不会把它切碎
+Q06,疾病用药,类风湿关节炎可以用哪些药？,类风湿关节炎,MATCH (:Disease {name:'类风湿关节炎'})-[:RECOMMEND_DRUG]->(d:Drug) RETURN d.name,5,图里 23 种，取 ≥5 即可
+Q07,疾病用药,劳力性心绞痛推荐用什么药？,劳力性心绞痛,MATCH (:Disease {name:'劳力性心绞痛'})-[:RECOMMEND_DRUG]->(d:Drug) RETURN d.name,5,
+Q08,疾病用药,病毒性肠炎该用什么药？,病毒性肠炎,MATCH (:Disease {name:'病毒性肠炎'})-[:RECOMMEND_DRUG]->(d:Drug) RETURN d.name,5,
+Q09,疾病用药,纤维肌痛综合征能用什么药？,纤维肌痛综合征,MATCH (:Disease {name:'纤维肌痛综合征'})-[:RECOMMEND_DRUG]->(d:Drug) RETURN d.name,5,
+Q10,疾病用药,肾阳虚吃什么药？,肾阳虚,MATCH (:Disease {name:'肾阳虚'})-[:RECOMMEND_DRUG]->(d:Drug) RETURN d.name,5,中医病名，考词表里确实有它
+Q11,适应症,骨肽片是治什么的？,骨肽片,MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'骨肽片'}) RETURN dz.name,1,⚠️ `RECOMMEND_DRUG` 的方向是 Disease→Drug，这条要走反向
+Q12,适应症,洛索洛芬钠片有什么适应症？,洛索洛芬钠片,MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'洛索洛芬钠片'}) RETURN dz.name,1,
+Q13,适应症,速效救心丸能治什么病？,速效救心丸,MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'速效救心丸'}) RETURN dz.name,1,
+Q14,适应症,去痛片用于哪些疾病？,去痛片,MATCH (dz:Disease)-[:RECOMMEND_DRUG]->(d:Drug {name:'去痛片'}) RETURN dz.name,1,
+Q15,禁忌,多塞平有哪些禁忌？,多塞平,MATCH (d:Drug {name:'多塞平'})-[r:CONTRAINDICATED_FOR]->(t) WHERE r.confidence='high' RETURN t.name,2,只认 high 置信——L4 的边实测约 33% 假阳性，别拿 medium 当金标准
+Q16,禁忌,吗啡禁用于哪些情况？,吗啡,MATCH (d:Drug {name:'吗啡'})-[r:CONTRAINDICATED_FOR]->(t) WHERE r.confidence='high' RETURN t.name,2,
+Q17,禁忌,孕妇能用乌帕达西替尼吗？,孕妇；乌帕达西替尼,MATCH (:Drug {name:'乌帕达西替尼'})-[:CONTRAINDICATED_FOR]->(t:Population {name:'孕妇'}) RETURN t.name,1,人群节点，考 Population 标签只有 5 个名字这件事
+Q18,禁忌,对大环内酯类药物过敏的人能用他克莫司吗？,他克莫司；大环内酯类药物过敏者,MATCH (:Drug {name:'他克莫司'})-[:CONTRAINDICATED_FOR]->(t {name:'大环内酯类药物过敏者'}) RETURN t.name,1,长实体名，考「最长优先」不会只匹到「大环内酯类」
+Q19,禁忌,尼洛替尼的禁忌里有没有低钾血症？,尼洛替尼；低钾血症,MATCH (:Drug {name:'尼洛替尼'})-[:CONTRAINDICATED_FOR]->(t {name:'低钾血症'}) RETURN t.name,1,**是非疑问句**——回答要能说「有」，而不是罗列全部禁忌
+Q20,禁忌,伤寒疫苗孕妇能打吗？,伤寒疫苗；孕妇,MATCH (:Drug {name:'伤寒疫苗'})-[:CONTRAINDICATED_FOR]->(t:Population {name:'孕妇'}) RETURN t.name,1,伤寒疫苗是 L4 里 8 个「剂型分裂」新建节点的之一
+Q21,药品信息,卡维地洛片的英文名是什么？,卡维地洛片,MATCH (d:Drug {name:'卡维地洛片'}) WHERE d.name_en IS NOT NULL RETURN d.name_en,1,
+Q22,药品信息,盐酸二甲双胍肠溶片的英文名？,盐酸二甲双胍肠溶片,MATCH (d:Drug {name:'盐酸二甲双胍肠溶片'}) WHERE d.name_en IS NOT NULL RETURN d.name_en,1,
+Q23,药品信息,卡维地洛是什么药？,卡维地洛,MATCH (d:Drug) WHERE d.name STARTS WITH '卡维地洛' RETURN d.name,1,只给简称——**这是实体链接最该考的一条**：必须补成「卡维地洛片」才查得到
+Q24,药品信息,乙酰唑胺片的英文名是什么？,乙酰唑胺片,MATCH (d:Drug {name:'乙酰唑胺片'}) WHERE d.name_en IS NOT NULL RETURN d.name_en,1,
+Q25,其他,阿司匹林能治癌症吗？,,,0,⚠️ 图里的阿司匹林叫「乙酰水杨酸」，直查「阿司匹林」**查不到**——正确行为是澄清或明说无记录，**不是硬猜**（§13.3）
+Q26,其他,感冒了吃什么药好？,,,0,「感冒」在词表里可能是「感冒」也可能是「普通感冒」，需要澄清——考多候选时不硬选
+Q27,其他,孕妇能吃这个药吗？,,,0,「这个药」没有上下文——必须澄清反问，绝不能拿上一轮的药硬套（也没有上一轮）
+Q28,其他,今天上海的天气怎么样？,,,0,完全超出医药范围——应明确拒答，考的是**不乱答**
