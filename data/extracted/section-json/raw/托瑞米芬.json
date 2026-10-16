@@ -1,0 +1,32 @@
+{
+  "items": [
+    {
+      "text": "患子宫内膜增生症或严重肝衰竭患者禁止长期服用托瑞米芬。",
+      "generic_only": false
+    },
+    {
+      "text": "禁用于已知对托瑞米芬及药片中任何一种辅料过敏者。",
+      "generic_only": true
+    },
+    {
+      "text": "一先天性或后天获得有证明的 QT 间期延长者",
+      "generic_only": false
+    },
+    {
+      "text": "一电解质紊乱,特别是顽固性低血钾症",
+      "generic_only": false
+    },
+    {
+      "text": "一临床相关的心动过缓",
+      "generic_only": false
+    },
+    {
+      "text": "一临床相关的伴左室射血分数降低的心力衰竭",
+      "generic_only": false
+    },
+    {
+      "text": "一既往有心律失常症状者",
+      "generic_only": false
+    }
+  ]
+}

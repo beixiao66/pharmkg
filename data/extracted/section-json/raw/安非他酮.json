@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "text": "有癫痫病史者禁用本品。",
+      "generic_only": false
+    },
+    {
+      "text": "正在使用其他含有安非他酮成分药物的患者禁用本品。",
+      "generic_only": false
+    },
+    {
+      "text": "贪食症或厌食症的患者禁用本品。",
+      "generic_only": false
+    },
+    {
+      "text": "对安非他酮或本品所含任一成份过敏者禁用本品。",
+      "generic_only": true
+    },
+    {
+      "text": "突然戒酒或者停用镇静剂的患者禁用本品。",
+      "generic_only": false
+    },
+    {
+      "text": "不能与单胺氧化酶(MAO)抑制剂合并应用。单胺氧化酶抑制剂与本品的服用间隔至少应该为 14 天。",
+      "generic_only": false
+    }
+  ]
+}

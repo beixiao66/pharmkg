@@ -36,9 +36,14 @@ L4 抽取结果评分（P / R / F1）
 
 用法
 ----
-    python scripts/score_extraction.py                    # 评基线
+    python scripts/score_extraction.py                    # 评基线（自由文本产物）
     python scripts/score_extraction.py --show-misses      # 顺便列出漏抽/多抽
     python scripts/score_extraction.py --input <目录> --method <名字>
+    python scripts/score_extraction.py --method section-json \
+        --items-dir data/extracted/section-json/items      # 评结构化产物
+
+⚠️ **自由文本产物没有 `generic_only` 标记，一律记 `None`**，不默认成 `False`。
+把"没有这个字段"和"模型判它不是通用过敏禁忌"混为一谈，等于白送一批假成绩。
 
 产出
 ----
@@ -165,14 +170,53 @@ def load_gold() -> dict[str, dict]:
     return out
 
 
-def load_output_items(path: Path) -> list[str]:
-    """从方法输出里取条目行。没有任何项目符号 → 视为"未给出条目"。"""
+def load_output_items(path: Path) -> list[dict]:
+    """从一个方法的产物里取条目。→ ``[{"text": ..., "generic_only": ...}]``
+
+    支持两种产物格式，**它们不是等价的**：
+
+    * **自由文本**（朴素基线）：``- x`` 这类项目符号行。``generic_only`` 一律
+      是 ``None``——基线**没有**这个标记，不许假装它有，更不许默认成 ``False``
+      混进"判对了"的账里。
+    * **结构化**（按小节送那一层）：``[{text, generic_only}]`` 的 JSON。
+      这才是决策 #30 里 ``generic_only`` 该待的地方。
+
+    路径后缀决定读哪种；读不出来或没有该文件 → 空表（= "没给出条目"）。
+    """
+    if path.suffix == ".json":
+        if not path.exists():
+            return []
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            return []
+        if not isinstance(data, list):
+            return []
+        out: list[dict] = []
+        for it in data:
+            if isinstance(it, str):
+                out.append({"text": it.strip(), "generic_only": None})
+            elif isinstance(it, dict) and str(it.get("text", "")).strip():
+                g = it.get("generic_only")
+                out.append({"text": str(it["text"]).strip(),
+                            "generic_only": g if isinstance(g, bool) else None})
+        return [it for it in out if it["text"]]
+
+    if not path.exists():
+        return []
     text = path.read_text(encoding="utf-8")
     items = []
     for ln in text.split("\n"):
         if BULLET.match(ln):
-            items.append(BULLET.sub("", ln).strip())
+            items.append({"text": BULLET.sub("", ln).strip(),
+                          "generic_only": None})
     return items
+
+
+def item_path(base: Path, drug: str) -> Path:
+    """优先结构化产物（``.json``），没有就退回自由文本（``.txt``）。"""
+    j = base / f"{drug}.json"
+    return j if j.exists() else base / f"{drug}.txt"
 
 
 def fmt(x: float) -> str:
@@ -190,6 +234,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--method", default="baseline", help="方法名（决定输出目录）")
     ap.add_argument("--input", default=None,
                     help="输出目录，默认 data/extracted/<method>/raw")
+    ap.add_argument("--items-dir", default=None,
+                    help="结构化产物的目录（[{text,generic_only}] 的 JSON）；"
+                         "给了就读它，不给就读 --input 下的自由文本")
     ap.add_argument("--show-misses", action="store_true",
                     help="列出漏抽与多抽的原子")
     args = ap.parse_args(argv)
@@ -199,23 +246,40 @@ def main(argv: list[str] | None = None) -> int:
         indir = (REPO_ROOT / indir).resolve()
     if not indir.exists():
         raise SystemExit(f"✗ 找不到输出目录 {indir}")
+    items_dir = None
+    if args.items_dir:
+        items_dir = Path(args.items_dir)
+        if not items_dir.is_absolute():
+            items_dir = (REPO_ROOT / items_dir).resolve()
+        if not items_dir.exists():
+            raise SystemExit(f"✗ 找不到条目目录 {items_dir}")
 
     gold = load_gold()
     log(f"L4 抽取评分 · {args.method}")
     log(f"  金标准      {GOLD_FILE.relative_to(REPO_ROOT)}"
         f"（{len(gold)} 药 / 编码 {next(iter(gold.values()))['enc']}）")
     log(f"  方法输出    {indir.relative_to(REPO_ROOT)}")
+    if items_dir:
+        log(f"  条目来源    {items_dir.relative_to(REPO_ROOT)}（结构化："
+            f"带 generic_only）")
     log(f"  原子切分    、，；  最短 {MIN_ATOM} 字   匹配阈值 {THRESHOLD}")
     log("")
 
     rows, misses = [], []
     sum_tp = sum_fp = sum_fn = 0
     zero_gold_ok = None
+    n_items = n_gen = n_gen_unknown = 0
 
     for drug in sorted(gold):
         g = gold[drug]
-        out_items = load_output_items(indir / f"{drug}.txt")
-        out_atoms = [a for it in out_items for a in atoms(it)]
+        base = items_dir if items_dir else indir
+        src = (base / f"{drug}.json") if items_dir else item_path(base, drug)
+        out_items = load_output_items(src)
+        out_atoms = [a for it in out_items for a in atoms(it["text"])]
+        n_items += len(out_items)
+        n_gen += sum(1 for it in out_items if it["generic_only"] is True)
+        n_gen_unknown += sum(1 for it in out_items
+                             if it["generic_only"] is None)
 
         if g["n_gold"] == 0:
             # 零禁忌样本：正确行为是"不给出任何禁忌条目"
@@ -268,6 +332,11 @@ def main(argv: list[str] | None = None) -> int:
     log(f"  Micro           P {micro_p:.3f}  R {micro_r:.3f}  F1 {micro_f1:.3f}")
     log(f"  Macro           P {macro_p:.3f}  R {macro_r:.3f}  F1 {macro_f1:.3f}")
     log(f"  零禁忌样本      {'✓ 正确声明无禁忌' if zero_gold_ok else '✗ 编出了禁忌'}")
+    if n_items:
+        log(f"  条目中 generic_only 标为 true 的  {n_gen} / {n_items}")
+        if n_gen_unknown:
+            log(f"  ⚠️ 有 {n_gen_unknown} 条**没有** generic_only 标记"
+                f"（自由文本产物一律算无标记，不许默认成 false）")
 
     if args.show_misses and misses:
         log("")
@@ -285,6 +354,10 @@ def main(argv: list[str] | None = None) -> int:
         "method": args.method,
         "gold_file": str(GOLD_FILE.relative_to(REPO_ROOT)),
         "input": str(indir.relative_to(REPO_ROOT)),
+        "items_dir": str(items_dir.relative_to(REPO_ROOT)) if items_dir else None,
+        "n_items": n_items,
+        "n_generic_only": n_gen,
+        "n_generic_only_unknown": n_gen_unknown,
         "threshold": THRESHOLD,
         "min_atom": MIN_ATOM,
         "unit": "最小并列项（按 、，； 切分，两边同样处理）",

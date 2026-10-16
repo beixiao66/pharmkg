@@ -1,0 +1,48 @@
+{
+  "items": [
+    {
+      "text": "已知对本品过敏者禁用。",
+      "generic_only": true
+    },
+    {
+      "text": "禁止同时口服或非肠道使用强效抑制 CYP3A4 酶的药物，包括：\n三唑类抗真菌药；\n大环内酯类抗生素；\nHIV 蛋白酶抑制剂；\n奈法唑酮；\n(见【药物相互作用】)",
+      "generic_only": false
+    },
+    {
+      "text": "心脏病、心律失常、QT 间期延长者禁用，禁止与引起 QT 间期延长的药物一起使用；",
+      "generic_only": false
+    },
+    {
+      "text": "有水、电解质紊乱的患者禁用，特别是低血钾或低血镁者禁用；",
+      "generic_only": false
+    },
+    {
+      "text": "心动过缓者禁用；",
+      "generic_only": false
+    },
+    {
+      "text": "患有其它严重心脏节律性疾病者禁用；",
+      "generic_only": false
+    },
+    {
+      "text": "非代偿性心力衰竭患者禁用；",
+      "generic_only": false
+    },
+    {
+      "text": "先天 QT 间期延长或有先天 QT 间期延长综合征家族史者禁用；",
+      "generic_only": false
+    },
+    {
+      "text": "肺、肝、肾功能不全的病人禁用；",
+      "generic_only": false
+    },
+    {
+      "text": "禁用于增加胃肠道动力可造成危害的疾病(如胃肠梗阻)患者。",
+      "generic_only": false
+    },
+    {
+      "text": "对早产新生儿，不建议使用本品治疗。",
+      "generic_only": false
+    }
+  ]
+}

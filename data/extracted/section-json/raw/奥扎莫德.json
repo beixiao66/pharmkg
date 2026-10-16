@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "text": "对“成份”项列出的活性物质或任何辅料有过敏反应。",
+      "generic_only": true
+    },
+    {
+      "text": "免疫缺陷状态（见【注意事项】）。",
+      "generic_only": false
+    },
+    {
+      "text": "最近 6 个月内发生心肌梗死、不稳定型心绞痛、卒中、短暂性脑缺血发作、需要住院的失代偿性心力衰竭或纽约心脏协会（NYHA）III/IV 级心力衰竭的患者。",
+      "generic_only": false
+    },
+    {
+      "text": "过去或目前有 II 度 II 型房室（AV）传导阻滞或 III 度 AV 传导阻滞或病态窦房结综合征的患者，除非患者体内有心脏起搏器，且功能良好。",
+      "generic_only": false
+    },
+    {
+      "text": "重度活动性感染，活动性慢性感染，例如肝炎和结核（见【注意事项】）。",
+      "generic_only": false
+    },
+    {
+      "text": "活动性恶性肿瘤。",
+      "generic_only": false
+    },
+    {
+      "text": "重度肝损伤（Child-Pugh C 级）。",
+      "generic_only": false
+    },
+    {
+      "text": "妊娠期间，以及未采取有效避孕措施的育龄女性（见【注意事项】和【孕妇及哺乳期妇女用药】）。",
+      "generic_only": false
+    },
+    {
+      "text": "正在使用单胺氧化酶（MAO）抑制剂（见【药物相互作用】）。",
+      "generic_only": false
+    }
+  ]
+}

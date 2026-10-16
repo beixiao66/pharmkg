@@ -1,0 +1,14 @@
+[
+  {
+    "text": "对活性成分或任何辅料（列于【成份】）存在超敏反应。",
+    "generic_only": true
+  },
+  {
+    "text": "活动性结核病或其他重度感染例如脓毒症和机会感染（见【注意事项】）。",
+    "generic_only": false
+  },
+  {
+    "text": "中度或重度心力衰竭（NYHA III/IV 级）（见【注意事项】）。",
+    "generic_only": false
+  }
+]

@@ -1,0 +1,161 @@
+{
+  "method": "section-json",
+  "gold_file": "data\\eval\\contraindications_gold.csv",
+  "input": "data\\extracted\\section-json\\raw",
+  "items_dir": "data\\extracted\\section-json\\items",
+  "n_items": 43,
+  "n_generic_only": 8,
+  "n_generic_only_unknown": 0,
+  "threshold": 0.85,
+  "min_atom": 2,
+  "unit": "最小并列项（按 、，； 切分，两边同样处理）",
+  "micro": {
+    "p": 1.0,
+    "r": 1.0,
+    "f1": 1.0,
+    "tp": 77,
+    "fp": 0,
+    "fn": 0
+  },
+  "macro": {
+    "p": 1.0,
+    "r": 1.0,
+    "f1": 1.0
+  },
+  "zero_gold_correct": true,
+  "per_drug": [
+    {
+      "drug": "他克莫司",
+      "kind": "有禁忌",
+      "n_gold_atoms": 2,
+      "n_out_atoms": 2,
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "p": 1.0,
+      "r": 1.0,
+      "f1": 1.0
+    },
+    {
+      "drug": "伤寒疫苗",
+      "kind": "有禁忌",
+      "n_gold_atoms": 5,
+      "n_out_atoms": 5,
+      "tp": 5,
+      "fp": 0,
+      "fn": 0,
+      "p": 1.0,
+      "r": 1.0,
+      "f1": 1.0
+    },
+    {
+      "drug": "克拉屈滨",
+      "kind": "有禁忌",
+      "n_gold_atoms": 1,
+      "n_out_atoms": 1,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "p": 1.0,
+      "r": 1.0,
+      "f1": 1.0
+    },
+    {
+      "drug": "多塞平",
+      "kind": "有禁忌",
+      "n_gold_atoms": 10,
+      "n_out_atoms": 10,
+      "tp": 10,
+      "fp": 0,
+      "fn": 0,
+      "p": 1.0,
+      "r": 1.0,
+      "f1": 1.0
+    },
+    {
+      "drug": "奥希替尼",
+      "kind": "有禁忌",
+      "n_gold_atoms": 2,
+      "n_out_atoms": 2,
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "p": 1.0,
+      "r": 1.0,
+      "f1": 1.0
+    },
+    {
+      "drug": "奥扎莫德",
+      "kind": "有禁忌",
+      "n_gold_atoms": 18,
+      "n_out_atoms": 18,
+      "tp": 18,
+      "fp": 0,
+      "fn": 0,
+      "p": 1.0,
+      "r": 1.0,
+      "f1": 1.0
+    },
+    {
+      "drug": "托法替布",
+      "kind": "零禁忌",
+      "n_gold_atoms": 0,
+      "n_out_atoms": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "p": null,
+      "r": null,
+      "f1": null,
+      "zero_gold_correct": true
+    },
+    {
+      "drug": "来氟米特",
+      "kind": "有禁忌",
+      "n_gold_atoms": 25,
+      "n_out_atoms": 25,
+      "tp": 25,
+      "fp": 0,
+      "fn": 0,
+      "p": 1.0,
+      "r": 1.0,
+      "f1": 1.0
+    },
+    {
+      "drug": "英夫利西单抗",
+      "kind": "有禁忌",
+      "n_gold_atoms": 6,
+      "n_out_atoms": 6,
+      "tp": 6,
+      "fp": 0,
+      "fn": 0,
+      "p": 1.0,
+      "r": 1.0,
+      "f1": 1.0
+    },
+    {
+      "drug": "达沙替尼",
+      "kind": "有禁忌",
+      "n_gold_atoms": 2,
+      "n_out_atoms": 2,
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "p": 1.0,
+      "r": 1.0,
+      "f1": 1.0
+    },
+    {
+      "drug": "阿那格雷",
+      "kind": "有禁忌",
+      "n_gold_atoms": 6,
+      "n_out_atoms": 6,
+      "tp": 6,
+      "fp": 0,
+      "fn": 0,
+      "p": 1.0,
+      "r": 1.0,
+      "f1": 1.0
+    }
+  ]
+}

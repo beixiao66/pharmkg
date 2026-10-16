@@ -1,0 +1,42 @@
+[
+  {
+    "text": "严重心脏病",
+    "generic_only": false
+  },
+  {
+    "text": "近期有心肌梗死发作史",
+    "generic_only": false
+  },
+  {
+    "text": "癫痫",
+    "generic_only": false
+  },
+  {
+    "text": "青光眼",
+    "generic_only": false
+  },
+  {
+    "text": "尿潴留",
+    "generic_only": false
+  },
+  {
+    "text": "甲状腺机能亢进",
+    "generic_only": false
+  },
+  {
+    "text": "肝功能损害",
+    "generic_only": false
+  },
+  {
+    "text": "谵妄",
+    "generic_only": false
+  },
+  {
+    "text": "粒细胞减少",
+    "generic_only": false
+  },
+  {
+    "text": "对三环类药物过敏者",
+    "generic_only": false
+  }
+]

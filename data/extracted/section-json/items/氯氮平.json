@@ -1,0 +1,34 @@
+[
+  {
+    "text": "严重心、肝、肾疾患、谵妄、骨髓抑制、低血压、青光眼患者禁用",
+    "generic_only": false
+  },
+  {
+    "text": "对氯氮平或氯氮平其他组份过敏的患者禁用",
+    "generic_only": true
+  },
+  {
+    "text": "骨髓增生障碍的患者禁用",
+    "generic_only": false
+  },
+  {
+    "text": "未得到有效控制的癫痫患者禁用",
+    "generic_only": false
+  },
+  {
+    "text": "麻痹性肠梗阻患者禁用",
+    "generic_only": false
+  },
+  {
+    "text": "曾因氯氮平导致粒细胞缺乏症或严重粒细胞减少的患者禁用",
+    "generic_only": false
+  },
+  {
+    "text": "与典型抗精神病药类似，对有严重中枢神经系统抑制或处于各种原因所致昏迷状态的患者禁用",
+    "generic_only": false
+  },
+  {
+    "text": "禁与其他能引起粒细胞缺乏症或有骨髓抑制作用的药物合用",
+    "generic_only": false
+  }
+]

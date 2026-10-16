@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "text": "免疫缺陷综合征患者。",
+      "generic_only": false
+    },
+    {
+      "text": "机会性感染风险升高的患者，包括免疫抑制患者（目前接受免疫抑制治疗或由于既往治疗导致的免疫抑制患者）。",
+      "generic_only": false
+    },
+    {
+      "text": "重度活动性感染、活动性慢性感染（肝炎、肺结核）。",
+      "generic_only": false
+    },
+    {
+      "text": "活动性恶性肿瘤患者。",
+      "generic_only": false
+    },
+    {
+      "text": "重度肝损伤（Child-Pugh C 级）。",
+      "generic_only": false
+    },
+    {
+      "text": "近 6 个月罹患心肌梗死、不稳定性心绞痛、卒中/短暂性脑缺血发作、失代偿性心力衰竭（需住院治疗）或纽约心脏协会（NYHA）III 级/IV 级心力衰竭的患者（见【注意事项】）。",
+      "generic_only": false
+    },
+    {
+      "text": "需服用 Ia 或 III 类抗心律失常药物进行抗心律失常治疗的严重心律失常患者（见【注意事项】）。",
+      "generic_only": false
+    },
+    {
+      "text": "II 度莫氏 II 型房室（AV）传导阻滞或 III 度房室传导阻滞，或未植入起搏器的病窦综合征患者（见【注意事项】）。",
+      "generic_only": false
+    },
+    {
+      "text": "基线 QTc 间期 ≥ 500 msec 的患者（见【注意事项】）。",
+      "generic_only": false
+    },
+    {
+      "text": "已知对芬戈莫德或对任何辅料过敏者。",
+      "generic_only": true
+    }
+  ]
+}

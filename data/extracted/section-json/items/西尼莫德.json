@@ -1,0 +1,18 @@
+[
+  {
+    "text": "已知对本品任何成份过敏的患者；",
+    "generic_only": true
+  },
+  {
+    "text": "CYP2C9*3*3 基因型；",
+    "generic_only": false
+  },
+  {
+    "text": "在过去 6 个月内发生心肌梗死（MI）、不稳定型心绞痛、脑卒中、短暂性脑缺血发作（TIA）、需要住院的失代偿性心力衰竭、纽约心脏协会 III 或 IV 级心力衰竭；",
+    "generic_only": false
+  },
+  {
+    "text": "有莫氏 II 度 II 型房室（AV）传导阻滞、III 度 AV 传导阻滞或病窦综合征，除非患者有运行正常的起搏器。",
+    "generic_only": false
+  }
+]

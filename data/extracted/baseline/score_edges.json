@@ -1,6 +1,7 @@
 {
   "method": "baseline",
   "input": "data\\extracted\\baseline\\raw",
+  "items_dir": null,
   "node_gold_file": "data\\eval\\contraindications_nodes.csv",
   "unit": {
     "layer1": "最小并列项（原子）",
@@ -13,6 +14,12 @@
     "tp": 77,
     "fp": 0,
     "fn": 0
+  },
+  "generic_only_flag": {
+    "n_items": 43,
+    "n_true": 0,
+    "n_unknown": 43,
+    "vs_gold": null
   },
   "layer2_edges": {
     "n_gold": 51,
@@ -30,6 +37,14 @@
         "p": 0.6667,
         "r": 0.5882,
         "f1": 0.625
+      },
+      "flagged": {
+        "tp": 30,
+        "fp": 47,
+        "fn": 21,
+        "p": 0.3896,
+        "r": 0.5882,
+        "f1": 0.4688
       }
     },
     "rule_plus_llm": {
@@ -46,6 +61,14 @@
         "p": 0.8,
         "r": 0.7059,
         "f1": 0.75
+      },
+      "flagged": {
+        "tp": 36,
+        "fp": 40,
+        "fn": 15,
+        "p": 0.4737,
+        "r": 0.7059,
+        "f1": 0.5669
       }
     },
     "rule_levels": {
