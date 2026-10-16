@@ -1,0 +1,43 @@
+{
+  "method": "baseline",
+  "section": "禁忌",
+  "scope": "整篇说明书",
+  "criterion": "基线 §13.5 L4 忠实度：逐条回说明书原文查证「原文有没有这么写」",
+  "n_atoms_total": 216,
+  "n_sample": 100,
+  "strict_only_whitespace": {
+    "ok": 94,
+    "rate": 0.94
+  },
+  "loose_punct_equiv": {
+    "ok": 94,
+    "rate": 0.94
+  },
+  "punct_only_diff": 0,
+  "not_found": [
+    {
+      "drug": "碘帕醇",
+      "atom": "仅在 Waldenström’s 巨球蛋白症"
+    },
+    {
+      "drug": "三氧化二砷",
+      "atom": "孕妇禁用"
+    },
+    {
+      "drug": "氯氮平",
+      "atom": "低血压患者禁用"
+    },
+    {
+      "drug": "阿达木单抗",
+      "atom": "对本品或制剂中其它成份过敏者"
+    },
+    {
+      "drug": "三氧化二砷",
+      "atom": "肾功能损害者禁用"
+    },
+    {
+      "drug": "特立氟胺",
+      "atom": "来氟米特或特立氟胺片任意非活性成分有超敏反应史的患者（反应包括全身性过敏反应"
+    }
+  ]
+}

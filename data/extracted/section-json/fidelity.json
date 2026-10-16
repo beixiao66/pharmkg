@@ -1,0 +1,18 @@
+{
+  "method": "section-json",
+  "section": "禁忌",
+  "scope": "【禁忌】一节",
+  "criterion": "基线 §13.5 L4 忠实度：逐条回说明书原文查证「原文有没有这么写」",
+  "n_atoms_total": 214,
+  "n_sample": 100,
+  "strict_only_whitespace": {
+    "ok": 100,
+    "rate": 1.0
+  },
+  "loose_punct_equiv": {
+    "ok": 100,
+    "rate": 1.0
+  },
+  "punct_only_diff": 0,
+  "not_found": []
+}
