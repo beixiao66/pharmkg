@@ -24,6 +24,7 @@ from sqlalchemy import create_engine, text
 from app.config import get_settings
 from app.routers import auth as auth_router
 from app.routers import conversations as conversations_router
+from app.routers import medicine_box as medicine_box_router
 
 #: 健康检查里**每个数据库**的探测预算（秒）。
 #:
@@ -55,6 +56,7 @@ app = FastAPI(
 
 app.include_router(auth_router.router)
 app.include_router(conversations_router.router)
+app.include_router(medicine_box_router.router)
 
 
 @app.on_event("startup")

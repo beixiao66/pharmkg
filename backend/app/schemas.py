@@ -94,3 +94,57 @@ class MessageResponse(OrmResponse):
     cypher: str | None
     evidence: dict[str, Any] | None
     created_at: datetime
+
+
+# ---------------------------------------------------------------- 用药安全校验（L6）
+
+class PopulationTagsUpdate(BaseModel):
+    #: 合法值＝图里实际存在的 `Population` 名（决策 #41）；服务端会校验。
+    tags: list[str] = Field(default_factory=list, max_length=10)
+
+
+class MedicineBoxCreate(BaseModel):
+    drug_id: str = Field(min_length=1, max_length=160)
+
+
+class MedicineBoxItem(OrmResponse):
+    drug_id: str
+    drug_name: str
+    added_at: datetime
+
+
+class RiskPair(BaseModel):
+    drug_a: str
+    drug_b: str
+    level: str | None            # None = 图谱里没有这条边
+    level_label: str
+    source: str | None
+    note: str = ""
+
+
+class RiskPopulation(BaseModel):
+    drug: str
+    tag: str
+    evidence: str | None = None
+
+
+class RiskCoverage(BaseModel):
+    """**数据覆盖**。它不是装饰——没有它，"没查到"会被读成"没问题"。"""
+
+    box_size: int
+    pairs_checked: int
+    interaction_edges_total: int
+    population_edges_total: int
+    population_edges_high: int
+    population_edges_used: int
+    confidence_filter: str
+    note: str
+
+
+class MedicineBoxRisk(BaseModel):
+    pairs: list[RiskPair]
+    population: list[RiskPopulation]
+    coverage: RiskCoverage
+    population_tags: list[str]
+    disclaimer: str
+    attribution: str

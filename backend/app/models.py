@@ -114,4 +114,31 @@ class Message(Base):
     )
 
 
-__all__ = ["AppUser", "Conversation", "Message"]
+__all__ = ["AppUser", "Conversation", "Message", "MedicineBox"]
+
+
+class MedicineBox(Base):
+    """用户的药箱（决策 #25）。
+
+    ⚠️ `drug_id` 是 **VARCHAR 而不是整数**：图里 `Drug.id` 的真实格式是
+    ``drug:卡维地洛片``（字符串，见 L6 开工前的实测），不是自增整数。
+    照"drug_id 应该是 id"想当然写成 BigInteger，入图时会直接对不上。
+
+    `drug_name_snapshot` 存**加药那一刻的名字**：图谱重建后 `drug_id` 可能变，
+    但用户至少要还能看到"我加的是什么药"（决策 #25 的原话）。
+    """
+
+    __tablename__ = "medicine_box"
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    user_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey("app_user.id", ondelete="CASCADE"), nullable=False)
+    drug_id: Mapped[str] = mapped_column(String(160), nullable=False)
+    drug_name_snapshot: Mapped[str] = mapped_column(String(160), nullable=False)
+    added_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+    __table_args__ = (
+        # 同一个药不能加两次——**靠唯一约束判，不靠"先查再插"**（与 L7 注册同一理由）
+        UniqueConstraint("user_id", "drug_id", name="uq_medicine_box_user_drug"),
+    )
