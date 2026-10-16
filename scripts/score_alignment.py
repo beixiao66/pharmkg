@@ -88,17 +88,38 @@ def load_graph_labels() -> dict[str, list[tuple[str, bool]]]:
     """把节点金标准读成 ``{药: [(原子归一化, 该不该进图)]}``。
 
     ``True`` = 金标准判它**该进图**，``False`` = 判它**不该进图**
-    （``仅文本`` / ``删除``）。有了它才能评 ``generic_only`` 标记本身准不准——
-    否则只能评"用了标记之后指标变成多少"，说不清是标记好还是碰巧。
+    （``仅文本`` / ``删除``）。有了它才能评"该不该进图"这件事本身。
     """
     rows, _ = read_csv_rows(NODE_FILE)
     out: dict[str, list[tuple[str, bool]]] = {}
     for r in rows:
         typ = (r.get("node_type") or "").strip()
         verdict = (r.get("verdict") or "").strip()
-        should = (verdict == "保留" and typ in ("疾病", "人群", "用药"))
+        should = (verdict == "保留" and typ in ("疾病", "人群"))
         out.setdefault(r["drug"].strip(), []).append(
             (norm(r.get("atom") or ""), should))
+    return out
+
+
+def load_generic_only_atoms() -> dict[str, list[str]]:
+    """只取 ``node_type = 仅文本`` 的行——**这才是 `generic_only` 的定义域**。
+
+    ⚠️ 踩过：原先评 `generic_only` 标记时，把"所有不该进图的原子"都当成正类，
+    也就是把 ``删除`` 那 23 行（残片 / 举例 / 理由句 / 后果句）也算进去。
+    但 `generic_only` 的定义是**「通用过敏禁忌」**——金标准里对应的是 ``仅文本``，
+    **不是"任何不该进图的东西"**。
+
+    这个口径问题在 2026-10-16 移出那 2 行合并用药禁忌时**暴露出来**：
+    它们从 `保留/用药` 变成 `删除/-`，于是被算成 `generic_only` 的漏标，
+    把标记的召回从 0.889 压到 0.727——**而它们根本不是过敏条目**。
+    按定义收紧后，`generic_only` 只对 ``仅文本`` 负责。
+    """
+    rows, _ = read_csv_rows(NODE_FILE)
+    out: dict[str, list[str]] = {}
+    for r in rows:
+        if (r.get("node_type") or "").strip() != "仅文本":
+            continue
+        out.setdefault(r["drug"].strip(), []).append(norm(r.get("atom") or ""))
     return out
 
 
@@ -144,6 +165,7 @@ def main(argv: list[str] | None = None) -> int:
     gold_edges = load_gold_edges()
     non_graph = load_non_graph_atoms()
     graph_labels = load_graph_labels()
+    generic_only = load_generic_only_atoms()
 
     gold_set = {(r["drug"].strip(), canon(r["node"])) for r in gold_edges}
     gold_drugs = {r["drug"].strip() for r in gold_edges}
@@ -290,43 +312,69 @@ def main(argv: list[str] | None = None) -> int:
     log("")
 
     # ── generic_only 标记本身准不准 ──────────────────────────────────
-    # 只看**金标准判过该不该进图**的原子；判没判过由 cover≥0.85 决定，判不了就跳过。
+    # 正类 = 金标准的 **`仅文本`** 行（= 「通用过敏禁忌」，这才是 generic_only 的定义）。
+    # `删除` 那些行（残片/举例/理由句/后果句/合并用药）**不参与**——
+    # 它们也"不该进图"，但**不是过敏条目**，拿它们当正类等于换了概念（踩过）。
     f_tp = f_fp = f_fn = f_skip = 0
     f_fn_list: list[tuple[str, str]] = []
     f_fp_list: list[tuple[str, str]] = []
     f_fn_fragment = 0
     i_tp = i_fp = i_fn = i_skip = 0
+
+    def gold_is_generic_only(drug: str, atom: str) -> bool | None:
+        """金标准对**这个原子**判过"是不是通用过敏禁忌"吗。
+
+        ``True`` = 是（``仅文本``）；``False`` = 不是（金标准判了它该进图）；
+        ``None`` = 金标准没判过这个问题（``删除`` 的那几类）。
+        """
+        a = norm(atom)
+        best: tuple[float, bool] | None = None
+        for t, should in graph_labels.get(drug, []):
+            s = max(cover(t, a), cover(a, t))
+            if s < 0.85:
+                continue
+            if best is None or s > best[0] or (s == best[0] and should):
+                best = (s, should)
+        if best is None:
+            return None
+        if best[1]:
+            return False            # 金标准说该进图 → 它不是通用过敏禁忌
+        for t in generic_only.get(drug, []):
+            if cover(t, a) >= 0.85 or cover(a, t) >= 0.85:
+                return True         # 仅文本 → 是通用过敏禁忌
+        return None                 # 不该进图、但属于删除的那几类 → 不评
+
     for drug in sorted(gold):
         for it in outputs[drug]:
             atoms_here = raw_atoms_of(it["text"])
-            labels = [gold_should_graph(drug, a) for a in atoms_here]
+            labels = [gold_is_generic_only(drug, a) for a in atoms_here]
             said_generic = (it["generic_only"] is True)
-            for a, should in zip(atoms_here, labels):
-                if should is None:
+            for a, is_generic in zip(atoms_here, labels):
+                if is_generic is None:
                     f_skip += 1
                     continue
-                if said_generic and not should:
+                if said_generic and is_generic:
                     f_tp += 1
-                elif said_generic and should:
+                elif said_generic and not is_generic:
                     f_fp += 1
                     f_fp_list.append((drug, a))
-                elif not said_generic and not should:
+                elif not said_generic and is_generic:
                     f_fn += 1
                     f_fn_list.append((drug, a))
                     if len(atoms_here) > 1:
                         f_fn_fragment += 1
             # **条目级**口径：与标记的粒度一致。金标准判过的那些原子里
-            # 只要有**一条**该进图，这一整条就该进图。
+            # 只要有**一条**是通用过敏禁忌，这一整条就该被标 generic_only。
             judged = [s for s in labels if s is not None]
             if not judged:
                 i_skip += 1
                 continue
-            should_item = any(judged)
-            if said_generic and not should_item:
+            is_generic_item = any(judged)
+            if said_generic and is_generic_item:
                 i_tp += 1
-            elif said_generic and should_item:
+            elif said_generic and not is_generic_item:
                 i_fp += 1
-            elif not said_generic and not should_item:
+            elif not said_generic and is_generic_item:
                 i_fn += 1
     fP = f_tp / (f_tp + f_fp) if f_tp + f_fp else 0.0
     fR = f_tp / (f_tp + f_fn) if f_tp + f_fn else 0.0

@@ -368,11 +368,28 @@ LLM_SYSTEM = """你是医学实体对齐助手。给你一条药品说明书里�
 
 
 def load_gold_edges() -> list[dict]:
-    """金标准里**入图**的行（`node_type ∈ 疾病/人群/用药`）。"""
+    """金标准里**入图**的行（``node_type ∈ 疾病/人群``）。
+
+    ⚠️ ``用药`` **不再是合法目标**（决策 #38 / 实测报告 §15）：`CONTRAINDICATED_FOR`
+    的槽位是 ``Drug → Disease/Population``，"不得与 X 合用"这类**合并用药禁忌**
+    该由 ``INTERACTS_WITH`` 承载——已实测 DDInter 覆盖得**更细**
+    （`Ozanimod` 与 8 个 MAO 抑制剂个体药全为 Major，而说明书那句只是类别级表述）。
+
+    所以这里**只认 疾病/人群**，并且**遇到别的类型就报出来**——
+    免得以后有人往金标准里加了新类型的行，却被这里静默丢掉。
+    """
     rows, _ = read_csv_rows(NODE_FILE)
+    known = ("疾病", "人群", "仅文本", "-", "")
+    odd = sorted({(r.get("node_type") or "").strip() for r in rows
+                  if (r.get("verdict") or "").strip() == "保留"
+                  and (r.get("node_type") or "").strip() not in known})
+    if odd:
+        print(f"⚠️ 金标准里有 {len(odd)} 种没见过的 node_type：{odd}")
+        print("   它们**不会**被当成入图边——要么补进上面的 known，"
+              "要么改金标准。别让它们静默消失。")
     return [r for r in rows
             if (r.get("verdict") or "").strip() == "保留"
-            and (r.get("node_type") or "").strip() in ("疾病", "人群", "用药")]
+            and (r.get("node_type") or "").strip() in ("疾病", "人群")]
 
 
 CACHE_FILE = REPO_ROOT / "data" / "extracted" / "alignment_cache.json"

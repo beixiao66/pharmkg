@@ -68,22 +68,22 @@
     ]
   },
   "pop_contain_min": 4,
-  "n_gold": 54,
+  "n_gold": 52,
   "rule_only": {
-    "hit": 42,
-    "acc": 0.7778,
+    "hit": 41,
+    "acc": 0.7885,
     "levels": {
       "①精确✓": 26,
       "②包含✓": 6,
       "②包含✗": 1,
       "③前后缀✗": 1,
-      "④新建✓": 10,
-      "④新建✗": 10
+      "④新建✓": 9,
+      "④新建✗": 9
     }
   },
   "rule_plus_llm": {
     "hit": 45,
-    "acc": 0.8333,
+    "acc": 0.8654,
     "levels": {
       "①精确✓": 26,
       "②包含✓": 6,
@@ -91,23 +91,17 @@
       "③前后缀✗": 1,
       "⑤LLM(existing)✓": 1,
       "⑤LLM(existing)✗": 3,
-      "⑤LLM(new)(降级)✗": 1,
       "⑤LLM(new)✓": 12,
-      "⑤LLM(new)✗": 3
+      "⑤LLM(new)✗": 2
     },
-    "llm_called": 20,
+    "llm_called": 18,
     "llm_fixed": 5,
-    "llm_broke": 2,
+    "llm_broke": 1,
     "broke": [
       {
         "atom": "卒中",
         "rule": "卒中",
         "llm": "中风"
-      },
-      {
-        "atom": "正在使用单胺氧化酶（MAO）抑制剂（见【药物相互作用】）",
-        "rule": "单胺氧化酶抑制剂",
-        "llm": "单胺氧化酶抑制剂使用期"
       }
     ]
   },
@@ -126,12 +120,6 @@
       "level": "③前后缀"
     },
     {
-      "drug": "本品不得与圣约翰草一起服用（见【药物相互作用】）",
-      "want": "圣约翰草",
-      "got": "圣约翰草用药",
-      "level": "⑤LLM(new)"
-    },
-    {
       "drug": "卒中",
       "want": "卒中",
       "got": "中风",
@@ -148,12 +136,6 @@
       "want": "房室传导阻滞",
       "got": "完全性房室传导阻滞",
       "level": "⑤LLM(existing)"
-    },
-    {
-      "drug": "正在使用单胺氧化酶（MAO）抑制剂（见【药物相互作用】）",
-      "want": "单胺氧化酶抑制剂",
-      "got": "单胺氧化酶抑制剂使用期",
-      "level": "⑤LLM(new)(降级)"
     },
     {
       "drug": "中性粒细胞减少的患者",
@@ -362,18 +344,6 @@
       "final_ok": true
     },
     {
-      "drug": "奥希替尼",
-      "atom_idx": "2",
-      "atom": "本品不得与圣约翰草一起服用（见【药物相互作用】）",
-      "want": "圣约翰草",
-      "rule_node": "本品不得与圣约翰草一起服用",
-      "rule_level": "④新建",
-      "rule_ok": false,
-      "final_node": "圣约翰草用药",
-      "final_level": "⑤LLM(new)",
-      "final_ok": false
-    },
-    {
       "drug": "奥扎莫德",
       "atom_idx": "2",
       "atom": "免疫缺陷状态（见【注意事项】）",
@@ -564,18 +534,6 @@
       "final_node": "育龄女性",
       "final_level": "①精确",
       "final_ok": true
-    },
-    {
-      "drug": "奥扎莫德",
-      "atom_idx": "18",
-      "atom": "正在使用单胺氧化酶（MAO）抑制剂（见【药物相互作用】）",
-      "want": "单胺氧化酶抑制剂",
-      "rule_node": "单胺氧化酶抑制剂",
-      "rule_level": "④新建",
-      "rule_ok": true,
-      "final_node": "单胺氧化酶抑制剂使用期",
-      "final_level": "⑤LLM(new)(降级)",
-      "final_ok": false
     },
     {
       "drug": "来氟米特",
