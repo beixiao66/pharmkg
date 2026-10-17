@@ -53,6 +53,7 @@ class UserResponse(OrmResponse):
     id: int
     username: str
     population_tags: list[str]
+    allergy_history: list[str]
     created_at: datetime
 
 
@@ -119,8 +120,30 @@ class DrugSearchResult(BaseModel):
 
 
 class PopulationTagsUpdate(BaseModel):
-    #: 合法值＝图里实际存在的 `Population` 名（决策 #41）；服务端会校验。
+    """人群 + 过敏史（决策 #42 拆成两个字段）。
+
+    合法值＝`app/population.py` 里的产品标签名（**不是图节点名**）；服务端会校验。
+    图节点名 ↔ 标签名的映射集中在那一个模块里——否则 `哺乳期` 与图里的
+    `哺乳期女性` 字符串不同就会**静默漏配**（安全功能里的漏报方向）。
+    """
+
     tags: list[str] = Field(default_factory=list, max_length=10)
+    allergy_history: list[str] = Field(default_factory=list, max_length=10)
+
+
+class TagCoverage(BaseModel):
+    """**单个标签的覆盖度**——0 也要说 0。
+
+    图里指向人群的禁忌边一共只有 12 条（high 8）。拆完字段后
+    `儿童`/`老年`/`肝功能不全`/`肾功能不全` 下面**一条边都没有**；
+    若界面只说「标了就会查」，用户会得到"没查到风险"＝**假的安全感**。
+    """
+
+    tag: str
+    group: str                  # population | allergy
+    graph_nodes: list[str]      # 映射到图里的 Population 名（空＝未接入）
+    edges: int                  # 该标签在图中 high 置信边的条数
+    mapped: bool                # False＝图里暂无对应节点，**不是**"查过没风险"
 
 
 class MedicineBoxCreate(BaseModel):
@@ -140,11 +163,15 @@ class RiskPair(BaseModel):
     level_label: str
     source: str | None
     note: str = ""
+    #: **无记录时必须给的提醒**：图谱未收录 ≠ 可以同服。
+    #: 界面上这条不能用绿色（绿色＝安全），要中性色 + 明确这句。
+    risk_hint: str = ""
 
 
 class RiskPopulation(BaseModel):
     drug: str
-    tag: str
+    tag: str                    # 命中的**产品标签名**（如 妊娠期），不是图节点名
+    graph_node: str | None = None   # 实际命中的图节点名（如 孕妇）
     evidence: str | None = None
 
 
@@ -166,5 +193,6 @@ class MedicineBoxRisk(BaseModel):
     population: list[RiskPopulation]
     coverage: RiskCoverage
     population_tags: list[str]
+    allergy_history: list[str]
     disclaimer: str
     attribution: str

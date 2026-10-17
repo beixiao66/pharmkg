@@ -82,16 +82,28 @@ def main() -> int:
     ids: dict[str, str] = {}
 
     try:
-        print("── 人群标签枚举 ──")
+        print("── 人群/过敏标签枚举 + 覆盖度（决策 #42）──")
         r = client.get("/medicine-box/population-vocabulary")
         vocab = r.json() if r.status_code == 200 else []
-        check("枚举接口 200", r.status_code == 200, str(vocab))
-        check("枚举＝图里实际存在的 Population（5 个）", len(vocab) == 5,
-              f"{len(vocab)} 个")
-        check("**不含** 儿童/老年/肝功能不全/肾功能不全（图里没有这些节点）",
-              not ({"儿童", "老年", "肝功能不全", "肾功能不全"} & set(vocab)))
-        check("含 孕妇 与 哺乳期女性（字符串与图一致，不是『哺乳期』）",
-              {"孕妇", "哺乳期女性"} <= set(vocab))
+        tags = {v["tag"] for v in vocab}
+        cov = {v["tag"]: v for v in vocab}
+        check("枚举接口 200", r.status_code == 200, f"{len(vocab)} 个标签")
+        check("人群 8 + 过敏史 2 = 10（**不再等于图里的 5 个 Population**）",
+              len(vocab) == 10, f"{len(vocab)} 个")
+        check("**含** 儿童/老年/肝功能不全/肾功能不全（#42 要的就是让这些标签存在）",
+              {"儿童", "老年", "肝功能不全", "肾功能不全"} <= tags)
+        check("人群用产品名 妊娠期/哺乳期/育龄期（**不是图的 孕妇/哺乳期女性**）",
+              {"妊娠期", "哺乳期", "育龄期"} <= tags
+              and not ({"孕妇", "哺乳期女性", "育龄女性"} & tags))
+        check("过敏史单独成组（group=allergy）",
+              cov["三环类药物过敏"]["group"] == "allergy"
+              and cov["大环内酯类药物过敏"]["group"] == "allergy")
+        check("**妊娠期覆盖度 = 图里 孕妇 的 high 边数（4）**",
+              cov["妊娠期"]["edges"] == 4 and cov["妊娠期"]["mapped"] is True,
+              f"edges={cov['妊娠期']['edges']} mapped={cov['妊娠期']['mapped']}")
+        check("**儿童覆盖度 = 0 且 mapped=False（0 就说 0，不许假装能查）**",
+              cov["儿童"]["edges"] == 0 and cov["儿童"]["mapped"] is False,
+              f"edges={cov['儿童']['edges']} mapped={cov['儿童']['mapped']}")
 
         print("\n── 药物检索（决策 #16：只从已有节点里选）──")
         for name in DEMO:
@@ -149,28 +161,44 @@ def main() -> int:
               pairs[0]["level"] == "Major",
               f"{pairs[0]['drug_a']}↔{pairs[0]['drug_b']} {pairs[0]['level']}")
         no_edge = [p for p in pairs if p["level"] is None]
-        check("**无记录的药对也出卡**，且写明「图谱中无记录」",
-              all(p["note"] for p in no_edge),
+        check("**无记录的药对也出卡**，且写明「未收录」",
+              all(p["note"] and "未收录" in p["note"] for p in no_edge),
               f"{len(no_edge)} 对无记录")
+        check("**无记录的卡带 risk_hint，明说「未收录 ≠ 可以同服」**",
+              all("不代表可以同服" in (p.get("risk_hint") or "") or
+                  "≠" in (p.get("risk_hint") or "") for p in no_edge),
+              repr((no_edge[0].get("risk_hint") if no_edge else "")[:40]))
         check("来源标注是 DDInter", "DDInter" in risk["attribution"],
               risk["attribution"][:40])
         check("带免责声明", bool(risk["disclaimer"]))
 
-        print("\n── 人群禁忌 ──")
+        print("\n── 人群禁忌（决策 #42：标签名 vs 图节点名）──")
         r = client.patch("/auth/me/population-tags",
-                         json={"tags": ["哺乳期"]}, headers=ha)
-        check("**拼错的标签**('哺乳期' 而非 '哺乳期女性') → 422",
+                         json={"tags": ["不存在的标签"]}, headers=ha)
+        check("非法标签 → 422", r.status_code == 422, f"→ {r.status_code}")
+        r = client.patch("/auth/me/population-tags",
+                         json={"tags": ["孕妇"]}, headers=ha)
+        check("**旧图节点名『孕妇』不再合法 → 422**（防老数据静默生效）",
               r.status_code == 422, f"→ {r.status_code}")
-        r = client.patch("/auth/me/population-tags", json={"tags": ["孕妇"]},
-                         headers=ha)
-        check("设置合法标签 孕妇 → 200", r.status_code == 200,
+        r = client.patch("/auth/me/population-tags",
+                         json={"tags": ["妊娠期"],
+                               "allergy_history": ["大环内酯类药物过敏"]}, headers=ha)
+        check("设置 妊娠期 + 过敏史 → 200", r.status_code == 200,
               f"→ {r.status_code}")
+        check("两个字段分别存住了（**没有混在一起**）",
+              r.json()["population_tags"] == ["妊娠期"]
+              and r.json()["allergy_history"] == ["大环内酯类药物过敏"],
+              f"{r.json()['population_tags']} / {r.json()['allergy_history']}")
         r = client.get("/medicine-box/risk", headers=ha)
         risk = r.json()
         pop = risk["population"]
-        check("药箱里 乌帕达西替尼 命中 孕妇（high）",
-              any(p["tag"] == "孕妇" and "乌帕达西替尼" in p["drug"] for p in pop),
+        check("药箱里 乌帕达西替尼 命中（high）",
+              any("乌帕达西替尼" in p["drug"] for p in pop),
               str([(p["drug"], p["tag"]) for p in pop]))
+        check("**回填的是标签名 妊娠期，同时保留图节点名 孕妇**（映射没丢信息）",
+              any(p["tag"] == "妊娠期" and p.get("graph_node") == "孕妇"
+                  for p in pop),
+              str([(p["tag"], p.get("graph_node")) for p in pop]))
         check("人群命中带说明书原句", all(p.get("evidence") for p in pop) if pop else False,
               str([p.get("evidence") for p in pop][:1]))
         cov = risk["coverage"]

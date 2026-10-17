@@ -31,13 +31,14 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.config import get_settings
+from app import population
 from app.db import get_db
 from app.deps import get_current_user
 from app.models import AppUser, MedicineBox
 from app.schemas import (DrugHit, DrugSearchResult, MedicineBoxCreate,
                          MedicineBoxItem, MedicineBoxRisk,
                          PopulationTagsUpdate, RiskCoverage, RiskPair,
-                         RiskPopulation, UserResponse)
+                         RiskPopulation, TagCoverage, UserResponse)
 
 router = APIRouter(tags=["用药安全校验（L6）"])
 
@@ -45,7 +46,7 @@ router = APIRouter(tags=["用药安全校验（L6）"])
 #: 混进 Minor 会让用户以为风险低。
 LEVEL_ORDER = {"Major": 0, "Moderate": 1, "Minor": 2, "Unknown": 3, None: 4}
 LEVEL_LABEL = {"Major": "高风险", "Moderate": "中等", "Minor": "轻微",
-               "Unknown": "严重程度未知", None: "图谱中无记录"}
+               "Unknown": "严重程度未知", None: "未收录"}
 
 DISCLAIMER = "以上结果来自知识图谱与公开数据集，仅供参考，不能替代医生或药师的判断。"
 
@@ -62,10 +63,16 @@ def _driver():
                                 auth=(st.neo4j_user, st.neo4j_password))
 
 
-def population_vocabulary(session) -> list[str]:
-    """图里**实际存在**的 `Population` 名——它就是本系统的合法标签枚举。"""
-    return sorted(r["n"] for r in session.run(
-        "MATCH (p:Population) RETURN p.name AS n") if r["n"])
+def population_vocabulary(session) -> list[dict]:
+    """合法标签枚举 = **产品标签名**，并带上每个标签在图里的覆盖度。
+
+    ⚠️ 不再返回图里的 `Population` 名。图节点名是 L4 抽出来的副产品，
+    不该直接当产品枚举（决策 #42）；映射集中在 `app/population.py`。
+    """
+    cov = population.coverage_of(session)
+    order = {"population": 0, "allergy": 1}
+    return [{"tag": t, **v} for t, v in
+            sorted(cov.items(), key=lambda kv: (order[kv[1]["group"]], kv[0]))]
 
 
 @router.get("/drugs/search", response_model=DrugSearchResult,
@@ -106,43 +113,49 @@ def search_drugs(q: str = Query(min_length=1, max_length=32),
         drv.close()
 
 
-@router.get("/medicine-box/population-vocabulary",
-            summary="合法的人群标签枚举（图里实际存在的 Population）")
-def get_population_vocabulary() -> list[str]:
+@router.get("/medicine-box/population-vocabulary", response_model=list[TagCoverage],
+            summary="合法标签枚举 + 每个标签在图谱里的覆盖度")
+def get_population_vocabulary() -> list[TagCoverage]:
+    """⚠️ **必须带覆盖度**：拆完字段后 `儿童`/`老年`/`肝功能不全`/`肾功能不全`
+    在图里**一条边都没有**，前端要能如实显示"0 条"，而不是让用户以为查过了。"""
     drv = _driver()
     try:
         with drv.session() as s:
-            return population_vocabulary(s)
+            return [TagCoverage(**v) for v in population_vocabulary(s)]
     finally:
         drv.close()
 
 
 @router.patch("/auth/me/population-tags", response_model=UserResponse,
-              summary="设置我的人群标签")
+              summary="设置我的人群标签与过敏史")
 def set_population_tags(body: PopulationTagsUpdate,
                         user: AppUser = Depends(get_current_user),
                         db: Session = Depends(get_db)) -> UserResponse:
-    """只接受**图里存在**的 Population 名，其余一律 422。
+    """校验后写入两个字段（决策 #42）。
 
-    为什么不在数据库层放宽：标签拼错不会报错，只会**静默地什么都查不到**——
-    在安全功能里那是漏报。宁可在这里把用户拦住。
+    ⚠️ 校验用的是**产品标签名**（`妊娠期`/`哺乳期`/…），不是图节点名。
+    拼错一律 422——标签拼错不会报错、只会**静默地什么都查不到**，
+    在安全功能里那是漏报方向。宁可在这里把用户拦住。
+
+    ⚠️ 人群与过敏史**分别校验**（两个不同词表），混填会被拒。
     """
-    drv = _driver()
-    try:
-        with drv.session() as s:
-            vocab = set(population_vocabulary(s))
-    finally:
-        drv.close()
-    illegal = [t for t in body.tags if t not in vocab]
+    tags = population.normalize_tags(body.tags)
+    allergies = population.normalize_tags(body.allergy_history)
+    illegal = ([t for t in body.tags if t not in population.POPULATION_TAGS]
+               + [t for t in body.allergy_history if t not in population.ALLERGY_TAGS])
     if illegal:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
-            detail=f"不支持的人群标签 {illegal}；可用的是 {sorted(vocab)}")
-    user.population_tags = list(dict.fromkeys(body.tags))
+            detail=(f"不支持的标签 {illegal}；"
+                    f"人群可用 {sorted(population.POPULATION_TAGS)}，"
+                    f"过敏史可用 {sorted(population.ALLERGY_TAGS)}"))
+    user.population_tags = tags
+    user.allergy_history = allergies
     db.commit()
     db.refresh(user)
     return UserResponse(id=user.id, username=user.username,
                         population_tags=list(user.population_tags or []),
+                        allergy_history=list(user.allergy_history or []),
                         created_at=user.created_at)
 
 
@@ -234,6 +247,7 @@ def check_risk(user: AppUser = Depends(get_current_user),
     ids = [b.drug_id for b in box]
     name_of = {b.drug_id: b.drug_name_snapshot for b in box}
     tags = list(user.population_tags or [])
+    allergies = list(user.allergy_history or [])
 
     pairs: list[RiskPair] = []
     pop_hits: list[RiskPopulation] = []
@@ -265,7 +279,14 @@ def check_risk(user: AppUser = Depends(get_current_user),
                             level=(hit or {}).get("level"),
                             level_label=LEVEL_LABEL[(hit or {}).get("level")],
                             source=(hit or {}).get("source"),
-                            note="" if hit else "图谱中无这两味药的相互作用记录"))
+                            # ⚠️ 措辞从「图谱中无记录」改成「图谱未收录」，
+                            #    并加一句 risk_hint。原来的说法 + 绿色标签
+                            #    会被读成「可以一起吃」——而"没查到"和"没有"
+                            #    在这里根本分不开（全图只有 15 万条 DDInter 边）。
+                            note="" if hit else "图谱未收录这对组合的相互作用",
+                            risk_hint="" if hit else
+                            "图谱未收录 ≠ 可以同服。可能只是数据未覆盖，"
+                            "请以说明书与医生/药师判断为准。"))
                 pairs.sort(key=lambda p: (LEVEL_ORDER[p.level], p.drug_a))
 
                 # ── 人群禁忌 ──
@@ -276,16 +297,26 @@ def check_risk(user: AppUser = Depends(get_current_user),
                     "MATCH (:Drug)-[r:CONTRAINDICATED_FOR]->(:Population) "
                     "WHERE r.confidence='high' RETURN count(r) AS c"
                 ).single()["c"]
-                if tags:
+                # 产品标签 → 图节点名（决策 #42 的映射层）。
+                # ⚠️ 直接把标签名拿去查图会**静默漏配**（`妊娠期` ≠ `孕妇`）。
+                gnodes = population.graph_population_names(tags, allergies)
+                node2tag = {}
+                for tag, graphs in {**population.POPULATION_TAGS,
+                                    **population.ALLERGY_TAGS}.items():
+                    for g in graphs:
+                        node2tag.setdefault(g, tag)
+                if gnodes:
                     for r in s.run(
                             "MATCH (d:Drug)-[e:CONTRAINDICATED_FOR]->(p:Population) "
-                            "WHERE d.id IN $ids AND p.name IN $tags "
+                            "WHERE d.id IN $ids AND p.name IN $nodes "
                             "AND e.confidence = 'high' "
-                            "RETURN d.name AS drug, p.name AS tag, "
-                            "e.evidence AS ev", ids=ids, tags=tags):
+                            "RETURN d.name AS drug, p.name AS gnode, "
+                            "e.evidence AS ev", ids=ids, nodes=gnodes):
                         pop_hits.append(RiskPopulation(
                             drug=r["drug"],
-                            tag=r["tag"], evidence=r["ev"]))
+                            # 回填成**产品标签名**（用户看到的应是 妊娠期，不是 孕妇）
+                            tag=node2tag.get(r["gnode"], r["gnode"]),
+                            graph_node=r["gnode"], evidence=r["ev"]))
         finally:
             drv.close()
 
@@ -304,6 +335,7 @@ def check_risk(user: AppUser = Depends(get_current_user),
                   "**没查到不等于没有**——覆盖不足时请以说明书与医生判断为准。"),
         ),
         population_tags=tags,
+        allergy_history=allergies,
         disclaimer=DISCLAIMER,
         attribution=DDINTER_ATTRIBUTION,
     )

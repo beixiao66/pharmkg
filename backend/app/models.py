@@ -42,6 +42,12 @@ class AppUser(Base):
     #: 孕妇 / 哺乳期 / 儿童 / 老年 / 肝功能不全 / 肾功能不全 …
     population_tags: Mapped[list[str]] = mapped_column(
         ARRAY(Text), nullable=False, server_default="{}")
+    #: 过敏史（决策 #42）：`三环类药物过敏` / `大环内酯类药物过敏`。
+    #: ⚠️ **和 population_tags 分开**：过敏史不是「人群」，原来混在一起
+    #:    逼得界面只能叫「人群 / 过敏史」来打补丁。存的是**产品标签名**，
+    #:    不是图节点名——标签与图节点的映射集中在 `app/population.py`。
+    allergy_history: Mapped[list[str]] = mapped_column(
+        ARRAY(Text), nullable=False, server_default="{}")
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False)
 

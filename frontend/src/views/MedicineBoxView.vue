@@ -9,6 +9,9 @@ const box = ref([])
 const risk = ref(null)
 const vocab = ref([])
 const tags = ref([])
+//: 决策 #42：人群与过敏史是**两个字段**（过敏史不是「人群」，原来混在一起
+//: 逼得界面只能叫「人群 / 过敏史」来打补丁）。
+const allergyTags = ref([])
 const q = ref('')
 const hits = ref([])
 const busy = ref(false)
@@ -20,6 +23,14 @@ const lastQ = ref('')
 //: 检索的总数与被截断标记（后端返回）。**截断必须显示出来**，见 search() 里的说明。
 const meta = ref({ total: 0, truncated: false })
 
+//: 词表按 group 拆开；**每个选项都显示图谱里有几条边**（0 就说"暂无数据"），
+//: 否则用户会以为「标了就一定查得到」。
+const popVocab = computed(() => vocab.value.filter((v) => v.group === 'population'))
+const allergyVocab = computed(() => vocab.value.filter((v) => v.group === 'allergy'))
+function tagLabel(v) {
+  return v.mapped ? `${v.tag}（图谱 ${v.edges} 条）` : `${v.tag}（暂无数据）`
+}
+
 async function load() {
   const [b, v] = await Promise.all([
     api.get('/medicine-box'), api.get('/medicine-box/population-vocabulary'),
@@ -28,7 +39,8 @@ async function load() {
   vocab.value = v.data
   try {
     risk.value = (await api.get('/medicine-box/risk')).data
-    tags.value = [...risk.value.population_tags]
+    tags.value = [...(risk.value.population_tags || [])]
+    allergyTags.value = [...(risk.value.allergy_history || [])]
   } catch (e) { ElMessage.error('风险检查失败：' + humanizeError(e)) }
 }
 
@@ -79,7 +91,8 @@ async function remove(id) {
 
 async function saveTags() {
   try {
-    await api.patch('/auth/me/population-tags', { tags: tags.value })
+    await api.patch('/auth/me/population-tags',
+                    { tags: tags.value, allergy_history: allergyTags.value })
     ElMessage.success('人群标签已保存')
     await load()
   } catch (e) {
@@ -157,12 +170,24 @@ const graph = computed(() => {
           <el-tag closable @close="remove(b.drug_id)">{{ b.drug_name }}</el-tag>
         </div>
         <el-divider />
-        <div style="font-size:13px;color:#606266;margin-bottom:6px">
-          我的人群 / 过敏史（只列图谱里真有的）
+        <!-- 决策 #42：人群与过敏史**分开两个选择器**，且每个选项自带**图谱覆盖度**。
+             覆盖度必须显示：`儿童`/`老年`/… 在图里一条边都没有，
+             只说「标了就会查」会让用户得到"没查到风险"＝假的安全感。 -->
+        <div style="font-size:13px;color:#606266;margin-bottom:4px">
+          我的人群（括号里是该标签在图谱里的禁忌边数）
         </div>
         <el-select v-model="tags" multiple size="small" style="width:100%"
-                   data-test="tag-select">
-          <el-option v-for="t in vocab" :key="t" :label="t" :value="t" />
+                   placeholder="如 妊娠期 / 哺乳期 / 儿童" data-test="tag-select">
+          <el-option v-for="v in popVocab" :key="v.tag" :label="tagLabel(v)"
+                     :value="v.tag" />
+        </el-select>
+        <div style="font-size:13px;color:#606266;margin:8px 0 4px">
+          我的过敏史
+        </div>
+        <el-select v-model="allergyTags" multiple size="small" style="width:100%"
+                   placeholder="如 大环内酯类药物过敏" data-test="allergy-select">
+          <el-option v-for="v in allergyVocab" :key="v.tag" :label="tagLabel(v)"
+                     :value="v.tag" />
         </el-select>
         <el-button size="small" type="primary" style="margin-top:8px"
                    @click="saveTags" data-test="save-tags">保存</el-button>

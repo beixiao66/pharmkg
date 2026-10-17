@@ -69,4 +69,5 @@ def login(body: LoginRequest, db: Session = Depends(get_db)) -> TokenResponse:
 def me(user: AppUser = Depends(get_current_user)) -> UserResponse:
     return UserResponse(id=user.id, username=user.username,
                         population_tags=list(user.population_tags or []),
+                        allergy_history=list(user.allergy_history or []),
                         created_at=user.created_at)

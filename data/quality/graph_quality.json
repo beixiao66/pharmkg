@@ -1,0 +1,328 @@
+{
+  "scale": {
+    "nodes_by_label": {
+      "Check": 3351,
+      "Department": 54,
+      "Disease": 14911,
+      "Drug": 5696,
+      "Food": 4872,
+      "Population": 5,
+      "Producer": 17309,
+      "Symptom": 17135,
+      "Treatment": 598
+    },
+    "edges_by_type": {
+      "ACCOMPANY_DISEASE": 25161,
+      "BELONG_DEPARTMENT": 8820,
+      "COMMON_DRUG": 14693,
+      "CONTRAINDICATED_FOR": 171,
+      "DEPT_BELONG_DEPT": 37,
+      "EAT_FOOD": 22262,
+      "HAS_SYMPTOM": 59762,
+      "INTERACTS_WITH": 150522,
+      "NEED_CHECK": 39416,
+      "NEED_TREATMENT": 20607,
+      "NOTEAT_FOOD": 27646,
+      "RECOMMEND_DRUG": 60621,
+      "RECOMMEND_FOOD": 40221,
+      "RELATE_PRODUCER": 17532,
+      "SAME_AS": 17974
+    },
+    "nodes_total": 63931,
+    "edges_total": 505445
+  },
+  "self_loop": {
+    "count": 112,
+    "samples": [
+      {
+        "label": "Disease",
+        "name": "青年上肢远端肌萎缩",
+        "type": "ACCOMPANY_DISEASE"
+      },
+      {
+        "label": "Disease",
+        "name": "老年人骨关节炎",
+        "type": "ACCOMPANY_DISEASE"
+      },
+      {
+        "label": "Disease",
+        "name": "胃肠道癌",
+        "type": "ACCOMPANY_DISEASE"
+      },
+      {
+        "label": "Disease",
+        "name": "下颌后缩",
+        "type": "ACCOMPANY_DISEASE"
+      },
+      {
+        "label": "Disease",
+        "name": "青少年及小儿卵巢肿瘤",
+        "type": "ACCOMPANY_DISEASE"
+      },
+      {
+        "label": "Disease",
+        "name": "皮脂腺囊肿",
+        "type": "ACCOMPANY_DISEASE"
+      },
+      {
+        "label": "Disease",
+        "name": "糖尿病肾病",
+        "type": "ACCOMPANY_DISEASE"
+      },
+      {
+        "label": "Disease",
+        "name": "阻塞性肺气肿",
+        "type": "ACCOMPANY_DISEASE"
+      },
+      {
+        "label": "Disease",
+        "name": "毛囊瘤",
+        "type": "ACCOMPANY_DISEASE"
+      },
+      {
+        "label": "Disease",
+        "name": "镰状细胞贫血",
+        "type": "ACCOMPANY_DISEASE"
+      }
+    ]
+  },
+  "dosage_split": {
+    "drug_total": 5696,
+    "split_bases": 509,
+    "split_drugs": 1243,
+    "samples": [
+      {
+        "base": "利巴韦林",
+        "forms": [
+          "利巴韦林分散片",
+          "利巴韦林含片",
+          "利巴韦林气雾剂",
+          "利巴韦林泡腾颗粒",
+          "利巴韦林注射液",
+          "利巴韦林滴眼液",
+          "利巴韦林片",
+          "利巴韦林胶囊",
+          "利巴韦林颗粒"
+        ]
+      },
+      {
+        "base": "盐酸氨溴索",
+        "forms": [
+          "盐酸氨溴索分散片",
+          "盐酸氨溴索口服溶液",
+          "盐酸氨溴索口腔崩解片",
+          "盐酸氨溴索注射液",
+          "盐酸氨溴索片",
+          "盐酸氨溴索糖浆",
+          "盐酸氨溴索缓释胶囊",
+          "盐酸氨溴索胶囊"
+        ]
+      },
+      {
+        "base": "阿昔洛韦",
+        "forms": [
+          "阿昔洛韦乳膏",
+          "阿昔洛韦凝胶",
+          "阿昔洛韦分散片",
+          "阿昔洛韦滴眼液",
+          "阿昔洛韦片",
+          "阿昔洛韦缓释片",
+          "阿昔洛韦胶囊"
+        ]
+      },
+      {
+        "base": "双氯芬酸钠",
+        "forms": [
+          "双氯芬酸钠凝胶",
+          "双氯芬酸钠滴眼液",
+          "双氯芬酸钠缓释片",
+          "双氯芬酸钠缓释胶囊",
+          "双氯芬酸钠肠溶片",
+          "双氯芬酸钠肠溶胶囊"
+        ]
+      },
+      {
+        "base": "盐酸左氧氟沙星",
+        "forms": [
+          "盐酸左氧氟沙星分散片",
+          "盐酸左氧氟沙星注射液",
+          "盐酸左氧氟沙星滴眼液",
+          "盐酸左氧氟沙星片",
+          "盐酸左氧氟沙星胶囊",
+          "盐酸左氧氟沙星软膏"
+        ]
+      },
+      {
+        "base": "阿奇霉素",
+        "forms": [
+          "阿奇霉素分散片",
+          "阿奇霉素干混悬剂",
+          "阿奇霉素片",
+          "阿奇霉素肠溶片",
+          "阿奇霉素胶囊",
+          "阿奇霉素颗粒"
+        ]
+      },
+      {
+        "base": "伊曲康唑",
+        "forms": [
+          "伊曲康唑分散片",
+          "伊曲康唑口服液",
+          "伊曲康唑注射液",
+          "伊曲康唑胶囊",
+          "伊曲康唑颗粒"
+        ]
+      },
+      {
+        "base": "克拉霉素",
+        "forms": [
+          "克拉霉素分散片",
+          "克拉霉素干混悬剂",
+          "克拉霉素片",
+          "克拉霉素缓释片",
+          "克拉霉素胶囊"
+        ]
+      },
+      {
+        "base": "吡拉西坦",
+        "forms": [
+          "吡拉西坦分散片",
+          "吡拉西坦注射液",
+          "吡拉西坦片",
+          "吡拉西坦胶囊",
+          "吡拉西坦颗粒"
+        ]
+      },
+      {
+        "base": "吲哚美辛",
+        "forms": [
+          "吲哚美辛凝胶",
+          "吲哚美辛栓",
+          "吲哚美辛肠溶片",
+          "吲哚美辛胶囊",
+          "吲哚美辛软膏"
+        ]
+      }
+    ]
+  },
+  "junk_concat": {
+    "fragment_count": 24,
+    "fragment_samples": [
+      "18AA-Ⅰ",
+      "19AA-Ⅰ",
+      "C",
+      "IV",
+      "SP",
+      "TP",
+      "p",
+      "Ⅰ",
+      "Ⅱ",
+      "Ⅲ"
+    ],
+    "too_long_count": 137,
+    "too_long_samples": [
+      "氯硝西泮类似物（注：实际为新型抗癫痫药，中国药典及NMPA标准名为‘森诺巴特’）",
+      "甲型流感病毒A/越南/1194/2004(H5N1)株抗原（甲醛灭活）",
+      "甲型流感病毒A/加州/7/2009(H1N1)株样抗原（丙内酯灭活）",
+      "加巴喷丁类似物（注：实际为‘噻加宾’；按中国药典规范名）",
+      "胰岛素样生长因子-1/胰岛素样生长因子结合蛋白-3复合物",
+      "霍乱弧菌CVD 103-HgR减毒活疫苗抗原（活）",
+      "佐匹克隆（注：应为扎来普隆，正确译名为扎来普隆）",
+      "流行性腮腺炎病毒Jeryl Lynn株减毒活疫苗",
+      "注射用重组人Ⅱ型肿瘤坏死因子受体-抗体融合蛋白",
+      "霍乱弧菌CVD 103-HgR减毒活疫苗抗原"
+    ],
+    "repeated_half_count": 0,
+    "repeated_half_samples": []
+  },
+  "person_noise": {
+    "drug_marked_count": 0,
+    "drug_marked_samples": [],
+    "disease_marked_count": 0,
+    "disease_marked_samples": [],
+    "short_name_samples": [
+      "21",
+      "23",
+      "29",
+      "2∶1",
+      "30R",
+      "4:1",
+      "9AA",
+      "C14",
+      "IV",
+      "SP"
+    ],
+    "note": "标记载体只抓带『医生/教授/氏』等字样的；**纯人名抓不到**，所以另给一批 2–3 字短名供人工扫"
+  },
+  "oov": {
+    "nodes_by_source": {
+      "ddinter": 1387,
+      "insert": 65,
+      "opencmkg": 62479
+    },
+    "oov_count": 60,
+    "oov_samples": [
+      {
+        "label": "Disease",
+        "name": "CYP2C9*3*3基因型",
+        "source": "insert",
+        "vocab": null
+      },
+      {
+        "label": "Disease",
+        "name": "CYP3A4酶抑制剂使用禁忌",
+        "source": "insert",
+        "vocab": null
+      },
+      {
+        "label": "Disease",
+        "name": "HIV蛋白酶抑制剂",
+        "source": "insert",
+        "vocab": null
+      },
+      {
+        "label": "Disease",
+        "name": "QTc间期延长",
+        "source": "insert",
+        "vocab": null
+      },
+      {
+        "label": "Disease",
+        "name": "QT间期延长",
+        "source": "insert",
+        "vocab": null
+      },
+      {
+        "label": "Disease",
+        "name": "Waldenström巨球蛋白血症",
+        "source": "insert",
+        "vocab": null
+      },
+      {
+        "label": "Disease",
+        "name": "三唑类抗真菌药过敏",
+        "source": "insert",
+        "vocab": null
+      },
+      {
+        "label": "Disease",
+        "name": "中性粒细胞减少",
+        "source": "insert",
+        "vocab": null
+      },
+      {
+        "label": "Disease",
+        "name": "中枢神经系统抑制",
+        "source": "insert",
+        "vocab": null
+      },
+      {
+        "label": "Disease",
+        "name": "乳糖不耐受",
+        "source": "insert",
+        "vocab": null
+      }
+    ],
+    "note": "判据只有『来源=insert 且词表不是 controlled』，**判不了语义对错**；这些节点是 L4 从说明书抽出来的，要看具体名字才谈得上对错"
+  }
+}
