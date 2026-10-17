@@ -110,9 +110,23 @@ def evidence_cypher(intent: str, entities: list[str], session) -> tuple[str, dic
             cy = ("MATCH (a:Drug {name: $e0})-[r:INTERACTS_WITH]-(b:Drug) "
                   "RETURN a, r, b")
     elif intent == "疾病用药":
+        # ⚠️ **必须排除 quality='junk' 的药名。**
+        #    实测 30 个垃圾药名（`8-11`/`SP`/`Ⅰ`/`pH4`/`冻干`…）被当成
+        #    "推荐用药" **591 次**——`8-11` 出现在 119 个疾病里、`SP` 109 个、
+        #    `Ⅰ` 71 个。这不是理论问题：Q06/Q07/Q08/Q09 的答案里已经出现过
+        #    `冻干`/`Ⅰ`/`Ⅱ`/`SP`。**这是本项目里唯一直接弄脏用户可见答案的数据问题。**
+        #    标记见 `scripts/flag_junk_nodes.py`（标记而非删除，可逆）。
+        #
+        #    为什么不删节点：这些"垃圾"里混着判断风险（`18AA-Ⅰ` 是复方氨基酸
+        #    注射液的组分名，可能是某母体药的一部分）。先打标让查询一致过滤，
+        #    要不要真删由看过清单的人决定。
         cy = ("MATCH (dz:Disease {name: $e0})-[r:RECOMMEND_DRUG]->(d:Drug) "
+              "WHERE coalesce(d.quality, 'ok') <> 'junk' "
               "RETURN dz, r, d")
     elif intent == "适应症":
+        # 这里 d 是**用户问的那个药**（`{name: $e0}`），不是图里捞出来的一批，
+        # 所以不存在"垃圾药名混进列表"的问题——不加过滤，但若 e0 本身是
+        # quality='junk' 的节点，实体链接那一层应该先拦住它。
         cy = ("MATCH (dz:Disease)-[r:RECOMMEND_DRUG]->(d:Drug {name: $e0}) "
               "RETURN dz, r, d")
     elif intent == "禁忌":

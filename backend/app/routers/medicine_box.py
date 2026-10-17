@@ -98,11 +98,16 @@ def search_drugs(q: str = Query(min_length=1, max_length=32),
     drv = _driver()
     try:
         with drv.session() as s:
-            total = s.run("MATCH (d:Drug) WHERE d.name = $q "
-                          "OR d.name STARTS WITH $q RETURN count(d) AS c",
-                          q=q).single()["c"]
+            # ⚠️ 排除 quality='junk' 的药名（见 scripts/flag_junk_nodes.py）。
+            #    否则用户能检索到并加进药箱一个叫 `30R`/`SP`/`冻干` 的"药"，
+            #    之后整条风险链路都在算一个不存在的东西。
+            total = s.run("MATCH (d:Drug) WHERE (d.name = $q "
+                          "OR d.name STARTS WITH $q) "
+                          "AND coalesce(d.quality,'ok') <> 'junk' "
+                          "RETURN count(d) AS c", q=q).single()["c"]
             rows = list(s.run(
-                "MATCH (d:Drug) WHERE d.name = $q OR d.name STARTS WITH $q "
+                "MATCH (d:Drug) WHERE (d.name = $q OR d.name STARTS WITH $q) "
+                "AND coalesce(d.quality,'ok') <> 'junk' "
                 "RETURN d.id AS id, d.name AS name, d.name_en AS name_en "
                 + order + " LIMIT $lim", q=q, lim=limit))
         return DrugSearchResult(
