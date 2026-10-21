@@ -196,3 +196,41 @@ class MedicineBoxRisk(BaseModel):
     allergy_history: list[str]
     disclaimer: str
     attribution: str
+
+
+# ---------------------------------------------------------------- 问答（L5）
+
+class ChatTurn(BaseModel):
+    """一轮历史对话（与数据库里的形状一致：问答成对）。"""
+
+    question: str
+    answer: str = ""
+
+
+class AskRequest(BaseModel):
+    question: str = Field(min_length=1, max_length=200)
+    #: 多轮历史，按时间正序。**决策 #39：有历史就一律改写**，不判断"是否含指代"。
+    history: list[ChatTurn] = Field(default_factory=list, max_length=10)
+    do_rewrite: bool = True
+
+
+class AskResponse(BaseModel):
+    """一轮问答的结果。
+
+    刻意**不包含"答得对不对"**——那是评测（L9）用金标准判的，
+    线上系统不该自评。这里只回答"答了什么、依据什么"。
+    """
+
+    question: str
+    rewritten: str              # 多轮改写后的问题（单轮时与 question 相同）
+    intent: str | None
+    entities: list[str]
+    step: str | None            # ok/澄清/无实体/白名单未过/执行失败/超条数上限
+    answer: str
+    cypher: str | None          # 实际执行的 Cypher（可解释性）
+    row_count: int
+    rows_preview: list          # 前 20 行；有的查询会返回上百行
+    evidence: dict | None       # 证据子图（前端可视化用）
+    evidence_consistent: bool | None
+    faithful: bool | None       # 机械忠实度检查的结论
+    out_of_evidence: list[str]

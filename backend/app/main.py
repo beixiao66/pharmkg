@@ -22,6 +22,7 @@ from neo4j import GraphDatabase
 from sqlalchemy import create_engine, text
 
 from app.config import get_settings
+from app.routers import ask as ask_router
 from app.routers import auth as auth_router
 from app.routers import conversations as conversations_router
 from app.routers import medicine_box as medicine_box_router
@@ -57,6 +58,7 @@ app = FastAPI(
 app.include_router(auth_router.router)
 app.include_router(conversations_router.router)
 app.include_router(medicine_box_router.router)
+app.include_router(ask_router.router)
 
 
 @app.on_event("startup")
