@@ -25,6 +25,7 @@ from app.config import get_settings
 from app.routers import ask as ask_router
 from app.routers import auth as auth_router
 from app.routers import conversations as conversations_router
+from app.routers import graph_browse as graph_router
 from app.routers import medicine_box as medicine_box_router
 from app.routers import quality as quality_router
 from app.routers import query as query_router
@@ -63,6 +64,7 @@ app.include_router(medicine_box_router.router)
 app.include_router(ask_router.router)
 app.include_router(quality_router.router)
 app.include_router(query_router.router)
+app.include_router(graph_router.router)
 
 
 @app.on_event("startup")

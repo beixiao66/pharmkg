@@ -270,3 +270,32 @@ class InteractionLookup(BaseModel):
     disclaimer: str
     attribution: str
     coverage_note: str
+
+
+# ---------------------------------------------------------------- 图谱浏览
+
+class GraphEntityHit(BaseModel):
+    name: str
+    label: str
+    #: 度数（有多少条边）。按它降序——孤点点进去是空白页。
+    degree: int
+
+
+class GraphSubgraph(BaseModel):
+    center: str
+    center_label: str
+    nodes: list[dict]           # [{id, label, type}]
+    edges: list[dict]           # [{source, target, label, type}]
+    #: ⚠️ 是否被截断。界面必须说出来，否则让人以为"图就长这样"。
+    truncated: bool
+    edge_limit: int
+
+
+class GraphPath(BaseModel):
+    src: str
+    dst: str
+    found: bool
+    hops: int
+    nodes: list[dict]
+    edges: list[dict]
+    note: str
