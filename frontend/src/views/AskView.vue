@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import api, { humanizeError } from '../api'
 import { levelLabel, typeLabel } from '../labels'
@@ -12,10 +12,96 @@ const turns = ref([])
 const q = ref('')
 const busy = ref(false)
 
+// ── 会话持久化（L7 的验收就是「刷新/重登不丢历史」）──────────────
+//: ⚠️ 第一版问答页**完全没有接持久化**，`turns` 只活在内存里——刷新就丢。
+//:    而 L7 的验收标准写的是「刷新/重登不丢历史」，那条此前只在 API 层测过
+//:    （`l7_selftest.py`），**用户界面上并未兑现**。这里补上。
+const convId = ref(null)
+const convs = ref([])
+
 //: 送给后端的多轮历史：**只含有答案的轮次**（失败/拒答的不算上下文）。
 const history = computed(() =>
   turns.value.filter((t) => t.answer)
     .map((t) => ({ question: t.question, answer: t.answer })))
+
+async function refreshConversations() {
+  try {
+    convs.value = (await api.get('/conversations')).data
+  } catch {
+    convs.value = []          // 列表拿不到不该阻塞提问
+  }
+}
+
+/** 把扁平的 messages 还原成 turns。
+ *
+ *  ⚠️ 消息表只持久化了 `rewritten_query / cypher / evidence`，
+ *     **没有** `intent / entities / row_count`。所以恢复出来的轮次
+ *     只显示答案 + 改写 + Cypher + 证据子图，**不显示那三个标签**——
+ *     宁可少显示，也不要在刷新后编造它们。
+ */
+async function loadConversation(id) {
+  convId.value = id
+  try {
+    const { data } = await api.get(`/conversations/${id}/messages`)
+    const out = []
+    for (const m of data) {
+      if (m.role === 'user') {
+        out.push({ question: m.content, answer: '', meta: null })
+      } else {
+        const last = out[out.length - 1]
+        if (!last) continue
+        last.answer = m.content
+        last.meta = {
+          rewritten: m.rewritten_query || '',
+          cypher: m.cypher,
+          evidence: m.evidence,
+          restored: true,     // 标记"这是从库里恢复的"，模板据此少显示几个标签
+        }
+      }
+    }
+    turns.value = out
+  } catch (e) {
+    ElMessage.error('加载会话历史失败：' + humanizeError(e))
+    turns.value = []
+  }
+}
+
+async function newConversation() {
+  try {
+    const { data } = await api.post('/conversations', { title: '' })
+    convId.value = data.id
+    turns.value = []
+    await refreshConversations()
+  } catch (e) {
+    ElMessage.error('新建会话失败：' + humanizeError(e))
+  }
+}
+
+onMounted(async () => {
+  await refreshConversations()
+  // 默认打开最近一个会话——用户刷新页面最想要的就是"接着刚才继续"
+  if (convs.value.length) await loadConversation(convs.value[0].id)
+})
+
+/** 落库一轮对话（失败不影响已算出的答案）。 */
+async function persist(text, data) {
+  try {
+    if (!convId.value) {
+      const { data: c } = await api.post('/conversations', { title: '' })
+      convId.value = c.id
+    }
+    await api.post(`/conversations/${convId.value}/messages`,
+                   { role: 'user', content: text })
+    await api.post(`/conversations/${convId.value}/messages`, {
+      role: 'assistant', content: data.answer,
+      rewritten_query: data.rewritten, cypher: data.cypher,
+      evidence: data.evidence,
+    })
+    await refreshConversations()
+  } catch {
+    // 写库失败不该影响"答案已经算出来"这件事（/ask 与 /conversations 是分开的接口）
+  }
+}
 
 async function send() {
   const text = q.value.trim()
@@ -29,6 +115,7 @@ async function send() {
     })
     turns.value.push({ question: text, answer: data.answer, meta: data })
     q.value = ''
+    await persist(text, data)      // 落库（失败静默，不打断体验）
   } catch (e) {
     ElMessage.error('提问失败：' + humanizeError(e))
   } finally {
@@ -72,6 +159,23 @@ const STEP_HINT = {
 
 <template>
   <div>
+    <!-- 会话栏：L7 的验收是「刷新/重登不丢历史」，所以这里必须能切会话 -->
+    <el-card shadow="never" style="margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <el-button size="small" type="primary" data-test="new-conv"
+                   @click="newConversation">新对话</el-button>
+        <span style="font-size:12px;color:#909399">最近会话：</span>
+        <el-button v-for="c in convs.slice(0, 6)" :key="c.id" size="small"
+                   :type="convId === c.id ? 'primary' : ''" plain
+                   :data-test="`conv-${c.id}`" @click="loadConversation(c.id)">
+          {{ c.title || `会话 ${c.id}` }}（{{ c.message_count }}）
+        </el-button>
+        <span v-if="!convs.length" style="font-size:12px;color:#c0c4cc">
+          还没有历史会话
+        </span>
+      </div>
+    </el-card>
+
     <el-card v-if="!turns.length" shadow="never">
       <template #header>智能问答</template>
       <p style="color:#606266;font-size:13px">
@@ -98,7 +202,7 @@ const STEP_HINT = {
           改写为：{{ t.meta.rewritten }}
         </div>
 
-        <div style="margin-top:8px;font-size:12px;color:#606266">
+        <div v-if="t.meta && !t.meta.restored" style="margin-top:8px;font-size:12px;color:#606266">
           <el-tag size="small">意图：{{ t.meta.intent || '—' }}</el-tag>
           <el-tag v-for="e in t.meta.entities" :key="e" size="small" type="success"
                   style="margin-left:6px">{{ e }}</el-tag>
@@ -106,6 +210,10 @@ const STEP_HINT = {
                   data-test="row-count">命中 {{ t.meta.row_count }} 行</el-tag>
           <el-tag v-if="t.meta.faithful === false" size="small" type="danger"
                   style="margin-left:6px">⚠️ 忠实度检查未过</el-tag>
+        </div>
+        <!-- 从库里恢复的轮次没有 intent/entities/row_count（未持久化），如实说明 -->
+        <div v-else-if="t.meta" style="margin-top:8px;font-size:12px;color:#c0c4cc">
+          历史记录（意图/实体/命中行数未持久化，故不显示）
         </div>
 
         <el-alert v-if="STEP_HINT[t.meta.step]" type="info" :closable="false"

@@ -174,6 +174,42 @@ def main() -> int:
         check("可重建索引（图谱变更后要用）", r.status_code == 200,
               str(r.json() if r.status_code == 200 else r.status_code))
 
+        # ── 问答页依赖的持久化契约（L7 的验收：刷新/重登不丢历史）──
+        # 前端按「user → assistant」配对还原成一轮；这依赖两件事：
+        #   ① 消息按**时间正序**返回（后端是取最近 N 条再 reversed，见 conversations.py）
+        #   ② assistant 消息里带回了 rewritten_query / cypher / evidence
+        # 这两条一旦被改坏，前端会静默地把"回答"配到错的"提问"上——**不报错，只是乱**。
+        print("\n── 持久化契约（前端刷新恢复历史依赖它）──")
+        r = client.post("/conversations", headers=h, json={"title": ""})
+        cid = (r.json() or {}).get("id") if r.status_code == 201 else None
+        check("建会话 → 201", r.status_code == 201 and cid is not None,
+              f"→ {r.status_code} id={cid}")
+        q_text = "卡维地洛和依度沙班能一起吃吗？"
+        client.post(f"/conversations/{cid}/messages", headers=h,
+                    json={"role": "user", "content": q_text})
+        client.post(f"/conversations/{cid}/messages", headers=h,
+                    json={"role": "assistant", "content": a.get("answer") or "",
+                          "rewritten_query": a.get("rewritten"),
+                          "cypher": a.get("cypher"), "evidence": a.get("evidence")})
+        r = client.get(f"/conversations/{cid}/messages", headers=h)
+        msgs = r.json() if r.status_code == 200 else []
+        check("读回来 2 条", len(msgs) == 2, str(len(msgs)))
+        check("**按时间正序**（user 在前）——前端配对全靠这个",
+              len(msgs) == 2 and msgs[0]["role"] == "user"
+              and msgs[1]["role"] == "assistant",
+              str([m["role"] for m in msgs]))
+        check("user 消息内容对得上", msgs and msgs[0]["content"] == q_text)
+        check("assistant 消息**带回了 Cypher**（刷新后还能展开看依据）",
+              len(msgs) == 2 and bool(msgs[1].get("cypher")),
+              str(msgs[1].get("cypher"))[:40] if len(msgs) == 2 else "")
+        check("assistant 消息**带回了 evidence**（刷新后还能画证据子图）",
+              len(msgs) == 2 and bool(msgs[1].get("evidence")))
+        r = client.get("/conversations", headers=h)
+        lst = r.json() if r.status_code == 200 else []
+        check("会话列表里能看到它，且 message_count = 2",
+              bool(lst) and lst[0]["id"] == cid and lst[0]["message_count"] == 2,
+              str([(x["id"], x["message_count"]) for x in lst[:2]]))
+
     finally:
         with SessionLocal() as db:
             db.execute(delete(AppUser).where(AppUser.username == user))
