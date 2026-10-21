@@ -26,6 +26,7 @@ from app.routers import ask as ask_router
 from app.routers import auth as auth_router
 from app.routers import conversations as conversations_router
 from app.routers import medicine_box as medicine_box_router
+from app.routers import quality as quality_router
 
 #: 健康检查里**每个数据库**的探测预算（秒）。
 #:
@@ -59,6 +60,7 @@ app.include_router(auth_router.router)
 app.include_router(conversations_router.router)
 app.include_router(medicine_box_router.router)
 app.include_router(ask_router.router)
+app.include_router(quality_router.router)
 
 
 @app.on_event("startup")
