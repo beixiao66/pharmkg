@@ -1,18 +1,24 @@
 import io
+import pathlib
 import sys
 import urllib.request
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-BASE = "http://127.0.0.1:5173"
-MODULES = [
-    "/src/main.js",
-    "/src/api.js",
-    "/src/App.vue",
-    "/src/views/LoginView.vue",
-    "/src/views/MedicineBoxView.vue",
-    "/src/components/RiskCard.vue",
-    "/src/components/EvidenceGraph.vue",
-]
+#: 端口可用命令行覆盖（默认 5173；我在沙箱里验证时用 5174，避开用户的端口）。
+#: 之前靠 `exec(...).replace('5173','5174')` 这种方式覆盖，结果 `__file__` 不见了——
+#: **用参数比替换源码可读也可靠**。
+PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 5173
+BASE = f"http://127.0.0.1:{PORT}"
+
+#: ⚠️ **自动发现**而不是写死清单。
+#: 写死清单**会漏掉新加的文件**——这次加 `AskView.vue` 时就漏了：
+#: 检查打印"7/7 通过"，而新页面根本没被编译过。**一个会漏掉新文件的检查，
+#: 比没有检查更危险**（它给的是假的安全感）。
+_SRC = pathlib.Path(__file__).resolve().parents[1] / "src"
+MODULES = sorted(
+    "/src/" + str(p.relative_to(_SRC)).replace("\\", "/")
+    for p in list(_SRC.rglob("*.vue")) + list(_SRC.rglob("*.js"))
+)
 
 ok = bad = 0
 for m in MODULES:

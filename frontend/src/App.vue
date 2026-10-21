@@ -2,23 +2,40 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import LoginView from './views/LoginView.vue'
 import MedicineBoxView from './views/MedicineBoxView.vue'
+import AskView from './views/AskView.vue'
 
 const token = ref(localStorage.getItem('token') || '')
+//: 当前视图。提案里五个模块，界面目前有两个：问答（核心）与药箱。
+const tab = ref('ask')
+
 function onLogout() { token.value = '' }
 onMounted(() => window.addEventListener('pharmkg:logout', onLogout))
 onUnmounted(() => window.removeEventListener('pharmkg:logout', onLogout))
+
+function logout() {
+  localStorage.removeItem('token')
+  token.value = ''
+}
 </script>
 
 <template>
   <el-container>
     <el-header style="display:flex;align-items:center;justify-content:space-between">
-      <h2 style="margin:0">pharmkg · 用药安全校验</h2>
-      <el-button v-if="token" size="small" @click="localStorage.removeItem('token'); token=''">
-        退出
-      </el-button>
+      <h2 style="margin:0">pharmkg · 医药查询与智能用药</h2>
+      <div v-if="token">
+        <el-radio-group v-model="tab" size="small" data-test="tab-switch">
+          <el-radio-button value="ask">智能问答</el-radio-button>
+          <el-radio-button value="box">我的药箱</el-radio-button>
+        </el-radio-group>
+        <el-button size="small" style="margin-left:12px" data-test="logout"
+                   @click="logout">退出</el-button>
+      </div>
     </el-header>
     <el-main>
-      <MedicineBoxView v-if="token" />
+      <template v-if="token">
+        <AskView v-if="tab === 'ask'" />
+        <MedicineBoxView v-else />
+      </template>
       <LoginView v-else @logged-in="token = $event" />
     </el-main>
   </el-container>
