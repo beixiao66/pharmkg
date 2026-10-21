@@ -24,10 +24,11 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
-# psycopg[binary] 自带二进制，不需要编译；只有健康检查用得上 curl
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl \
-    && rm -rf /var/lib/apt/lists/*
+# ⚠️ **刻意不装 curl。** 第一版为健康检查装了 curl（`apt-get install curl`），
+# 结果在代理环境下 `apt-get` 直连 deb.debian.org 拿到 502、速度 23 kB/s，构建失败。
+# 健康检查用 `python -c "urllib.request..."` 就行——**基础镜像自带 python**，
+# 少一个 apt 步骤就少一个网络依赖，镜像也更小。
+# 教训：**能不加系统包就不加**，尤其在"用户机器网络环境未知"的场景下。
 
 WORKDIR /app
 
