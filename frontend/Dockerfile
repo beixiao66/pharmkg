@@ -16,11 +16,23 @@ WORKDIR /app
 
 # 先拷锁文件，让依赖层可缓存
 COPY frontend/package.json frontend/pnpm-lock.yaml frontend/pnpm-workspace.yaml ./
-# ⚠️ pnpm 11 起，`pnpm-workspace.yaml` 里的 `allowBuilds` 决定 esbuild 的构建脚本是否执行；
-#    这里用 `--config.confirmModulesPurge=false` 避免非交互环境下的确认提示。
+# ⚠️ 两个来自实测的坑：
+#
+# 1. **`pnpm-workspace.yaml` 里的 `allowBuilds: {esbuild: true}` 必须一起拷进来**。
+#    pnpm 11 靠它决定要不要执行 esbuild 的构建脚本；缺了它，`vite build` 会报
+#    `Cannot find package 'esbuild'`——**而这个报错完全不提 pnpm 的构建脚本策略**，
+#    极难定位（开发期就为这个折腾过一轮）。
+#
+# 2. **抗慢网络**：实测本机容器的 npm registry **单个 ping 就要 30 秒**
+#    （`npm ping` → PONG 30249ms）。默认的并发下载 + 短超时会让 `pnpm install`
+#    直接失败，而报错只有一句 exit 1。所以这里显式降并发、拉长超时——
+#    慢可以等，失败不行。
 RUN corepack enable \
     && corepack prepare pnpm@11.7.0 --activate \
-    && pnpm install --frozen-lockfile
+    && pnpm install --frozen-lockfile \
+       --network-concurrency=1 \
+       --fetch-timeout=300000 \
+       --config.confirmModulesPurge=false
 
 COPY frontend/ ./
 RUN pnpm build
