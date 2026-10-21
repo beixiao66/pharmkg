@@ -135,6 +135,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--no-schema", action="store_true", help="消融：不给 schema")
     ap.add_argument("--timeout", type=float, default=10.0, help="单条查询超时（秒）")
     ap.add_argument("--show-cypher", action="store_true")
+    #: 同厂商多模型对比（§13.4 消融第 ③ 项）。配置里本就有这句话：
+    #: 「多模型对比靠改 llm_model 实现」，这里只是把它开放成命令行参数。
+    ap.add_argument("--model", default="",
+                    help="覆盖 LLM_MODEL（如 qwen-max）；不填则用配置里的默认模型")
     args = ap.parse_args(argv)
 
     from app.config import get_settings
@@ -142,6 +146,9 @@ def main(argv: list[str] | None = None) -> int:
     from openai import OpenAI
 
     st = get_settings()
+    if args.model and args.model != st.llm_model:
+        # pydantic 设置对象默认允许赋值（未开 frozen）；显式覆盖，全脚本只认 st.llm_model
+        st.llm_model = args.model
     if not st.llm_configured:
         log("✗ LLM 未配齐。")
         return 2
@@ -314,11 +321,20 @@ def main(argv: list[str] | None = None) -> int:
                     log(f"    判定会变的条目：{per_run[0]['detail'][i]['qid']}")
 
     if tag == "full":
-        OUT_FILE.write_text(json.dumps(
+        # ⚠️ **换模型时绝不能覆盖基线产物。**
+        #    `l5_text2cypher.json` 里那份 qwen-plus 的结果是已入库的对照基线
+        #    （22/23），被冲掉就再也复现不出来（temperature=0 也不保证逐字相同）。
+        #    所以：显式给了 `--model` 就写到带模型名的文件里；
+        #    不带 `--model` 才写原路径（保持原有行为不变）。
+        out = (OUT_FILE if not args.model
+               else OUT_FILE.with_name(f"{OUT_FILE.stem}_{st.llm_model}.json"))
+        out.write_text(json.dumps(
             {"tag": tag, "model": st.llm_model, "repeat": args.repeat,
              "fewshot": len(fewshot), "runs": per_run},
             ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
-        log(f"  ✓ 已写 {OUT_FILE.relative_to(REPO_ROOT)}")
+        log(f"  ✓ 已写 {out.relative_to(REPO_ROOT)}")
+        if out != OUT_FILE:
+            log(f"     （基线 {OUT_FILE.name} 未被触碰）")
     return 0
 
 

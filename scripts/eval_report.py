@@ -89,6 +89,7 @@ def main() -> int:
 
     # ── L5 Text2Cypher ────────────────────────────────────────
     d = load_json("l5_text2cypher.json")
+    d_max = load_json("l5_text2cypher_qwen-max.json")
     if d and d.get("runs"):
         run = d["runs"][0]
         rows.append(("Text2Cypher 严格（结果集完全一致）",
@@ -99,6 +100,20 @@ def main() -> int:
                      "data/eval/l5_text2cypher.json"))
     else:
         missing.append("Text2Cypher 产物")
+
+    # 消融第 ③ 项：同厂商多模型对比（qwen-plus vs qwen-max）
+    if d and d_max and d.get("runs") and d_max.get("runs"):
+        rb, rm = d["runs"][0], d_max["runs"][0]
+        rows.append((f"Text2Cypher 严格 · {d_max['model']}（对照 {d['model']}）",
+                     pct(rm["strict_ok"], rm["scored"]), "机械",
+                     "data/eval/l5_text2cypher_qwen-max.json"))
+        # 逐条判定一致数——比总分更能说明"换大模型有没有用"
+        qb = {x["qid"]: bool(x.get("ok")) for x in rb.get("detail") or []}
+        qm = {x["qid"]: bool(x.get("ok")) for x in rm.get("detail") or []}
+        common = [q for q in qb if q in qm]
+        same = sum(1 for q in common if qb[q] == qm[q])
+        rows.append(("两个模型**逐条判定一致**的题数",
+                     f"{same}/{len(common)}", "机械", "两者 detail 逐题比对"))
 
     # ── L5 多轮改写（机器）────────────────────────────────────
     d = load_json("l5_rewrite.json")
@@ -183,13 +198,18 @@ def main() -> int:
         "",
         "| 消融项 | 状态 | 说明 |",
         "|---|---|---|",
-        "| ① 纯 LLM vs 图谱增强 | ❌ **未做** | `data/eval/` 下**没有任何 baseline 产物**。"
-        "必须补：对同一 28 题直接问 LLM（不给图谱证据），再与图谱增强的答案人工对比。 |",
+        "| ① 纯 LLM vs 图谱增强 | ⚠️ **产物已生成，判定未做** | "
+        "基线答案见 `data/eval/l9_baseline.json`（24 题，不给任何图谱证据）；"
+        "对照表 `data/eval/l9_baseline_review.csv` **等人填两列**"
+        "（哪个更可靠 / 基线有没有编造）。**填完才有结论数字。** |",
         "| ② 单轮 vs 多轮 | ⚠️ **部分** | 有单轮/多轮各自的成功率，但**没有把多轮拆成"
         "『改写前 vs 改写后』的对照**（决策 #39 已把多轮统一改成一律改写，所以"
         "『不改写』那一臂现在是历史数据）。 |",
-        "| ③ 同厂商多模型 | ❌ **未做** | 只跑过 `qwen-plus`。决策 #22 允许"
-        "（同 key 下 qwen-plus / qwen-max 对比），但没有产物。 |",
+        "| ③ 同厂商多模型 | ✅ **已完成** | `qwen-plus` vs `qwen-max`，同批 23 题、"
+        "同提示词、`temperature=0`。**结果：严格口径都是 22/23 = 95.7%，"
+        "而且 24 条逐条判定 100% 一致**——换更大的模型对 Text2Cypher **零增益**。"
+        "两个模型在 Q23 上生成的 Cypher **逐字相同**，说明瓶颈不在模型能力，"
+        "而在题面定义与图谱能提供的信息。 |",
         "",
         "**为什么把缺失项写进总表**：如果只列已有数字，读表的人会以为消融做完了。"
         "本项目宁可少做也不做不可验证的产出（决策 #34 的口径）。",
