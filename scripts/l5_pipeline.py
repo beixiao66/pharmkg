@@ -138,7 +138,12 @@ def run_turn(session, client, st, question: str, *, intent_gold: str = "",
 
     if not ents:
         out["step"] = "无实体"
-        out["answer"] = f"没能从问题里认出可查询的实体。{DISCLAIMER}"
+        out["answer"] = (
+            "这个问题不在本系统的查询范围内——我只会查图谱里的药物、疾病、"
+            "人群等信息，没法回答其他类型的问题。\n\n"
+            "可以换个问法试试，例如「某某药和某某药能一起吃吗」、"
+            "「某某病可以用哪些药」。"
+            f"{DISCLAIMER}")
         out["faithful"] = True
         return out
 

@@ -108,6 +108,25 @@ def main() -> int:
         check("答案里出现 Major", "Major" in (a.get("answer") or ""),
               (a.get("answer") or "")[:60])
 
+        # ── 面向普通用户的三条硬要求（决策 #43）──
+        # 用户实测时指出：原先答案是「根据图谱，A 与 B 之间存在 **Major** 级相互作用。」
+        #   · `**` 被当文字显示（模板输出 markdown，页面按纯文本渲染）
+        #   · `Major` 是英文码，界面上别处已经叫「高风险」
+        #   · 用户问「能一起吃吗」，系统只陈述"存在相互作用"，**没回应问题**
+        # 这三条不写进自测，改回去就没人拦。
+        print("\n── 面向普通用户（决策 #43）──")
+        ans = a.get("answer") or ""
+        check("**答案里没有 markdown 星号**（`**` 会被原样显示）",
+              "**" not in ans, [x for x in ans.split("\n") if "**" in x][:1])
+        check("等级用中文「高风险」而不是英文码",
+              "高风险" in ans and "「高风险」" in ans, ans[:40])
+        check("**正面回应「能不能」**（给出行动建议）",
+              "通常建议避免同时使用" in ans, "未找到行动建议")
+        check("**限定措辞**：明确不是个体化医嘱 + 让去问医生",
+              "不是针对你个人情况" in ans and "咨询医生" in ans)
+        check("出处里保留原始等级 Major（可追溯到 DDInter）",
+              "DDInter" in ans and "Major" in ans)
+
         # ── 不自评 ──
         print("\n── 线上接口不该自评 ──")
         check("**返回里没有 result_ok**（金标准字段不该外泄）",

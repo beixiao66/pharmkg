@@ -201,14 +201,50 @@ def _list(names: list[str]) -> str:
     return "、".join(uniq[:MAX_LISTED]) + f" 等 {len(uniq)} 个"
 
 
+#: 严重等级 → （中文名, 这个等级**意味着什么**）。
+#:
+#: ⚠️ 这是**固定文本，不是模型生成的**——所以不会引入幻觉，每句话都能指回证据。
+#: 加它的原因：原先答案直接吐 DDInter 的英文码 `Major`，普通用户根本不知道
+#: 那代表什么，也不知道该不该吃。用户实测后提出「回答让普通用户很难理解」。
+#:
+#: ⚠️ 措辞必须留余地：说「通常建议避免」而不是「禁止」，因为
+#: **数据库记录的是"这对组合存在相互作用"，不是"你必须停药"**。
+#: 用户拍板（决策 #43）：可以给行动建议，但必须限定措辞并明确不是个体化医嘱。
+LEVEL_INFO: dict[str, tuple[str, str]] = {
+    "Major": ("高风险", "这两种药联用时可能造成严重后果，通常建议避免同时使用"),
+    "Moderate": ("中等风险", "联用时可能需要调整剂量或加强监测，具体由医生判断"),
+    "Minor": ("轻微", "风险相对较小，通常无需特别处理，但仍建议留意身体反应"),
+    "Unknown": ("严重程度未知",
+                "数据库没有给出这一对的等级，这不等于「轻微」，建议按最坏情况对待"),
+}
+
+#: 数据来源说明——每条相互作用答案都带上，让"等级 Major"这个原始值仍可追溯。
+INTERACTION_SOURCE = ("数据来源：DDInter 药物相互作用数据库"
+                      "（该库对此组合的分级为 {level}）")
+
+
 def template_answer(intent: str, entities: list[str], ev: dict) -> str:
     """**零幻觉基线**：只把证据里的值填进固定句式，一个字都不生成。
 
     这个基线的作用不是"更好的回答"，而是给 LLM 回答提供一个**下界与参照**：
     它 100% 忠实（因为它只会照抄证据），所以任何 LLM 回答的忠实度都该以它为基准看。
+
+    ## 为什么句式要"面向普通用户"而不是"面向图"
+
+    第一版句式是 `根据图谱，A 与 B 之间存在 **Major** 级相互作用。`，实测后用户
+    指出三点（决策 #43）：
+      ① `**Major**` 的星号被当文字渲染了（模板输出 markdown，页面按纯文本显示）；
+      ② `Major` 是英文码，界面上别处已经叫「高风险」，答案里却不一致；
+      ③ 用户问的是「**能**一起吃吗」，系统答的是「存在相互作用」——
+         **陈述了事实，但没回应问题**。
+
+    现在每条答案都：先给**结论**（是什么等级、能不能）、再给**这个等级意味着什么**
+    （固定释义）、然后**说明边界**（不是个体化医嘱）、最后**给出处**。
     """
     if not ev["nodes"] and not ev["edges"]:
-        return "图谱中无相关记录。" + DISCLAIMER
+        return ("图谱里没有找到与这个问题相关的记录。\n\n"
+                "这不代表没有风险——可能只是本系统没有收录相关内容。"
+                "请以药品说明书与医生、药师的判断为准。\n\n" + DISCLAIMER)
 
     # ⚠️ 踩过两次，第二次是用户抽检表照出来的，值得记清楚。
     #
@@ -235,8 +271,16 @@ def template_answer(intent: str, entities: list[str], ev: dict) -> str:
 
     if intent == "相互作用":
         if len(entities) > 1 and levels:
-            return (f"根据图谱，{entities[0]} 与 {entities[1]} 之间存在 "
-                    f"**{levels[0]}** 级相互作用。{DISCLAIMER}")
+            lv = levels[0]
+            zh, meaning = LEVEL_INFO.get(lv, (lv, "数据库未给出这个等级的说明"))
+            # ① 结论 → ② 这个等级意味着什么 → ③ 边界 → ④ 出处。
+            #    用户问的是「能一起吃吗」，所以第一句之后必须**正面回应**，
+            #    但仍限定成"一般性提示"，不当个体化医嘱。
+            return (f"{entities[0]} 与 {entities[1]} 之间存在「{zh}」的相互作用。\n\n"
+                    f"按药物相互作用数据库的分级，「{zh}」意味着{meaning}。"
+                    f"这是基于数据库记录的一般性提示，不是针对你个人情况的判断——"
+                    f"是否调整用药请咨询医生或药师。\n\n"
+                    f"{INTERACTION_SOURCE.format(level=lv)}。{DISCLAIMER}")
         # ⚠️ `INTERACTS_WITH` 是无向关系，图里存的方向不由我们决定：
         #    实测 `依度沙班 -[INTERACTS_WITH]-> 卡维地洛片`——`to` 端恰好是实体自己。
         #    所以"对方药"要挑**不在 entities 里**的那一端，不能只看 `to`。
@@ -244,15 +288,23 @@ def template_answer(intent: str, entities: list[str], ev: dict) -> str:
         for e, lv in zip(ev["edges"], levels):
             pair = [x for x in (e["from"], e["to"]) if x not in entities]
             if pair:
-                pairs.append(f"{pair[0]}（{lv}）")
-        return (f"根据图谱，{entities[0]} 共有 {len(ev['edges'])} 条相互作用记录："
-                f"{_list(pairs)}。{DISCLAIMER}")
+                zh = LEVEL_INFO.get(lv, (lv, ""))[0]
+                pairs.append(f"{pair[0]}（{zh}）")
+        return (f"{entities[0]} 在图谱中共记录到 {len(ev['edges'])} 条相互作用："
+                f"{_list(pairs)}。\n\n"
+                f"这里只列出数据库已收录的部分，未列出的不代表没有相互作用。"
+                f"{DISCLAIMER}")
     if intent == "疾病用药":
-        return (f"根据图谱，{entities[0]} 的推荐用药共 {len(names)} 种："
-                f"{_list(names)}。{DISCLAIMER}")
+        return (f"图谱记录 {entities[0]} 的推荐用药共 {len(names)} 种："
+                f"{_list(names)}。\n\n"
+                f"这些是公开图谱『疾病-推荐药物』关系里的记录，不是临床指南；"
+                f"该关系存在噪声（例如给病毒性感染列出抗生素），"
+                f"请以说明书与医生判断为准。{DISCLAIMER}")
     if intent == "适应症":
-        return (f"根据图谱，{entities[0]} 出现在 {len(names)} 个疾病的推荐用药中："
-                f"{_list(names)}。{DISCLAIMER}")
+        return (f"图谱记录 {entities[0]} 出现在 {len(names)} 个疾病的推荐用药中："
+                f"{_list(names)}。\n\n"
+                f"这是从公开图谱反查出来的关联，不代表这些疾病都是它的适应症；"
+                f"准确的适应症请以药品说明书为准。{DISCLAIMER}")
     if intent == "禁忌":
         if len(entities) > 1:
             # ⚠️ 原写法是 `根据图谱，{entities[0]} 与该情况存在禁忌关系（高置信度）`——
@@ -269,19 +321,26 @@ def template_answer(intent: str, entities: list[str], ev: dict) -> str:
                 target = e["to"]
             conf = (ev["edges"][0]["props"] or {}).get("confidence", "") if ev["edges"] else ""
             conf_s = f"（{conf} 置信度）" if conf else ""
-            return (f"根据图谱，{drug} 禁用于 {target}{conf_s}。"
-                    f"说明书原句：{evid}。{DISCLAIMER}")
-        return (f"根据图谱，{entities[0]} 的禁忌（高置信度）共 {len(targets)} 条："
-                f"{_list(targets)}。{DISCLAIMER}")
+            # 「禁忌」与「风险等级」性质不同：禁忌是说明书里**不应使用**的规定，
+            # 不是"风险有多高"的评分——这一点要让用户分清。
+            return (f"{drug} 在说明书里明确禁用于 {target}{conf_s}。\n\n"
+                    f"说明书原句：「{evid}」。\n\n"
+                    f"禁忌与「风险高低」不是一回事：它是说明书规定「不应使用」的情形，"
+                    f"不存在「剂量调小一点就能用」的说法。请遵医嘱。{DISCLAIMER}")
+        return (f"图谱记录 {entities[0]} 的禁忌共 {len(targets)} 条："
+                f"{_list(targets)}。\n\n"
+                f"这些是说明书里写明「不应使用」的情形，与风险等级不是一回事。"
+                f"{DISCLAIMER}")
     if intent == "药品信息":
         en = None
         for n in ev["nodes"]:
             en = n["props"].get("name_en") or en
         if en:
-            return f"根据图谱，{entities[0]} 的英文名是 {en}。{DISCLAIMER}"
-        return (f"根据图谱中记录，{entities[0]} 的相关信息为："
-                f"{_list(drugs)}。{DISCLAIMER}")
-    return "图谱中无相关记录。" + DISCLAIMER
+            return (f"{entities[0]} 的英文名是 {en}。{DISCLAIMER}")
+        return (f"图谱里没有收录 {entities[0]} 的英文名。{DISCLAIMER}")
+    return ("图谱里没有找到与这个问题相关的记录。\n\n"
+            "这不代表没有风险——可能只是本系统没有收录。"
+            "请以药品说明书与医生、药师的判断为准。\n\n" + DISCLAIMER)
 
 
 # ---------------------------------------------------------------- 忠实度检查

@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import api, { humanizeError } from '../api'
+import { levelLabel, typeLabel } from '../labels'
 import EvidenceGraph from '../components/EvidenceGraph.vue'
 
 //: 一轮一个对象：{question, answer, meta}
@@ -35,7 +36,12 @@ async function send() {
   }
 }
 
-/** 把 `/ask` 返回的证据（原始图结构）适配成 EvidenceGraph 要的形状。 */
+/** 把 `/ask` 返回的证据（原始图结构）适配成 EvidenceGraph 要的形状。
+ *
+ *  ⚠️ 边标签要翻成人话：证据里的 `type` 是关系类型的英文名
+ *  （`INTERACTS_WITH`），用户实测截图里边上就显示着这串大写——
+ *  那是给开发者看的。有 `level` 属性时优先显示「相互作用（高风险）」这种。
+ */
 function asGraph(ev) {
   if (!ev || !ev.nodes) return { nodes: [], edges: [] }
   const nodes = (ev.nodes || []).filter((n) => n.name).map((n) => ({
@@ -43,9 +49,14 @@ function asGraph(ev) {
     label: n.name,
     type: n.label || (n.labels && n.labels[0]) || 'Node',
   }))
-  const edges = (ev.edges || []).filter((e) => e.from && e.to).map((e) => ({
-    source: e.from, target: e.to, label: e.type || e.label || '',
-  }))
+  const edges = (ev.edges || []).filter((e) => e.from && e.to).map((e) => {
+    const t = typeLabel(e.type)
+    const lv = levelLabel((e.props || {}).level)
+    return {
+      source: e.from, target: e.to,
+      label: lv ? `${t}（${lv}）` : t,
+    }
+  })
   return { nodes, edges }
 }
 

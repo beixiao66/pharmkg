@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import api, { humanizeError } from '../api'
+import { typeLabel } from '../labels'
 import EvidenceGraph from '../components/EvidenceGraph.vue'
 
 // ── 实体检索 + 邻域子图 ────────────────────────────────────────
@@ -58,10 +59,15 @@ async function findPath() {
   }
 }
 
-//: 把接口返回的 {nodes:[{id,label,type}], edges:[{source,target,label}]} 直接交给
-//: EvidenceGraph（它的契约就是这形状），所以这里不用再适配。
+//: 把接口返回的 {nodes:[{id,label,type}], edges:[{source,target,label}]} 交给
+//: EvidenceGraph。**边标签要翻译**——原始值是 `INTERACTS_WITH` 这类关系类型名，
+//: 那是给开发者看的；给用户看的是「相互作用」。
 function asGraph(d) {
-  return d ? { nodes: d.nodes || [], edges: d.edges || [] } : { nodes: [], edges: [] }
+  if (!d) return { nodes: [], edges: [] }
+  return {
+    nodes: d.nodes || [],
+    edges: (d.edges || []).map((e) => ({ ...e, label: typeLabel(e.label || e.type) })),
+  }
 }
 </script>
 
