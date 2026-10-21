@@ -1,0 +1,33 @@
+# 构建上下文排除项
+#
+# ⚠️ 后端镜像的构建上下文是**仓库根目录**（见 backend/Dockerfile 的说明），
+# 所以这份忽略清单直接决定了镜像体积与构建速度。
+# 下面这几项（node_modules / .venv / .docker-data）加起来有几百 MB，
+# 不排除的话构建会慢到不可用，而且会覆盖镜像里装好的依赖。
+
+# 依赖目录（镜像里会重新装）
+**/node_modules
+**/.venv
+**/__pycache__
+**/*.pyc
+**/.pnpm-store
+
+# 数据卷（Neo4j/PG 的物理数据，绝不能进镜像）
+.docker-data
+**/.docker-data
+
+# 前端构建产物（容器里现build）
+frontend/dist
+
+# 临时与本地文件
+_tmp
+.cache
+.slidep
+**/.DS_Store
+*.log
+
+# ⚠️ **不排除** data/ 与 scripts/：
+#   · scripts/ 是 /ask 的运行时依赖（L5 流水线）
+#   · data/eval/l5_fewshot.csv、data/quality/graph_quality.json 是接口要读的产物
+#   排除它们能让镜像变小，但会让 /ask 与 /quality 在运行时 500——**构建阶段不会报错**。
+#   这是本项目最值得记一笔的取舍：**宁可镜像大一点，也不要"能建但一用就挂"**。

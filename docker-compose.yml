@@ -66,3 +66,60 @@ services:
       timeout: 5s
       retries: 12
       start_period: 20s
+
+  # ── 后端 FastAPI ────────────────────────────────────────────
+  #
+  # ⚠️ 构建上下文是**仓库根目录**（`context: .` + `dockerfile: backend/Dockerfile`），
+  #    不是 `./backend`。原因：`/ask` 复用 `scripts/` 里的 L5 流水线，
+  #    还要读 `data/eval/l5_fewshot.csv`；`/quality/graph` 读 `data/quality/`。
+  #    只拷 backend/ 会"镜像能建、一调 /ask 就 500"，而构建阶段完全看不出来。
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: pharmkg-backend
+    restart: unless-stopped
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    environment:
+      # ⚠️ 容器里必须用**服务名**而不是 127.0.0.1：容器各有独立网络命名空间，
+      #    127.0.0.1 指向容器自己。这是"起得来但连不上库"最常见的原因。
+      NEO4J_URI: bolt://neo4j:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: ${NEO4J_PASSWORD}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      JWT_SECRET: ${JWT_SECRET}
+      # 大模型走云接口（决策 #22），key 从 .env 读，绝不写进镜像
+      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY}
+      DASHSCOPE_BASE_URL: ${DASHSCOPE_BASE_URL}
+      LLM_MODEL: ${LLM_MODEL:-qwen-plus}
+      TZ: Asia/Shanghai
+    healthcheck:
+      # /health 会真的探测 Neo4j 与 PostgreSQL，不是只回 200
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/health >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 40s
+
+  # ── 前端（nginx 静态托管 + /api 反代）──────────────────────
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: pharmkg-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"   # 浏览器访问 http://localhost:8080
+
