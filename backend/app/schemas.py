@@ -234,3 +234,39 @@ class AskResponse(BaseModel):
     evidence_consistent: bool | None
     faithful: bool | None       # 机械忠实度检查的结论
     out_of_evidence: list[str]
+
+
+# ---------------------------------------------------------------- 医药查询
+
+class DiseaseHit(BaseModel):
+    name: str
+    #: 该病在图里有多少条推荐用药（用来排序：用户要的是"能查出东西的病"）
+    drug_count: int
+
+
+class DiseaseDrugs(BaseModel):
+    disease: str
+    total: int
+    drugs: list[dict]           # [{name, source}]
+    truncated: bool
+    disclaimer: str
+
+
+class InteractionLookup(BaseModel):
+    """两两相互作用直查。
+
+    ⚠️ `found=False` 时**必须**同时给 `risk_hint`——
+    "没查到"与"没有"在图谱里分不开（只收录了 15 万对 DDInter 边）。
+    """
+
+    drug_a: str
+    drug_b: str
+    found: bool
+    level: str | None
+    level_label: str
+    source: str | None
+    note: str
+    risk_hint: str
+    disclaimer: str
+    attribution: str
+    coverage_note: str

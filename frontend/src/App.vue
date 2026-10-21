@@ -4,9 +4,10 @@ import LoginView from './views/LoginView.vue'
 import MedicineBoxView from './views/MedicineBoxView.vue'
 import AskView from './views/AskView.vue'
 import DataBoardView from './views/DataBoardView.vue'
+import QueryView from './views/QueryView.vue'
 
 const token = ref(localStorage.getItem('token') || '')
-//: 当前视图。提案里五个模块，界面现在有三个：问答（核心）、药箱、数据看板。
+//: 当前视图。提案里五个模块，界面现在有四个：问答（核心）、医药查询、药箱、数据看板。
 const tab = ref('ask')
 
 function onLogout() { token.value = '' }
@@ -26,6 +27,7 @@ function logout() {
       <div v-if="token">
         <el-radio-group v-model="tab" size="small" data-test="tab-switch">
           <el-radio-button value="ask">智能问答</el-radio-button>
+          <el-radio-button value="query">医药查询</el-radio-button>
           <el-radio-button value="box">我的药箱</el-radio-button>
           <el-radio-button value="board">数据看板</el-radio-button>
         </el-radio-group>
@@ -36,6 +38,7 @@ function logout() {
     <el-main>
       <template v-if="token">
         <AskView v-if="tab === 'ask'" />
+        <QueryView v-else-if="tab === 'query'" />
         <DataBoardView v-else-if="tab === 'board'" />
         <MedicineBoxView v-else />
       </template>
