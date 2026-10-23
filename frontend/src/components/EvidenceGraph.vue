@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import G6 from '@antv/g6'
 
 // ⚠️ 这里钉的是 **G6 v4**（package.json 里 ^4.8）。v5 的 API 完全不同。
@@ -89,7 +89,6 @@ function layout(nodes, hubId, widths, W) {
   const cx = W / 2
   const rest = nodes.filter((n) => n.id !== hubId)
 
-  // 先算出"要多高"，再决定 cy —— 让整张图垂直居中
   let ring = 1
   let idx = 0
   const rings = []
@@ -99,7 +98,7 @@ function layout(nodes, hubId, widths, W) {
       / Math.max(1, rest.length - idx)
     const cap = Math.max(3, Math.floor((2 * Math.PI * R) / (avg + GAP)))
     const cnt = Math.min(cap, rest.length - idx)
-    rings.push({ R, from: idx, cnt })
+    rings.push({ R, from: idx, cnt, ring })
     idx += cnt
     ring += 1
   }
@@ -109,8 +108,14 @@ function layout(nodes, hubId, widths, W) {
   if (hubId) pos.set(hubId, { x: cx, y: cy })
   for (const rg of rings) {
     for (let k = 0; k < rg.cnt; k++) {
-      // 相邻两环错开半个角，视觉上更匀
-      const a = (2 * Math.PI * k) / rg.cnt + (rg.from === 0 && rings.length > 1 ? 0 : 0)
+      // ⚠️ **每一环必须错开起始角**，否则内环与外环在同一个角度的两个节点
+      //    会与圆心**完全共线**——「中心→外环节点」的连线会从内环节点背后穿过去，
+      //    看起来就像"内环节点和外环节点之间有一条带箭头的边"。
+      //    实测就是这么误判出来的：骨肽片（内环 0°）与骨刺片（外环 0°）共线，
+      //    用户看到 骨肽片→骨刺片 的箭头，而数据里根本没有这条边
+      //    （查证：23 条边全是 类风湿关节炎→某药，两端都不含枢纽的有 0 条）。
+      //    （第一版这里写了注释但表达式恒为 0，等于没做。）
+      const a = (2 * Math.PI * k) / rg.cnt + (rg.ring - 1) * (Math.PI / rg.cnt)
       pos.set(rest[rg.from + k].id, {
         x: cx + rg.R * Math.cos(a),
         y: cy + rg.R * Math.sin(a),
@@ -120,7 +125,12 @@ function layout(nodes, hubId, widths, W) {
   return { pos, H }
 }
 
-function draw() {
+async function draw() {
+  // ⚠️ **必须等 DOM 更新完**。watch 回调在 DOM patch **之前**执行，
+  //    此时容器可能还没进 DOM（`v-if` 刚翻成 true）或宽度还是 0，
+  //    G6 在零宽/隐藏容器上渲染 = **一片空白**。
+  //    "两节点那张图空着"就是这一类时序问题。
+  await nextTick()
   if (graph) { graph.destroy(); graph = null }
   const el = box.value
   if (!el) return
@@ -129,6 +139,7 @@ function draw() {
   if (!rawNodes.length) {
     summary.value = ''
     note.value = ''
+    graph = null
     return
   }
 
@@ -141,7 +152,14 @@ function draw() {
     if (d > best) { best = d; hubId = n.id }
   }
 
-  const W = Math.max(360, el.clientWidth || 640)
+  // ⚠️ 取不到宽度时兜底 640 并在控制台喊一声（而不是静默画在 0 宽度里）。
+  //    上一版用 `v-show` 隐藏容器，隐藏时 `clientWidth` 是 0，
+  //    G6 在隐藏/零宽容器上渲染的结果就是**一片空白**——两节点那张图就是这么空的。
+  const measured = el.clientWidth || 0
+  const W = measured > 40 ? measured : 640
+  if (measured <= 40) {
+    console.warn('[EvidenceGraph] 容器宽度取到', measured, '，回退到 640 渲染')
+  }
   const { pos, H } = layout(rawNodes, hubId, widths, W)
   canvasH.value = H
 
@@ -230,7 +248,7 @@ onBeforeUnmount(() => { if (graph) graph.destroy() })
   <div>
     <p v-if="summary" style="color:#606266;font-size:12px;margin:0 0 6px"
        data-test="graph-summary">{{ summary }}</p>
-    <div v-show="!nothing" ref="box" data-test="evidence-graph"
+    <div v-if="!nothing" ref="box" data-test="evidence-graph"
          :style="{ border: '1px solid #ebeef5', borderRadius: '4px',
                    background: '#fafafa', height: canvasH + 'px' }" />
     <p v-if="nothing" style="color:#909399;font-size:12px;margin:0">
