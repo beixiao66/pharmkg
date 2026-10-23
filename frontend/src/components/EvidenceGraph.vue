@@ -1,32 +1,33 @@
 <script setup>
-import { onMounted, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, onMounted, onBeforeUnmount, ref, watch } from 'vue'
 import G6 from '@antv/g6'
 
 // ⚠️ 这里钉的是 **G6 v4**（package.json 里 ^4.8）。v5 的 API 完全不同
 //    （`new Graph({data, node, edge})` 那一套），不能混用。
 //
-// ## 这一版重写了三件事（都有用户实测截图作为起因）
+// ## 这一版是第二轮重做，起因同样是用户截图
 //
-// 1. **节点从圆改成圆角矩形，宽度按字数算**：中文药名 5–12 字，塞进 44px 的圆里
-//    必然溢出，截图里标签叠成一团糊。现在 `width = 字数*13 + 18`，超长截断成 `…`。
+// 第一轮解决了：布局退化（无 layout → 摆成一条线）、箭头语义、标签溢出。
+// 第二轮解决截图暴露的两件事：
 //
-// 2. **无向关系不画箭头**：`INTERACTS_WITH` 在图里是**无向**的，存成
-//    `A -[r]-> B` 只是 Neo4j 的存储方向。**单箭头暗示方向，不对；
-//    双箭头暗示"两个关系"，同样不对**——正确做法是**不画箭头**。
-//    只有真正有方向的关系（禁忌 = 药→人群/疾病、推荐用药 = 病→药）才带箭头，
-//    由边上的 `directed: true` 决定。
+// 1. **边标签压在节点上**：G6 默认把边标签放在**线段中点**。两点相距不远的图上，
+//    标签（「相互作用（高风险）」有 11 个字）比线段还长，直接盖住两侧节点。
+//    → `labelCfg.refY: -10` 把标签**垂直于线**推出去，不再压节点。
+// 2. **边一多，标签就成一团糊**：24 条边的「推荐用药」标签全旋转着挤在中心。
+//    → 边数超过 `MAX_LABELED_EDGES` 时**不画边标签**，改由下方的文字说明承担
+//      （"关系均为「推荐用药」"）——**图形放弃的细节，用文字补回来**。
 //
-// 3. **节点太多就不画全**：截图里 137 个节点的星形图挤成一条横线，毫无可读性。
-//    现在按**度数**取前 N 个（保留枢纽），并在图下方**明说"只画了 M/N 个"**——
-//    与项目里"截断必须显式"的原则一致。
+// 另外按用户要求把节点上限从 30 降到 **15**：宁可少画、看清楚，
+// 也不要把 30 个塞满。少画的部分在文字里说清数量与去处。
 const props = defineProps({
   graph: { type: Object, required: true },
-  /** 最多画多少个节点。超过就按度数取前 N 个并在图下注明。 */
-  maxNodes: { type: Number, default: 30 },
+  /** 最多画多少个节点。超过就按度数取前 N 个，并在图下注明。 */
+  maxNodes: { type: Number, default: 15 },
 })
 
 const box = ref(null)
 const note = ref('')
+const summary = ref('')
 let graph = null
 
 const COLOR = {
@@ -36,13 +37,15 @@ const COLOR = {
   Symptom: '#909399',
   default: '#b1b3b8',
 }
-//: 边的颜色：标签里带 level 就按严重程度上色，否则中性灰
+const TYPE_CN = { Drug: '药物', Disease: '疾病', Population: '人群', Symptom: '症状' }
 const LEVEL_COLOR = { Major: '#c0392b', Moderate: '#e67e22', Minor: '#95a5a6' }
 
 const FONT = 11
 const CHAR_W = 13
 const NODE_H = 28
 const MAX_LABEL = 12
+//: 边数超过这个值就不画边标签——否则标签会挤成一团（实测 24 条边时完全不可读）
+const MAX_LABELED_EDGES = 6
 
 function shortLabel(s) {
   if (!s) return ''
@@ -53,7 +56,7 @@ function nodeWidth(label) {
   return Math.min(180, Math.max(56, shortLabel(label).length * CHAR_W + 18))
 }
 
-/** 按度数取前 maxNodes 个节点；返回裁剪后的图与"是否截断"。 */
+/** 按度数取前 maxNodes 个节点；返回裁剪后的图、"是否截断"、以及类型统计。 */
 function pick(src) {
   const all = (src.nodes || []).filter((n) => n && n.id)
   const deg = new Map(all.map((n) => [n.id, 0]))
@@ -70,13 +73,34 @@ function pick(src) {
   return { nodes: kept, edges, total: all.length, truncated: kept.length < all.length }
 }
 
+/** 用一句话说清"图里是什么、少画了什么"——图形放弃的细节由文字承担。 */
+function describe(keptNodes, keptEdges, total, truncated) {
+  const byType = {}
+  for (const n of keptNodes) {
+    const t = TYPE_CN[n.type] || n.type || '实体'
+    byType[t] = (byType[t] || 0) + 1
+  }
+  const typePart = Object.entries(byType).map(([k, v]) => `${v} 个${k}`).join('、')
+  const kinds = [...new Set(keptEdges.map((e) => e.label).filter(Boolean))]
+  const relPart = kinds.length
+    ? `关系：${kinds.slice(0, 3).join('、')}${kinds.length > 3 ? ` 等 ${kinds.length} 种` : ''}`
+    : '无连线'
+  const cut = truncated
+    ? `；另有 ${total - keptNodes.length} 个未画出，完整清单见上面的答案`
+    : ''
+  return `图中画了 ${keptNodes.length} 个节点（${typePart}），${keptEdges.length} 条连线（${relPart}）${cut}。`
+}
+
 function draw() {
   if (!box.value) return
   if (graph) { graph.destroy(); graph = null }
 
   const { nodes: rawNodes, edges: rawEdges, total, truncated } = pick(props.graph || {})
+  const showEdgeLabels = rawEdges.length <= MAX_LABELED_EDGES
+
+  summary.value = describe(rawNodes, rawEdges, total, truncated)
   note.value = truncated
-    ? `节点太多，这里只画了关联最多的 ${rawNodes.length} 个（共 ${total} 个）——完整清单见上面的答案。`
+    ? `节点过多，只画了关联最多的 ${rawNodes.length} 个（共 ${total} 个）。`
     : ''
 
   const nodes = rawNodes.map((n) => ({
@@ -90,7 +114,6 @@ function draw() {
       stroke: 'transparent',
     },
     labelCfg: {
-      // 标签默认就在图形中心；显式写出来，避免以后改默认值时跑偏
       position: 'center',
       style: { fontSize: FONT, fill: '#fff' },
     },
@@ -100,36 +123,41 @@ function draw() {
     id: `e${i}`,
     source: e.source,
     target: e.target,
-    label: e.label || '',
+    label: showEdgeLabels ? (e.label || '') : '',
     style: {
       stroke: LEVEL_COLOR[String(e.label || '').match(/Major|Moderate|Minor/)?.[0]]
         || '#c8c9cc',
       lineWidth: 1.2,
-      // ⚠️ 只有有方向的关系才画箭头。无向关系画箭头（尤其双箭头）是**凭空断言**。
+      // 只有有方向的关系才画箭头。无向关系画箭头（尤其双箭头）是**凭空断言**。
       endArrow: e.directed === true,
       endArrowType: 'vee',
     },
-    labelCfg: {
-      autoRotate: true,
-      style: {
-        fontSize: 10,
-        fill: '#606266',
-        background: { fill: '#fff', padding: [2, 3] },
-      },
-    },
+    labelCfg: showEdgeLabels
+      ? {
+          autoRotate: true,
+          // ⚠️ 把标签**垂直于线**推出 10px。默认在中点上，两点靠近时会直接压住节点。
+          refY: -10,
+          style: {
+            fontSize: 10,
+            fill: '#606266',
+            background: { fill: 'rgba(255,255,255,.9)', padding: [2, 3] },
+          },
+        }
+      : {},
   }))
 
+  // 点少时把间距拉开一点，给标签留位置；点多时收紧一些免得挤成一团
+  const sparse = nodes.length <= 4
   graph = new G6.Graph({
     container: box.value,
     width: box.value.clientWidth || 640,
-    height: 320,
-    // ⚠️ 不给 layout 时 G6 会把节点摆成一条线（截图里就是这样），必须显式指定。
+    height: 340,
     layout: {
       type: 'force',
       preventOverlap: true,
-      nodeSize: 46,
-      linkDistance: 130,
-      nodeStrength: -60,
+      nodeSize: 56,
+      linkDistance: sparse ? 220 : 120,
+      nodeStrength: sparse ? -120 : -60,
       edgeStrength: 0.4,
       animate: false,
     },
@@ -137,12 +165,16 @@ function draw() {
     defaultNode: { type: 'rect' },
     defaultEdge: { type: 'line' },
     fitView: true,
-    fitViewPadding: [16, 16, 16, 16],
+    // 多留内边距：否则 fitView 会把图放大到贴边，标签更容易出界
+    fitViewPadding: [36, 36, 36, 36],
     animate: false,
   })
   graph.data({ nodes, edges })
   graph.render()
 }
+
+const nothing = computed(() =>
+  !props.graph || !(props.graph.nodes || []).length)
 
 onMounted(draw)
 watch(() => props.graph, draw, { deep: true })
@@ -151,13 +183,17 @@ onBeforeUnmount(() => { if (graph) graph.destroy() })
 
 <template>
   <div>
-    <div ref="box" data-test="evidence-graph"
+    <p v-if="summary" style="color:#606266;font-size:12px;margin:0 0 6px"
+       data-test="graph-summary">{{ summary }}</p>
+    <div v-show="!nothing" ref="box" data-test="evidence-graph"
          style="border:1px solid #ebeef5;border-radius:4px;background:#fafafa" />
+    <p v-if="nothing" style="color:#909399;font-size:12px;margin:0">
+      这个回答没有可画的证据子图。
+    </p>
     <p style="color:#909399;font-size:12px;margin:6px 0 0">
       按实体类型着色（蓝＝药物，绿＝疾病，橙＝人群）。
       <b>连线不带箭头＝无向关系（如药物相互作用）</b>；带箭头＝有方向（如「禁用于」）。
+      <span v-if="note" style="color:#b88230"> ⚠️ {{ note }}</span>
     </p>
-    <p v-if="note" style="color:#b88230;font-size:12px;margin:2px 0 0"
-       data-test="graph-truncated">⚠️ {{ note }}</p>
   </div>
 </template>
