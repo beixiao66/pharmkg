@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import api, { humanizeError } from '../api'
-import { levelLabel, typeLabel } from '../labels'
+import { isDirected, levelLabel, typeLabel } from '../labels'
 import EvidenceGraph from '../components/EvidenceGraph.vue'
 
 //: 一轮一个对象：{question, answer, meta}
@@ -142,6 +142,8 @@ function asGraph(ev) {
     return {
       source: e.from, target: e.to,
       label: lv ? `${t}（${lv}）` : t,
+      // 无向关系（相互作用）不画箭头；有方向的（禁忌/推荐用药）才画
+      directed: isDirected(e.type),
     }
   })
   return { nodes, edges }

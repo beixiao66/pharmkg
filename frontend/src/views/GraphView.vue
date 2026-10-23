@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import api, { humanizeError } from '../api'
-import { typeLabel } from '../labels'
+import { isDirected, typeLabel } from '../labels'
 import EvidenceGraph from '../components/EvidenceGraph.vue'
 
 // ── 实体检索 + 邻域子图 ────────────────────────────────────────
@@ -66,7 +66,11 @@ function asGraph(d) {
   if (!d) return { nodes: [], edges: [] }
   return {
     nodes: d.nodes || [],
-    edges: (d.edges || []).map((e) => ({ ...e, label: typeLabel(e.label || e.type) })),
+    edges: (d.edges || []).map((e) => ({
+      ...e,
+      label: typeLabel(e.label || e.type),
+      directed: isDirected(e.type || e.label),
+    })),
   }
 }
 </script>

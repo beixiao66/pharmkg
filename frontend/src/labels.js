@@ -39,4 +39,26 @@ export function levelLabel(lv) {
   return LEVEL_LABEL[lv] || lv
 }
 
+/**
+ * 这个关系类型在语义上**有没有方向**？
+ *
+ * ⚠️ 为什么必须单独判定，而不是统一画箭头：
+ * 图里所有关系都存成 `(a)-[r]->(b)`，但**存储方向 ≠ 语义方向**。
+ * `INTERACTS_WITH` 是**无向**的——画单箭头暗示"药 A 作用于药 B"（假的），
+ * 画双箭头暗示"存在两个关系"（也是假的）。**无向关系就该是一条线。**
+ *
+ * 有方向的例子：`禁忌`（药 → 人群/疾病）、`推荐用药`（病 → 药）、`忌口`（病 → 食物）。
+ */
+const UNDIRECTED = new Set([
+  'INTERACTS_WITH',     // 药物相互作用：对称
+  'HAS_SYMPTOM',        // 病 - 症状：关联
+  'ACCOMPANY_DISEASE',  // 伴随疾病：对称
+  'SameAs',             // 别名：对称
+])
+
+export function isDirected(t) {
+  if (!t) return false
+  return !UNDIRECTED.has(t)
+}
+
 export default typeLabel

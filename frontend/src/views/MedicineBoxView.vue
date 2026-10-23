@@ -117,14 +117,14 @@ const graph = computed(() => {
     if (!p.level) continue
     const a = [...nodes.values()].find((n) => n.label === p.drug_a)
     const b = [...nodes.values()].find((n) => n.label === p.drug_b)
-    if (a && b) edges.push({ source: a.id, target: b.id, label: p.level })
+    if (a && b) edges.push({ source: a.id, target: b.id, label: p.level, directed: false })
   }
   for (const h of risk.value.population) {
     const d = [...nodes.values()].find((n) => n.label === h.drug)
     if (!d) continue
     const tid = 'pop:' + h.tag
     if (!nodes.has(tid)) nodes.set(tid, { id: tid, label: h.tag, type: 'Population' })
-    edges.push({ source: d.id, target: tid, label: '禁忌' })
+    edges.push({ source: d.id, target: tid, label: '禁忌', directed: true })
   }
   return { nodes: [...nodes.values()], edges }
 })
