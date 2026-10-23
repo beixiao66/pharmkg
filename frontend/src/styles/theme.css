@@ -46,6 +46,20 @@
 
   --ph-font: "PingFang SC", "Microsoft YaHei", "Noto Sans SC",
              system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* ── 让 Element Plus 的主色跟随品牌色 ─────────────────────────────
+   * Element 2.x 的按钮/链接/聚焦态全走 `--el-color-primary` 这一族变量。
+   * 不改的话，同一屏会出现**两个蓝**：品牌区 #1d4ed8、按钮 #409eff（天蓝），
+   * 一眼就能看出"没统一"。light-3/5/7/8/9 是它的 hover/disabled/浅底档位，
+   * 必须一起给，否则按钮的次要状态还是旧蓝。
+   * ------------------------------------------------------------------ */
+  --el-color-primary: #1d4ed8;
+  --el-color-primary-light-3: #4f74e3;
+  --el-color-primary-light-5: #82a0ec;
+  --el-color-primary-light-7: #b3c5f4;
+  --el-color-primary-light-8: #ccd8f8;
+  --el-color-primary-light-9: #e6ecfb;
+  --el-color-primary-dark-2: #16307f;
 }
 
 * { box-sizing: border-box; }

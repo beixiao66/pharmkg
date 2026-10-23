@@ -27,6 +27,7 @@ const busy = ref(false)
 //: 提交过才显示校验错误，避免一进页面就红一片
 const touched = ref(false)
 
+
 const FEATURES = [
   { t: '自然语言提问', d: '问「A 和 B 能一起吃吗」，命中即给分级与出处' },
   { t: '药箱联用风险', d: '把自己在吃的药放进去，逐对检查相互作用' },
@@ -144,7 +145,7 @@ async function submit() {
 
           <el-button type="primary" size="large" native-type="submit"
                      class="auth__submit" :loading="busy"
-                     :disabled="!canSubmit" data-test="login">
+                     data-test="login">
             {{ busy ? '处理中…' : (mode === 'login' ? '登录' : '注册并登录') }}
           </el-button>
 
@@ -169,7 +170,7 @@ async function submit() {
 <style scoped>
 .auth {
   display: grid;
-  grid-template-columns: 1.15fr .85fr;
+  grid-template-columns: 40fr 60fr;
   min-height: 100%;
   /* 左栏深色、右栏浅底 —— 一眼分出"品牌"与"操作" */
   background: var(--ph-page);
@@ -181,7 +182,7 @@ async function submit() {
   overflow: hidden;
   display: flex;
   align-items: center;
-  padding: var(--ph-s7);
+  padding: 0 clamp(24px, 2.6vw, 44px);
   color: #fff;
   background:
     radial-gradient(120% 120% at 0% 0%, #2563eb 0%, #1d4ed8 42%, #16307f 100%);
@@ -196,12 +197,12 @@ async function submit() {
   background: radial-gradient(circle, rgba(255,255,255,.16), transparent 62%);
   pointer-events: none;
 }
-.auth__brandInner { position: relative; max-width: 540px; }
+.auth__brandInner { position: relative; width: 100%; max-width: 330px; margin: 0 auto; }
 
 .auth__logo {
   display: flex; align-items: center; gap: var(--ph-s2);
-  margin: 0 0 var(--ph-s6);
-  font-size: 18px; font-weight: 650; letter-spacing: .12em;
+  margin: 0 0 34px;
+  font-size: 15px; font-weight: 650; letter-spacing: .12em;
   text-transform: lowercase; opacity: .95;
 }
 .auth__mark {
@@ -214,22 +215,22 @@ async function submit() {
 
 .auth__title {
   margin: 0 0 var(--ph-s4);
-  font-size: clamp(30px, 3.4vw, 44px);
-  line-height: 1.18;
+  font-size: clamp(24px, 2.2vw, 31px);
+  line-height: 1.26;
   letter-spacing: -.01em;
   font-weight: 700;
 }
 .auth__lede {
-  margin: 0 0 var(--ph-s6);
+  margin: 0 0 24px;
   max-width: 44ch;
-  font-size: 15px; line-height: 1.7;
+  font-size: 13px; line-height: 1.75;
   color: rgba(255,255,255,.82);
 }
 
 .auth__feats { list-style: none; margin: 0 0 var(--ph-s6); padding: 0; }
 .auth__feats li {
-  display: flex; gap: var(--ph-s3);
-  padding: var(--ph-s3) 0;
+  display: flex; gap: 9px;
+  padding: 10px 0;
   border-top: 1px solid rgba(255,255,255,.14);
 }
 .auth__feats li:last-child { border-bottom: 1px solid rgba(255,255,255,.14); }
@@ -240,32 +241,37 @@ async function submit() {
   background: rgba(255,255,255,.18);
   font-size: 11px;
 }
-.auth__feats b { display: block; font-size: 14px; font-weight: 600; }
+.auth__feats b { display: block; font-size: 13px; font-weight: 600; }
 .auth__feats i {
   display: block; margin-top: 2px;
-  font-style: normal; font-size: 13px; line-height: 1.6;
+  font-style: normal; font-size: 12px; line-height: 1.6;
   color: rgba(255,255,255,.72);
 }
 
 .auth__stats {
-  display: flex; flex-wrap: wrap; gap: var(--ph-s5) var(--ph-s6);
-  margin: 0; padding-top: var(--ph-s4);
+  display: flex; flex-wrap: wrap; gap: 18px;
+  margin: 0; padding-top: 14px;
 }
-.auth__stats div { min-width: 96px; }
+.auth__stats div { min-width: 72px; }
 .auth__stats dt {
-  font-size: 22px; font-weight: 700; letter-spacing: -.02em;
+  font-size: 16px; font-weight: 700; letter-spacing: -.02em;
 }
 .auth__stats dd {
-  margin: 2px 0 0; font-size: 12px; color: rgba(255,255,255,.66);
+  margin: 2px 0 0; font-size: 10.5px; color: rgba(255,255,255,.64);
 }
 
 /* ── 右栏 ───────────────────────────────────────────────── */
 .auth__panel {
   display: flex; align-items: center; justify-content: center;
+  /* ⚠️ `min-width: 0` 必须写。grid 子项默认 `min-width: auto`，
+   *    会按"内容最小宽度"决定轨道，于是卡片（含自定义 minimum 的输入框）
+   *    把整条轨道撑得比视口还宽 —— 窄屏上表现为**卡片右侧被裁掉**。
+   *    这是 grid 布局最常见的溢出原因，比加 `overflow:hidden` 治标得多。 */
+  min-width: 0;
   padding: var(--ph-s6) var(--ph-s5);
 }
 .auth__card {
-  width: 100%; max-width: 400px;
+  width: 100%; max-width: 392px;
   padding: var(--ph-s6);
   background: var(--ph-surface);
   border: 1px solid var(--ph-line);
@@ -348,5 +354,4 @@ async function submit() {
   .auth__lede { margin-bottom: var(--ph-s4); font-size: 14px; }
   .auth__panel { padding: var(--ph-s5) var(--ph-s4) var(--ph-s6); }
   .auth__card { box-shadow: var(--ph-shadow-sm); }
-}
-</style>
+}</style>
