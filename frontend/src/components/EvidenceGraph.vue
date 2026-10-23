@@ -152,14 +152,14 @@ async function draw() {
     if (d > best) { best = d; hubId = n.id }
   }
 
-  // ⚠️ 取不到宽度时兜底 640 并在控制台喊一声（而不是静默画在 0 宽度里）。
-  //    上一版用 `v-show` 隐藏容器，隐藏时 `clientWidth` 是 0，
-  //    G6 在隐藏/零宽容器上渲染的结果就是**一片空白**——两节点那张图就是这么空的。
+  // ⚠️ 宽度取不到（0）或取得**太小**都要兜底。
+  //    实测教训：`v-show` 隐藏时是 0；而卡片刚 patch 完时可能量到几十像素——
+  //    不是 0，所以"只判 0"的兜底不会触发，G6 画布就只有几十像素宽，
+  //    节点全被裁到框外，**页面显示为一块空框**（两节点那张图就是这样）。
+  //    所以这里给一个**下界** 400，并把实测值写进摘要行（UI 上可见），
+  //    下次出问题不用再猜。
   const measured = el.clientWidth || 0
-  const W = measured > 40 ? measured : 640
-  if (measured <= 40) {
-    console.warn('[EvidenceGraph] 容器宽度取到', measured, '，回退到 640 渲染')
-  }
+  const W = Math.max(400, measured)
   const { pos, H } = layout(rawNodes, hubId, widths, W)
   canvasH.value = H
 
@@ -175,7 +175,10 @@ async function draw() {
     ? `关系：${kinds.slice(0, 3).join('、')}${kinds.length > 3 ? ` 等 ${kinds.length} 种` : ''}`
     : '无连线'
   const cut = truncated ? `；另有 ${total - rawNodes.length} 个未画出，完整清单见上面的答案` : ''
-  summary.value = `图中画了 ${rawNodes.length} 个节点（${typePart}），${rawEdges.length} 条连线（${relPart}）${cut}。`
+  // 调试尾巴：画布尺寸与元素数直接显示在 UI 上。出问题时一张截图就能定位，
+  // 不用再靠"你猜我猜"。验收通过后可以删掉这一段。
+  const dbg = `（画布 ${Math.round(W)}×${Math.round(H)}，实测宽度 ${Math.round(measured)}，节点 ${rawNodes.length}、边 ${rawEdges.length}）`
+  summary.value = `图中画了 ${rawNodes.length} 个节点（${typePart}），${rawEdges.length} 条连线（${relPart}）${cut}。${dbg}`
   note.value = truncated ? `节点过多，只画了关联最多的 ${rawNodes.length} 个（共 ${total} 个）。` : ''
 
   const showEdgeLabels = rawEdges.length <= MAX_LABELED_EDGES
@@ -224,17 +227,31 @@ async function draw() {
 
   // ⚠️ **不给 layout**：节点自带 x/y，G6 直接用。
   //    也不设 fitView —— 坐标是按当前画布尺寸算的，本来就都落在可视区内。
-  graph = new G6.Graph({
-    container: el,
-    width: W,
-    height: H,
-    modes: { default: ['drag-canvas', 'zoom-canvas', 'drag-node'] },
-    defaultNode: { type: 'rect' },
-    defaultEdge: { type: 'line' },
-    animate: false,
-  })
-  graph.data({ nodes, edges })
-  graph.render()
+  //
+  //    try/catch 是**诊断用**的：前几轮"空白"里有一部分可能是 G6 内部抛错，
+  //    而 async 函数里抛出会变成 unhandled rejection——**页面上一点痕迹都没有**，
+  //    只能靠控制台。现在把错误直接写到 figure 下方，截图就能看见。
+  try {
+    graph = new G6.Graph({
+      container: el,
+      width: W,
+      height: H,
+      modes: { default: ['drag-canvas', 'zoom-canvas', 'drag-node'] },
+      defaultNode: { type: 'rect' },
+      defaultEdge: { type: 'line' },
+      animate: false,
+    })
+    graph.data({ nodes, edges })
+    graph.render()
+    // 有些情况下容器尺寸与建图时的尺寸不一致，显式同步一次
+    try { graph.changeSize(el.clientWidth || W, H) } catch { /* 忽略 */ }
+    if (!graph.getNodes().length) {
+      note.value = '（图为空：G6 拿到了数据但没画出节点，请把控制台报错发我）'
+    }
+  } catch (e) {
+    graph = null
+    note.value = `（图形渲染失败：${e && e.message ? e.message : e}）`
+  }
 }
 
 const nothing = computed(() => !props.graph || !(props.graph.nodes || []).length)
