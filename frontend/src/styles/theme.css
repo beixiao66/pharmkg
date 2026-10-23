@@ -1,0 +1,81 @@
+/* ============================================================================
+ * pharmkg 设计 token 与基础样式
+ *
+ * 目的：把颜色/圆角/阴影/间距收成变量，让"登录页是产品的一部分"而不是
+ * 一张默认样式的 Element 卡片。后续页面直接用同一套 token，视觉才是一致的。
+ *
+ * 配色思路（医疗 + 可信）：
+ *   主色  #1d4ed8  深靛蓝 —— 在医疗/科研场景里比亮蓝更稳，白字对比度 ≈ 7:1（WCAG AAA）
+ *   强调  #0d9488  青绿   —— 只用在"安全/正常"状态，不与主色抢
+ *   墨色  #0f172a / #475569 —— 标题与正文两级
+ *   底线  #e2e8f0  分隔线
+ *   底色  #f6f8fb  页面背景（比纯白柔和，卡片浮起来才有层次）
+ *
+ * 编号说明：间距一律用 4px 基准（4/8/12/16/24/32/48），不写 13px、19px 这种。
+ * ========================================================================== */
+
+:root {
+  --ph-brand: #1d4ed8;
+  --ph-brand-dark: #1e40af;
+  --ph-brand-soft: #eef2ff;
+  --ph-accent: #0d9488;
+  --ph-danger: #b91c1c;
+  --ph-warn: #b45309;
+
+  --ph-ink: #0f172a;
+  --ph-ink-2: #475569;
+  --ph-ink-3: #94a3b8;
+
+  --ph-line: #e2e8f0;
+  --ph-surface: #ffffff;
+  --ph-page: #f6f8fb;
+
+  --ph-radius: 10px;
+  --ph-radius-lg: 16px;
+  --ph-shadow-sm: 0 1px 2px rgba(15, 23, 42, .06);
+  --ph-shadow: 0 8px 24px rgba(15, 23, 42, .08);
+  --ph-shadow-lg: 0 24px 64px rgba(15, 23, 42, .16);
+
+  --ph-s1: 4px;
+  --ph-s2: 8px;
+  --ph-s3: 12px;
+  --ph-s4: 16px;
+  --ph-s5: 24px;
+  --ph-s6: 32px;
+  --ph-s7: 48px;
+
+  --ph-font: "PingFang SC", "Microsoft YaHei", "Noto Sans SC",
+             system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #app { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--ph-font);
+  /* 页面底色 + 极淡的网格质感，避免大片纯白的"素" */
+  background-color: var(--ph-page);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(29, 78, 216, .06) 1px, transparent 0);
+  background-size: 22px 22px;
+  color: var(--ph-ink);
+  -webkit-font-smoothing: antialiased;
+  /* 数字用等宽数字，表格/统计对得齐 */
+  font-variant-numeric: tabular-nums;
+}
+
+/* 焦点可见：键盘用户必须能看出焦点在哪 */
+:focus-visible {
+  outline: 2px solid var(--ph-brand);
+  outline-offset: 2px;
+}
+
+/* 尊重系统的"减少动态效果" */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}
