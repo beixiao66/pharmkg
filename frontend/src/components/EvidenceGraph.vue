@@ -84,7 +84,7 @@ function pick(src) {
  * 环的容量按"该环周长能放下几个节点"算，放不下就开下一环——
  * 这样节点数变化时**永远不会有重叠**，也不依赖任何布局引擎。
  */
-function layout(nodes, hubId, widths, W) {
+function layout(nodes, hubId, widths, W, minFirstRing = 0) {
   const pos = new Map()
   const cx = W / 2
   const rest = nodes.filter((n) => n.id !== hubId)
@@ -93,7 +93,12 @@ function layout(nodes, hubId, widths, W) {
   let idx = 0
   const rings = []
   while (idx < rest.length) {
-    const R = 60 + ring * RING_GAP
+    const base = 60 + ring * RING_GAP
+    // ⚠️ **第一环要额外让位给边标签**。
+    //    实测：两节点的图里，环半径 134 − 两个半宽 ≈ 只有 57px 的空隙，
+    //    而标签「相互作用（高风险）」约 95px，两边都被节点压住，只看得见中间几个字。
+    //    所以第一环半径至少要能容纳：枢纽半宽 + 该节点半宽 + 标签宽 + 余量。
+    const R = ring === 1 ? Math.max(base, minFirstRing) : base
     const avg = rest.slice(idx).reduce((s, n) => s + (widths.get(n.id) || 90), 0)
       / Math.max(1, rest.length - idx)
     const cap = Math.max(3, Math.floor((2 * Math.PI * R) / (avg + GAP)))
@@ -160,7 +165,18 @@ async function draw() {
   //    下次出问题不用再猜。
   const measured = el.clientWidth || 0
   const W = Math.max(400, measured)
-  const { pos, H } = layout(rawNodes, hubId, widths, W)
+
+  // 边标签只在边少时画（多则挤成一团）；画标签时第一环半径要给它让位
+  const showEdgeLabels = rawEdges.length <= MAX_LABELED_EDGES
+  const maxLabelChars = showEdgeLabels
+    ? rawEdges.reduce((m, e) => Math.max(m, (e.label || '').length), 0)
+    : 0
+  // 字宽按 10px/字 估（fontSize=10），横竖都要留白
+  const labelW = maxLabelChars * 10 + 26
+  const maxHalfW = Math.max(...widths.values()) / 2
+  const minFirstRing = showEdgeLabels ? maxHalfW * 2 + labelW : 0
+
+  const { pos, H } = layout(rawNodes, hubId, widths, W, minFirstRing)
   canvasH.value = H
 
   // 摘要 + 截断说明（图形放弃的细节由文字承担）
@@ -180,8 +196,6 @@ async function draw() {
   const dbg = `（画布 ${Math.round(W)}×${Math.round(H)}，实测宽度 ${Math.round(measured)}，节点 ${rawNodes.length}、边 ${rawEdges.length}）`
   summary.value = `图中画了 ${rawNodes.length} 个节点（${typePart}），${rawEdges.length} 条连线（${relPart}）${cut}。${dbg}`
   note.value = truncated ? `节点过多，只画了关联最多的 ${rawNodes.length} 个（共 ${total} 个）。` : ''
-
-  const showEdgeLabels = rawEdges.length <= MAX_LABELED_EDGES
 
   const nodes = rawNodes.map((n) => {
     const p = pos.get(n.id) || { x: W / 2, y: H / 2 }
@@ -216,7 +230,7 @@ async function draw() {
     labelCfg: showEdgeLabels
       ? {
           autoRotate: true,
-          refY: -10,
+          refY: -18,
           style: {
             fontSize: 10, fill: '#606266',
             background: { fill: 'rgba(255,255,255,.9)', padding: [2, 3] },
