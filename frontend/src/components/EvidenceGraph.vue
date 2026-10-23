@@ -146,31 +146,56 @@ function draw() {
       : {},
   }))
 
-  // 点少时把间距拉开一点，给标签留位置；点多时收紧一些免得挤成一团
-  const sparse = nodes.length <= 4
+  // ── 径向布局：中心枢纽 + 一圈对称 ─────────────────────────────
+  //
+  // ⚠️ **为什么从 force 换成 radial**（用户第三轮截图）：
+  //    `force` 布局是**异步**的——节点会持续移动；而 `fitView` 在布局还没稳定时就
+  //    把画布放大了，于是节点被甩出视口，只剩一堆连线指向它们原来的位置。
+  //    截图里那种"字号被放大好几倍、线条飞出画面、中间聚成一束无主的线"就是这个症状。
+  //    （先确认过不是数据问题：实测两条回答的"边两端不在节点表里"都是 **0 条**。）
+  //
+  //    `radial` 的位置是**同步算出来**的，配上显式 `fitView()` 就不会错位；
+  //    而且"中心枢纽 + 一圈对称"正是用户要的形态。
+  const deg = new Map()
+  for (const e of rawEdges) {
+    deg.set(e.source, (deg.get(e.source) || 0) + 1)
+    deg.set(e.target, (deg.get(e.target) || 0) + 1)
+  }
+  let hub = null
+  let best = -1
+  for (const n of nodes) {
+    const d = deg.get(n.id) || 0
+    if (d > best) { best = d; hub = n.id }
+  }
+
   graph = new G6.Graph({
     container: box.value,
     width: box.value.clientWidth || 640,
     height: 340,
-    layout: {
-      type: 'force',
-      preventOverlap: true,
-      nodeSize: 56,
-      linkDistance: sparse ? 220 : 120,
-      nodeStrength: sparse ? -120 : -60,
-      edgeStrength: 0.4,
-      animate: false,
-    },
+    layout: hub && nodes.length > 2
+      ? {
+          type: 'radial',
+          focusNode: hub,
+          // 一圈排开要够宽：内圈半径随节点数增长
+          unitRadius: nodes.length <= 6 ? 170 : 120,
+          preventOverlap: true,
+          nodeSize: 64,
+          strictRadial: false,
+          maxIteration: 300,
+          animate: false,
+        }
+      // 只有 1~2 个节点时径向没有意义，用 grid 保证不重叠
+      : { type: 'grid', preventOverlap: true, nodeSize: 80 },
     modes: { default: ['drag-canvas', 'zoom-canvas', 'drag-node'] },
     defaultNode: { type: 'rect' },
     defaultEdge: { type: 'line' },
-    fitView: true,
-    // 多留内边距：否则 fitView 会把图放大到贴边，标签更容易出界
-    fitViewPadding: [36, 36, 36, 36],
     animate: false,
   })
   graph.data({ nodes, edges })
   graph.render()
+  // ⚠️ **显式再 fit 一次**：依赖构造参数里的 `fitView` 不够可靠——
+  //    它可能在布局落位之前就计算了缩放。这一行是"节点被甩出视口"的直接解药。
+  try { graph.fitView(30) } catch { /* 空图时 fitView 会抛，忽略 */ }
 }
 
 const nothing = computed(() =>
