@@ -21,7 +21,7 @@ const searching = ref(false)
 const searched = ref(false)
 const lastQ = ref('')
 //: 检索的总数与被截断标记（后端返回）。**截断必须显示出来**，见 search() 里的说明。
-const meta = ref({ total: 0, truncated: false })
+const meta = ref({ total: 0, truncated: false, matchedBy: null })
 
 //: 词表按 group 拆开；**每个选项都显示图谱里有几条边**（0 就说"暂无数据"），
 //: 否则用户会以为「标了就一定查得到」。
@@ -58,11 +58,12 @@ async function search() {
     //    LIMIT 10 把卡维地洛片切掉了，页面却毫无提示）。
     const { data } = await api.get('/drugs/search', { params: { q: qv } })
     hits.value = data.items
-    meta.value = { total: data.total, truncated: data.truncated }
+    meta.value = { total: data.total, truncated: data.truncated,
+                  matchedBy: data.matched_by || null }
     searched.value = true
   } catch (e) {
     hits.value = []
-    meta.value = { total: 0, truncated: false }
+    meta.value = { total: 0, truncated: false, matchedBy: null }
     searched.value = true
     ElMessage.error('检索失败：' + humanizeError(e))
   } finally {
@@ -152,7 +153,12 @@ const graph = computed(() => {
           <!-- ⚠️ 「被截断」必须说出来。实测：以「卡」开头 29 个药，
                原来 LIMIT 10 把「卡维地洛片」（第 17 位）切掉了，
                页面毫无提示 → 用户以为图谱里没有这个药。 -->
-          <el-alert v-if="meta.truncated" type="warning" :closable="false"
+          <!-- 按读音兜底：字面没查到、但同音找到时，必须说清楚是"按读音"，
+             否则用户会以为系统认得这个错别字 -->
+        <el-alert v-if="meta.matchedBy" type="info" :closable="false"
+          style="margin-bottom:6px" data-test="search-pinyin"
+          :title="`没有字面匹配，已按读音找到 ${meta.total} 个（同音字也能查到）`" />
+        <el-alert v-if="meta.truncated" type="warning" :closable="false"
                     style="margin-bottom:6px" data-test="search-truncated"
                     :title="`共 ${meta.total} 条，只显示了前 ${hits.length} 条 —— 请多输几个字缩小范围`" />
           <span v-else style="color:#909399;font-size:12px">

@@ -137,6 +137,25 @@ def main() -> int:
               and b2["items"][0]["name"] == "卡维地洛片",
               str(b2["items"]))
 
+        # ── 拼音兜底：同音错别字（真实需求）──
+        # 用户把「卡维地洛」打成「卡位低落」：读起来一样，三个字都不一样。
+        # 字形匹配救不回来，靠拼音键（ka wei di luo）精确相等才能命中。
+        z = client.get("/drugs/search", params={"q": "卡位低落"}).json()
+        check("同音错别字『卡位低落』能查到（按读音兜底）",
+              z["total"] >= 1 and z.get("matched_by") in ("pinyin", "pinyin-prefix"),
+              f"total={z['total']} matched_by={z.get('matched_by')} "
+              f"{[x['name'] for x in z['items'][:2]]}")
+        check("按读音命中的仍是『卡维地洛片』",
+              any("卡维地洛" in x["name"] for x in z["items"]),
+              str([x["name"] for x in z["items"][:3]]))
+        check("字面命中时 matched_by 为 None（不冒充读音匹配）",
+              client.get("/drugs/search", params={"q": "卡维地洛"}
+                         ).json().get("matched_by") is None)
+        check("乱打一串字 → 0 条（拼音也不该乱配）",
+              client.get("/drugs/search", params={"q": "完全乱打"}
+                         ).json()["total"] == 0)
+
+
         print("\n── 加药 ──")
         r = client.post("/medicine-box", json={"drug_id": "drug:不存在的药"}, headers=ha)
         check("加图谱里没有的药 → 404", r.status_code == 404, f"→ {r.status_code}")

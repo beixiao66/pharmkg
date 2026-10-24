@@ -117,6 +117,10 @@ class DrugSearchResult(BaseModel):
     total: int
     limit: int
     truncated: bool
+    #: 字面查不到时按**读音**兜底的标记（None = 字面命中）。
+    #: 值 ∈ {"pinyin", "pinyin-prefix"}。界面据此提示"已按读音找到"，
+    #: 而不是让用户以为这是字面命中——**匹配方式也是结果的一部分**。
+    matched_by: str | None = None
 
 
 class PopulationTagsUpdate(BaseModel):

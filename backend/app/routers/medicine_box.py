@@ -22,7 +22,10 @@
 
 from __future__ import annotations
 
+import sys
 from datetime import datetime, timezone
+from pathlib import Path
+from threading import Lock
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from neo4j import GraphDatabase
@@ -40,7 +43,36 @@ from app.schemas import (DrugHit, DrugSearchResult, MedicineBoxCreate,
                          PopulationTagsUpdate, RiskCoverage, RiskPair,
                          RiskPopulation, TagCoverage, UserResponse)
 
+# ⚠️ 拼音匹配模块在 `scripts/` 下（与 l5 的脚本同目录），backend 需要把它挂进 sys.path。
+#    这里自己挂一次，不依赖 `l5_service` 先被导入——**不要靠别人的导入顺序**。
+_SCRIPTS_DIR = Path(__file__).resolve().parents[3] / "scripts"
+if str(_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS_DIR))
+from pinyin_match import PinyinIndex  # noqa: E402
+
 router = APIRouter(tags=["用药安全校验（L6）"])
+
+#: 药物拼音索引（进程级单例）。
+#: 构建要扫一遍药物名：实测 5,666 个 / **0.4 秒**——每个请求重建一次会让检索慢到不可用，
+#: 与 `l5_service` 里实体索引的做法保持一致。加锁是因为同步路由跑在线程池里，
+#: 并发首请求会同时进来。
+_PINYIN: dict[str, PinyinIndex | None] = {"index": None}
+_PINYIN_LOCK = Lock()
+
+
+def _pinyin_index() -> PinyinIndex:
+    with _PINYIN_LOCK:
+        if _PINYIN["index"] is None:
+            drv = _driver()
+            try:
+                with drv.session() as s:
+                    names = [r["name"] for r in s.run(
+                        "MATCH (d:Drug) WHERE coalesce(d.quality,'ok') <> 'junk' "
+                        "AND d.name IS NOT NULL RETURN d.name AS name")]
+            finally:
+                drv.close()
+            _PINYIN["index"] = PinyinIndex(names)
+        return _PINYIN["index"]
 
 #: 严重程度排序：**`Unknown` 单独一档**（§6.3）——它不是"最轻"，是"不知道"，
 #: 混进 Minor 会让用户以为风险低。
@@ -110,10 +142,30 @@ def search_drugs(q: str = Query(min_length=1, max_length=32),
                 "AND coalesce(d.quality,'ok') <> 'junk' "
                 "RETURN d.id AS id, d.name AS name, d.name_en AS name_en "
                 + order + " LIMIT $lim", q=q, lim=limit))
+
+            # ── 字面查不到时，退一步按**读音**找 ─────────────────────────
+            # 真实需求：「卡维地洛」打成「卡位低落」——读起来一样，三个字都不一样。
+            # 字形匹配（精确/前缀）对此无能为力，而拼音键是**精确相等**的
+            # （ka wei di luo），所以既救得回来，又不必放宽字面匹配的标准。
+            #
+            # ⚠️ 只在**字面完全没结果**时才走这条路：能在字面上找到的药，
+            #    不该被同音候选混进来（否则搜「阿司匹林」会混进同音的其他药）。
+            matched_by = None
+            if total == 0:
+                names, kind = _pinyin_index().match(q, limit=limit)
+                if names:
+                    rows = list(s.run(
+                        "MATCH (d:Drug) WHERE d.name IN $names "
+                        "AND coalesce(d.quality,'ok') <> 'junk' "
+                        "RETURN d.id AS id, d.name AS name, d.name_en AS name_en "
+                        + order + " LIMIT $lim", q=q, names=names, lim=limit))
+                    total = len(rows)
+                    matched_by = kind
         return DrugSearchResult(
             items=[DrugHit(id=r["id"], name=r["name"], name_en=r["name_en"])
                    for r in rows],
-            total=total, limit=limit, truncated=total > len(rows))
+            total=total, limit=limit, truncated=total > len(rows),
+            matched_by=matched_by)
     finally:
         drv.close()
 
