@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import api, { humanizeError } from '../api'
 import { isDirected, levelLabel, typeLabel } from '../labels'
@@ -11,6 +11,28 @@ import EvidenceGraph from '../components/EvidenceGraph.vue'
 const turns = ref([])
 const q = ref('')
 const busy = ref(false)
+
+//: 空态里给的三个示例。点一下就发出去——比让用户自己编一个问题容易得多，
+//: 也顺带把"这个系统能问什么"演示了。
+const EXAMPLES = [
+  '卡维地洛和依度沙班能一起吃吗？',
+  '类风湿关节炎可以用哪些药？',
+  '骨肽片是治什么的？',
+]
+/** 消息区容器：新消息要自动滚到底部，否则用户以为没反应。 */
+const scroller = ref(null)
+
+function useExample(text) {
+  q.value = text
+  send()
+}
+
+// 轮次变化（发送成功 / 载入历史）后自动滚到底部
+watch(turns, async () => {
+  await nextTick()
+  const el = scroller.value
+  if (el) el.scrollTop = el.scrollHeight
+}, { deep: true })
 
 // ── 会话持久化（L7 的验收就是「刷新/重登不丢历史」）──────────────
 //: ⚠️ 第一版问答页**完全没有接持久化**，`turns` 只活在内存里——刷新就丢。
@@ -169,105 +191,234 @@ const STEP_HINT = {
 </script>
 
 <template>
-  <div>
+  <div class="ask">
     <header class="ph-page">
       <h1>智能问答</h1>
       <p>用中文问一句；只在图谱有据可查时作答，并给出依据。</p>
-    </header>
-    <!-- 会话栏：L7 的验收是「刷新/重登不丢历史」，所以这里必须能切会话 -->
-    <el-card shadow="never" style="margin-bottom:12px">
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <el-button size="small" type="primary" data-test="new-conv"
+      <!-- 会话：放在标题右侧，不再单独占一张卡片 -->
+      <div class="ph-page__aside ask__convs">
+        <el-select v-model="convId" size="small" placeholder="最近会话"
+                   class="ask__convSel" data-test="conv-select"
+                   @change="loadConversation">
+          <el-option v-for="c in convs" :key="c.id" :value="c.id"
+                     :label="`${c.title || '会话 ' + c.id}（${c.message_count}）`" />
+        </el-select>
+        <el-button size="small" type="primary" plain data-test="new-conv"
                    @click="newConversation">新对话</el-button>
-        <span style="font-size:12px;color:#909399">最近会话：</span>
-        <el-button v-for="c in convs.slice(0, 6)" :key="c.id" size="small"
-                   :type="convId === c.id ? 'primary' : ''" plain
-                   :data-test="`conv-${c.id}`" @click="loadConversation(c.id)">
-          {{ c.title || `会话 ${c.id}` }}（{{ c.message_count }}）
-        </el-button>
-        <span v-if="!convs.length" style="font-size:12px;color:#c0c4cc">
-          还没有历史会话
-        </span>
       </div>
-    </el-card>
+    </header>
 
-    <el-card v-if="!turns.length" shadow="never">
-      <template #header>使用说明</template>
-      <p style="color:#606266;font-size:13px">
-        直接问一句话，系统会走：<b>改写 → 意图 → 实体链接 → 生成 Cypher →
-        只读校验 → 执行 → 证据 → 答案</b>。答案只依据图谱事实；查不到会明确拒答。
-      </p>
-      <p style="color:#909399;font-size:12px">
-        试试：卡维地洛和依度沙班能一起吃吗？／类风湿关节炎可以用哪些药？／
-        骨肽片是治什么的？
-      </p>
-    </el-card>
-
-    <div v-for="(t, i) in turns" :key="i" style="margin-bottom:14px">
-      <el-card shadow="never" :data-test="`turn-${i}`">
-        <div style="font-weight:600;margin-bottom:6px">
-          <el-tag size="small" type="info">问</el-tag> {{ t.question }}
+    <!-- 消息区：可滚动，向上生长 -->
+    <div ref="scroller" class="ask__stream">
+      <div v-if="!turns.length" class="ask__empty">
+        <p class="ask__emptyTitle">问一句试试</p>
+        <p class="ask__emptySub">
+          系统只依据图谱作答——查不到会明确拒答，不会用常识硬编。
+        </p>
+        <div class="ask__examples">
+          <button v-for="ex in EXAMPLES" :key="ex" type="button"
+                  class="ask__example" @click="useExample(ex)">
+            <span>{{ ex }}</span><b aria-hidden="true">→</b>
+          </button>
         </div>
-        <div style="white-space:pre-wrap" :data-test="`answer-${i}`">{{ t.answer }}</div>
+      </div>
 
-        <!-- 多轮改写：改写后和原问题不同才显示，否则是噪音 -->
-        <div v-if="t.meta.rewritten && t.meta.rewritten !== t.question"
-             style="color:#909399;font-size:12px;margin-top:6px"
-             data-test="rewritten">
-          改写为：{{ t.meta.rewritten }}
-        </div>
+      <div v-for="(t, i) in turns" :key="i" class="ask__turn" :data-test="`turn-${i}`">
+        <div class="ask__q"><span>{{ t.question }}</span></div>
 
-        <div v-if="t.meta && !t.meta.restored" style="margin-top:8px;font-size:12px;color:#606266">
-          <el-tag size="small">意图：{{ t.meta.intent || '—' }}</el-tag>
-          <el-tag v-for="e in t.meta.entities" :key="e" size="small" type="success"
-                  style="margin-left:6px">{{ e }}</el-tag>
-          <el-tag size="small" type="warning" style="margin-left:6px"
-                  data-test="row-count">命中 {{ t.meta.row_count }} 行</el-tag>
-          <el-tag v-if="t.meta.faithful === false" size="small" type="danger"
-                  style="margin-left:6px">⚠️ 忠实度检查未过</el-tag>
-        </div>
-        <!-- 从库里恢复的轮次没有 intent/entities/row_count（未持久化），如实说明 -->
-        <div v-else-if="t.meta" style="margin-top:8px;font-size:12px;color:#c0c4cc">
-          历史记录（意图/实体/命中行数未持久化，故不显示）
-        </div>
+        <div class="ask__a">
+          <div class="ask__text" :data-test="`answer-${i}`">{{ t.answer || '…' }}</div>
 
-        <el-alert v-if="STEP_HINT[t.meta.step]" type="info" :closable="false"
-                  style="margin-top:8px" :title="STEP_HINT[t.meta.step]" />
+          <!-- 多轮改写：改写后和原问题不同才显示，否则是噪音 -->
+          <p v-if="t.meta && t.meta.rewritten && t.meta.rewritten !== t.question"
+             class="ask__rewritten" data-test="rewritten">
+            改写为：{{ t.meta.rewritten }}
+          </p>
 
-        <!-- 可解释性：Cypher 与结果都在折叠里 -->
-        <el-collapse style="margin-top:8px">
-          <el-collapse-item title="查看依据（实际执行的 Cypher 与命中结果）"
-                            :name="'d' + i" :data-test="`details-${i}`">
-            <div style="font-size:12px">
-              <div style="color:#606266;margin-bottom:4px">实际执行的 Cypher：</div>
-              <pre data-test="cypher"
-                   style="background:#f5f7fa;padding:8px;border-radius:4px;overflow:auto;font-size:12px">{{ t.meta.cypher || '（未生成）' }}</pre>
-              <div style="color:#606266;margin:8px 0 4px">
-                命中结果（共 {{ t.meta.row_count }} 行，最多显示 20 行）：
+          <div v-if="t.meta && !t.meta.restored" class="ask__tags">
+            <el-tag size="small">意图：{{ t.meta.intent || '—' }}</el-tag>
+            <el-tag v-for="e in t.meta.entities" :key="e" size="small" type="success">
+              {{ e }}
+            </el-tag>
+            <el-tag size="small" type="warning" data-test="row-count">
+              命中 {{ t.meta.row_count }} 行
+            </el-tag>
+            <el-tag v-if="t.meta.faithful === false" size="small" type="danger">
+              ⚠️ 忠实度检查未过
+            </el-tag>
+          </div>
+          <!-- 从库里恢复的轮次没有 intent/entities/row_count（未持久化），如实说明 -->
+          <p v-else-if="t.meta" class="ask__restored">
+            历史记录（意图/实体/命中行数未持久化，故不显示）
+          </p>
+
+          <el-alert v-if="t.meta && STEP_HINT[t.meta.step]" type="info" :closable="false"
+                    class="ask__alert" :title="STEP_HINT[t.meta.step]" />
+
+          <!-- 可解释性：Cypher 与结果都在折叠里 -->
+          <el-collapse v-if="t.meta" class="ask__more">
+            <el-collapse-item title="查看依据（实际执行的 Cypher 与命中结果）"
+                              :name="'d' + i" :data-test="`details-${i}`">
+              <div class="ask__code">
+                <p>实际执行的 Cypher：</p>
+                <pre data-test="cypher">{{ t.meta.cypher || '（未生成）' }}</pre>
+                <p>命中结果（共 {{ t.meta.row_count }} 行，最多显示 20 行）：</p>
+                <pre>{{ JSON.stringify(t.meta.rows_preview, null, 1) }}</pre>
               </div>
-              <pre style="background:#f5f7fa;padding:8px;border-radius:4px;overflow:auto;font-size:12px">{{ JSON.stringify(t.meta.rows_preview, null, 1) }}</pre>
-            </div>
-          </el-collapse-item>
-        </el-collapse>
+            </el-collapse-item>
+          </el-collapse>
 
-        <div v-if="t.meta.evidence" style="margin-top:10px">
-          <EvidenceGraph :graph="asGraph(t.meta.evidence)" />
+          <div v-if="t.meta && t.meta.evidence" class="ask__graph">
+            <EvidenceGraph :graph="asGraph(t.meta.evidence)" :max-height="240" />
+          </div>
         </div>
-      </el-card>
+      </div>
     </div>
 
-    <el-card shadow="never" style="position:sticky;bottom:0">
-      <el-input v-model="q" placeholder="问一句，例如：卡维地洛和依度沙班能一起吃吗？"
-                data-test="ask-q" :disabled="busy" @keyup.enter="send">
-        <template #append>
-          <el-button type="primary" :loading="busy" data-test="ask-send"
-                     @click="send">提问</el-button>
-        </template>
-      </el-input>
-      <p style="color:#909399;font-size:12px;margin:6px 0 0">
-        多轮：接着问「它和依度沙班能一起吃吗？」——系统会把「它」补成上文提到的药名。
-        图谱数据仅供参考，不能替代医生或药师的判断。
-      </p>
-    </el-card>
+    <!-- 输入区：固定在底部（聊天界面的常规形态） -->
+    <div class="ask__composer">
+      <el-input v-model="q" type="textarea" resize="none"
+                :autosize="{ minRows: 1, maxRows: 5 }"
+                placeholder="问一句，例如：卡维地洛和依度沙班能一起吃吗？"
+                data-test="ask-q" :disabled="busy"
+                @keydown.enter.exact.prevent="send" />
+      <div class="ask__composerRow">
+        <span class="ph-muted">
+          多轮：接着问「它和依度沙班能一起吃吗？」——系统会把「它」补成上文提到的药名。
+          图谱数据仅供参考，不能替代医生或药师的判断。
+        </span>
+        <el-button type="primary" :loading="busy" data-test="ask-send"
+                   @click="send">提问</el-button>
+      </div>
+    </div>
   </div>
 </template>
+
+<style scoped>
+/* 聊天布局的骨架：
+   标题（自动高）→ 消息区（flex:1，可滚）→ 输入区（自动高，贴底）。
+   整体高度吃满内容区：减去 .main__inner 上下各 24px 的内边距。 */
+.ask {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--ph-s5) * 2);
+  min-height: 460px;
+}
+.ask > .ph-page { flex: none; }
+
+.ask__convs { display: flex; align-items: center; gap: var(--ph-s2); }
+.ask__convSel { width: 220px; }
+
+/* ── 消息区 ─────────────────────────────────────────────── */
+.ask__stream {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--ph-s2) var(--ph-s1) var(--ph-s4);
+  scroll-behavior: smooth;
+}
+
+/* 空态：欢迎语 + 三个示例卡，垂直居中 */
+.ask__empty {
+  height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: var(--ph-s5) var(--ph-s3);
+}
+.ask__emptyTitle {
+  margin: 0 0 var(--ph-s2);
+  font-size: 20px; font-weight: 700; color: var(--ph-ink);
+}
+.ask__emptySub {
+  margin: 0 0 var(--ph-s5);
+  max-width: 34em;
+  font-size: 13px; line-height: 1.7; color: var(--ph-ink-2);
+}
+.ask__examples {
+  display: grid; gap: var(--ph-s2);
+  width: 100%; max-width: 460px;
+}
+.ask__example {
+  appearance: none;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--ph-s3);
+  padding: var(--ph-s3) var(--ph-s4);
+  border: 1px solid var(--ph-line);
+  border-radius: 10px;
+  background: var(--ph-surface);
+  color: var(--ph-ink);
+  font-family: inherit; font-size: 13.5px;
+  text-align: left; cursor: pointer;
+  transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+.ask__example:hover {
+  border-color: var(--ph-brand);
+  box-shadow: 0 4px 14px rgba(29, 78, 216, .10);
+}
+.ask__example b { color: var(--ph-brand); font-weight: 600; }
+
+/* ── 一轮问答：问右、答左 ───────────────────────────────── */
+.ask__turn { margin-bottom: var(--ph-s5); }
+.ask__q { display: flex; justify-content: flex-end; margin-bottom: var(--ph-s3); }
+.ask__q span {
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: 14px 14px 4px 14px;
+  background: var(--ph-brand);
+  color: #fff;
+  font-size: 14px; line-height: 1.65;
+}
+.ask__a {
+  max-width: 92%;
+  padding: var(--ph-s4);
+  border: 1px solid var(--ph-line);
+  border-radius: 4px 14px 14px 14px;
+  background: var(--ph-surface);
+}
+.ask__text {
+  white-space: pre-wrap;
+  font-size: 14px; line-height: 1.75;
+  color: var(--ph-ink);
+}
+.ask__rewritten { margin: var(--ph-s2) 0 0; font-size: 12px; color: var(--ph-ink-3); }
+.ask__restored { margin: var(--ph-s2) 0 0; font-size: 12px; color: var(--ph-ink-3); }
+.ask__tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: var(--ph-s3);
+}
+.ask__alert { margin-top: var(--ph-s3); }
+.ask__more { margin-top: var(--ph-s3); }
+.ask__code { font-size: 12px; color: var(--ph-ink-2); }
+.ask__code p { margin: var(--ph-s2) 0 4px; }
+.ask__code pre {
+  margin: 0;
+  padding: var(--ph-s2);
+  border-radius: 6px;
+  background: #f5f7fa;
+  overflow: auto;
+  font-size: 12px;
+}
+.ask__graph { margin-top: var(--ph-s3); }
+
+/* ── 输入区 ─────────────────────────────────────────────── */
+.ask__composer {
+  flex: none;
+  padding-top: var(--ph-s3);
+  border-top: 1px solid var(--ph-line);
+  background: var(--ph-page);
+}
+.ask__composerRow {
+  display: flex; align-items: center; gap: var(--ph-s3);
+  margin-top: var(--ph-s2);
+}
+.ask__composerRow .ph-muted { flex: 1 1 auto; }
+
+@media (max-width: 900px) {
+  .ask { height: calc(100vh - var(--ph-s4) * 2); }
+  .ask__convSel { width: 150px; }
+  .ask__a { max-width: 100%; }
+  .ask__q span { max-width: 88%; }
+  .ask__composerRow .ph-muted { display: none; }
+}
+</style>

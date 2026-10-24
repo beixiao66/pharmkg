@@ -27,6 +27,8 @@ import G6 from '@antv/g6'
 const props = defineProps({
   graph: { type: Object, required: true },
   maxNodes: { type: Number, default: 15 },
+  /** 画布高度上限。聊天里嵌入时给 260，独立的图谱页可以给 420。 */
+  maxHeight: { type: Number, default: 340 },
 })
 
 const box = ref(null)
@@ -84,7 +86,7 @@ function pick(src) {
  * 环的容量按"该环周长能放下几个节点"算，放不下就开下一环——
  * 这样节点数变化时**永远不会有重叠**，也不依赖任何布局引擎。
  */
-function layout(nodes, hubId, widths, W, minFirstRing = 0) {
+function layout(nodes, hubId, widths, W, minFirstRing = 0, maxH = 0) {
   const pos = new Map()
   const cx = W / 2
   const rest = nodes.filter((n) => n.id !== hubId)
@@ -107,8 +109,16 @@ function layout(nodes, hubId, widths, W, minFirstRing = 0) {
     idx += cnt
     ring += 1
   }
-  const maxR = rings.length ? rings[rings.length - 1].R : 0
-  const H = Math.max(320, 2 * (maxR + NODE_H + 24))
+  let maxR = rings.length ? rings[rings.length - 1].R : 0
+  let H = Math.max(320, 2 * (maxR + NODE_H + 24))
+  // ⚠️ 超过上限时**按比例收半径**，而不是把画布裁矮——
+  //    只裁画布会让外环的节点落到可视区外（"图空了一半"那种错觉）。
+  if (maxH > 0 && H > maxH) {
+    const k = maxH / H
+    for (const rg of rings) rg.R *= k
+    maxR *= k
+    H = maxH
+  }
   const cy = H / 2
   if (hubId) pos.set(hubId, { x: cx, y: cy })
   for (const rg of rings) {
@@ -176,7 +186,7 @@ async function draw() {
   const maxHalfW = Math.max(...widths.values()) / 2
   const minFirstRing = showEdgeLabels ? maxHalfW * 2 + labelW : 0
 
-  const { pos, H } = layout(rawNodes, hubId, widths, W, minFirstRing)
+  const { pos, H } = layout(rawNodes, hubId, widths, W, minFirstRing, props.maxHeight)
   canvasH.value = H
 
   // 摘要 + 截断说明（图形放弃的细节由文字承担）
@@ -191,10 +201,7 @@ async function draw() {
     ? `关系：${kinds.slice(0, 3).join('、')}${kinds.length > 3 ? ` 等 ${kinds.length} 种` : ''}`
     : '无连线'
   const cut = truncated ? `；另有 ${total - rawNodes.length} 个未画出，完整清单见上面的答案` : ''
-  // 调试尾巴：画布尺寸与元素数直接显示在 UI 上。出问题时一张截图就能定位，
-  // 不用再靠"你猜我猜"。验收通过后可以删掉这一段。
-  const dbg = `（画布 ${Math.round(W)}×${Math.round(H)}，实测宽度 ${Math.round(measured)}，节点 ${rawNodes.length}、边 ${rawEdges.length}）`
-  summary.value = `图中画了 ${rawNodes.length} 个节点（${typePart}），${rawEdges.length} 条连线（${relPart}）${cut}。${dbg}`
+  summary.value = `图中画了 ${rawNodes.length} 个节点（${typePart}），${rawEdges.length} 条连线（${relPart}）${cut}。`
   note.value = truncated ? `节点过多，只画了关联最多的 ${rawNodes.length} 个（共 ${total} 个）。` : ''
 
   const nodes = rawNodes.map((n) => {
