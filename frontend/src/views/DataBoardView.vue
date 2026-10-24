@@ -58,6 +58,10 @@ const junkLong = computed(() => num('junk_concat', 'too_long_count'))
 
 <template>
   <div v-loading="busy">
+    <header class="ph-page">
+      <h1>数据看板</h1>
+      <p>图谱规模、质量诊断与评测指标；每个数字都标出处与口径。</p>
+    </header>
     <el-card v-if="q" shadow="never" style="margin-bottom:14px">
       <template #header>图谱规模</template>
       <el-row :gutter="12">

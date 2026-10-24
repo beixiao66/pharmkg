@@ -147,7 +147,7 @@ def shortest_path(src: str = Query(min_length=1, max_length=64),
                 raise HTTPException(
                     status_code=status.HTTP_504_GATEWAY_TIMEOUT,
                     detail=(f"路径查询超时（{type(exc).__name__}）。"
-                            f"可调小 max_hops 再试；**这不代表两点之间没有路径**。")
+                            "可调小 max_hops 再试；这不代表两点之间没有路径。")
                 ) from exc
         if not row:
             return GraphPath(src=src, dst=dst, found=False, hops=0,

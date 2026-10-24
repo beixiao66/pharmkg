@@ -51,8 +51,11 @@ def graph_quality(user: AppUser = Depends(get_current_user)) -> dict:
         "generated_at": datetime.fromtimestamp(
             st.st_mtime, tz=timezone.utc).isoformat(timespec="seconds"),
         "size_bytes": st.st_size,
-        # ⚠️ 明确说明它是快照，不是实时统计
-        "note": ("这是 `scripts/check_graph_quality.py` 跑出来的一次快照；"
+        # ⚠️ 明确说明它是快照，不是实时统计。
+        #    注意：这里是**给界面直接显示的纯文本**，不是 markdown——
+        #    用反引号包脚本名会**原样显示**出来（看板截图里就露出来了），
+        #    改用中文书名号。
+        "note": ("这是「scripts/check_graph_quality.py」跑出来的一次快照；"
                  "图谱重新导入后要重跑该脚本，否则看板显示的是旧图的质量。"),
     }
     return data

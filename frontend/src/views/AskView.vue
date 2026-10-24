@@ -170,6 +170,10 @@ const STEP_HINT = {
 
 <template>
   <div>
+    <header class="ph-page">
+      <h1>智能问答</h1>
+      <p>用中文问一句；只在图谱有据可查时作答，并给出依据。</p>
+    </header>
     <!-- 会话栏：L7 的验收是「刷新/重登不丢历史」，所以这里必须能切会话 -->
     <el-card shadow="never" style="margin-bottom:12px">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
@@ -188,7 +192,7 @@ const STEP_HINT = {
     </el-card>
 
     <el-card v-if="!turns.length" shadow="never">
-      <template #header>智能问答</template>
+      <template #header>使用说明</template>
       <p style="color:#606266;font-size:13px">
         直接问一句话，系统会走：<b>改写 → 意图 → 实体链接 → 生成 Cypher →
         只读校验 → 执行 → 证据 → 答案</b>。答案只依据图谱事实；查不到会明确拒答。

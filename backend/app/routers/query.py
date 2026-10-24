@@ -103,7 +103,7 @@ def disease_drugs(name: str = Query(min_length=1, max_length=64),
             drugs=[{"name": r["name"], "source": r["src"]} for r in rows],
             truncated=total > len(rows),
             disclaimer=("推荐用药来自 OpenCMKG 的『疾病-推荐药物』关系，"
-                        "**不是临床指南**；该关系存在明显噪声（例如给病毒性肠炎"
+                        "「不是临床指南」；该关系存在明显噪声（例如给病毒性肠炎"
                         "推荐抗生素、把已停用的药物仍列为推荐）。请以说明书与"
                         "医生判断为准。"))
     finally:
@@ -152,12 +152,12 @@ def interaction(drug_a: str = Query(min_length=1, max_length=64),
             level=lv, level_label=LEVEL_LABEL.get(lv, lv),
             source=row["src"], note="",
             risk_hint="" if lv in ("Major", "Moderate") else
-            ("严重程度未知（Unknown）**不等于轻微**，请按最坏情况对待。"
+            ("严重程度未知（Unknown）「不等于轻微」，请按最坏情况对待。"
              if lv == "Unknown" else ""),
             disclaimer=DISCLAIMER, attribution=DDINTER_ATTRIBUTION,
             coverage_note=("图谱收录 DDInter 中可与中国药名对齐的部分："
                            "1,387 种药物、150,522 对相互作用。"
                            "DDInter 的批量文件只有风险等级，"
-                           "**机制/处理建议/替代用药不在其中**。"))
+                           "「机制/处理建议/替代用药不在其中」。"))
     finally:
         drv.close()

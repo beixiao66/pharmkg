@@ -75,6 +75,10 @@ const LEVEL_TAG = { Major: 'danger', Moderate: 'warning', Minor: 'info',
 
 <template>
   <div>
+    <header class="ph-page">
+      <h1>医药查询</h1>
+      <p>按病查推荐用药，或查两两药物之间的相互作用。</p>
+    </header>
     <el-card shadow="never" style="margin-bottom:14px">
       <template #header>① 按病查推荐用药</template>
       <el-input v-model="diseaseQ" placeholder="疾病名前缀，如 类风湿"

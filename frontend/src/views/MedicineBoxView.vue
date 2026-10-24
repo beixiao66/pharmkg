@@ -131,7 +131,12 @@ const graph = computed(() => {
 </script>
 
 <template>
-  <el-row :gutter="16">
+  <div>
+    <header class="ph-page">
+      <h1>我的药箱</h1>
+      <p>把正在吃的药加进来，逐对检查相互作用与人群禁忌。</p>
+    </header>
+    <el-row :gutter="16">
     <el-col :span="9">
       <el-card>
         <template #header>我的药箱（{{ box.length }}）</template>
@@ -205,5 +210,6 @@ const graph = computed(() => {
       </el-card>
       <el-card v-else><el-skeleton :rows="6" animated /></el-card>
     </el-col>
-  </el-row>
+    </el-row>
+  </div>
 </template>

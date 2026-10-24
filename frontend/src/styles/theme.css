@@ -93,3 +93,89 @@ body {
     transition-duration: .001ms !important;
   }
 }
+
+
+/* ============================================================================
+ * 页面骨架：每个页面顶部的标题区
+ *
+ * 五个页面原来都直接从第一张卡片开始，用户进来看不出"这是哪一页、能干什么"。
+ * 统一加一行标题 + 一句说明，并用一条细线与内容分开——这是最省事也最有效的
+ * 层级手段：**一次只有一个主角**。
+ * ========================================================================== */
+.ph-page {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ph-s3);
+  flex-wrap: wrap;
+  margin: 0 0 var(--ph-s4);
+  padding-bottom: var(--ph-s3);
+  border-bottom: 1px solid var(--ph-line);
+}
+.ph-page h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: var(--ph-ink);
+}
+.ph-page p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ph-ink-2);
+}
+/* 标题右侧的次要动作（刷新之类）靠右 */
+.ph-page .ph-page__aside { margin-left: auto; }
+
+/* ============================================================================
+ * 内容区里的 Element 组件统一
+ *
+ * ⚠️ 选择器一律带 `.shell__inner` 前缀：登录页不在这个容器里，
+ *    它的卡片是单独写的，不能被这里的规则误伤。
+ * ========================================================================== */
+.shell__inner .el-card {
+  border-radius: var(--ph-radius);
+  border-color: var(--ph-line);
+  box-shadow: var(--ph-shadow-sm);
+  margin-bottom: var(--ph-s4);
+  color: var(--ph-ink);
+}
+.shell__inner .el-card__header {
+  padding: var(--ph-s3) var(--ph-s4);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ph-ink);
+  background: #fbfcfe;
+  border-bottom-color: var(--ph-line);
+}
+.shell__inner .el-card__body { padding: var(--ph-s4); }
+
+/* 表格：表头浅底 + 更清晰的边框，长表更好读 */
+.shell__inner .el-table { --el-table-border-color: var(--ph-line); }
+.shell__inner .el-table th.el-table__cell {
+  background: #f8fafc;
+  color: var(--ph-ink-2);
+  font-weight: 600;
+}
+
+.shell__inner .el-tag { border-radius: 6px; }
+/* 空态插图默认 160px，在卡片里显得过于笨重（药箱页曾出现两个巨大的空盒子）。
+   收到 72px，并压缩上下留白——空态是提示，不该占据视觉重心。 */
+.shell__inner .el-empty { padding: var(--ph-s4) 0; }
+.shell__inner .el-empty__image { width: 72px; height: 72px; }
+.shell__inner .el-empty__description { margin-top: var(--ph-s2); }
+.shell__inner .el-empty__description p { font-size: 13px; color: var(--ph-ink-3); }
+.shell__inner .el-divider--horizontal { margin: var(--ph-s4) 0; }
+
+/* 页内辅助文字（说明、口径、空状态补充） */
+.ph-muted { color: var(--ph-ink-3); font-size: 12px; line-height: 1.7; }
+.ph-hint {
+  margin: var(--ph-s2) 0 0;
+  padding: var(--ph-s2) var(--ph-s3);
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid var(--ph-line);
+  color: var(--ph-ink-2);
+  font-size: 12.5px;
+  line-height: 1.7;
+}

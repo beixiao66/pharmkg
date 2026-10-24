@@ -337,7 +337,7 @@ def check_risk(user: AppUser = Depends(get_current_user),
             confidence_filter="high",
             note=("人群禁忌只统计 `confidence='high'` 的边：L4 抽出的禁忌边实测约 33% 假阳性，"
                   f"而这类边全图只有 {pop_total} 条（其中 high {pop_high} 条）。"
-                  "**没查到不等于没有**——覆盖不足时请以说明书与医生判断为准。"),
+                  "「没查到不等于没有」——覆盖不足时请以说明书与医生判断为准。"),
         ),
         population_tags=tags,
         allergy_history=allergies,

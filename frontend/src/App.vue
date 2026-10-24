@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import LoginView from './views/LoginView.vue'
 import MedicineBoxView from './views/MedicineBoxView.vue'
 import AskView from './views/AskView.vue'
@@ -7,9 +7,16 @@ import DataBoardView from './views/DataBoardView.vue'
 import GraphView from './views/GraphView.vue'
 import QueryView from './views/QueryView.vue'
 
+const TABS = ['ask', 'query', 'box', 'graph', 'board']
+const savedTab = localStorage.getItem('pharmkg:tab') || ''
+
 const token = ref(localStorage.getItem('token') || '')
 //: 提案的五模块至此齐了：问答、医药查询、药箱、图谱浏览、数据看板。
-const tab = ref('ask')
+//: **记住上次所在的页签**：刷新后回到同一页，而不是被弹回"智能问答"。
+const tab = ref(TABS.includes(savedTab) ? savedTab : 'ask')
+watch(tab, (v) => {
+  try { localStorage.setItem('pharmkg:tab', v) } catch { /* 隐私模式下可能抛，忽略 */ }
+})
 
 function onLogout() { token.value = '' }
 onMounted(() => window.addEventListener('pharmkg:logout', onLogout))

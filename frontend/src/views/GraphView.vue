@@ -77,6 +77,10 @@ function asGraph(d) {
 
 <template>
   <div>
+    <header class="ph-page">
+      <h1>图谱浏览</h1>
+      <p>检索实体、看邻域子图，或查两个实体之间的最短路径。</p>
+    </header>
     <el-card shadow="never" style="margin-bottom:14px">
       <template #header>① 实体检索 → 邻域子图</template>
       <el-input v-model="q" placeholder="实体名前缀，如 卡维地洛 / 类风湿"
@@ -89,7 +93,7 @@ function asGraph(d) {
 
       <div v-if="hits.length" style="margin-top:10px" data-test="entity-hits">
         <div style="font-size:12px;color:#909399;margin-bottom:6px">
-          命中 {{ hits.length }} 个（括号里是标签与连边数——**孤点进去是空白页，所以按连边数排序**）
+          命中 {{ hits.length }} 个（括号里是标签与连边数——孤点进去是空白页，所以按连边数排序）
         </div>
         <el-button v-for="h in hits" :key="h.name + h.label" size="small"
                    style="margin:4px" :type="center === h.name ? 'primary' : ''"
@@ -131,7 +135,7 @@ function asGraph(d) {
         </el-col>
       </el-row>
       <p style="color:#909399;font-size:12px;margin:6px 0 0">
-        最多 6 跳（不设上限就是全图搜索）。查询超时会明确报错——**超时不等于没有路径**。
+        最多 6 跳（不设上限就是全图搜索）。查询超时会明确报错——超时不等于没有路径。
       </p>
 
       <div v-if="path" style="margin-top:12px" data-test="path-result">
