@@ -84,6 +84,23 @@ function pick(src) {
  * 环的容量按"该环周长能放下几个节点"算，放不下就开下一环——
  * 这样节点数变化时**永远不会有重叠**，也不依赖任何布局引擎。
  */
+/** 矩形相交判定：任意两个节点是否重叠（节点宽按名字算，高固定）。 */
+function _hasOverlap(pos, widths) {
+  const items = [...pos.entries()]
+  for (let a = 0; a < items.length; a += 1) {
+    for (let b = a + 1; b < items.length; b += 1) {
+      const [ia, pa] = items[a]
+      const [ib, pb] = items[b]
+      const wa = widths.get(ia) || 90
+      const wb = widths.get(ib) || 90
+      if (Math.abs(pa.x - pb.x) < (wa + wb) / 2 && Math.abs(pa.y - pb.y) < NODE_H) {
+        return true
+      }
+    }
+  }
+  return false
+}
+
 function layout(nodes, hubId, widths, W, minFirstRing = 0) {
   const pos = new Map()
   const cx = W / 2
@@ -99,38 +116,51 @@ function layout(nodes, hubId, widths, W, minFirstRing = 0) {
     //    而标签「相互作用（高风险）」约 95px，两边都被节点压住，只看得见中间几个字。
     //    所以第一环半径至少要能容纳：枢纽半宽 + 该节点半宽 + 标签宽 + 余量。
     const R = ring === 1 ? Math.max(base, minFirstRing) : base
-    const avg = rest.slice(idx).reduce((s, n) => s + (widths.get(n.id) || 90), 0)
-      / Math.max(1, rest.length - idx)
-    const cap = Math.max(3, Math.floor((2 * Math.PI * R) / (avg + GAP)))
-    const cnt = Math.min(cap, rest.length - idx)
+    // ⚠️ **用这一批里最宽的名字**来算容量，不能用平均值。
+    //    实测：「慢性淋巴细胞性甲状腺炎」(161px) 混在一堆短名里，
+    //    平均值只有 ~95px，于是这一环塞了 6 个 → 长名和邻居撞在一起
+    //    （dx=74，需要 116）。按最宽算 = 少放几个 + 多开一环，宁可图大一圈。
+    const maxW = rest.slice(idx).reduce((s, n) => Math.max(s, widths.get(n.id) || 90), 0)
+    const capOf = (R) => Math.max(3, Math.floor((2 * Math.PI * R) / (maxW + GAP)))
+    const cnt = Math.min(capOf(R), rest.length - idx)
     rings.push({ R, from: idx, cnt, ring })
     idx += cnt
     ring += 1
   }
-  const maxR = rings.length ? rings[rings.length - 1].R : 0
-  // ⚠️ 画布高度**由布局自然决定**，不做"按上限缩半径"。
-  //    我试过缩半径（为了把图塞进固定高度），结果 10 个节点全挤在中心附近、
-  //    标签互相压住——**重叠比"图高一点"糟糕得多**，而且页面本来就能滚。
-  const H = Math.max(320, 2 * (maxR + NODE_H + 24))
-  const cy = H / 2
-  if (hubId) pos.set(hubId, { x: cx, y: cy })
-  for (const rg of rings) {
-    for (let k = 0; k < rg.cnt; k++) {
-      // ⚠️ **每一环必须错开起始角**，否则内环与外环在同一个角度的两个节点
-      //    会与圆心**完全共线**——「中心→外环节点」的连线会从内环节点背后穿过去，
-      //    看起来就像"内环节点和外环节点之间有一条带箭头的边"。
-      //    实测就是这么误判出来的：骨肽片（内环 0°）与骨刺片（外环 0°）共线，
-      //    用户看到 骨肽片→骨刺片 的箭头，而数据里根本没有这条边
-      //    （查证：23 条边全是 类风湿关节炎→某药，两端都不含枢纽的有 0 条）。
-      //    （第一版这里写了注释但表达式恒为 0，等于没做。）
-      const a = (2 * Math.PI * k) / rg.cnt + (rg.ring - 1) * (Math.PI / rg.cnt)
-      pos.set(rest[rg.from + k].id, {
-        x: cx + rg.R * Math.cos(a),
-        y: cy + rg.R * Math.sin(a),
-      })
+    // ⚠️ **先摆，再检测碰撞，有碰撞就整体放大重摆**。
+    //
+    //    为什么不能只靠"算容量"：碰撞不只发生在同一环内，还发生在
+    //    ① 枢纽 vs 第一环的长名（180px 的名，半宽 90 + 枢纽半宽 48 > 第一环半径 134）；
+    //    ② 相邻两环角度接近时。
+    //    实测「类风湿关节炎（疾病）」那张图就有 2 处重叠——
+    //    「祖师麻片」压着「慢性淋巴细胞性甲状腺炎」、「妊娠合并…」两个叠在一起。
+    //
+    //    放大是**单调**的：半径越大，同环弦长与环间距都变大，所以一定会收敛。
+    //    代价是画布变高（实测 +12%~25%），但**重叠比图高糟糕得多**，页面本来就能滚。
+    let scale = 1
+    let H = 320
+    for (let iter = 0; iter < 15; iter += 1) {
+      pos.clear()
+      const maxR = rings.length ? rings[rings.length - 1].R * scale : 0
+      H = Math.max(320, 2 * (maxR + NODE_H + 24))
+      const cy = H / 2
+      if (hubId) pos.set(hubId, { x: cx, y: cy })
+      for (const rg of rings) {
+        for (let k = 0; k < rg.cnt; k += 1) {
+          // ⚠️ **每一环错开起始角**：否则内环与外环在同一个角度的两个节点会与圆心
+          //    完全共线，「中心→外环节点」的连线会从内环节点背后穿过去，
+          //    看起来就像"两者之间有一条边"（实测误判过，数据里其实没有）。
+          const a = (2 * Math.PI * k) / rg.cnt + (rg.ring - 1) * (Math.PI / rg.cnt)
+          pos.set(rest[rg.from + k].id, {
+            x: cx + rg.R * scale * Math.cos(a),
+            y: cy + rg.R * scale * Math.sin(a),
+          })
+        }
+      }
+      if (!_hasOverlap(pos, widths)) break
+      scale *= 1.12
     }
-  }
-  return { pos, H }
+    return { pos, H }
 }
 
 async function draw() {
