@@ -70,6 +70,11 @@ def search_entities(q: str = Query(min_length=1, max_length=32),
 
 @router.get("/subgraph", response_model=GraphSubgraph, summary="邻域子图（1 跳）")
 def subgraph(name: str = Query(min_length=1, max_length=64),
+             label: str | None = Query(
+                 default=None, max_length=32,
+                 description="中心节点的标签。图谱里存在**同名不同标签**的节点"
+                             "（实测 1,774 个，例如「类风湿关节炎」既是 Disease 又是 Symptom），"
+                             "只给 name 会 LIMIT 1 随便挑一个，导致点 A 却看到 B 的邻域。"),
              limit: int = Query(default=120, ge=1, le=MAX_EDGES),
              user: AppUser = Depends(get_current_user)) -> GraphSubgraph:
     """以某实体为中心，取它的直接邻居。
@@ -81,17 +86,19 @@ def subgraph(name: str = Query(min_length=1, max_length=64),
     drv = _driver()
     try:
         with drv.session() as s:
-            c = s.run("MATCH (c) WHERE c.name = $n "
-                      "RETURN c.name AS name, labels(c)[0] AS label LIMIT 1",
-                      n=name).single()
+            c = s.run(
+                "MATCH (c {name: $n}) WHERE $lb IS NULL OR $lb IN labels(c) "
+                "RETURN c.name AS name, labels(c)[0] AS label LIMIT 1",
+                n=name, lb=label).single()
             if not c:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                     detail=f"图谱里没有名为「{name}」的实体")
             rows = list(s.run(
-                "MATCH (c {name: $n})-[r]-(o) "
+                  "MATCH (c {name: $n}) WHERE $lb IS NULL OR $lb IN labels(c) "
+                  "MATCH (c)-[r]-(o) "
                 "RETURN type(r) AS t, o.name AS oname, labels(o)[0] AS olabel, "
                 "startNode(r) = c AS outgoing "
-                "ORDER BY t, o.name LIMIT $lim", n=name, lim=limit + 1))
+                "ORDER BY t, o.name LIMIT $lim", n=name, lb=label, lim=limit + 1))
     finally:
         drv.close()
 

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import api, { humanizeError } from '../api'
 import { isDirected, typeLabel } from '../labels'
@@ -27,6 +27,14 @@ async function usePath(a, b) {
   await findPath()
 }
 
+//: 同名的命中（同名不同标签）。必须解释一句，否则用户看到两个
+//: 「类风湿关节炎」完全不知道为什么。
+const dupNames = computed(() => {
+  const cnt = {}
+  for (const h of hits.value) cnt[h.name] = (cnt[h.name] || 0) + 1
+  return Object.entries(cnt).filter(([, c]) => c > 1).map(([n]) => n)
+})
+
 async function searchEntity() {
   const text = q.value.trim()
   if (!text) return
@@ -41,12 +49,14 @@ async function searchEntity() {
   }
 }
 
-async function loadSubgraph(name) {
+async function loadSubgraph(name, label) {
   center.value = name
   sub.value = null
   try {
     sub.value = (await api.get('/graph/subgraph',
-                               { params: { name, limit: 120 } })).data
+                               // ⚠️ **必须带 label**：图谱里有同名不同标签的节点（实测 1,774 个），
+                               //   只传 name 的话后端 LIMIT 1 会随便挑一个，点「症状」却看到「疾病」。
+                               { params: { name, label, limit: 120 } })).data
   } catch (e) {
     ElMessage.error('加载邻域失败：' + humanizeError(e))
   }
@@ -116,16 +126,23 @@ function asGraph(d) {
         <div style="font-size:12px;color:#909399;margin-bottom:6px">
           命中 {{ hits.length }} 个（括号里是标签与连边数——孤点进去是空白页，所以按连边数排序）
         </div>
+
+        <!-- 同名多标签：必须解释，否则用户看到两个一样的名字完全不知道为什么 -->
+        <p v-if="dupNames.length" class="ph-hint" data-test="dup-hint">
+          「{{ dupNames[0] }}」这个名字在图谱里对应<b>多个标签</b>
+          （全图有 1,774 个这样的名字，属上游数据重复）。它们的连边完全不同——
+          点哪个就看哪个：标成「疾病」的那个通常信息更多，另一类多是"作为症状被别的病引用"。
+        </p>
         <el-button v-for="h in hits" :key="h.name + h.label" size="small"
                    style="margin:4px" :type="center === h.name ? 'primary' : ''"
-                   @click="loadSubgraph(h.name)">
-          {{ h.name }}（{{ h.label }}，{{ h.degree }}）
+                   @click="loadSubgraph(h.name, h.label)">
+          {{ h.name }}（{{ typeLabel(h.label) }}，{{ h.degree }} 条边）
         </el-button>
       </div>
 
       <div v-if="sub" style="margin-top:14px" data-test="subgraph">
         <div style="font-size:13px;margin-bottom:6px">
-          以 <b>{{ sub.center }}</b>（{{ sub.center_label }}）为中心：
+          以 <b>{{ sub.center }}</b>（{{ typeLabel(sub.center_label) }}）为中心：
           <b>{{ sub.nodes.length }}</b> 个节点 / <b>{{ sub.edges.length }}</b> 条边
         </div>
         <el-alert v-if="sub.truncated" type="warning" :closable="false"
