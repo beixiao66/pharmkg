@@ -86,7 +86,7 @@ def log(msg: str = "") -> None:
 def run_turn(session, client, st, question: str, *, intent_gold: str = "",
              gold_nodes: list[str] | None = None, gold_rows: list | None = None,
              history: list[tuple[str, str]] | None = None,
-             names=None, prefixes=None, max_len=2, fewshot=None,
+             names=None, prefixes=None, aliases=None, max_len=2, fewshot=None,
              intent_method: str = "llm", do_rewrite: bool = True,
              answer_method: str = "template", trace: bool = False) -> dict:
     """跑完一轮，返回**每一步的中间结果**（归因要用）。"""
@@ -120,7 +120,7 @@ def run_turn(session, client, st, question: str, *, intent_gold: str = "",
     ents: list[str] = []
     ambiguities: list[str] = []
     for _a, _b, piece, kind in scan(out["rewritten"], names, prefixes, max_len):
-        res = resolve(piece, kind, allowed, names, prefixes)
+        res = resolve(piece, kind, allowed, names, prefixes, aliases=aliases)
         if res["status"] == "需澄清":
             ambiguities.append(piece)
         if res["node"] and res["node"] not in ents:
@@ -139,10 +139,14 @@ def run_turn(session, client, st, question: str, *, intent_gold: str = "",
     if not ents:
         out["step"] = "无实体"
         out["answer"] = (
-            "这个问题不在本系统的查询范围内——我只会查图谱里的药物、疾病、"
-            "人群等信息，没法回答其他类型的问题。\n\n"
-            "可以换个问法试试，例如「某某药和某某药能一起吃吗」、"
-            "「某某病可以用哪些药」。"
+            # ⚠️ 这里**不能说"不在查询范围内"**。用户问「Lindane能治什么」时，
+            #    问题明明在范围内（药物→适应症），失败的只是"认不出实体"。
+            #    把三件事（超出范围 / 没认出实体 / 认出了但无数据）混成一句，
+            #    会让用户以为系统不支持这类问题，从而放弃——这是实测反馈出来的。
+            "我在你的问题里没有认出图谱中的药物、疾病或人群名称，所以查不到东西。\n\n"
+            "这不代表没有相关信息，只是这条链路认不出它。可以试试："
+            "① 用图谱里存在的名称（可先在「图谱浏览」里搜一下）；"
+            "② 换个说法，例如「某某药和某某药能一起吃吗」「某某病可以用哪些药」。"
             f"{DISCLAIMER}")
         out["faithful"] = True
         return out
@@ -275,7 +279,7 @@ def main(argv: list[str] | None = None) -> int:
 
     summary: dict = {}
     with driver.session() as s:
-        names, prefixes = build_index(s)
+        names, prefixes, aliases = build_index(s)
         max_len = max((len(x) for x in names), default=2)
 
         gold_rows_cache: dict[str, list] = {}
@@ -323,7 +327,7 @@ def main(argv: list[str] | None = None) -> int:
                 t0 = time.time()
                 out = run_turn(s, client, st, question, intent_gold=intent_gold,
                                gold_nodes=gold_nodes, gold_rows=g_rows,
-                               history=history, names=names, prefixes=prefixes,
+                               history=history, names=names, prefixes=prefixes, aliases=aliases,
                                max_len=max_len, fewshot=fewshot,
                                intent_method=args.intent,
                                do_rewrite=not args.no_rewrite,

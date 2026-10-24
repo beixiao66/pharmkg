@@ -89,10 +89,11 @@ def _ensure_state(session) -> dict:
     with _lock:
         if _state:                      # 双检：等锁期间别人可能已经建好
             return _state
-        names, prefixes = build_index(session)
+        names, prefixes, aliases = build_index(session)
         _state.update({
             "names": names,
             "prefixes": prefixes,
+            "aliases": aliases,
             "max_len": max((len(x) for x in names), default=2),
             "fewshot": _load_fewshot(),
         })
@@ -157,6 +158,7 @@ def ask(question: str, history: list[tuple[str, str]] | None = None,
                 session, _llm_client(st), st, question,
                 history=_to_transcript(history),
                 names=state["names"], prefixes=state["prefixes"],
+            aliases=state["aliases"],
                 max_len=state["max_len"], fewshot=state["fewshot"],
                 do_rewrite=do_rewrite, trace=trace,
             )

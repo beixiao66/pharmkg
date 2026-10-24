@@ -234,6 +234,26 @@ def main() -> int:
               len(m2) == 2 and m2[-1]["content"] == "第 4 轮回答",
               str([x["content"] for x in m2]))
 
+        # ── 回归：英文名（name_en）必须能被识别 ──
+        # 真实反馈：系统能回答「林丹的英文名是 Lindane」，却认不出「Lindane能治什么」，
+        # 因为实体链接索引里只有 n.name。图里 1,803/5,696 个药有英文名。
+        print("\n── 回归：英文药名可识别 ──")
+        r = client.post("/ask", json={"question": "Lindane 和 奋乃静片 能一起吃吗？"},
+                        headers=h)
+        d = r.json() if r.status_code == 200 else {}
+        ents = d.get("entities") or []
+        check("英文名 Lindane 被解析成中文节点「林丹」", "林丹" in ents, str(ents))
+        check("中英混问能同时认出两个药", "奋乃静片" in ents and len(ents) >= 2, str(ents))
+        check("中英混问真能查到相互作用（不是空结果）",
+              (d.get("row_count") or 0) >= 1, str(d.get("row_count")))
+
+        # ── 回归：拒答文案不得把"没认出实体"说成"不在查询范围内" ──
+        r = client.post("/ask", json={"question": "今天天气怎么样？"}, headers=h)
+        ans = (r.json() if r.status_code == 200 else {}).get("answer") or ""
+        check("无实体时的说明是「没认出实体」而不是「不在查询范围」",
+              "没有认出图谱" in ans and "不在本系统的查询范围内" not in ans,
+              ans[:60])
+
     finally:
         with SessionLocal() as db:
             db.execute(delete(AppUser).where(AppUser.username == user))

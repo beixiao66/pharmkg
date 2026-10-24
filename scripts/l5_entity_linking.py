@@ -104,25 +104,67 @@ def log(msg: str = "") -> None:
     print(msg, flush=True)
 
 
-def build_index(session) -> tuple[set[str], dict[str, list[tuple[str, tuple[str, ...]]]]]:
-    """返回 ``(全部节点名, 前缀索引)``。
+def build_index(session) -> tuple[set[str], dict[str, list[tuple[str, tuple[str, ...]]]], dict[str, str]]:
+    """返回 ``(全部节点名, 前缀索引, 英文别名表)``。
 
     前缀索引的值是 ``[(完整名字, 标签元组)...]``——**标签要一起存**，
     因为同一个名字可能同时是 Symptom 和 Disease（实测全图 1,774 个），
     解析时得按意图挑对那一个。
+
+    ⚠️ **英文别名（`name_en`）是后补的**，起因是一个真实反馈：
+    系统能回答「林丹的英文名是 Lindane」，却**认不出**「Lindane能治什么」——
+    因为索引里只有 `n.name`。图里 **1,803 / 5,696** 个药有英文名（DDInter 来源）。
+
+    英文名只登记为**精确别名**，不进前缀索引：
+    按前缀去匹配英文会产生大量无意义命中（`Lind` → `Lindane`、`Lin` → …），
+    而中文可以按前缀补全——两种语言的匹配习惯不一样。
+
+    别名表是小写的，便于大小写不敏感地查；`names` 里同时放原名与小写形式，
+    这样用户输入 `Lindane` / `lindane` 都能被扫到。
     """
     by_name: dict[str, list[str]] = defaultdict(list)
+    aliases: dict[str, str] = {}
+    #: 英文名的**原始大小写**形式。必须单独收着：
+    #: `scan` 按原样字符串匹配，而 `aliases` 的键是小写——
+    #: 只放小写的话用户输入 `Lindane`（大写 L）就扫不到（实测踩过）。
+    en_surface: set[str] = set()
     for rec in session.run(
             "MATCH (n) WHERE any(l IN labels(n) WHERE l IN $ls) "
-            "RETURN n.name AS name, labels(n) AS ls", ls=list(INDEX_LABELS)):
+            "RETURN n.name AS name, labels(n) AS ls, n.name_en AS en",
+            ls=list(INDEX_LABELS)):
         name = rec["name"]
         if not name:
             continue
         for lb in rec["ls"]:
             if lb in INDEX_LABELS and lb not in by_name[name]:
                 by_name[name].append(lb)
+        en = (rec["en"] or "").strip()
+        if en and en != name:
+            # 英文名 → 中文节点名。同一个英文名指向多个中文名时**不登记**，
+            # 让它们落到"认不出"而不是"猜一个"（宁可不答，不可答错）。
+            key = en.lower()
+            if key in aliases and aliases[key] != name:
+                aliases.pop(key, None)
+                aliases[f"__ambig__{key}"] = ""
+            elif not aliases.get(f"__ambig__{key}"):
+                aliases[key] = name
+                en_surface.add(en)
+
+    # 清掉歧义标记，并把它们的原始 key / 原始大小写形式一起排除
+    for k in [k for k in aliases if k.startswith("__ambig__")]:
+        raw_key = k[len("__ambig__"):]
+        aliases.pop(raw_key, None)
+        aliases.pop(k, None)
+    for en in list(en_surface):
+        if en.lower() not in aliases:
+            en_surface.discard(en)
 
     names = set(by_name)
+    # 英文别名加入可扫描集合（原始大小写 + 小写形式），但**不进前缀索引**
+    names |= en_surface
+    for key in aliases:
+        names.add(key)
+
     prefixes: dict[str, list[tuple[str, tuple[str, ...]]]] = defaultdict(list)
     for name, labels in by_name.items():
         entry = (name, tuple(labels))
@@ -130,7 +172,7 @@ def build_index(session) -> tuple[set[str], dict[str, list[tuple[str, tuple[str,
             prefixes[name[:cut]].append(entry)
     for key in prefixes:
         prefixes[key].sort()
-    return names, dict(prefixes)
+    return names, dict(prefixes), aliases
 
 
 def scan(question: str, names: set[str], prefixes: dict,
@@ -170,11 +212,17 @@ CONTROLS = {
 
 
 def resolve(piece: str, kind: str, allowed: tuple[str, ...],
-            names: set[str], prefixes: dict, control: str | None = None) -> dict:
+            names: set[str], prefixes: dict, control: str | None = None,
+            aliases: dict[str, str] | None = None) -> dict:
     """把一个命中解析成节点（或判定为需澄清 / 无法链接）。"""
     if control == "none":
         return {"status": "无法链接", "node": "", "note": "对照：什么都不链"}
     if kind == "精确":
+        # 英文别名（name_en）在这里换成中文节点名——用户输入 `Lindane`，
+        # 图里那个节点叫「林丹」。不加这一步，下游 Cypher 会拿一个不存在的节点名去查。
+        if aliases and piece.lower() in aliases:
+            node = aliases[piece.lower()]
+            return {"status": "别名", "node": node, "note": f"{piece} → {node}"}
         return {"status": "精确", "node": piece, "note": ""}
 
     pool = prefixes.get(piece, [])
@@ -240,7 +288,7 @@ def main(argv: list[str] | None = None) -> int:
     log("")
 
     with driver.session() as s:
-        names, prefixes = build_index(s)
+        names, prefixes, aliases = build_index(s)
         max_len = max((len(x) for x in names), default=2)
         log(f"  索引      {len(names):,} 个节点名 · "
             f"{len(prefixes):,} 个前缀 · 最长名字 {max_len} 字")
@@ -264,7 +312,8 @@ def main(argv: list[str] | None = None) -> int:
             detail: list[str] = []
             per_hit_status: list[tuple[str, str]] = []
             for _a, _b, piece, kind in hits:
-                res = resolve(piece, kind, allowed, names, prefixes, control=args.control)
+                res = resolve(piece, kind, allowed, names, prefixes,
+                      control=args.control, aliases=aliases)
                 stat[res["status"]] += 1
                 per_hit_status.append((res["status"], res["node"]))
                 if res["node"]:
