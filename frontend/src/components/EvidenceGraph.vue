@@ -1,6 +1,7 @@
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import G6 from '@antv/g6'
+import { typeLabel } from '../labels'
 
 // ⚠️ 这里钉的是 **G6 v4**（package.json 里 ^4.8）。v5 的 API 完全不同。
 //
@@ -41,21 +42,6 @@ const COLOR = {
   Population: '#f0a020',
   Symptom: '#909399',
   default: '#b1b3b8',
-}
-//: ⚠️ **必须覆盖图里所有可能出现的一级标签**。
-//: 第一版只写了 Drug/Disease/Population/Symptom，于是「食物 / 科室」这两类
-//: 在摘要里直接显示成 `Food` / `Department`（实测截图里就是）。
-//: 兜底用「实体」，绝不把英文标签漏到界面上。
-const TYPE_CN = {
-  Drug: '药物',
-  Disease: '疾病',
-  Symptom: '症状',
-  Population: '人群',
-  Food: '食物',
-  Check: '检查',
-  Treatment: '治疗',
-  Department: '科室',
-  Producer: '生产商',
 }
 const LEVEL_COLOR = { Major: '#c0392b', Moderate: '#e67e22', Minor: '#95a5a6' }
 
@@ -220,7 +206,7 @@ async function draw() {
   // 摘要 + 截断说明（图形放弃的细节由文字承担）
   const byType = {}
   for (const n of rawNodes) {
-    const t = TYPE_CN[n.type] || n.type || '实体'
+    const t = typeLabel(n.type) || '实体'
     byType[t] = (byType[t] || 0) + 1
   }
   const typePart = Object.entries(byType).map(([k, v]) => `${v} 个${k}`).join('、')

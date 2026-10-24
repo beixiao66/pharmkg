@@ -8,17 +8,45 @@
  * 没收录的类型**原样返回**，不硬翻：翻错比不翻更糟。
  */
 const TYPE_LABEL = {
+  // ── 节点标签（9 个，取自 `CALL db.labels()`）────────────────────
+  // ⚠️ 第一版**一个都没收录**，于是界面上显示 `Disease` / `Symptom` / `Food`。
+  //    实体标签也是"给开发者看的英文名"，同样必须翻。
+  Drug: '药物',
+  Disease: '疾病',
+  Symptom: '症状',
+  Population: '人群',
+  Food: '食物',
+  Check: '检查',
+  Treatment: '治疗',
+  Department: '科室',
+  Producer: '生产商',
+
+  // ── 关系类型（15 个，取自 `CALL db.relationshipTypes()`）─────────
+  // ⚠️ 这一组曾经漏了 6 个、还写错 2 个：
+  //    漏：COMMON_DRUG / EAT_FOOD / NEED_TREATMENT / BELONG_DEPARTMENT /
+  //        DEPT_BELONG_DEPT / RELATE_PRODUCER
+  //    错：写成 `BELONGS_TO`（真名是 BELONG_DEPARTMENT）、
+  //        写成 `SameAs`（真名是大写 SAME_AS）
+  //    → 界面上照样蹦英文。**这张表要和图里的枚举对齐，靠人肉记不住**，
+  //      所以加了 `scripts/check_label_map.py` 做防漂移检查。
   INTERACTS_WITH: '相互作用',
   CONTRAINDICATED_FOR: '禁忌',
   CAUTION_FOR: '慎用',
   RECOMMEND_DRUG: '推荐用药',
+  COMMON_DRUG: '常用药物',
   RECOMMEND_FOOD: '推荐食物',
+  EAT_FOOD: '宜吃食物',
   NOTEAT_FOOD: '忌口',
   HAS_SYMPTOM: '症状',
   ACCOMPANY_DISEASE: '伴随疾病',
   NEED_CHECK: '需要检查',
-  BELONGS_TO: '属于',
+  NEED_TREATMENT: '需要治疗',
+  BELONG_DEPARTMENT: '就诊科室',
+  DEPT_BELONG_DEPT: '上级科室',
+  RELATE_PRODUCER: '生产商',
+  SAME_AS: '别名',
   SameAs: '别名',
+  BELONGS_TO: '属于',
 }
 
 export function typeLabel(t) {

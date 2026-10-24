@@ -48,6 +48,8 @@ TESTS: list[tuple[str, str, Path, str]] = [
     ("图谱质量接口", "scripts/quality_selftest.py", BACKEND_DIR, "quality"),
     ("医药查询接口", "scripts/query_selftest.py", BACKEND_DIR, "query"),
     ("图谱浏览接口", "scripts/graph_selftest.py", BACKEND_DIR, "graph"),
+    # 前端翻译表 vs 图里的枚举：漏一个，界面上就会蹦英文。
+    ("标签翻译表覆盖", "../scripts/check_label_map.py", BACKEND_DIR, "labels"),
 ]
 
 
