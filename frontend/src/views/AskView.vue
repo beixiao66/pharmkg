@@ -42,7 +42,12 @@ async function refreshConversations() {
 async function loadConversation(id) {
   convId.value = id
   try {
-    const { data } = await api.get(`/conversations/${id}/messages`)
+    // ⚠️ **必须显式传 limit**。后端默认值曾经是 6（= 3 轮），前端不带参数就
+    //    只拿到最后 3 轮 —— 用户的第 4 轮之前**凭空消失**，界面上没有任何提示
+    //    （会话按钮显示「(18)」，点开只有 3 轮，自相矛盾）。
+    //    这里显式要 200 条（= 100 轮），真的被截断时也会明确告诉用户。
+    const { data } = await api.get(`/conversations/${id}/messages`,
+                                   { params: { limit: 200 } })
     const out = []
     for (const m of data) {
       if (m.role === 'user') {
@@ -60,6 +65,10 @@ async function loadConversation(id) {
       }
     }
     turns.value = out
+    // 拿到 200 条说明后面可能还有——明说，别让用户以为历史就这么多
+    if (data.length >= 200) {
+      ElMessage.warning('这个会话很长，只加载了最近 200 条消息')
+    }
   } catch (e) {
     ElMessage.error('加载会话历史失败：' + humanizeError(e))
     turns.value = []

@@ -71,15 +71,23 @@ def list_conversations(limit: int = Query(default=50, ge=1, le=200),
 
 
 @router.get("/{conv_id}/messages", response_model=list[MessageResponse],
-            summary="取会话消息（默认最近 3 轮，§6.2 的上下文窗口）")
+            summary="取会话消息（默认全部，按时间正序）")
 def list_messages(conv_id: int,
-                  limit: int = Query(default=6, ge=1, le=200),
+                  limit: int = Query(default=200, ge=1, le=200),
                   user: AppUser = Depends(get_current_user),
                   db: Session = Depends(get_db)) -> list[MessageResponse]:
     """取消息。
 
-    ⚠️ 默认 ``limit=6``（= 3 轮，一问一答）。L5 的上下文窗口只要最近 N 轮，
-    一次拉全部历史既费 token 又没有用（§6.2 建议 N=3）。
+    ⚠️ **默认 `limit` 从 6 改成了 200**（原来 6 = 3 轮）。原因是一起真实的
+    静默截断 bug：这个默认值本来是给「L5 上下文窗口只要最近 3 轮」设计的，
+    但**前端从来没用它取上下文**（上下文由页面在内存里拼好后 POST 给 /ask），
+    前端复用它来**显示完整历史**——于是用户的第 4 轮之前全部消失，
+    而界面上没有任何提示（会话列表里那条会话显示「(18) 条」，
+    点开却只有最后 3 轮，自相矛盾）。
+
+    教训：**一个接口的默认值若同时服务"取上下文"和"做展示"两种语义，一定会错一边**。
+    现在默认取全部（上限 200 = 100 轮）；需要少数几条的调用方显式写 `limit=N`
+    （`l7_selftest.py` 就有 `limit=1` 的用例）。
 
     返回的是**最近** N 条，但按**时间正序**排列——模型看到的顺序必须是对话顺序，
     倒着喂进去会让它把最新的一轮当成最早的一轮。

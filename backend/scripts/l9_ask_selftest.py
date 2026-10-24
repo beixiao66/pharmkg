@@ -210,6 +210,30 @@ def main() -> int:
               bool(lst) and lst[0]["id"] == cid and lst[0]["message_count"] == 2,
               str([(x["id"], x["message_count"]) for x in lst[:2]]))
 
+        # ── 回归：默认 limit 不得截断历史（这是用户真实遇到的 bug）──
+        # `/conversations/{id}/messages` 曾默认 limit=6（=3 轮）。前端不带参数，
+        # 于是第 4 轮之前**凭空消失**——而会话按钮上明明写着「(18)」，自相矛盾。
+        # 现在再写 5 轮（共 12 条），要求"不带 limit"能拿到全部。
+        print("\n── 回归：默认 limit 不得截断历史 ──")
+        for k in range(5):
+            client.post(f"/conversations/{cid}/messages", headers=h,
+                        json={"role": "user", "content": f"第 {k} 轮问题"})
+            client.post(f"/conversations/{cid}/messages", headers=h,
+                        json={"role": "assistant", "content": f"第 {k} 轮回答"})
+        r = client.get(f"/conversations/{cid}/messages", headers=h)
+        msgs2 = r.json() if r.status_code == 200 else []
+        check("**不带 limit** 也拿到全部 12 条（默认不再截断）",
+              len(msgs2) == 12, f"实际 {len(msgs2)} 条")
+        check("仍是时间正序（首条 user、末条 assistant）",
+              bool(msgs2) and msgs2[0]["role"] == "user"
+              and msgs2[-1]["role"] == "assistant",
+              f"首 {msgs2[0]['role'] if msgs2 else '?'} / 末 {msgs2[-1]['role'] if msgs2 else '?'}")
+        r = client.get(f"/conversations/{cid}/messages?limit=2", headers=h)
+        m2 = r.json() if r.status_code == 200 else []
+        check("显式 limit=2 仍只取最后 2 条（少数几条的用法没被破坏）",
+              len(m2) == 2 and m2[-1]["content"] == "第 4 轮回答",
+              str([x["content"] for x in m2]))
+
     finally:
         with SessionLocal() as db:
             db.execute(delete(AppUser).where(AppUser.username == user))
