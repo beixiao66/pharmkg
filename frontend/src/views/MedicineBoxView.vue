@@ -2,6 +2,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import api, { humanizeError } from '../api'
+import { levelLabel } from '../labels'
 import RiskCard from '../components/RiskCard.vue'
 import EvidenceGraph from '../components/EvidenceGraph.vue'
 
@@ -22,6 +23,22 @@ const searched = ref(false)
 const lastQ = ref('')
 //: 检索的总数与被截断标记（后端返回）。**截断必须显示出来**，见 search() 里的说明。
 const meta = ref({ total: 0, truncated: false, matchedBy: null })
+
+
+//: 右侧顶部的汇总条。为什么需要：原来的层级是"先看 ① 的逐对列表"，
+//: 用户要滚到底才知道一共几对、几对是高风险。**结论应该在最上面。**
+const summary = computed(() => {
+  const r = risk.value || {}
+  const pairs = r.pairs || []
+  const byLevel = (lv) => pairs.filter((p) => p.level === lv).length
+  return {
+    drugs: (box.value || []).length,
+    checked: (r.coverage && r.coverage.pairs_checked) ?? pairs.length,
+    major: byLevel("Major"),
+    moderate: byLevel("Moderate"),
+    none: pairs.filter((p) => !p.level).length,
+  }
+})
 
 //: 词表按 group 拆开；**每个选项都显示图谱里有几条边**（0 就说"暂无数据"），
 //: 否则用户会以为「标了就一定查得到」。
@@ -118,7 +135,10 @@ const graph = computed(() => {
     if (!p.level) continue
     const a = [...nodes.values()].find((n) => n.label === p.drug_a)
     const b = [...nodes.values()].find((n) => n.label === p.drug_b)
-    if (a && b) edges.push({ source: a.id, target: b.id, label: p.level, directed: false })
+    if (a && b) // 边标签要翻成人话：图里存的是 Major/Moderate/Unknown 这些英文枚举，
+        // 直接画出来会让界面上同时出现「高风险」和「Major」两种说法。
+        edges.push({ source: a.id, target: b.id, label: levelLabel(p.level) || '相互作用',
+                     directed: false })
   }
   for (const h of risk.value.population) {
     const d = [...nodes.values()].find((n) => n.label === h.drug)
@@ -207,6 +227,25 @@ const graph = computed(() => {
     <el-col :span="15">
       <el-card v-if="risk">
         <template #header>用药安全校验</template>
+
+          <!-- 汇总条：先给结论，再给逐对明细 -->
+          <div class="mb-sum">
+            <div class="mb-sum__i">
+              <b>{{ summary.drugs }}</b><span>药箱药物</span>
+            </div>
+            <div class="mb-sum__i">
+              <b>{{ summary.checked }}</b><span>已检查药对</span>
+            </div>
+            <div class="mb-sum__i" :class="{ 'mb-sum__i--bad': summary.major }">
+              <b>{{ summary.major }}</b><span>高风险</span>
+            </div>
+            <div class="mb-sum__i" :class="{ 'mb-sum__i--warn': summary.moderate }">
+              <b>{{ summary.moderate }}</b><span>中等风险</span>
+            </div>
+            <div class="mb-sum__i">
+              <b>{{ summary.none }}</b><span>未收录</span>
+            </div>
+          </div>
         <RiskCard :risk="risk" />
         <h3>④ 证据子图</h3>
         <EvidenceGraph :graph="graph" />
@@ -219,3 +258,45 @@ const graph = computed(() => {
     </el-row>
   </div>
 </template>
+
+<style scoped>
+/* 汇总条：结论先行的五格 */
+.mb-sum {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--ph-s3);
+  margin-bottom: var(--ph-s4);
+  padding-bottom: var(--ph-s4);
+  border-bottom: 1px solid var(--ph-line);
+}
+.mb-sum__i {
+  padding: var(--ph-s2) var(--ph-s3);
+  border-radius: 8px;
+  background: #fbfcfe;
+  border-left: 3px solid var(--ph-line);
+}
+.mb-sum__i b {
+  display: block;
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--ph-ink);
+  font-variant-numeric: tabular-nums;
+}
+.mb-sum__i span {
+  display: block;
+  margin-top: 2px;
+  font-size: 11.5px;
+  color: var(--ph-ink-3);
+}
+/* 有风险时那一格才染色——**颜色只在有问题时出现**，平时是灰线 */
+.mb-sum__i--bad { border-left-color: var(--ph-danger); }
+.mb-sum__i--bad b { color: var(--ph-danger); }
+.mb-sum__i--warn { border-left-color: var(--ph-warn); }
+.mb-sum__i--warn b { color: var(--ph-warn); }
+
+@media (max-width: 900px) {
+  .mb-sum { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mb-sum__i b { font-size: 18px; }
+}
+</style>
