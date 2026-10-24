@@ -272,8 +272,20 @@ const STEP_HINT = {
               <div class="ask__code">
                 <p>实际执行的 Cypher：</p>
                 <pre data-test="cypher">{{ t.meta.cypher || '（未生成）' }}</pre>
-                <p>命中结果（共 {{ t.meta.row_count }} 行，最多显示 20 行）：</p>
-                <pre>{{ JSON.stringify(t.meta.rows_preview, null, 1) }}</pre>
+
+                <!-- ⚠️ 恢复出来的轮次**没有** row_count / rows_preview（未入库）。
+                     原来这里照旧渲染，于是显示成「命中结果（共  行…）」加一个空表格，
+                     用户会以为是系统坏了。**宁可明说"没保存"，也不要留半截空壳。**
+                     （为什么不去补存：那 20 行原始数据体积大，而答案已经是对它的解读；
+                      更关键的是图谱若变了，会出现"旧行配新答案"的不一致。） -->
+                <p v-if="t.meta.restored" class="ask__codeNote" data-test="rows-not-saved">
+                  这一轮是从历史记录恢复的：「命中结果」当时没有入库，所以这里没有表格。
+                  答案正文、Cypher 与证据子图都已保存。
+                </p>
+                <template v-else>
+                  <p>命中结果（共 {{ t.meta.row_count }} 行，最多显示 20 行）：</p>
+                  <pre>{{ JSON.stringify(t.meta.rows_preview, null, 1) }}</pre>
+                </template>
               </div>
             </el-collapse-item>
           </el-collapse>
@@ -401,6 +413,15 @@ const STEP_HINT = {
 .ask__more { margin-top: var(--ph-s3); }
 .ask__code { font-size: 12px; color: var(--ph-ink-2); }
 .ask__code p { margin: var(--ph-s2) 0 4px; }
+.ask__codeNote {
+  margin: var(--ph-s3) 0 0;
+  padding: var(--ph-s2) var(--ph-s3);
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid var(--ph-line);
+  color: var(--ph-ink-2);
+  line-height: 1.7;
+}
 .ask__code pre {
   margin: 0;
   padding: var(--ph-s2);
