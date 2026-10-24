@@ -113,9 +113,9 @@ body {
 }
 .ph-page h1 {
   margin: 0;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
-  letter-spacing: -.01em;
+  letter-spacing: -.015em;
   color: var(--ph-ink);
 }
 .ph-page p {
@@ -130,17 +130,17 @@ body {
 /* ============================================================================
  * 内容区里的 Element 组件统一
  *
- * ⚠️ 选择器一律带 `.shell__inner` 前缀：登录页不在这个容器里，
+ * ⚠️ 选择器一律带 `.main__inner` 前缀：登录页不在这个容器里，
  *    它的卡片是单独写的，不能被这里的规则误伤。
  * ========================================================================== */
-.shell__inner .el-card {
+.main__inner .el-card {
   border-radius: var(--ph-radius);
   border-color: var(--ph-line);
   box-shadow: var(--ph-shadow-sm);
   margin-bottom: var(--ph-s4);
   color: var(--ph-ink);
 }
-.shell__inner .el-card__header {
+.main__inner .el-card__header {
   padding: var(--ph-s3) var(--ph-s4);
   font-size: 14px;
   font-weight: 600;
@@ -148,24 +148,24 @@ body {
   background: #fbfcfe;
   border-bottom-color: var(--ph-line);
 }
-.shell__inner .el-card__body { padding: var(--ph-s4); }
+.main__inner .el-card__body { padding: var(--ph-s4); }
 
 /* 表格：表头浅底 + 更清晰的边框，长表更好读 */
-.shell__inner .el-table { --el-table-border-color: var(--ph-line); }
-.shell__inner .el-table th.el-table__cell {
+.main__inner .el-table { --el-table-border-color: var(--ph-line); }
+.main__inner .el-table th.el-table__cell {
   background: #f8fafc;
   color: var(--ph-ink-2);
   font-weight: 600;
 }
 
-.shell__inner .el-tag { border-radius: 6px; }
+.main__inner .el-tag { border-radius: 6px; }
 /* 空态插图默认 160px，在卡片里显得过于笨重（药箱页曾出现两个巨大的空盒子）。
    收到 72px，并压缩上下留白——空态是提示，不该占据视觉重心。 */
-.shell__inner .el-empty { padding: var(--ph-s4) 0; }
-.shell__inner .el-empty__image { width: 72px; height: 72px; }
-.shell__inner .el-empty__description { margin-top: var(--ph-s2); }
-.shell__inner .el-empty__description p { font-size: 13px; color: var(--ph-ink-3); }
-.shell__inner .el-divider--horizontal { margin: var(--ph-s4) 0; }
+.main__inner .el-empty { padding: var(--ph-s4) 0; }
+.main__inner .el-empty__image { width: 72px; height: 72px; }
+.main__inner .el-empty__description { margin-top: var(--ph-s2); }
+.main__inner .el-empty__description p { font-size: 13px; color: var(--ph-ink-3); }
+.main__inner .el-divider--horizontal { margin: var(--ph-s4) 0; }
 
 /* 页内辅助文字（说明、口径、空状态补充） */
 .ph-muted { color: var(--ph-ink-3); font-size: 12px; line-height: 1.7; }

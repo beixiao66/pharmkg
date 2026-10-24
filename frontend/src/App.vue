@@ -7,15 +7,24 @@ import DataBoardView from './views/DataBoardView.vue'
 import GraphView from './views/GraphView.vue'
 import QueryView from './views/QueryView.vue'
 
-const TABS = ['ask', 'query', 'box', 'graph', 'board']
+//: 侧栏导航。**不放图标**：试过手写 SVG path（分别画气泡/放大镜/盒子/网络/柱状），
+//: 在 17px 下根本认不出来，反而像一堆括号和逗号。与其放认不出的符号，
+//: 不如把文字排版做干净——很多成熟产品的侧栏就是纯文字的。
+const NAV = [
+  { k: 'ask', t: '智能问答' },
+  { k: 'query', t: '医药查询' },
+  { k: 'box', t: '我的药箱' },
+  { k: 'graph', t: '图谱浏览' },
+  { k: 'board', t: '数据看板' },
+]
+const TABS = NAV.map((n) => n.k)
 const savedTab = localStorage.getItem('pharmkg:tab') || ''
 
 const token = ref(localStorage.getItem('token') || '')
-//: 提案的五模块至此齐了：问答、医药查询、药箱、图谱浏览、数据看板。
 //: **记住上次所在的页签**：刷新后回到同一页，而不是被弹回"智能问答"。
 const tab = ref(TABS.includes(savedTab) ? savedTab : 'ask')
 watch(tab, (v) => {
-  try { localStorage.setItem('pharmkg:tab', v) } catch { /* 隐私模式下可能抛，忽略 */ }
+  try { localStorage.setItem('pharmkg:tab', v) } catch { /* 隐私模式下可能抛 */ }
 })
 
 function onLogout() { token.value = '' }
@@ -32,90 +41,152 @@ function logout() {
   <!-- 未登录：整屏给登录页（它自己是左右分栏，需要满高） -->
   <LoginView v-if="!token" @logged-in="token = $event" />
 
-  <!-- 已登录：顶栏 + 内容区 -->
-  <el-container v-else class="shell">
-    <el-header class="shell__bar" height="64px">
-      <div class="shell__left">
-        <span class="shell__mark" aria-hidden="true">Rx</span>
-        <b class="shell__brand">pharmkg</b>
-        <span class="shell__sep" aria-hidden="true" />
-        <span class="shell__product">医药查询与智能用药</span>
+  <!-- 已登录：左侧导航 + 内容区 -->
+  <div v-else class="app">
+    <aside class="side">
+      <div class="side__brand">
+        <span class="side__mark" aria-hidden="true">Rx</span>
+        <span class="side__name">pharmkg</span>
       </div>
 
-      <div class="shell__right">
-        <el-radio-group v-model="tab" data-test="tab-switch">
-          <el-radio-button value="ask">智能问答</el-radio-button>
-          <el-radio-button value="query">医药查询</el-radio-button>
-          <el-radio-button value="box">我的药箱</el-radio-button>
-          <el-radio-button value="graph">图谱浏览</el-radio-button>
-          <el-radio-button value="board">数据看板</el-radio-button>
-        </el-radio-group>
-        <el-button text class="shell__logout" data-test="logout" @click="logout">
-          退出
-        </el-button>
-      </div>
-    </el-header>
+      <nav class="side__nav" aria-label="主导航">
+        <p class="side__label">工作区</p>
+        <button v-for="n in NAV" :key="n.k" type="button"
+                :class="['side__item', { on: tab === n.k }]"
+                :aria-current="tab === n.k ? 'page' : undefined"
+                :data-test="`nav-${n.k}`" @click="tab = n.k">
+          <span>{{ n.t }}</span>
+        </button>
+      </nav>
 
-    <el-main class="shell__main">
-      <div class="shell__inner">
+      <div class="side__foot">
+        <p class="side__note">图谱数据仅供学习参考<br />不能替代医生判断</p>
+        <button type="button" class="side__item side__item--quiet"
+                data-test="logout" @click="logout">
+          <span>退出登录</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="main__inner">
         <AskView v-if="tab === 'ask'" />
         <QueryView v-else-if="tab === 'query'" />
         <GraphView v-else-if="tab === 'graph'" />
         <DataBoardView v-else-if="tab === 'board'" />
         <MedicineBoxView v-else />
       </div>
-    </el-main>
-  </el-container>
+    </main>
+  </div>
 </template>
 
 <style scoped>
-.shell { min-height: 100%; background: var(--ph-page); }
-
-/* 顶栏：白底 + 底部细线 + 粘顶。比 Element 默认的 header 更"像一个应用" */
-.shell__bar {
-  position: sticky; top: 0; z-index: 20;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: var(--ph-s4);
-  padding: 0 var(--ph-s5);
-  background: rgba(255, 255, 255, .92);
-  backdrop-filter: saturate(180%) blur(8px);
-  border-bottom: 1px solid var(--ph-line);
+.app {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  min-height: 100%;
+  background: var(--ph-page);
 }
 
-.shell__left { display: flex; align-items: center; gap: var(--ph-s2); min-width: 0; }
-.shell__mark {
+/* ── 侧栏 ───────────────────────────────────────────────────
+   为什么不用顶栏那排单选按钮：五个功能平铺在顶栏像"表单选项"，
+   而它们其实是五个**并列的工作区**。左侧导航是这类应用的常规形态，
+   也能容下更多项（以后加分册/设置都不用改布局）。 */
+.side {
+  position: sticky; top: 0;
+  align-self: start;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--ph-s4) var(--ph-s3);
+  background: var(--ph-surface);
+  border-right: 1px solid var(--ph-line);
+}
+
+.side__brand {
+  display: flex; align-items: center; gap: var(--ph-s2);
+  padding: var(--ph-s2) var(--ph-s2) var(--ph-s5);
+}
+.side__mark {
   display: inline-grid; place-items: center;
-  width: 26px; height: 26px; border-radius: 7px;
+  width: 28px; height: 28px; border-radius: 8px;
   background: var(--ph-brand); color: #fff;
   font-size: 11px; font-weight: 700;
 }
-.shell__brand {
-  font-size: 15px; letter-spacing: .04em; color: var(--ph-ink);
-}
-.shell__sep {
-  width: 1px; height: 16px; margin: 0 var(--ph-s2);
-  background: var(--ph-line);
-}
-.shell__product {
-  font-size: 13px; color: var(--ph-ink-2);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+.side__name {
+  font-size: 15px; font-weight: 700; letter-spacing: .02em;
+  color: var(--ph-ink);
 }
 
-.shell__right { display: flex; align-items: center; gap: var(--ph-s3); }
-.shell__logout { color: var(--ph-ink-2); }
-.shell__logout:hover { color: var(--ph-brand); }
+.side__nav { display: flex; flex-direction: column; gap: 2px; }
+.side__label {
+  margin: 0 0 var(--ph-s2);
+  padding: 0 var(--ph-s3);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  color: var(--ph-ink-3);
+}
 
-.shell__main { padding: 0; }
-/* 内容区限宽居中：大屏上不要把表格/卡片拉成一整行 */
-.shell__inner {
-  max-width: 1240px;
+.side__item {
+  appearance: none;
+  display: flex; align-items: center; gap: var(--ph-s3);
+  width: 100%;
+  min-height: 40px;
+  padding: 0 var(--ph-s3);
+  border: 0; border-radius: 9px;
+  background: transparent;
+  color: var(--ph-ink-2);
+  font-family: inherit; font-size: 14px; font-weight: 500;
+  text-align: left; cursor: pointer;
+  transition: background .16s ease, color .16s ease;
+}
+.side__item:hover { background: #f4f6fb; color: var(--ph-ink); }
+/* 选中态：淡品牌底 + 左侧一条实色指示条（不只靠颜色，形状也变） */
+.side__item.on {
+  background: var(--ph-brand-soft);
+  color: var(--ph-brand);
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--ph-brand);
+}
+.side__item--quiet { color: var(--ph-ink-3); }
+
+.side__foot { margin-top: auto; padding-top: var(--ph-s4); }
+.side__note {
+  margin: 0 0 var(--ph-s3);
+  padding: 0 var(--ph-s3);
+  font-size: 11px; line-height: 1.7; color: var(--ph-ink-3);
+}
+
+/* ── 内容区 ───────────────────────────────────────────────── */
+.main { min-width: 0; }
+.main__inner {
+  max-width: 1180px;
   margin: 0 auto;
-  padding: var(--ph-s5);
+  padding: var(--ph-s5) var(--ph-s5) var(--ph-s7);
 }
 
+/* ── 窄屏：侧栏变成顶部横向条 ─────────────────────────────── */
 @media (max-width: 900px) {
-  .shell__bar { flex-wrap: wrap; height: auto !important; padding: var(--ph-s3) var(--ph-s4); }
-  .shell__product, .shell__sep { display: none; }
-  .shell__inner { padding: var(--ph-s4) var(--ph-s3); }
+  .app { grid-template-columns: 1fr; }
+  .side {
+    position: static;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--ph-s2);
+    padding: var(--ph-s2) var(--ph-s3);
+    border-right: 0;
+    border-bottom: 1px solid var(--ph-line);
+    overflow-x: auto;
+  }
+  .side__brand { padding: 0 var(--ph-s2) 0 0; }
+  .side__name { display: none; }
+  .side__nav { flex-direction: row; gap: 4px; }
+  .side__item { min-height: 36px; padding: 0 var(--ph-s3); white-space: nowrap; }
+  .side__item.on { box-shadow: inset 0 -3px 0 var(--ph-brand); }
+  .side__foot { margin-top: 0; padding-top: 0; margin-left: auto; }
+  .side__note { display: none; }
+  .main__inner { padding: var(--ph-s4) var(--ph-s4) var(--ph-s6); }
 }
 </style>
