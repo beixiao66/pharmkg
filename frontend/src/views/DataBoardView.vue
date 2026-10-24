@@ -22,6 +22,12 @@ const scale = computed(() => q.value?.scale || {})
 const labels = computed(() =>
   Object.entries(scale.value.nodes_by_label || {})
     .filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]))
+//: 按标签取节点数（四宫格里要用药物 / 疾病的绝对值）。
+const countOfLabel = (name) => scale.value.nodes_by_label?.[name] || 0
+
+//: 大数字统一格式化：规模数字上千分位比裸数字好读。
+const fmt = (n) => (typeof n === "number" ? n.toLocaleString("en-US") : "—")
+
 const rels = computed(() =>
   Object.entries(scale.value.edges_by_type || {})
     .sort((a, b) => b[1] - a[1]).slice(0, 10))
@@ -64,20 +70,26 @@ const junkLong = computed(() => num('junk_concat', 'too_long_count'))
     </header>
     <el-card v-if="q" shadow="never" style="margin-bottom:14px">
       <template #header>图谱规模</template>
-      <el-row :gutter="12">
-        <el-col :span="6"><el-statistic title="节点总数"
-          :value="scale.nodes_total || 0" /></el-col>
-        <el-col :span="6"><el-statistic title="关系总数"
-          :value="scale.edges_total || 0" /></el-col>
-        <el-col :span="12">
-          <div style="font-size:12px;color:#909399;line-height:1.7">
-            快照生成于 <b>{{ (q._meta && q._meta.generated_at) || '未知' }}</b><br>
-            {{ (q._meta && q._meta.note) || '' }}
+        <!-- 四宫格 KPI：规模本身就是这套系统的可信度来源，值得给大字号。
+             原来用 el-statistic 排成一行，数字和正文一样大，等于没说。 -->
+        <div class="kpi">
+          <div class="kpi__item">
+            <b>{{ fmt(scale.nodes_total) }}</b><span>节点总数</span>
           </div>
-        </el-col>
-      </el-row>
-      <el-alert type="warning" :closable="false" style="margin-top:10px"
-        title="这是快照，不是实时统计。图谱重新导入后必须重跑 scripts/check_graph_quality.py，否则看板显示的是旧图的质量。" />
+          <div class="kpi__item">
+            <b>{{ fmt(scale.edges_total) }}</b><span>关系总数</span>
+          </div>
+          <div class="kpi__item">
+            <b>{{ fmt(countOfLabel("Drug")) }}</b><span>药物</span>
+          </div>
+          <div class="kpi__item">
+            <b>{{ fmt(countOfLabel("Disease")) }}</b><span>疾病</span>
+          </div>
+        </div>
+        <p class="ph-muted" style="margin-top:var(--ph-s3)">
+          快照生成于 <b>{{ (q._meta && q._meta.generated_at) || "未知" }}</b>
+          {{ (q._meta && q._meta.note) ? "｜" + q._meta.note : "" }}
+        </p>
     </el-card>
 
     <el-row v-if="q" :gutter="14">
@@ -162,5 +174,39 @@ const junkLong = computed(() => num('junk_concat', 'too_long_count'))
   max-height: 260px;
   overflow: auto;
   margin: 0;
+}
+</style>
+
+<style scoped>
+/* 四宫格 KPI：大数字 + 小标签，等宽数字让四列对齐 */
+.kpi {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--ph-s4);
+}
+.kpi__item {
+  padding: var(--ph-s3) var(--ph-s4);
+  border-left: 3px solid var(--ph-brand-soft);
+  border-radius: 4px;
+  background: #fbfcfe;
+}
+.kpi__item b {
+  display: block;
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--ph-ink);
+  font-variant-numeric: tabular-nums;
+}
+.kpi__item span {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--ph-ink-3);
+}
+@media (max-width: 900px) {
+  .kpi { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kpi__item b { font-size: 20px; }
 }
 </style>
