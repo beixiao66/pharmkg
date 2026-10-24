@@ -291,7 +291,7 @@ const STEP_HINT = {
           </el-collapse>
 
           <div v-if="t.meta && t.meta.evidence" class="ask__graph">
-            <EvidenceGraph :graph="asGraph(t.meta.evidence)" :max-height="240" />
+            <EvidenceGraph :graph="asGraph(t.meta.evidence)" />
           </div>
         </div>
       </div>

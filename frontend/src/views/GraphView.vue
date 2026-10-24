@@ -131,7 +131,7 @@ function asGraph(d) {
         <el-alert v-if="sub.truncated" type="warning" :closable="false"
                   style="margin-bottom:8px" data-test="truncated"
                   :title="`只画了前 ${sub.edge_limit} 条边 —— 这个实体的连边更多，图上不是全部。`" />
-        <EvidenceGraph :graph="asGraph(sub)" :max-nodes="10" :max-height="420" />
+        <EvidenceGraph :graph="asGraph(sub)" :max-nodes="10" />
       </div>
     </el-card>
 

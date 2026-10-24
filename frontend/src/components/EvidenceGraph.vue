@@ -27,8 +27,6 @@ import G6 from '@antv/g6'
 const props = defineProps({
   graph: { type: Object, required: true },
   maxNodes: { type: Number, default: 15 },
-  /** 画布高度上限。聊天里嵌入时给 260，独立的图谱页可以给 420。 */
-  maxHeight: { type: Number, default: 340 },
 })
 
 const box = ref(null)
@@ -100,7 +98,7 @@ function pick(src) {
  * 环的容量按"该环周长能放下几个节点"算，放不下就开下一环——
  * 这样节点数变化时**永远不会有重叠**，也不依赖任何布局引擎。
  */
-function layout(nodes, hubId, widths, W, minFirstRing = 0, maxH = 0) {
+function layout(nodes, hubId, widths, W, minFirstRing = 0) {
   const pos = new Map()
   const cx = W / 2
   const rest = nodes.filter((n) => n.id !== hubId)
@@ -123,16 +121,11 @@ function layout(nodes, hubId, widths, W, minFirstRing = 0, maxH = 0) {
     idx += cnt
     ring += 1
   }
-  let maxR = rings.length ? rings[rings.length - 1].R : 0
-  let H = Math.max(320, 2 * (maxR + NODE_H + 24))
-  // ⚠️ 超过上限时**按比例收半径**，而不是把画布裁矮——
-  //    只裁画布会让外环的节点落到可视区外（"图空了一半"那种错觉）。
-  if (maxH > 0 && H > maxH) {
-    const k = maxH / H
-    for (const rg of rings) rg.R *= k
-    maxR *= k
-    H = maxH
-  }
+  const maxR = rings.length ? rings[rings.length - 1].R : 0
+  // ⚠️ 画布高度**由布局自然决定**，不做"按上限缩半径"。
+  //    我试过缩半径（为了把图塞进固定高度），结果 10 个节点全挤在中心附近、
+  //    标签互相压住——**重叠比"图高一点"糟糕得多**，而且页面本来就能滚。
+  const H = Math.max(320, 2 * (maxR + NODE_H + 24))
   const cy = H / 2
   if (hubId) pos.set(hubId, { x: cx, y: cy })
   for (const rg of rings) {
@@ -221,7 +214,7 @@ async function draw() {
   const maxHalfW = Math.max(...widths.values()) / 2
   const minFirstRing = showEdgeLabels ? maxHalfW * 2 + labelW : 0
 
-  const { pos, H } = layout(rawNodes, hubId, widths, W, minFirstRing, props.maxHeight)
+  const { pos, H } = layout(rawNodes, hubId, widths, W, minFirstRing)
   canvasH.value = H
 
   // 摘要 + 截断说明（图形放弃的细节由文字承担）
