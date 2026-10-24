@@ -42,8 +42,18 @@ const convId = ref(null)
 const convs = ref([])
 
 //: 送给后端的多轮历史：**只含有答案的轮次**（失败/拒答的不算上下文）。
+//:
+//: ⚠️ **必须截断**。后端 `AskRequest.history` 有 `max_length=10` 的硬上限，
+//:    而这里原来把**全部**轮次都发过去——聊到第 11 轮时每次提问都返回 422，
+//:    界面上就是一句「提问失败：history: List should have at most 10 items…」。
+//:
+//:    为什么是 6 而不是 10：后端只在**改写**那一步用 `history[-3:]`（§6.2 的上下文窗口），
+//:    发满 10 条纯属浪费 token；6 条给 3 轮窗口留了足够冗余，也给"以后窗口调大"留了空间。
+//:    **截断在前端做，后端仍保留 10 的防守上限**（接口不该假设调用方守规矩）。
+const HISTORY_TURNS = 6
 const history = computed(() =>
   turns.value.filter((t) => t.answer)
+    .slice(-HISTORY_TURNS)
     .map((t) => ({ question: t.question, answer: t.answer })))
 
 async function refreshConversations() {

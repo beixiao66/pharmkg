@@ -254,6 +254,25 @@ def main() -> int:
               "没有认出图谱" in ans and "不在本系统的查询范围内" not in ans,
               ans[:60])
 
+        # ── 回归：多轮历史的长度契约 ──
+        # 曾经的真实 bug：前端把**全部**轮次当 history 发出去，
+        # 而 AskRequest.history 的上限是 10 → 聊到第 11 轮时每次提问都 422，
+        # 用户看到的是「提问失败：history: List should have at most 10 items…」。
+        # 现在前端只发最近 6 条（HISTORY_TURNS），这里把两端的契约都钉住：
+        #   ≤10 条必须正常作答；>10 条必须**明确 422**（而不是被静默截断后照常回答）。
+        print("\n── 回归：多轮历史长度契约 ──")
+        turns6 = [{"question": f"第{i}轮问", "answer": f"第{i}轮答"} for i in range(6)]
+        r = client.post("/ask", json={"question": "卡维地洛和依度沙班能一起吃吗？",
+                                      "history": turns6}, headers=h)
+        check("history 6 条 → 正常作答（前端实际发送的规模）",
+              r.status_code == 200, str(r.status_code))
+
+        turns11 = [{"question": f"第{i}轮问", "answer": f"第{i}轮答"} for i in range(11)]
+        r = client.post("/ask", json={"question": "卡维地洛和依度沙班能一起吃吗？",
+                                      "history": turns11}, headers=h)
+        check("history 11 条 → 显式 422（上限 10，不静默截断）",
+              r.status_code == 422, str(r.status_code))
+
     finally:
         with SessionLocal() as db:
             db.execute(delete(AppUser).where(AppUser.username == user))
