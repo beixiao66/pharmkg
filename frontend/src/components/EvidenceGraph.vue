@@ -218,6 +218,13 @@ async function draw() {
   summary.value = `图中画了 ${rawNodes.length} 个节点（${typePart}），${rawEdges.length} 条连线（${relPart}）${cut}。`
   note.value = truncated ? `节点过多，只画了关联最多的 ${rawNodes.length} 个（共 ${total} 个）。` : ''
 
+  // ⚠️ **连线从节点中心出发**（`anchorPoints: [[0.5, 0.5]]`），线会从方块背后穿过、
+  //    只在空隙里露出来——看起来更像辐射状，而不是"边框对边框"。
+  //    但**有向边的箭头会落在中心、被方块盖住**，方向就读不出来了。
+  //    所以只在"**全部是无向边**"的图里启用（相互作用这类占绝大多数）。
+  //    注意用 `rawEdges` 判定：`edges` 在这之后才构造，提前引用会 TDZ 报错。
+  const allUndirected = rawEdges.every((e) => e.directed !== true)
+
   const nodes = rawNodes.map((n) => {
     const p = pos.get(n.id) || { x: W / 2, y: H / 2 }
     return {
@@ -226,6 +233,7 @@ async function draw() {
       type: 'rect',
       x: p.x,
       y: p.y,
+      ...(allUndirected ? { anchorPoints: [[0.5, 0.5]] } : {}),
       size: [widths.get(n.id), NODE_H],
       style: {
         fill: COLOR[n.type] || COLOR.default,
