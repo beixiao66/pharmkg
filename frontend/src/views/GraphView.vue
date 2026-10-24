@@ -12,6 +12,21 @@ const center = ref('')
 const sub = ref(null)
 const busy = ref(false)
 
+//: 示例入口：把「这页能查什么」直接摆出来。
+const ENTITY_EXAMPLES = ['卡维地洛片', '类风湿关节炎', '孕妇']
+const PATH_EXAMPLES = [['卡维地洛片', '孕妇'], ['骨肽片', '类风湿关节炎']]
+
+async function useEntity(name) {
+  q.value = name
+  await searchEntity()
+}
+
+async function usePath(a, b) {
+  src.value = a
+  dst.value = b
+  await findPath()
+}
+
 async function searchEntity() {
   const text = q.value.trim()
   if (!text) return
@@ -91,6 +106,12 @@ function asGraph(d) {
         </template>
       </el-input>
 
+      <div class="ph-examples">
+        <span>试试：</span>
+        <button v-for="ex in ENTITY_EXAMPLES" :key="ex" type="button"
+                class="ph-chip" @click="useEntity(ex)">{{ ex }}</button>
+      </div>
+
       <div v-if="hits.length" style="margin-top:10px" data-test="entity-hits">
         <div style="font-size:12px;color:#909399;margin-bottom:6px">
           命中 {{ hits.length }} 个（括号里是标签与连边数——孤点进去是空白页，所以按连边数排序）
@@ -134,6 +155,12 @@ function asGraph(d) {
                      data-test="path-find" @click="findPath">找路径</el-button>
         </el-col>
       </el-row>
+
+      <div class="ph-examples">
+        <span>试试：</span>
+        <button v-for="p in PATH_EXAMPLES" :key="p[0] + p[1]" type="button"
+                class="ph-chip" @click="usePath(p[0], p[1])">{{ p[0] }} → {{ p[1] }}</button>
+      </div>
       <p style="color:#909399;font-size:12px;margin:6px 0 0">
         最多 6 跳（不设上限就是全图搜索）。查询超时会明确报错——超时不等于没有路径。
       </p>
@@ -150,3 +177,29 @@ function asGraph(d) {
     </el-card>
   </div>
 </template>
+
+<style scoped>
+
+/* ── 示例入口：首屏只有输入框时，给出可以直接点的例子 ─────────── */
+.ph-examples {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+  margin-top: var(--ph-s2);
+}
+.ph-examples span { font-size: 12px; color: var(--ph-ink-3); }
+.ph-chip {
+  appearance: none;
+  padding: 4px 10px;
+  border: 1px solid var(--ph-line);
+  border-radius: 999px;
+  background: var(--ph-surface);
+  color: var(--ph-ink-2);
+  font-family: inherit; font-size: 12.5px;
+  cursor: pointer;
+  transition: border-color .16s ease, color .16s ease, background .16s ease;
+}
+.ph-chip:hover {
+  border-color: var(--ph-brand);
+  color: var(--ph-brand);
+  background: var(--ph-brand-soft);
+}
+</style>

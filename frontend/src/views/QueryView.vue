@@ -43,6 +43,24 @@ const optionsB = ref([])
 const inter = ref(null)
 const busyI = ref(false)
 
+//: 示例入口。点一下就走完整查询——比让用户自己编一个名字容易，
+//: 也顺带演示"这一页能查什么"。
+const DISEASE_EXAMPLES = ['类风湿关节炎', '高血压', '2型糖尿病']
+const PAIR_EXAMPLES = [['卡维地洛片', '依度沙班'], ['阿司匹林肠溶胶囊', '华法林钠片']]
+
+async function useDisease(name) {
+  diseaseQ.value = name
+  await searchDisease()
+}
+
+async function usePair(a, b) {
+  // 必须先把选项灌进去，否则 el-select 显示的是空标签（v-model 只有值）
+  await Promise.all([remoteSearch(a, optionsA), remoteSearch(b, optionsB)])
+  drugA.value = a
+  drugB.value = b
+  await checkInteraction()
+}
+
 async function remoteSearch(q, target) {
   if (!q || q.length < 1) { target.value = []; return }
   try {
@@ -88,6 +106,12 @@ const LEVEL_TAG = { Major: 'danger', Moderate: 'warning', Minor: 'info',
                      @click="searchDisease">检索</el-button>
         </template>
       </el-input>
+
+      <div class="ph-examples">
+        <span>试试：</span>
+        <button v-for="ex in DISEASE_EXAMPLES" :key="ex" type="button"
+                class="ph-chip" @click="useDisease(ex)">{{ ex }}</button>
+      </div>
 
       <div v-if="diseaseHits.length" style="margin-top:10px" data-test="disease-hits">
         <div style="font-size:12px;color:#909399;margin-bottom:6px">
@@ -144,6 +168,12 @@ const LEVEL_TAG = { Major: 'danger', Moderate: 'warning', Minor: 'info',
         </el-col>
       </el-row>
 
+      <div class="ph-examples">
+        <span>试试：</span>
+        <button v-for="p in PAIR_EXAMPLES" :key="p[0] + p[1]" type="button"
+                class="ph-chip" @click="usePair(p[0], p[1])">{{ p[0] }} + {{ p[1] }}</button>
+      </div>
+
       <div v-if="inter" style="margin-top:14px" data-test="interaction-result">
         <div style="font-size:15px;margin-bottom:6px">
           <b>{{ inter.drug_a }}</b> ↔ <b>{{ inter.drug_b }}</b>
@@ -172,3 +202,31 @@ const LEVEL_TAG = { Major: 'danger', Moderate: 'warning', Minor: 'info',
     </el-card>
   </div>
 </template>
+
+<style scoped>
+
+/* ── 示例入口：首屏只有输入框时，给出可以直接点的例子 ───────────
+   为什么要有：这两页在没查询前是"两个输入框 + 一大片空白"，
+   用户既不知道该问什么，也看不出这页能做什么。 */
+.ph-examples {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+  margin-top: var(--ph-s2);
+}
+.ph-examples span { font-size: 12px; color: var(--ph-ink-3); }
+.ph-chip {
+  appearance: none;
+  padding: 4px 10px;
+  border: 1px solid var(--ph-line);
+  border-radius: 999px;
+  background: var(--ph-surface);
+  color: var(--ph-ink-2);
+  font-family: inherit; font-size: 12.5px;
+  cursor: pointer;
+  transition: border-color .16s ease, color .16s ease, background .16s ease;
+}
+.ph-chip:hover {
+  border-color: var(--ph-brand);
+  color: var(--ph-brand);
+  background: var(--ph-brand-soft);
+}
+</style>
