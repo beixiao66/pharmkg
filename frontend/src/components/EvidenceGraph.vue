@@ -44,7 +44,21 @@ const COLOR = {
   Symptom: '#909399',
   default: '#b1b3b8',
 }
-const TYPE_CN = { Drug: '药物', Disease: '疾病', Population: '人群', Symptom: '症状' }
+//: ⚠️ **必须覆盖图里所有可能出现的一级标签**。
+//: 第一版只写了 Drug/Disease/Population/Symptom，于是「食物 / 科室」这两类
+//: 在摘要里直接显示成 `Food` / `Department`（实测截图里就是）。
+//: 兜底用「实体」，绝不把英文标签漏到界面上。
+const TYPE_CN = {
+  Drug: '药物',
+  Disease: '疾病',
+  Symptom: '症状',
+  Population: '人群',
+  Food: '食物',
+  Check: '检查',
+  Treatment: '治疗',
+  Department: '科室',
+  Producer: '生产商',
+}
 const LEVEL_COLOR = { Major: '#c0392b', Moderate: '#e67e22', Minor: '#95a5a6' }
 
 const FONT = 11
@@ -159,6 +173,27 @@ async function draw() {
   }
 
   const widths = new Map(rawNodes.map((n) => [n.id, nodeWidth(n.label || n.id)]))
+
+  // ⚠️ **外层节点按类型聚簇**，而不是按度数随意排。
+  //    图谱浏览给的是"整个邻域"：一个中心 + 药物/疾病/食物/科室混在一起，
+  //    外层之间还有互相连线。同类散落时，跨类型的长连线会把图搅成一团。
+  //    把同类型排在一起后：① 同色成片、图例对得上；② 跨类型连线不再是"横穿全图"。
+  //    排序键：类型出现次数降序 → 类型名 → 度数降序（同类型内部度数高的靠前）。
+  const typeOf = new Map(rawNodes.map((n) => [n.id, n.type || 'other']))
+  const typeCount = {}
+  for (const n of rawNodes) {
+    const ty = typeOf.get(n.id) || 'other'
+    typeCount[ty] = (typeCount[ty] || 0) + 1
+  }
+  const ordered = [...rawNodes].sort((a, b) => {
+    const ta = typeOf.get(a.id) || 'other'
+    const tb = typeOf.get(b.id) || 'other'
+    if (typeCount[tb] !== typeCount[ta]) return typeCount[tb] - typeCount[ta]
+    if (ta !== tb) return ta < tb ? -1 : 1
+    return (deg.get(b.id) || 0) - (deg.get(a.id) || 0)
+  })
+  rawNodes.length = 0
+  rawNodes.push(...ordered)
   // 枢纽 = 度数最高的节点（骨肽片 137 / 类风湿关节炎 23），天然是中心
   let hubId = null
   let best = -1
