@@ -36,6 +36,7 @@ for _p in (str(_SCRIPTS), str(REPO_ROOT / "backend")):
 
 from insert_io import read_csv_rows  # noqa: E402
 from l5_entity_linking import build_index  # noqa: E402
+from pinyin_match import PinyinIndex  # noqa: E402
 from l5_pipeline import run_turn  # noqa: E402
 
 FEWSHOT_FILE = REPO_ROOT / "data" / "eval" / "l5_fewshot.csv"
@@ -90,10 +91,18 @@ def _ensure_state(session) -> dict:
         if _state:                      # 双检：等锁期间别人可能已经建好
             return _state
         names, prefixes, aliases = build_index(session)
+        #: 拼音索引（只收药物名）：字形没认出来时按**读音**兜一次。
+        #: 与药品检索共用同一个模块与同一套规则；构建约 0.4 秒，
+        #: 和实体索引一起做成进程级单例，每个请求不再重算。
+        #: ⚠️ 只收 Drug：把疾病/症状也塞进来会让"读音相同但类型不同"的误配变多。
+        drug_names = [r["name"] for r in session.run(
+            "MATCH (d:Drug) WHERE coalesce(d.quality,'ok') <> 'junk' "
+            "AND d.name IS NOT NULL RETURN d.name AS name")]
         _state.update({
             "names": names,
             "prefixes": prefixes,
             "aliases": aliases,
+            "pinyin": PinyinIndex(drug_names),
             "max_len": max((len(x) for x in names), default=2),
             "fewshot": _load_fewshot(),
         })
@@ -158,7 +167,7 @@ def ask(question: str, history: list[tuple[str, str]] | None = None,
                 session, _llm_client(st), st, question,
                 history=_to_transcript(history),
                 names=state["names"], prefixes=state["prefixes"],
-            aliases=state["aliases"],
+            aliases=state["aliases"], pinyin=state["pinyin"],
                 max_len=state["max_len"], fewshot=state["fewshot"],
                 do_rewrite=do_rewrite, trace=trace,
             )

@@ -260,6 +260,26 @@ def main() -> int:
         # 用户看到的是「提问失败：history: List should have at most 10 items…」。
         # 现在前端只发最近 6 条（HISTORY_TURNS），这里把两端的契约都钉住：
         #   ≤10 条必须正常作答；>10 条必须**明确 422**（而不是被静默截断后照常回答）。
+        # ── 回归：/ask 的拼音兜底（唯一命中才采用，且必须明说）──
+        # 真实需求：「卡维地洛」被打成「卡位低落」——读起来一样，三个字都不一样。
+        # 与"药品检索"的安全不对称：检索里多给候选没关系，问答里错认一个实体
+        # 会直接变成答案的主语，所以只采用**同音精确且唯一**的匹配。
+        print("\n── 回归：/ask 拼音兜底 ──")
+        d = client.post("/ask", json={"question": "卡位低落和依度沙班能一起吃吗？"},
+                        headers=h).json()
+        ents = d.get("entities") or []
+        check("同音错别字被按读音认出来", "卡维地洛片" in ents, str(ents))
+        check("认出之后真能查到相互作用（不是空结果）",
+              (d.get("row_count") or 0) >= 1, str(d.get("row_count")))
+        check("答案里**明说**是按读音理解的（用户有机会发现认错）",
+              "按读音理解" in (d.get("answer") or ""),
+              (d.get("answer") or "")[:50])
+        d2 = client.post("/ask", json={"question": "卡维地洛和依度沙班能一起吃吗？"},
+                         headers=h).json()
+        check("正常写法**不出现**「按读音」提示（不冒充）",
+              "按读音理解" not in (d2.get("answer") or ""),
+              (d2.get("answer") or "")[:40])
+
         print("\n── 回归：多轮历史长度契约 ──")
         turns6 = [{"question": f"第{i}轮问", "answer": f"第{i}轮答"} for i in range(6)]
         r = client.post("/ask", json={"question": "卡维地洛和依度沙班能一起吃吗？",

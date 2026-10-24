@@ -74,10 +74,25 @@ class PinyinIndex:
                         self._prefix.setdefault(key[:cut], []).append(name)
         self.size = len(self._exact)
 
+    def exact(self, text: str) -> list[str]:
+        """只认**整词同音**（拼音键完全相等）。用于在句子里找"哪个片段是某个药"。
+
+        与 `match()` 的区别：`match()` 会做前缀兜底（"卡维"也算命中），
+        而句子切出来的片段参差不齐，用前缀会误命中——所以这里只认整词。
+        """
+        key = pinyin_key(text)
+        if len(key.replace(" ", "")) < MIN_KEY_LEN:
+            return []
+        return list(self._exact.get(key, []))
+
     def match(self, query: str, limit: int = 8) -> tuple[list[str], str]:
         """按读音匹配。返回 ``(名字列表, 匹配方式)``，方式 ∈ {'pinyin', 'pinyin-prefix', ''}。"""
         key = pinyin_key(query)
         if len(key.replace(" ", "")) < MIN_KEY_LEN:
+            return [], ""
+        # ⚠️ **至少 2 个音节**。单个音节（「能」「卡」）做前缀匹配会配出
+        #    「能全素」这种完全不相干的药——虚词/单个常用字不该触发读音兜底。
+        if len(key.split()) < 2:
             return [], ""
 
         # ① 整词：同音错别字走这一条（卡位低落 → ka wei di luo → 卡维地洛）
@@ -85,12 +100,14 @@ class PinyinIndex:
         if hit:
             return hit[:limit], "pinyin"
 
-        # ② 整词前缀：同音 + 少说几个字（卡位 → ka wei → 卡维地洛）
-        best: list[str] = []
-        for cut in sorted(self._prefix, key=len, reverse=True):
-            if key.startswith(cut):
-                best = self._prefix[cut]
-                break
+        # ② 整词前缀：同音 + 少说几个字（卡位低落 → ka wei di luo → 卡维地洛片）
+        #
+        # ⚠️ 方向必须是「**名字的拼音**以查询的拼音开头」，不是反过来。
+        #    第一版写成 `for cut in prefixes: if key.startswith(cut)` ——
+        #    那等于要求"查询以某个名字前缀开头"，于是「能一起吃吗」
+        #    （`neng yi qi chi ma`）以 `neng` 开头就命中了「能全素」，
+        #    把一个虚词当成了药名。**索引本身是按"名字前缀"建的，直接查便是。**
+        best = self._prefix.get(key, [])
         if best:
             return best[:limit], "pinyin-prefix"
         return [], ""

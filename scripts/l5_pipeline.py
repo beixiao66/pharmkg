@@ -61,6 +61,7 @@ from opencmkg_io import REPO_ROOT
 from l5_answer import evidence_cypher, faithfulness, template_answer
 from l5_cypher_prompt import build_messages, extract_cypher, validate_cypher
 from l5_entity_linking import INTENT_LABELS, build_index, resolve, scan
+from pinyin_match import pinyin_key
 from l5_intent import llm_intent, rule_intent
 from l5_rewrite import rewrite_prompt
 from l5_text2cypher import MAX_ROWS, MAX_TOKENS, norm_row
@@ -83,10 +84,65 @@ def log(msg: str = "") -> None:
 
 # ---------------------------------------------------------------- 单轮流水线
 
+def _uncovered(covered: list[tuple[int, int]], text: str) -> list[str]:
+    """把一句话里**没有被实体命中覆盖**的片段切出来。
+
+    例：「卡位低落和依度沙班能一起吃吗」+ 覆盖了「依度沙班」
+    → ['卡位低落和', '能一起吃吗']（长度 < 2 的片段丢掉，没有匹配价值）
+    """
+    spans = sorted(covered)
+    out: list[str] = []
+    cur = 0
+    for a, b in spans:
+        if a > cur:
+            seg = text[cur:a].strip()
+            if len(seg) >= 2:
+                out.append(seg)
+        cur = max(cur, b)
+    if cur < len(text):
+        seg = text[cur:].strip()
+        if len(seg) >= 2:
+            out.append(seg)
+    return out
+
+
+def _longest_unique_pinyin(pinyin, seg: str) -> tuple[str, str] | None:
+    """在一个片段里找**最长的、同音精确且唯一**的子串。
+
+    为什么要找子串：切出来的片段常带虚词——「卡位低落**和**」。
+    整段转拼音是 `ka wei di luo he`，对不上任何药名；而其中「卡位低落」
+    正好等于「卡维地洛」的拼音。所以逐段枚举子串，取最长的那一个。
+
+    为什么要求"唯一"：同音可能对应好几个药（多音字、同音异药）。
+    问答里错认一个药会直接变成答案的主语，**宁可认不出，也不能猜一个**。
+    """
+    best: tuple[str, str] | None = None
+    n = len(seg)
+    for i in range(n):
+        for j in range(i + 2, n + 1):
+            sub = seg[i:j]
+            if best is not None and len(sub) <= len(best[0]):
+                continue
+            # ⚠️ **至少 3 个字、至少 2 个音节**。少了这条会误配：
+            #    实测「能一起吃吗」里的「能」→ 拼音 `neng` 正好是「能全素」的前缀，
+            #    于是把"能全素"当成了用户说的药。虚词单字必须排除。
+            if len(sub) < 3 or len(pinyin_key(sub).split()) < 2:
+                continue
+            # 为什么用 match() 而不是 exact()：药节点常带剂型后缀
+            # （「卡维地洛**片**」），而用户说的是「卡维地洛」——
+            # 拼音上前者是后者的**前缀**（ka wei di luo ⊂ ka wei di luo pian）。
+            # 只认整词会把这种情况全部漏掉（实测踩过）。
+            # match() 的前缀只在**音节边界**上做，所以不会切出半个音节。
+            hits, _how = pinyin.match(sub, limit=5)
+            if len(hits) == 1:
+                best = (sub, hits[0])
+    return best
+
+
 def run_turn(session, client, st, question: str, *, intent_gold: str = "",
              gold_nodes: list[str] | None = None, gold_rows: list | None = None,
              history: list[tuple[str, str]] | None = None,
-             names=None, prefixes=None, aliases=None, max_len=2, fewshot=None,
+             names=None, prefixes=None, aliases=None, pinyin=None, max_len=2, fewshot=None,
              intent_method: str = "llm", do_rewrite: bool = True,
              answer_method: str = "template", trace: bool = False) -> dict:
     """跑完一轮，返回**每一步的中间结果**（归因要用）。"""
@@ -135,6 +191,31 @@ def run_turn(session, client, st, question: str, *, intent_gold: str = "",
                          f"请确认是哪一个，我再查。{DISCLAIMER}")
         out["faithful"] = True
         return out
+
+    # ── ②.5 拼音兜底：字形没认出来的**片段**，再按读音试一次 ─────────
+    #
+    # 真实需求：「卡维地洛」被写成「卡位低落」——读起来一样，三个字都不一样。
+    #
+    # ⚠️ 第一版写错了：只在"一个实体都没认出"时才兜底。可实际问题常常是
+    #    「卡位低落**和依度沙班**能一起吃吗」——依度沙班认出来了，`ents` 非空，
+    #    兜底分支永远不进。**兜底要针对"没被覆盖的那几段文字"**，不是整句。
+    #
+    # ⚠️ 与"药品检索"的安全不对称：检索里多给候选没关系（用户会挑），
+    #    **问答里错认一个实体会直接变成答案的主语**。所以这里只采用
+    #    **同音精确且唯一**的匹配，并在答案里明说是按读音理解的。
+    pinyin_note = ""
+    if pinyin is not None:
+        covered = [(a, b) for a, b, _p, _k in
+                   scan(out["rewritten"], names, prefixes, max_len)]
+        for seg in _uncovered(covered, out["rewritten"]):
+            found = _longest_unique_pinyin(pinyin, seg)
+            if found and found[1] not in ents:
+                piece, node = found
+                ents.append(node)
+                pinyin_note += (
+                    f"（「{piece}」在图谱中没有同名字面，这里按读音理解为「{node}」"
+                    f"——如果理解错了，请用完整药名再问一次。）\n\n")
+                say(f"      ② 拼音兜底 → {piece} ≈ {node}")
 
     if not ents:
         out["step"] = "无实体"
@@ -200,10 +281,11 @@ def run_turn(session, client, st, question: str, *, intent_gold: str = "",
     out["stray"] = sorted(stray)[:5]
 
     if answer_method == "template":
-        out["answer"] = template_answer(out["intent"], ents, ev)
+        out["answer"] = pinyin_note + template_answer(out["intent"], ents, ev)
     else:
         from l5_answer import llm_answer
-        out["answer"] = llm_answer(out["rewritten"], out["intent"], ents, ev, st)
+        out["answer"] = pinyin_note + llm_answer(
+            out["rewritten"], out["intent"], ents, ev, st)
     f_ok, f_bad = faithfulness(out["answer"], ev, names)
     out["faithful"] = f_ok
     out["out_of_evidence"] = sorted(f_bad)
@@ -328,6 +410,7 @@ def main(argv: list[str] | None = None) -> int:
                 out = run_turn(s, client, st, question, intent_gold=intent_gold,
                                gold_nodes=gold_nodes, gold_rows=g_rows,
                                history=history, names=names, prefixes=prefixes, aliases=aliases,
+              pinyin=None,   # ⚠️ 评测**不启用**拼音兜底：冻结产物的口径不变
                                max_len=max_len, fewshot=fewshot,
                                intent_method=args.intent,
                                do_rewrite=not args.no_rewrite,
